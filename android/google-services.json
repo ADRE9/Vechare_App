@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "792432651607",
+    "project_id": "vecharge-v2",
+    "storage_bucket": "vecharge-v2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792432651607:android:2704addee3f369067b6212",
+        "android_client_info": {
+          "package_name": "com.valerio.vecharge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792432651607-65agquu5vao6mk8llotd9pd71bvaakjt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.valerio.vecharge",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "792432651607-oh2kvqvrcgc94n6jfco0cg5af4csbr4l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdwH-oPYta_FQ-1aNFpHX-G9M1bvNRLGw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792432651607-oh2kvqvrcgc94n6jfco0cg5af4csbr4l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
