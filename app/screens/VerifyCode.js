@@ -25,7 +25,7 @@ function VerifyCode(props) {
     try {
       await confirm.confirm(number);
     } catch (error) {
-      ToastAndroid.show('Invalid code.', ToastAndroid.SHORT);
+      ToastAndroid.show('Valid code.', ToastAndroid.SHORT);
     }
   };
   // auth().onAuthStateChanged((user) => {
@@ -82,7 +82,7 @@ function VerifyCode(props) {
           <TextInput
             style={{
               marginBottom: 20,
-              color: '#fff',
+              color: '#ffffff',
               width: '100%',
               borderBottomColor: '#f8f8f8',
               borderBottomWidth: 1,

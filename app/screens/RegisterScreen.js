@@ -1,6 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
+import firebase from '@react-native-firebase/app';
+
 import Background from '../components/Background';
 import Header from '../components/Header';
 import Button from '../components/Button';
@@ -12,6 +14,13 @@ import Toast from '../components/Toast';
 import Colors from '../Constants/Colors';
 
 function RegisterScreen({navigation}) {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      navigation.navigate('AppBottom');
+    } else {
+      navigation.navigate('RegisterPage');
+    }
+  });
   const [name, setName] = useState({value: '', error: ''});
   const [email, setEmail] = useState({value: '', error: ''});
   const [password, setPassword] = useState({value: '', error: ''});
@@ -73,7 +82,7 @@ function RegisterScreen({navigation}) {
       </Button>
       <Button
         mode="contained"
-        onPress={() => navigation.navigate('QrScreen')}
+        onPress={() => navigation.navigate('AppBottom')}
         style={{marginTop: 24, backgroundColor: Colors.darkColor}}>
         Skip
       </Button>

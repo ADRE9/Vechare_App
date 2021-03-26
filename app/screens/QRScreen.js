@@ -9,11 +9,37 @@ import {
   PermissionsAndroid,
   Platform,
   StyleSheet,
+  Alert,
+  BackHandler,
 } from 'react-native';
 import {CameraScreen} from 'react-native-camera-kit';
-import Button from '../components/Button';
+import {useFocusEffect} from '@react-navigation/native';
 
 const App = (props) => {
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        Alert.alert('Hold on!', 'Are you sure you want to exit app?', [
+          {
+            text: 'Cancel',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {text: 'YES', onPress: () => BackHandler.exitApp()},
+        ]);
+        return true;
+      };
+
+      // Add Event Listener for hardwareBackPress
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress,
+      );
+
+      return () => backHandler.remove();
+    }, []),
+  );
+
   const [qrvalue, setQrvalue] = useState('');
   const [opneScanner, setOpneScanner] = useState(false);
 
@@ -111,12 +137,6 @@ const App = (props) => {
           <Text style={{marginTop: 120, marginRight: 100, fontSize: 23}}>
             Charging Points Near me
           </Text>
-          <Button
-            mode="contained"
-            onPress={() => props.navigation.navigate('Status')}
-            style={{marginTop: 50, backgroundColor: '#1e756b'}}>
-            Next
-          </Button>
         </View>
       )}
     </SafeAreaView>

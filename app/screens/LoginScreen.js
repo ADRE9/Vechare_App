@@ -76,7 +76,7 @@ function LoginScreen(props) {
             // disabled={ number.length == 10 ? false : true}
             style={[
               styles.listView,
-              {backgroundColor: number.length == 10 ? '#000' : 'grey'},
+              {backgroundColor: number.length === 10 ? '#000' : 'grey'},
             ]}>
             <Text
               style={{

@@ -136,6 +136,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     splits {
         abi {
@@ -192,8 +193,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth'
     implementation "androidx.browser:browser:1.2.0"
     implementation project(':react-native-vector-icons')
-    implementation project(':tipsi-stripe')
-    implementation 'com.stripe:stripe-android:16.3.0'
+    implementation project(':react-native-razorpay')
+    implementation 'androidx.multidex:multidex:2.0.1'
+    // implementation project(':tipsi-stripe')
+    // implementation 'com.stripe:stripe-android:16.3.0'
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }

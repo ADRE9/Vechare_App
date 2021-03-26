@@ -1,6 +1,6 @@
 import React from 'react';
-import {Button} from 'react-native';
-import {createStackNavigator, HeaderBackButton} from '@react-navigation/stack';
+
+import {createStackNavigator} from '@react-navigation/stack';
 
 import WelcomeScreen from '../screens/WelcomeScreen';
 import LoginScreen from '../screens/LoginScreen';
@@ -22,40 +22,6 @@ function AuthNavigation() {
       <Stack.Screen name="LoginPage" component={LoginScreen} />
       <Stack.Screen name="Verify" component={VerifyCode} />
       <Stack.Screen name="RegisterPage" component={RegisterScreen} />
-      <Stack.Screen
-        name="QrScreen"
-        component={QRScreen}
-        // options={({navigation}) => ({
-        //   headerRight: () => (
-        //     <Button
-        //       onPress={() => navigation.navigate('Status')}
-        //       title="Status"
-        //       color="#00cc00"
-        //     />
-        //   ),
-        //   headerShown: true,
-        //   headerTitle: 'Home',
-        //   headerTitleAlign: 'center',
-        //   // headerLeft: () => (
-        //   //   <HeaderBackButton onPress={() => navigation.navigate('QrScreen')} />
-        //   // ),
-        // })}
-      />
-      <Stack.Screen
-        name="Status"
-        component={Status}
-        options={({navigation}) => ({
-          headerRight: () => (
-            <Button
-              onPress={() => navigation.navigate('AppBottom')}
-              title="Next"
-              color="#00ca12"
-            />
-          ),
-          headerShown: true,
-          headerTitle: 'Status',
-        })}
-      />
     </Stack.Navigator>
   );
 }

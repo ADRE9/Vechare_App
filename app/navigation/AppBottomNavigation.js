@@ -7,6 +7,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import home from '../screens/home';
 // import Payment from '../screens/Payment';
 import Profile from '../screens/Profile';
+import QRScreen from '../screens/QRScreen';
+import Status from '../screens/Status';
 
 const EmptyScreen = () => {
   return null;
@@ -25,7 +27,16 @@ const AppBottomNavigation = () => (
     }}>
     <Tab.Screen
       name="Home"
-      component={home}
+      component={QRScreen}
+      options={{
+        tabBarIcon: ({size, color}) => (
+          <MaterialCommunityIcons name="home-outline" size={30} color={color} />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Status"
+      component={Status}
       options={{
         tabBarIcon: ({size, color}) => (
           <MaterialCommunityIcons name="home-outline" size={30} color={color} />
