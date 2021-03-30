@@ -1,120 +1,108 @@
-/* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {View, StyleSheet, Image, Alert, BackHandler} from 'react-native';
 import {
-  Text,
-  View,
-  StyleSheet,
-  Dimensions,
-  TextInput,
-  ImageBackground,
-  TouchableOpacity,
-} from 'react-native';
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
-
-const {width, height} = Dimensions.get('window');
+import {useFocusEffect} from '@react-navigation/native';
 
 function LoginScreen(props) {
-  const [number, setNumber] = useState('');
-  const [confirm, setConfirm] = useState(null);
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        Alert.alert('Hold on!', 'Are you sure you want to exit app?', [
+          {
+            text: 'Cancel',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {text: 'YES', onPress: () => BackHandler.exitApp()},
+        ]);
+        return true;
+      };
 
-  const signin = async () => {
-    const confirmation = await auth().signInWithPhoneNumber('+91' + number);
-    console.log('confirmation', confirmation);
-    if (confirmation) {
-      setConfirm(confirmation);
-      props.navigation.navigate('Verify', {confirm: confirmation});
+      // Add Event Listener for hardwareBackPress
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress,
+      );
+
+      return () => backHandler.remove();
+    }, []),
+  );
+  const [loggedIn, setloggedIn] = useState(false);
+  const [user, setUser] = useState([]);
+
+  const _signIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const {accessToken, idToken} = await GoogleSignin.signIn();
+      setloggedIn(true);
+
+      const credential = auth.GoogleAuthProvider.credential(
+        idToken,
+        accessToken,
+      );
+      await auth().signInWithCredential(credential);
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+        alert('Cancel');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        alert('Signin in progress');
+        // operation (f.e. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        alert('PLAY_SERVICES_NOT_AVAILABLE');
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
     }
   };
+  function onAuthStateChanged(user) {
+    setUser(user);
+    console.log(user);
+    if (user) setloggedIn(true);
+  }
+  useEffect(() => {
+    GoogleSignin.configure({
+      scopes: ['email'], // what API you want to access on behalf of the user, default is email and profile
+      webClientId:
+        '792432651607-oh2kvqvrcgc94n6jfco0cg5af4csbr4l.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+      offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+    });
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
 
   return (
-    <ImageBackground
-      source={require('../assets/car.jpg')}
-      style={{flex: 1}}
-      blurRadius={1.5}>
-      <View
-        style={{
-          height: height,
-          width: '100%',
-          flex: 1,
-          justifyContent: 'center',
-        }}>
-        <Text
-          style={{
-            fontSize: 22,
-            fontWeight: 'bold',
-            color: 'white',
-            marginLeft: 20,
-            marginTop: 25,
-            marginBottom: 15,
-          }}>
-          Sign in to continue
-        </Text>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginHorizontal: 20,
-          }}>
-          <TextInput
-            style={{
-              marginBottom: 20,
-              color: '#fff',
-              width: '100%',
-              borderBottomColor: '#f8f8f8',
-              borderBottomWidth: 1,
-            }}
-            placeholder="Enter 10 digit Mobile Number"
-            placeholderTextColor="#fff"
-            underlineColorAndroid={'transparent'}
-            keyboardType="number-pad"
-            onChangeText={(value) => setNumber(value)}
-            value={number}
-            maxLength={10}
-          />
-          <TouchableOpacity
-            onPress={signin}
-            // disabled={ number.length == 10 ? false : true}
-            style={[
-              styles.listView,
-              {backgroundColor: number.length === 10 ? '#000' : 'grey'},
-            ]}>
-            <Text
-              style={{
-                color: 'seashell',
-                fontSize: 15,
-                fontWeight: 'bold',
-              }}>
-              Continue
-            </Text>
-          </TouchableOpacity>
-          <View
-            style={{
-              justifyContent: 'space-between',
-              flexDirection: 'row',
-              height: 25,
-              width: '100%',
-            }}
-          />
-        </View>
-      </View>
-    </ImageBackground>
+    <View style={styles.container}>
+      <Image
+        source={require('../assets/login.png')}
+        style={{width: 300, height: 300, marginLeft: 40, marginBottom: 12}}
+      />
+      {!loggedIn ? (
+        <GoogleSigninButton
+          style={{width: 192, height: 48}}
+          size={GoogleSigninButton.Size.Wide}
+          color={GoogleSigninButton.Color.Dark}
+          onPress={_signIn}
+        />
+      ) : (
+        <View>{props.navigation.replace('RegisterPage')}</View>
+      )}
+    </View>
   );
 }
-
-export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
-    opacity: 0.9,
-  },
-  listView: {
-    width: '100%',
-    height: 50,
-    alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'grey',
-    borderRadius: 5,
+    alignItems: 'center',
   },
 });
+
+export default LoginScreen;

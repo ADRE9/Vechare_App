@@ -19,9 +19,8 @@ const Tab = createBottomTabNavigator();
 const AppBottomNavigation = () => (
   <Tab.Navigator
     tabBarOptions={{
-      activeBackgroundColor: '#8eb1c6',
-      activeTintColor: 'white',
-      inactiveBackgroundColor: '#FCCB45',
+      activeTintColor: '#069DFF',
+      inactiveBackgroundColor: '#FFFFFF',
       inactiveTintColor: 'black',
       showLabel: false,
     }}>

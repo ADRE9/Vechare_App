@@ -15,7 +15,7 @@ export default class App extends Component {
   }
   toggleSwitch = () => {
     fetch(
-      `http://ec2-15-206-146-91.ap-south-1.compute.amazonaws.com/${
+      `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/${
         this.state.toggle === false ? 'on' : 'off'
       }/test`,
     );

@@ -14,13 +14,13 @@ import Toast from '../components/Toast';
 import Colors from '../Constants/Colors';
 
 function RegisterScreen({navigation}) {
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      navigation.navigate('AppBottom');
-    } else {
-      navigation.navigate('RegisterPage');
-    }
-  });
+  // firebase.auth().onAuthStateChanged((user) => {
+  //   if (user) {
+  //     navigation.navigate('AppBottom');
+  //   } else {
+  //     navigation.navigate('RegisterPage');
+  //   }
+  // });
   const [name, setName] = useState({value: '', error: ''});
   const [email, setEmail] = useState({value: '', error: ''});
   const [password, setPassword] = useState({value: '', error: ''});
@@ -36,21 +36,11 @@ function RegisterScreen({navigation}) {
       setEmail({...email, error: emailError});
       setPassword({...password, error: passwordError});
     }
-    // setLoading(true);
-    // const response = await signInUser({
-    //   name: name.value,
-    //   email: email.value,
-    //   password: password.value,
-    // });
-    // if (response.error) {
-    //   setError(response.error);
-    // }
-    // setLoading(false);
   };
 
   return (
     <Background>
-      <Image source={require('../assets/logo2.jpg')} style={styles.image} />
+      <Image source={require('../assets/vl.png')} style={styles.image} />
 
       <Header>Please Complete Your Profile</Header>
       <TextInput

@@ -1,21 +1,12 @@
 import React from 'react';
 import {View, Image, StyleSheet} from 'react-native';
-import firebase from '@react-native-firebase/app';
 
 import valerio from '../assets/valerio.jpeg';
 
 function WelcomeScreen({navigation}) {
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      setTimeout(() => {
-        navigation.replace('RegisterPage'); // Stack Name
-      }, 3000);
-    } else {
-      setTimeout(() => {
-        navigation.replace('LoginPage'); // Stack Name
-      }, 3000);
-    }
-  });
+  setTimeout(() => {
+    navigation.replace('AuthLoad'); // Stack Name
+  }, 3000);
 
   return (
     <View style={styles.container}>
