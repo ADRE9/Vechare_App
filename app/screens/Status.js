@@ -8,15 +8,16 @@ import {
   Alert,
   Dimensions,
   Image,
+  Switch,
 } from 'react-native';
 import io from 'socket.io-client';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Switch} from 'react-native-switch';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
+import ToggleSwitch from 'toggle-switch-react-native';
 import '../Constants/Useragent';
 
 // const token =
@@ -112,13 +113,10 @@ export default class Status extends Component {
             text: 'Disconnect,Generate Bill',
             onPress: () =>
               this.disconnect().then(() =>
-                this.props.navigation.navigate('Payment'),
+                this.props.navigation.replace('Payment'),
               ),
           },
-          {
-            text: 'Yes',
-            onPress: () => this.switchoff(),
-          },
+
           {
             text: 'No',
             onPress: () => console.log('No'),
@@ -217,17 +215,20 @@ export default class Status extends Component {
         </View>
         <View style={styles.switch}>
           {/* <Text style={{}}>{this.state.toggle ? 'on' : 'off'}</Text> */}
-
+          {/* <ToggleSwitch
+            isOn={this.state.toggle}
+            onColor="green"
+            offColor="red"
+            label="Connection"
+            labelStyle={{color: 'black', fontWeight: '900'}}
+            size="large"
+            onToggle={this.toggleSwitch}
+          /> */}
           <Switch
+            trackColor={{false: '#767577', true: '#81b0ff'}}
             onValueChange={this.toggleSwitch}
             value={this.state.toggle}
-            circleSize={50}
-            activeText={'ON'}
-            inActiveText={'OFF'}
-            backgroundActive={'green'}
-            backgroundInactive={'#069DFF'}
-            circleActiveColor={'#30a566'}
-            circleInActiveColor={'#2C2C2C'}
+            style={{transform: [{scaleX: 2.5}, {scaleY: 2.5}]}}
           />
         </View>
       </View>
@@ -258,7 +259,7 @@ const styles = StyleSheet.create({
   value: {
     color: 'black',
     height: hp('6%'), // 70% of height device screen
-    width: wp('28%'), // 80% of width device
+    width: wp('30%'), // 80% of width device
     fontSize: hp('3.5%'), // End result looks like the provided UI mockup
   },
   switch: {
