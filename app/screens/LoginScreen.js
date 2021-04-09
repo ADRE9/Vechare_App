@@ -1,5 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Image, Alert, BackHandler} from 'react-native';
+import {View, StyleSheet, Image, Alert, BackHandler, Text} from 'react-native';
 import {
   GoogleSignin,
   GoogleSigninButton,
@@ -7,6 +8,7 @@ import {
 } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import {useFocusEffect} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function LoginScreen(props) {
   useFocusEffect(
@@ -45,6 +47,8 @@ function LoginScreen(props) {
         idToken,
         accessToken,
       );
+      // console.log(idToken);
+      token(idToken);
       await auth().signInWithCredential(credential);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -63,9 +67,28 @@ function LoginScreen(props) {
   };
   function onAuthStateChanged(user) {
     setUser(user);
-    console.log(user);
+
     if (user) setloggedIn(true);
   }
+  const token = async function (idToken) {
+    const res = await fetch(
+      `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/users/loginWithGoogle`,
+      {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({token: idToken}),
+      },
+    );
+    const data = await res.json();
+    console.log(data.data.token);
+
+    try {
+      await AsyncStorage.setItem('token', data.data.token);
+    } catch (e) {
+      console.log('error in token storing', e);
+    }
+  };
+
   useEffect(() => {
     GoogleSignin.configure({
       scopes: ['email'], // what API you want to access on behalf of the user, default is email and profile
@@ -81,8 +104,21 @@ function LoginScreen(props) {
     <View style={styles.container}>
       <Image
         source={require('../assets/login.png')}
-        style={{width: 300, height: 300, marginLeft: 40, marginBottom: 12}}
+        style={{
+          width: 300,
+          height: 300,
+          marginLeft: 30,
+        }}
       />
+      <Text
+        style={{
+          fontSize: 22,
+          fontWeight: 'bold',
+          color: 'black',
+          marginLeft: 10,
+        }}>
+        Charge your vechicle {'\n'}with veCharge
+      </Text>
       {!loggedIn ? (
         <GoogleSigninButton
           style={{width: 192, height: 48}}
@@ -91,7 +127,7 @@ function LoginScreen(props) {
           onPress={_signIn}
         />
       ) : (
-        <View>{props.navigation.replace('RegisterPage')}</View>
+        <View>{props.navigation.navigate('RegisterPage')}</View>
       )}
     </View>
   );
@@ -102,6 +138,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'absolute',
+    marginTop: 40,
+    padding: 10,
   },
 });
 

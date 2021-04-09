@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -13,6 +13,7 @@ const Stack = createStackNavigator();
 
 function AuthNavigation() {
   const [isFirstLaunch, setIsFirstLaunch] = React.useState(null);
+  // const [isloggedIn, setLogged] = useState(null);
 
   useEffect(() => {
     AsyncStorage.getItem('alreadyLaunched').then((value) => {
@@ -25,6 +26,18 @@ function AuthNavigation() {
     });
   }, []);
 
+  // useEffect(() => {
+  //   async function fetchtoken() {
+  //     const token = await AsyncStorage.getItem('token');
+  //     if (token) {
+  //       setLogged(true);
+  //     } else {
+  //       setLogged(false);
+  //     }
+  //   }
+  //   fetchtoken();
+  // }, []);
+
   if (isFirstLaunch === null) {
     return null;
   } else if (isFirstLaunch === true) {
@@ -34,7 +47,6 @@ function AuthNavigation() {
         screenOptions={{
           headerShown: false,
         }}>
-        {/* <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} /> */}
         <Stack.Screen name="onBoard" component={onBoardingScreen} />
         <Stack.Screen name="LoginPage" component={LoginScreen} />
         <Stack.Screen name="Verify" component={VerifyCode} />
@@ -48,7 +60,6 @@ function AuthNavigation() {
         screenOptions={{
           headerShown: false,
         }}>
-        {/* <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} /> */}
         <Stack.Screen name="AuthLoad" component={AuthLoadingScreen} />
 
         <Stack.Screen name="LoginPage" component={LoginScreen} />

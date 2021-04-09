@@ -52,7 +52,6 @@ function Profile(props) {
     <View style={styles.container}>
       <Text style={styles.text}>Profile</Text>
       <View style={{marginTop: 30}}>
-        <Text>Welcome {user.displayName}</Text>
         <Button onPress={() => signOut()} title="LogOut" color="red" />
       </View>
     </View>

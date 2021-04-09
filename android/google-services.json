@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "792432651607-25qilne5j9p8ppv0fd63dekup1s4uaqt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.valerio.vecharge",
+            "certificate_hash": "6d52370e677d0ccfe018ecf6c5c4d92278df82c2"
+          }
+        },
+        {
           "client_id": "792432651607-65agquu5vao6mk8llotd9pd71bvaakjt.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

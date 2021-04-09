@@ -9,37 +9,11 @@ import {
   PermissionsAndroid,
   Platform,
   StyleSheet,
-  Alert,
-  BackHandler,
+  Image,
 } from 'react-native';
 import {CameraScreen} from 'react-native-camera-kit';
-import {useFocusEffect} from '@react-navigation/native';
 
-const App = (props) => {
-  useFocusEffect(
-    React.useCallback(() => {
-      const onBackPress = () => {
-        Alert.alert('Hold on!', 'Are you sure you want to exit app?', [
-          {
-            text: 'Cancel',
-            onPress: () => null,
-            style: 'cancel',
-          },
-          {text: 'YES', onPress: () => BackHandler.exitApp()},
-        ]);
-        return true;
-      };
-
-      // Add Event Listener for hardwareBackPress
-      const backHandler = BackHandler.addEventListener(
-        'hardwareBackPress',
-        onBackPress,
-      );
-
-      return () => backHandler.remove();
-    }, []),
-  );
-
+const QRScreen = (props) => {
   const [qrvalue, setQrvalue] = useState('');
   const [opneScanner, setOpneScanner] = useState(false);
 
@@ -101,8 +75,13 @@ const App = (props) => {
             // If frame is visible then frame color
             colorForScannerFrame={'black'}
             // Scanner Frame color
-            onReadCode={(event) =>
-              onBarcodeScan(event.nativeEvent.codeStringValue)
+            // onReadCode={(event) =>
+            //   onBarcodeScan(event.nativeEvent.codeStringValue)
+
+            onReadCode={() =>
+              props.navigation.navigate('Status', {
+                id: qrvalue,
+              })
             }
           />
         </View>
@@ -121,10 +100,11 @@ const App = (props) => {
               </Text>
             </TouchableHighlight>
           ) : null}
-          <TouchableHighlight
-            onPress={onOpneScanner}
-            style={styles.buttonStyle}>
-            <Text style={styles.buttonTextStyle}>Open QR Scanner</Text>
+          <TouchableHighlight onPress={onOpneScanner}>
+            <Image
+              source={require('../assets/scanner.png')}
+              style={{width: 250, height: 250}}
+            />
           </TouchableHighlight>
           <Text
             style={{
@@ -143,7 +123,7 @@ const App = (props) => {
   );
 };
 
-export default App;
+export default QRScreen;
 
 const styles = StyleSheet.create({
   container: {

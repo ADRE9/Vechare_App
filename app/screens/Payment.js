@@ -11,7 +11,7 @@ import axios from 'axios';
 import RazorpayCheckout from 'react-native-razorpay';
 import {RazorpayApiKey} from '../Constants/config';
 
-export default function App() {
+export default function Payment() {
   const [product, setProduct] = useState(null);
   const [paymentProcessing, setPaymentProcessing] = useState(false);
 

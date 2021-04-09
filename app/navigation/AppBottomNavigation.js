@@ -26,23 +26,27 @@ const AppBottomNavigation = () => (
     }}>
     <Tab.Screen
       name="Home"
+      component={home}
+      options={{
+        tabBarIcon: ({size, color}) => (
+          <MaterialCommunityIcons
+            name="battery-charging"
+            size={30}
+            color={color}
+          />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="QrScreen"
       component={QRScreen}
       options={{
         tabBarIcon: ({size, color}) => (
-          <MaterialCommunityIcons name="home-outline" size={30} color={color} />
+          <MaterialCommunityIcons name="qrcode-scan" size={60} color={color} />
         ),
       }}
     />
-    <Tab.Screen
-      name="Status"
-      component={Status}
-      options={{
-        tabBarIcon: ({size, color}) => (
-          <MaterialCommunityIcons name="home-outline" size={30} color={color} />
-        ),
-      }}
-    />
-    <Tab.Screen
+    {/* <Tab.Screen
       name="Pay"
       component={EmptyScreen}
       options={{
@@ -56,7 +60,7 @@ const AppBottomNavigation = () => (
           navigation.navigate('Payment');
         },
       })}
-    />
+    /> */}
 
     <Tab.Screen
       name="Profile"

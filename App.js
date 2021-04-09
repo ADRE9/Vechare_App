@@ -9,6 +9,9 @@ import AppBottomNavigation from './app/navigation/AppBottomNavigation';
 import Payment from './app/screens/Payment';
 import Profile from './app/screens/Profile';
 import LoginScreen from './app/screens/LoginScreen';
+import RegisterScreen from './app/screens/RegisterScreen';
+import QRScreen from './app/screens/QRScreen';
+import Status from './app/screens/Status';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +27,9 @@ function App() {
         <Stack.Screen name="Payment" component={Payment} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="LoginPage" component={LoginScreen} />
+        <Stack.Screen name="RegisterPage" component={RegisterScreen} />
+        <Stack.Screen name="QrScan" component={QRScreen} />
+        <Stack.Screen name="Status" component={Status} />
       </Stack.Navigator>
     </NavigationContainer>
   );

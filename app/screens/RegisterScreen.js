@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image, Alert, BackHandler} from 'react-native';
 import firebase from '@react-native-firebase/app';
 
 import Background from '../components/Background';
@@ -12,6 +12,7 @@ import {passwordValidator} from '../helpers/passwordValidator';
 import {nameValidator} from '../helpers/nameValidator';
 import Toast from '../components/Toast';
 import Colors from '../Constants/Colors';
+import {useFocusEffect} from '@react-navigation/native';
 
 function RegisterScreen({navigation}) {
   // firebase.auth().onAuthStateChanged((user) => {
@@ -21,6 +22,29 @@ function RegisterScreen({navigation}) {
   //     navigation.navigate('RegisterPage');
   //   }
   // });
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        Alert.alert('Hold on!', 'Are you sure you want to exit app?', [
+          {
+            text: 'Cancel',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {text: 'YES', onPress: () => BackHandler.exitApp()},
+        ]);
+        return true;
+      };
+
+      // Add Event Listener for hardwareBackPress
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress,
+      );
+
+      return () => backHandler.remove();
+    }, []),
+  );
   const [name, setName] = useState({value: '', error: ''});
   const [email, setEmail] = useState({value: '', error: ''});
   const [password, setPassword] = useState({value: '', error: ''});
@@ -93,11 +117,10 @@ const styles = StyleSheet.create({
   image: {
     resizeMode: 'cover',
     justifyContent: 'center',
-    width: 200,
-    borderRadius: 250,
+    width: 100,
     borderColor: Colors.secondaryColor,
     borderWidth: 2,
-    height: 200,
+    height: 100,
   },
 });
 
