@@ -33,14 +33,12 @@
     "react-native-phone-number-input": "^2.0.1",
     "react-native-razorpay": "^2.2.4",
     "react-native-reanimated": "^2.0.0",
-    "react-native-rename": "^2.7.0",
     "react-native-responsive-screen": "^1.4.2",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^2.18.1",
     "react-native-status-bar-height": "^2.6.0",
     "react-native-vector-icons": "^8.1.0",
-    "socket.io-client": "^2.4.0",
-    "toggle-switch-react-native": "^3.2.0"
+    "socket.io-client": "^2.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.13.8",

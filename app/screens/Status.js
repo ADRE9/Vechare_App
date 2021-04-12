@@ -17,27 +17,9 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
-import ToggleSwitch from 'toggle-switch-react-native';
 import '../Constants/Useragent';
 
-// const token =
-//   'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNjlhYWYzZGZjY2QwNDAzN2ExM2FjMSIsImlhdCI6MTYxNzczMzg4MCwiZXhwIjoxNjI1NTA5ODgwfQ.-gFyy1-FzFzn4SW1zbWeb2KC6VuD-cZyJEuI5pCsJn0';
-
-const id = 'test';
-
-let socket;
-
-// const token = async () => {
-//   try {
-//     const value = await AsyncStorage.getItem('token');
-//     if (value != null) {
-//       return value;
-//     }
-//   } catch (e) {
-//     console.log('getting token value error', e);
-//   }
-// };
-const {width, height} = Dimensions.get('window');
+// const id = 'test';
 
 export default class Status extends Component {
   constructor(props) {
@@ -48,6 +30,7 @@ export default class Status extends Component {
       current: '',
       power: '',
       energy: '',
+      price: '',
     };
   }
   disconnect = async () => {
@@ -69,6 +52,7 @@ export default class Status extends Component {
 
   switchoff = async () => {
     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
+    var id = await AsyncStorage.getItem('id');
 
     fetch(
       `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState`,
@@ -88,6 +72,7 @@ export default class Status extends Component {
   toggleSwitch = async () => {
     if (this.state.toggle === false) {
       var token = `Bearer ${await AsyncStorage.getItem('token')}`;
+      var id = await AsyncStorage.getItem('id');
 
       fetch(
         `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState`,
@@ -130,10 +115,11 @@ export default class Status extends Component {
   };
 
   async componentDidMount() {
-    // const {id} = this.props.route.params;
-    var token = `Bearer ${await AsyncStorage.getItem('token')}`;
+    const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+    const id = await AsyncStorage.getItem('id');
+
     console.log(token);
-    socket = io.connect(
+    const socket = io.connect(
       'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com',
       {
         query: {
@@ -155,6 +141,7 @@ export default class Status extends Component {
       this.setState({voltage: data.voltage});
       this.setState({power: data.power});
       this.setState({current: data.current});
+      this.setState({price: data.price});
     });
 
     socket.on('statusChanged', (data) => {
@@ -198,7 +185,7 @@ export default class Status extends Component {
           <TouchableOpacity style={styles.details}>
             <Text style={styles.text}>Price</Text>
             <Text style={styles.value}>
-              ₹ {(this.state.energy * 5).toFixed(2)}
+              ₹ {(this.state.energy * this.state.price).toFixed(2)}
             </Text>
           </TouchableOpacity>
         </View>

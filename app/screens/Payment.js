@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import RazorpayCheckout from 'react-native-razorpay';
 import {RazorpayApiKey} from '../Constants/config';
 
@@ -15,38 +16,56 @@ export default function Payment() {
   const [product, setProduct] = useState(null);
   const [paymentProcessing, setPaymentProcessing] = useState(false);
 
-  const onComponentMount = async () => {
-    const {data} = await axios.get(
-      `https://fakestoreapi.com/products/${Math.floor(Math.random() * 20)}`,
-    );
-    data.price = data.price * 100;
-    setProduct(data);
-  };
+  // const onComponentMount = async () => {
+  //   const {data} = await axios.get(
+  //     `https://fakestoreapi.com/products/${Math.floor(Math.random() * 20)}`,
+  //   );
+  //   data.price = data.price * 100;
+  //   setProduct(data);
+  // };
 
-  useEffect(() => {
-    onComponentMount();
-  }, []);
+  // useEffect(() => {
+  //   onComponentMount();
+  // }, []);
+
+  const unpaid = async () => {
+    var token = `Bearer ${await AsyncStorage.getItem('token')}`;
+    const order = await fetch(
+      `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/unpaid`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      },
+    );
+    const resData = await order.json();
+  };
 
   const createOrder = async () => {
-    const {data} = await axios.post(
-      'https://vecharge.herokuapp.com/createOrder',
+    var token = `Bearer ${await AsyncStorage.getItem('token')}`;
+    const order = await fetch(
+      `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/instantiatePayment`,
       {
-        amount: product.price * 100,
-        currency: 'INR',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
       },
     );
-    return data;
   };
 
-  const verifyPayment = async (orderID, transaction) => {
-    const {data} = await axios.post(
-      'https://vecharge.herokuapp.com/verifySignature',
+  const verifyPayment = async () => {
+    var token = `Bearer ${await AsyncStorage.getItem('token')}`;
+    const verify = await fetch(
+      `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/madePayment`,
       {
-        orderID: orderID,
-        transaction: transaction,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
       },
     );
-    return data.validSignature;
   };
 
   const onPay = async () => {
@@ -88,15 +107,11 @@ export default function Payment() {
 
   return (
     <View style={styles.screen}>
-      <Text style={styles.heading}>Checkout</Text>
-      <Image source={{uri: product.image}} style={styles.image} />
-      <Text style={styles.title}>{product.title}</Text>
-      <Text style={styles.description}>{product.description}</Text>
       <TouchableOpacity style={styles.button} onPress={onPay}>
         {paymentProcessing ? (
           <ActivityIndicator color="white" size={30} />
         ) : (
-          <Text style={styles.buttonText}>Buy for ₹ {product.price / 100}</Text>
+          <Text style={styles.buttonText}>Pay </Text>
         )}
       </TouchableOpacity>
     </View>

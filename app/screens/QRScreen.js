@@ -12,6 +12,7 @@ import {
   Image,
 } from 'react-native';
 import {CameraScreen} from 'react-native-camera-kit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const QRScreen = (props) => {
   const [qrvalue, setQrvalue] = useState('');
@@ -51,6 +52,11 @@ const QRScreen = (props) => {
           alert('Camera permission err', err);
           console.warn(err);
         }
+        try {
+          await AsyncStorage.setItem('id', qrvalue);
+        } catch (e) {
+          console.log('error in token storing', e);
+        }
       }
       // Calling the camera permission function
       requestCameraPermission();
@@ -78,11 +84,7 @@ const QRScreen = (props) => {
             // onReadCode={(event) =>
             //   onBarcodeScan(event.nativeEvent.codeStringValue)
 
-            onReadCode={() =>
-              props.navigation.navigate('Status', {
-                id: qrvalue,
-              })
-            }
+            onReadCode={() => props.navigation.navigate('Status')}
           />
         </View>
       ) : (

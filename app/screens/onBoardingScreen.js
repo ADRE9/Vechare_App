@@ -14,8 +14,6 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
-const {width, height} = Dimensions.get('window');
-
 const dots = ({selected}) => {
   let backgroundColor;
   backgroundColor = selected ? 'rgba(6,157,255,1.00)' : ' rgba(0, 0, 0, 0.8)';
@@ -26,7 +24,7 @@ const dots = ({selected}) => {
         height: 5,
         marginHorizontal: 5,
         backgroundColor,
-        marginBottom: 220,
+        marginBottom: 310,
       }}
     />
   );
@@ -34,7 +32,7 @@ const dots = ({selected}) => {
 
 const Next = ({...props}) => (
   <TouchableOpacity style={styles.next} {...props}>
-    <Text style={{fontSize: 20, color: '#fff'}}>Next</Text>
+    <Image source={require('../assets/next.png')} style={styles.nextImage} />
   </TouchableOpacity>
 );
 function onBoardingScreen({navigation}) {
@@ -98,21 +96,21 @@ function onBoardingScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: hp('50%'), // 70% of height device screen
-    width: wp('100%'), // 80% of width device screen
   },
   next: {
-    marginRight: 50,
-    backgroundColor: '#069DFF',
-    width: 300,
-    height: 50,
-    marginBottom: 60,
+    marginBottom: 70,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'yellow',
+    marginRight: 40,
+  },
+  nextImage: {
+    width: wp('80%'),
+    height: hp('8%'),
   },
   image: {
-    width: 400,
-    height: 400,
+    width: wp('100%'),
+    height: hp('50%'),
     marginBottom: 140,
   },
 });

@@ -9,6 +9,10 @@ import {
 import auth from '@react-native-firebase/auth';
 import {useFocusEffect} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 
 function LoginScreen(props) {
   useFocusEffect(
@@ -105,9 +109,8 @@ function LoginScreen(props) {
       <Image
         source={require('../assets/login.png')}
         style={{
-          width: 300,
-          height: 300,
-          marginLeft: 30,
+          width: wp('69%'),
+          height: hp('38%'),
         }}
       />
       <Text
@@ -115,13 +118,13 @@ function LoginScreen(props) {
           fontSize: 22,
           fontWeight: 'bold',
           color: 'black',
-          marginLeft: 10,
+          marginVertical: 20,
         }}>
         Charge your vechicle {'\n'}with veCharge
       </Text>
       {!loggedIn ? (
         <GoogleSigninButton
-          style={{width: 192, height: 48}}
+          style={{width: 192, height: 48, marginBottom: 190}}
           size={GoogleSigninButton.Size.Wide}
           color={GoogleSigninButton.Color.Dark}
           onPress={_signIn}
@@ -138,9 +141,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
-    marginTop: 40,
-    padding: 10,
+
+    height: hp('100%'),
+    width: wp('100%'),
+    backgroundColor: 'white',
   },
 });
 
