@@ -12,6 +12,10 @@ import {
   FlatList,
 } from 'react-native';
 import {Searchbar} from 'react-native-paper';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 
 import CardScreen from '../components/Card';
 
@@ -155,8 +159,8 @@ export default App;
 const styles = StyleSheet.create({
   cont: {
     flex: 1,
-    marginBottom: 50,
     backgroundColor: '#ffffff',
+    height: hp('95%'),
   },
   paragraph: {
     margin: 24,
