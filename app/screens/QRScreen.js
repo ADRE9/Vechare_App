@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -10,11 +10,13 @@ import {
   Platform,
   StyleSheet,
   Image,
+  Button,
+  TextInput,
 } from 'react-native';
 import {CameraScreen} from 'react-native-camera-kit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const QRScreen = (props) => {
+const QRScreen = ({navigation}) => {
   const [qrvalue, setQrvalue] = useState('');
   const [opneScanner, setOpneScanner] = useState(false);
 
@@ -25,6 +27,15 @@ const QRScreen = (props) => {
 
   const onBarcodeScan = (qrvalue) => {
     // Called after te successful scanning of QRCode/Barcode
+    async function value() {
+      try {
+        await AsyncStorage.setItem('id', qrvalue);
+        console.log(qrvalue);
+      } catch (e) {
+        console.log('error in token storing', e);
+      }
+    }
+    value();
     setQrvalue(qrvalue);
     setOpneScanner(false);
   };
@@ -52,12 +63,8 @@ const QRScreen = (props) => {
           alert('Camera permission err', err);
           console.warn(err);
         }
-        try {
-          await AsyncStorage.setItem('id', qrvalue);
-        } catch (e) {
-          console.log('error in token storing', e);
-        }
       }
+
       // Calling the camera permission function
       requestCameraPermission();
     } else {
@@ -65,11 +72,15 @@ const QRScreen = (props) => {
       setOpneScanner(true);
     }
   };
+  const value = async () => {};
+  useEffect(() => {
+    value();
+  });
 
   return (
     <SafeAreaView style={{flex: 1}}>
       {opneScanner ? (
-        <View style={{flex: 1}}>
+        <View style={{flex: 0.5}}>
           <CameraScreen
             showFrame={true}
             // Show/hide scan frame
@@ -81,27 +92,27 @@ const QRScreen = (props) => {
             // If frame is visible then frame color
             colorForScannerFrame={'black'}
             // Scanner Frame color
-            // onReadCode={(event) =>
-            //   onBarcodeScan(event.nativeEvent.codeStringValue)
 
-            onReadCode={() => props.navigation.navigate('Status')}
+            // onReadCode={() =>
+            //   props.navigation.navigate('Status', {
+            //     value: qrvalue,
+            //   })
+            // }
+            onReadCode={(event) =>
+              onBarcodeScan(event.nativeEvent.codeStringValue)
+            }
           />
         </View>
       ) : (
         <View style={styles.container}>
           {/* <Text style={styles.titleText}>QR Code Scanner</Text> */}
           <Text style={styles.textStyle}>
-            {qrvalue ? 'Scanned Result: ' + qrvalue : ''}
+            {qrvalue ? navigation.replace('Status') : ''}
           </Text>
-          {qrvalue.includes('https://') ||
-          qrvalue.includes('http://') ||
-          qrvalue.includes('geo:') ? (
-            <TouchableHighlight onPress={onOpenlink}>
-              <Text style={styles.textLinkStyle}>
-                {qrvalue.includes('geo:') ? 'Open in Map' : 'Open Link'}
-              </Text>
-            </TouchableHighlight>
-          ) : null}
+          {/* <Button
+            title="status"
+            onPress={() => navigation.navigate('Status')}
+          /> */}
           <TouchableHighlight onPress={onOpneScanner}>
             <Image
               source={require('../assets/scanner.png')}
@@ -111,14 +122,21 @@ const QRScreen = (props) => {
           <Text
             style={{
               marginTop: 30,
-              marginRight: 190,
               fontSize: 23,
+              fontWeight: 'bold',
+              width: '80%',
             }}>
-            Recent Sessions
+            Charge via Station ID
           </Text>
-          <Text style={{marginTop: 120, marginRight: 100, fontSize: 23}}>
-            Charging Points Near me
+          <Text
+            style={{
+              fontSize: 15,
+              marginTop: 35,
+              right: 95,
+            }}>
+            Enter code here
           </Text>
+          <TextInput style={styles.input} placeholder="Enter station" />
         </View>
       )}
     </SafeAreaView>
@@ -162,5 +180,17 @@ const styles = StyleSheet.create({
   textLinkStyle: {
     color: 'blue',
     paddingVertical: 20,
+  },
+  input: {
+    marginTop: 15,
+    borderColor: '#e7e7e7',
+    borderWidth: 2,
+    marginRight: 30,
+    borderRadius: 30,
+    padding: 5,
+    paddingLeft: 10,
+    backgroundColor: '#e7e7e7',
+    color: 'black',
+    width: 280,
   },
 });

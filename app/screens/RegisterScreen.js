@@ -1,126 +1,79 @@
-/* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
-import {View, StyleSheet, Image, Alert, BackHandler} from 'react-native';
-import firebase from '@react-native-firebase/app';
-
-import Background from '../components/Background';
-import Header from '../components/Header';
-import Button from '../components/Button';
-import TextInput from '../components/TextInput';
-import {emailValidator} from '../helpers/emailValidator';
-import {passwordValidator} from '../helpers/passwordValidator';
-import {nameValidator} from '../helpers/nameValidator';
-import Toast from '../components/Toast';
-import Colors from '../Constants/Colors';
-import {useFocusEffect} from '@react-navigation/native';
+import React from 'react';
+import {TouchableHighlight} from 'react-native';
+import {View, StyleSheet, Text, Image, TextInput} from 'react-native';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 
 function RegisterScreen({navigation}) {
-  // firebase.auth().onAuthStateChanged((user) => {
-  //   if (user) {
-  //     navigation.navigate('AppBottom');
-  //   } else {
-  //     navigation.navigate('RegisterPage');
-  //   }
-  // });
-  useFocusEffect(
-    React.useCallback(() => {
-      const onBackPress = () => {
-        Alert.alert('Hold on!', 'Are you sure you want to exit app?', [
-          {
-            text: 'Cancel',
-            onPress: () => null,
-            style: 'cancel',
-          },
-          {text: 'YES', onPress: () => BackHandler.exitApp()},
-        ]);
-        return true;
-      };
-
-      // Add Event Listener for hardwareBackPress
-      const backHandler = BackHandler.addEventListener(
-        'hardwareBackPress',
-        onBackPress,
-      );
-
-      return () => backHandler.remove();
-    }, []),
-  );
-  const [name, setName] = useState({value: '', error: ''});
-  const [email, setEmail] = useState({value: '', error: ''});
-  const [password, setPassword] = useState({value: '', error: ''});
-  // const [loading, setLoading] = useState();
-  const [error, setError] = useState();
-
-  const onSignUpPressed = async () => {
-    const nameError = nameValidator(name.value);
-    const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
-    if (emailError || passwordError || nameError) {
-      setName({...name, error: nameError});
-      setEmail({...email, error: emailError});
-      setPassword({...password, error: passwordError});
-    }
-  };
-
   return (
-    <Background>
-      <Image source={require('../assets/vl.png')} style={styles.image} />
+    <View style={styles.container}>
+      <Image
+        source={require('../assets/valerio-logo.png')}
+        resizeMode="contain"
+        style={{
+          width: wp('30%'),
+          height: hp('30%'),
+          marginLeft: wp('32%'),
+          marginTop: wp('3%'),
+        }}
+      />
+      <Image
+        source={require('../assets/signup-text.png')}
+        resizeMode="contain"
+        style={{width: wp('60%'), height: hp('10%'), marginLeft: wp('10%')}}
+      />
+      <View style={{marginTop: wp('8%'), marginLeft: wp('10%')}}>
+        <Text style={{fontSize: wp('5%'), color: '#7C7C7C'}}>Username</Text>
+        <TextInput
+          placeholder="Enter Name"
+          style={{
+            color: 'black',
+            borderBottomWidth: 1,
+            borderBottomColor: '#E2E2E2',
+            marginRight: wp('10%'),
+          }}
+        />
+      </View>
 
-      <Header>Please Complete Your Profile</Header>
-      <TextInput
-        label="Name"
-        returnKeyType="next"
-        value={name.value}
-        onChangeText={(text) => setName({value: text, error: ''})}
-        error={!!name.error}
-        errorText={name.error}
-      />
-      <TextInput
-        label="Email"
-        returnKeyType="next"
-        value={email.value}
-        onChangeText={(text) => setEmail({value: text, error: ''})}
-        error={!!email.error}
-        errorText={email.error}
-        autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
-      />
-      <TextInput label="Vechicle No." returnKeyType="next" />
-      <Button
-        mode="contained"
-        onPress={onSignUpPressed}
-        style={{marginTop: 24, backgroundColor: Colors.primaryColor}}>
-        Save
-      </Button>
-      <Button
-        mode="contained"
-        onPress={() => navigation.navigate('AppBottom')}
-        style={{marginTop: 24, backgroundColor: Colors.darkColor}}>
-        Skip
-      </Button>
-      <Toast message={error} onDismiss={() => setError('')} />
-    </Background>
+      <View style={{marginTop: wp('4%'), marginLeft: wp('10%')}}>
+        <Text style={{fontSize: wp('5%'), color: '#7C7C7C'}}>Email</Text>
+        <TextInput
+          placeholder="Enter Email Address"
+          style={{
+            color: '#030303',
+            borderBottomWidth: 1,
+            borderBottomColor: '#E2E2E2',
+            marginRight: wp('10%'),
+          }}
+        />
+      </View>
+      <Text
+        style={{
+          marginTop: wp('6%'),
+          marginLeft: wp('10%'),
+          fontSize: wp('3.6%'),
+          color: '#7C7C7C',
+        }}>
+        By continuing you agree to our{' '}
+        <Text style={{color: '#069DFF'}}>Terms of Service </Text>
+        and <Text style={{color: '#069DFF'}}>Privacy Policy.</Text>
+      </Text>
+      <TouchableHighlight onPress={() => navigation.replace('AppBottom')}>
+        <Image
+          source={require('../assets/signupBtn.png')}
+          resizeMode="contain"
+          style={{width: wp('60%'), height: hp('18%'), marginLeft: wp('20%')}}
+        />
+      </TouchableHighlight>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    marginTop: 4,
-  },
-  link: {
-    fontWeight: 'bold',
-    color: Colors.darkColor,
-  },
-  image: {
-    resizeMode: 'cover',
-    justifyContent: 'center',
-    width: 100,
-    borderColor: Colors.secondaryColor,
-    borderWidth: 2,
-    height: 100,
+  container: {
+    flex: 1,
   },
 });
 

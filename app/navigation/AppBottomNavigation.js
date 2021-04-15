@@ -4,15 +4,16 @@ import {View, Text, Image, StyleSheet} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import home from '../screens/home';
-// import Payment from '../screens/Payment';
+
 import Profile from '../screens/Profile';
 import QRScreen from '../screens/QRScreen';
-import Status from '../screens/Status';
+import AppNavigation from './AppNavigation';
 
 const Tab = createBottomTabNavigator();
 
 const AppBottomNavigation = () => (
   <Tab.Navigator
+    initialRouteName="CHARGE"
     tabBarOptions={{
       activeTintColor: '#069DFF',
       inactiveBackgroundColor: '#FFFFFF',
@@ -48,7 +49,7 @@ const AppBottomNavigation = () => (
     />
     <Tab.Screen
       name="SCAN"
-      component={QRScreen}
+      component={AppNavigation}
       options={{
         tabBarIcon: ({focused}) => (
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -69,21 +70,6 @@ const AppBottomNavigation = () => (
         ),
       }}
     />
-    {/* <Tab.Screen
-      name="Pay"
-      component={EmptyScreen}
-      options={{
-        tabBarIcon: ({size, color}) => (
-          <FontAwesome name="rupee" size={30} color={color} />
-        ),
-      }}
-      listeners={({navigation}) => ({
-        tabPress: (event) => {
-          event.preventDefault();
-          navigation.navigate('Payment');
-        },
-      })}
-    /> */}
 
     <Tab.Screen
       name="Profile"

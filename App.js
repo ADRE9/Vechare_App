@@ -12,6 +12,7 @@ import LoginScreen from './app/screens/LoginScreen';
 import RegisterScreen from './app/screens/RegisterScreen';
 import QRScreen from './app/screens/QRScreen';
 import Status from './app/screens/Status';
+import AppNavigation from './app/navigation/AppNavigation';
 
 const Stack = createStackNavigator();
 
@@ -21,15 +22,15 @@ function App() {
   }, []);
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator
+        screenOptions={{headerShown: false}}
+        initialRouteName="Auth">
         <Stack.Screen name="Auth" component={AuthNavigation} />
         <Stack.Screen name="AppBottom" component={AppBottomNavigation} />
         <Stack.Screen name="Payment" component={Payment} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="LoginPage" component={LoginScreen} />
         <Stack.Screen name="RegisterPage" component={RegisterScreen} />
-        <Stack.Screen name="QrScan" component={QRScreen} />
-        <Stack.Screen name="Status" component={Status} />
       </Stack.Navigator>
     </NavigationContainer>
   );

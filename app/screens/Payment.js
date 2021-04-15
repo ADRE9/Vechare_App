@@ -6,27 +6,43 @@ import {
   Text,
   TouchableOpacity,
   View,
+  SafeAreaView,
+  ImageBackground,
 } from 'react-native';
 import axios from 'axios';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RazorpayCheckout from 'react-native-razorpay';
 import {RazorpayApiKey} from '../Constants/config';
 
-export default function Payment() {
-  const [product, setProduct] = useState(null);
+import RadioButton from '../components/RadioButton';
+
+const PROP = [
+  {
+    key: '1',
+    text: 'Paytm',
+  },
+  {
+    key: '2',
+    text: 'Google Pay',
+  },
+  {
+    key: '3',
+    text: 'Net Banking',
+  },
+  {
+    key: '4',
+    text: 'Card',
+  },
+];
+
+export default function Payment({navigation}) {
   const [paymentProcessing, setPaymentProcessing] = useState(false);
-
-  // const onComponentMount = async () => {
-  //   const {data} = await axios.get(
-  //     `https://fakestoreapi.com/products/${Math.floor(Math.random() * 20)}`,
-  //   );
-  //   data.price = data.price * 100;
-  //   setProduct(data);
-  // };
-
-  // useEffect(() => {
-  //   onComponentMount();
-  // }, []);
+  const [amount, setAmount] = useState([]);
+  const [energy, setEnergy] = useState([]);
 
   const unpaid = async () => {
     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
@@ -39,44 +55,70 @@ export default function Payment() {
         },
       },
     );
-    const resData = await order.json();
   };
+  useEffect(() => {
+    unpaid();
+  }, []);
 
-  const createOrder = async () => {
+  // const createOrder = async () => {
+  //   var token = `Bearer ${await AsyncStorage.getItem('token')}`;
+  //   const order = await fetch(
+  //     `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/instantiatePayment`,
+  //     {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: token,
+  //       },
+  //     },
+  //   );
+  //   const orderData = await order.json();
+  // };
+
+  // const verifyPayment = async (orderID, transaction) => {
+  //   var token = `Bearer ${await AsyncStorage.getItem('token')}`;
+  //   const verify = await fetch(
+  //     `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/madePayment`,
+  //     {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: token,
+  //       },
+  //       body: JSON.stringify({
+  //         orderID: orderID,
+  //         transaction: transaction,
+  //       }),
+  //     },
+  //   );
+  //   const verifyData = await verify.json();
+
+  //   console.log('verify Paymnet details', verifyData);
+  // };
+
+  const onPay = async () => {
     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
     const order = await fetch(
       `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/instantiatePayment`,
       {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: token,
         },
       },
     );
-  };
 
-  const verifyPayment = async () => {
-    var token = `Bearer ${await AsyncStorage.getItem('token')}`;
-    const verify = await fetch(
-      `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/madePayment`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token,
-        },
-      },
-    );
-  };
+    const orderData = await order.json();
 
-  const onPay = async () => {
+    console.log(orderData);
+
     console.log('OnPay');
-    setPaymentProcessing(true);
-    const order = await createOrder();
+
     var options = {
-      name: product.title,
-      image: product.image,
-      description: product.description,
-      order_id: order.id,
+      description: 'Electricity bill payment',
+      curreny: 'INR',
+      amount: orderData.amount,
+      order_id: orderData.id,
       key: RazorpayApiKey,
       prefill: {
         email: 'useremail@example.com',
@@ -86,87 +128,209 @@ export default function Payment() {
       theme: {color: '#a29bfe'},
     };
     RazorpayCheckout.open(options)
-      .then(async (transaction) => {
-        const validSignature = await verifyPayment(order.id, transaction);
-        alert('Is Valid Payment: ' + validSignature);
+      .then(async function (response) {
+        const config = {
+          headers: {Authorization: token},
+        };
+        const data = {
+          orderCreationId: orderData.id,
+          razorpayPaymentId: response.razorpay_payment_id,
+          razorpayOrderId: response.razorpay_order_id,
+          razorpaySignature: response.razorpay_signature,
+        };
+        console.log(data);
+        const result = await axios
+          .post(
+            'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/madePayment',
+            data,
+            config,
+          )
+          .then(console.log)
+          .catch(console.log);
       })
       .catch(console.log);
-    setPaymentProcessing(false);
   };
 
-  if (!product) {
-    return (
-      <View style={styles.loadingScreen}>
-        <ActivityIndicator color="#a29bfe" size={60} />
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Buy</Text>
+  return (
+    <SafeAreaView style={styles.cont}>
+      <View>
+        <ImageBackground
+          source={require('../assets/details.png')}
+          style={{width: wp('100%'), height: hp('16%')}}
+          resizeMode="cover">
+          <Image
+            source={require('../assets/Back.png')}
+            style={{
+              width: wp('5%'),
+              height: hp('3%'),
+              marginLeft: wp('4%'),
+              marginTop: wp('2%'),
+            }}
+          />
+        </ImageBackground>
+      </View>
+
+      <View flexDirection="row">
+        <View style={styles.box1} flexDirection="column">
+          <View flexDirection="row">
+            <Image
+              source={require('../assets/energy-icon.png')}
+              style={{
+                height: hp('5%'),
+                width: wp('10%'),
+                margin: wp('3%'),
+                borderRadius: wp('10%') / 8,
+              }}
+            />
+            <View>
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  color: 'white',
+                  fontSize: wp('5%'),
+                  marginTop: wp('2%'),
+                }}>
+                Energy
+              </Text>
+              <Text style={{fontSize: wp('3.5%'), color: 'white'}}>
+                consumed
+              </Text>
+            </View>
+          </View>
+          <View>
+            <Text
+              style={{
+                fontSize: wp('9%'),
+                color: 'white',
+                fontWeight: 'bold',
+                padding: wp('1%'),
+                marginTop: wp('4%'),
+              }}>
+              23 kWh
+            </Text>
+          </View>
+        </View>
+        <View style={styles.box2} flexDirection="column">
+          <View flexDirection="row">
+            <Image
+              source={require('../assets/cost.png')}
+              style={{
+                height: hp('5%'),
+                width: wp('10%'),
+                margin: wp('3%'),
+                borderRadius: wp('10%') / 8,
+              }}
+            />
+            <View>
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  color: 'white',
+                  fontSize: wp('5%'),
+                  marginTop: wp('2%'),
+                }}>
+                Amount
+              </Text>
+              <Text style={{fontSize: wp('3.5%'), color: 'white'}}>
+                Payable
+              </Text>
+            </View>
+          </View>
+          <View>
+            <Text
+              style={{
+                fontSize: wp('9%'),
+                color: 'white',
+                fontWeight: 'bold',
+                padding: wp('1%'),
+                marginTop: wp('4%'),
+                marginLeft: wp('2%'),
+              }}>
+              20 INR
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View>
+        <Text
+          style={{
+            marginLeft: wp('5%'),
+            marginTop: wp('3%'),
+            fontWeight: 'bold',
+            color: '#3D3D3D',
+            fontSize: wp('7%'),
+          }}>
+          Complete Payment
+        </Text>
+        <View style={styles.container}>
+          <RadioButton PROP={PROP} />
+        </View>
+      </View>
+      <View
+        flexDirection="row"
+        style={{
+          alignItems: 'center',
+          marginTop: wp('30%'),
+          borderRadius: 8,
+          borderWidth: 0.3,
+          height: hp('11%'),
+        }}>
+        <View flexDirection="column">
+          <Text
+            style={{
+              fontWeight: 'bold',
+              marginLeft: wp('5%'),
+              fontSize: wp('8%'),
+              color: 'black',
+            }}>
+            {'\u20B9'} 48
+          </Text>
+          <Image
+            source={require('../assets/view.png')}
+            style={{
+              height: hp('1.3%'),
+              width: wp('25%'),
+              marginLeft: wp('3%'),
+            }}
+            resizeMode="contain"
+          />
+        </View>
+        <TouchableOpacity
+          onPress={() => onPay().then(() => navigation.replace('AppBottom'))}>
+          <Image
+            source={require('../assets/payNow.png')}
+            style={{
+              height: hp('6%'),
+              width: wp('60%'),
+              marginLeft: wp('7%'),
+            }}
+          />
         </TouchableOpacity>
       </View>
-    );
-  }
-
-  return (
-    <View style={styles.screen}>
-      <TouchableOpacity style={styles.button} onPress={onPay}>
-        {paymentProcessing ? (
-          <ActivityIndicator color="white" size={30} />
-        ) : (
-          <Text style={styles.buttonText}>Pay </Text>
-        )}
-      </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: {
+  cont: {
     flex: 1,
-    width: '100%',
-    alignItems: 'center',
-    backgroundColor: '#fff',
   },
-  loadingScreen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  box1: {
+    backgroundColor: '#03AD70',
+    height: hp('19%'),
+    width: wp('40%'),
+    borderRadius: hp('20%') / 8,
+    margin: wp('5%'),
+    padding: 5,
+    marginTop: hp('5%'),
   },
-  heading: {
-    marginTop: 50,
-    fontSize: 28,
-    color: '#a29bfe',
-  },
-  image: {
-    height: 300,
-    width: 300,
-    marginTop: 50,
-    borderRadius: 10,
-  },
-  title: {
-    marginTop: 30,
-    fontSize: 22,
-    textAlign: 'center',
-    width: '80%',
-    color: '#a29bfe',
-  },
-  description: {
-    width: '80%',
-    marginTop: 20,
-    fontSize: 16,
-    textAlign: 'center',
-  },
-  button: {
-    width: '80%',
-    backgroundColor: '#a29bfe',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 12,
-    borderRadius: 50,
-    position: 'absolute',
-    bottom: 0,
-    marginBottom: 50,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 20,
+  box2: {
+    backgroundColor: '#2D9CDB',
+    height: hp('19%'),
+    width: wp('40%'),
+    borderRadius: hp('20%') / 8,
+    margin: wp('5%'),
+    padding: 5,
+    marginTop: hp('5%'),
   },
 });

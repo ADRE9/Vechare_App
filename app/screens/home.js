@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -12,35 +12,52 @@ import {
   FlatList,
 } from 'react-native';
 import {Searchbar} from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import Card from '../components/Card';
+
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
-import CardScreen from '../components/Card';
-
 const details = [
   {
     id: '1',
-    status: 'available',
+    status: 'Available',
     dis: '1.3',
     loc: 'Rohini Community Charging Station, B-5/30, 2nd Floor, Delhi',
   },
   {
     id: '2',
-    status: 'available',
-    dis: '1.3',
+    status: 'Available',
+    dis: '12.4',
     loc: 'Rohini Community Charging Station, B-5/30, 2nd Floor, Delhi',
   },
   {
     id: '3',
-    status: 'available',
+    status: 'Available',
     dis: '1.3',
     loc: 'Rohini Community Charging Station, B-5/30, 2nd Floor, Delhi',
   },
 ];
+const unpaid = async () => {
+  var token = `Bearer ${await AsyncStorage.getItem('token')}`;
+  const order = await fetch(
+    `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/unpaid`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+    },
+  );
+};
 
-const App = () => {
+const home = () => {
+  useEffect(() => {
+    unpaid();
+  }, []);
   return (
     <ScrollView>
       <SafeAreaView style={styles.cont}>
@@ -63,14 +80,12 @@ const App = () => {
                 style={{
                   fontSize: 28,
                   color: 'white',
-                  marginLeft: -185,
-                  marginBottom: 65,
+                  marginLeft: -180,
+                  marginBottom: 80,
+                  fontWeight: 'bold',
                 }}>
                 Hello Moksh,
               </Text>
-              {/* <Text style={{fontSize: 14, color: 'white', marginLeft: -100}}>
-                Let's Charge your Vehicle
-              </Text> */}
             </View>
           </ImageBackground>
         </View>
@@ -115,11 +130,7 @@ const App = () => {
               keyExtractor={(details) => details.id}
               horizontal={true}
               renderItem={({item}) => (
-                <CardScreen
-                  status={item.status}
-                  dis={item.dis}
-                  loc={item.loc}
-                />
+                <Card status={item.status} dis={item.dis} loc={item.loc} />
               )}
             />
           </ScrollView>
@@ -141,11 +152,7 @@ const App = () => {
               keyExtractor={(details) => details.id}
               horizontal={true}
               renderItem={({item}) => (
-                <CardScreen
-                  status={item.status}
-                  dis={item.dis}
-                  loc={item.loc}
-                />
+                <Card status={item.status} dis={item.dis} loc={item.loc} />
               )}
             />
           </ScrollView>
@@ -154,7 +161,6 @@ const App = () => {
     </ScrollView>
   );
 };
-export default App;
 
 const styles = StyleSheet.create({
   cont: {
@@ -170,3 +176,5 @@ const styles = StyleSheet.create({
     color: '#34495e',
   },
 });
+
+export default home;
