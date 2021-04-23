@@ -83,11 +83,11 @@ function LoginScreen(props) {
         body: JSON.stringify({token: idToken}),
       },
     );
-    const data = await res.json();
-    console.log(data.data.token);
+    const tokendata = await res.json();
+    console.log(tokendata.data.token);
 
     try {
-      await AsyncStorage.setItem('token', data.data.token);
+      await AsyncStorage.setItem('token', tokendata.data.token);
     } catch (e) {
       console.log('error in token storing', e);
     }

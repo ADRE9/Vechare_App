@@ -39,8 +39,8 @@ export default class Status extends Component {
     };
   }
   disconnect = async () => {
-    var token = `Bearer ${await AsyncStorage.getItem('token')}`;
-    var id = await AsyncStorage.getItem('id');
+    const token = `Bearer ${await AsyncStorage.getItem('token')}`
+    const id = await AsyncStorage.getItem('id')
     const res = await fetch(
       `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
       {
@@ -56,29 +56,29 @@ export default class Status extends Component {
     }
   };
 
-  // switchoff = async () => {
-  //   var token = `Bearer ${await AsyncStorage.getItem('token')}`;
-  //   var id = await AsyncStorage.getItem('id');
+  switchoff = async () => {
+    const token = `Bearer ${await AsyncStorage.getItem('token')}`
+    const id = await AsyncStorage.getItem('id')
 
-  //   fetch(
-  //     `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState`,
-  //     {
-  //       method: 'PATCH',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         Authorization: token,
-  //       },
-  //       body: JSON.stringify({
-  //         status: this.state.toggle === false ? 'ON' : 'OFF',
-  //         chargerId: id,
-  //       }),
-  //     },
-  //   );
-  // };
+    fetch(
+      `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+        body: JSON.stringify({
+          status: this.state.toggle === false ? 'ON' : 'OFF',
+          chargerId: id,
+        }),
+      },
+    );
+  };
   toggleSwitch = async () => {
     if (this.state.toggle === false) {
-      var token = `Bearer ${await AsyncStorage.getItem('token')}`;
-      var id = await AsyncStorage.getItem('id');
+      const token = `Bearer ${await AsyncStorage.getItem('token')}`
+      const id = await AsyncStorage.getItem('id')
 
       fetch(
         `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState`,
@@ -100,39 +100,43 @@ export default class Status extends Component {
 
         'Do you wish to stop charging ?',
         [
+          // {
+          //   text: 'Generate Bill',
+          //   onPress: () =>
+          //     this.disconnect().then(() =>
+          //       this.props.navigation.replace('Payment'),
+          //     ),
+          // },
+
           {
             text: 'Generate Bill',
             onPress: () =>
-              this.disconnect().then(() =>
-                this.props.navigation.replace('Payment'),
+              this.switchoff().then(() =>
+                this.props.navigation.replace('Pay'),
               ),
+            style: 'cancel',
           },
-
           {
             text: 'No',
             onPress: () => console.log('No'),
             style: 'cancel',
           },
-          // {
-          //   text: 'yes',
-          //   onPress: () => this.switchoff(),
-          //   style: 'cancel',
-          // },
         ],
         {cancelable: false},
         //clicking out side of alert will not cancel
       );
     }
   };
-  message = () => {
-    ToastAndroid.showWithGravityAndOffset(
-      'Device Connected',
-      ToastAndroid.LONG,
-      ToastAndroid.CENTER,
-      25,
-      50,
-    );
-  };
+
+  // message = () => {
+  //   return ToastAndroid.showWithGravityAndOffset(
+  //     'Device Connected',
+  //     ToastAndroid.LONG,
+  //     ToastAndroid.CENTER,
+  //     25,
+  //     50,
+  //   );
+  // };
 
   async componentDidMount() {
     loader.load((v) => this.setState({loaded: true}));
@@ -180,6 +184,7 @@ export default class Status extends Component {
       this.setState({voltage: log.voltage});
       this.setState({power: log.power});
       this.setState({current: log.current});
+      this.setState({current: log.price});
     });
     socket.on('error', (data) => {
       console.log(data);
@@ -202,7 +207,7 @@ export default class Status extends Component {
             <View style={styles.status}>
               <TouchableOpacity style={styles.details}>
                 <Text style={styles.text}>Energy</Text>
-                <Text style={styles.value}>{this.state.energy}kWh</Text>
+                <Text style={styles.value}>{this.state.energy} kWh</Text>
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.details}>
@@ -228,15 +233,25 @@ export default class Status extends Component {
                 trackColor={{false: '#767577', true: '#81b0ff'}}
                 onValueChange={this.toggleSwitch}
                 value={this.state.toggle}
+                // onChange={this.message}
                 style={{transform: [{scaleX: 2.5}, {scaleY: 2.5}]}}
               />
             </View>
+            {/* {this.state.toggle === true
+              ? ToastAndroid.showWithGravityAndOffset(
+                  'Device Connected',
+                  ToastAndroid.LONG,
+                  ToastAndroid.CENTER,
+                  25,
+                  50,
+                )
+              : null} */}
           </View>
         ) : (
           <View
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <Text style={{fontSize: 25, fontWeight: 'bold'}}>
-              Connecting to device....
+              Connecting to device 🔌🔌...
             </Text>
           </View>
         )}
@@ -254,35 +269,35 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: hp('20%'), // 70% of height device screen
-    width: wp('80%'), // 80% of width device screen
+    height: hp('20%'),
+    width: wp('80%'),
 
     marginLeft: 35,
   },
 
   text: {
     color: 'black',
-    height: hp('6%'), // 70% of height device screen
-    width: wp('20%'), // 80% of width device screen
-    fontSize: hp('2.5%'), // End result looks like the provided UI mockup
+    height: hp('6%'),
+    width: wp('20%'),
+    fontSize: hp('2.5%'),
   },
   value: {
     color: 'black',
-    height: hp('6%'), // 70% of height device screen
-    width: wp('30%'), // 80% of width device
-    fontSize: hp('3.5%'), // End result looks like the provided UI mockup
+    height: hp('6%'),
+    width: wp('33%'),
+    fontSize: hp('3.5%'),
   },
   switch: {
-    height: hp('20%'), // 70% of height device screen
-    width: wp('80%'), // 80% of width device screen
+    height: hp('20%'),
+    width: wp('80%'),
     marginLeft: 20,
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
   },
   image: {
-    height: hp('15%'), // 70% of height device screen
-    width: wp('100%'), // 80% of width device screen
+    height: hp('15%'),
+    width: wp('100%'),
     marginLeft: 0.5,
   },
 });

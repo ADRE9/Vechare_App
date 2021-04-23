@@ -1,13 +1,12 @@
 import React, {focused} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {View, Text, Image, StyleSheet} from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import home from '../screens/home';
+import ScanButton from './scan'
 
-import Profile from '../screens/Profile';
-import QRScreen from '../screens/QRScreen';
 import AppNavigation from './AppNavigation';
+import ProfileNavigator from "./ProfileNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -21,7 +20,9 @@ const AppBottomNavigation = () => (
       showLabel: false,
       style: {
         backgroundColor: '#ffffff',
-        height: 80,
+        height: 45,
+        elevation: 20,
+        shadowOffset:20
       },
     }}>
     <Tab.Screen
@@ -31,18 +32,15 @@ const AppBottomNavigation = () => (
         tabBarIcon: ({focused}) => (
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <Image
-              source={require('../assets/Charge.png')}
+              source={require('../assets/Explore.png')}
               resizeMode="contain"
               style={{
-                width: 30,
-                height: 30,
+                width: 37,
+                height: 37,
                 tintColor: focused ? '#069DFF' : '#000000',
               }}
             />
-            <Text
-              style={{color: focused ? '#069DFF' : '#000000', fontSize: 12}}>
-              CHARGE
-            </Text>
+
           </View>
         ),
       }}
@@ -53,27 +51,17 @@ const AppBottomNavigation = () => (
       options={{
         tabBarIcon: ({focused}) => (
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Image
-              source={require('../assets/Scan.png')}
-              resizeMode="contain"
-              style={{
-                width: 60,
-                height: 60,
-                tintColor: focused ? '#069DFF' : '#000000',
-              }}
-            />
-            <Text
-              style={{color: focused ? '#069DFF' : '#000000', fontSize: 12}}>
-              SCAN
-            </Text>
-          </View>
+
+            <ScanButton  tintcolor={focused ? '#069DFF' : '#000000'}  />
+
+        </View>
         ),
       }}
     />
 
     <Tab.Screen
-      name="Profile"
-      component={Profile}
+      name="ProfileScreen"
+      component={ProfileNavigator}
       options={{
         tabBarIcon: ({focused}) => (
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -81,15 +69,11 @@ const AppBottomNavigation = () => (
               source={require('../assets/Profile.png')}
               resizeMode="contain"
               style={{
-                width: 30,
-                height: 30,
+                width: 37,
+                height: 37,
                 tintColor: focused ? '#069DFF' : '#000000',
               }}
             />
-            <Text
-              style={{color: focused ? '#069DFF' : '#000000', fontSize: 12}}>
-              PROFILE
-            </Text>
           </View>
         ),
       }}

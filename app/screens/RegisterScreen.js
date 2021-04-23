@@ -1,6 +1,13 @@
 import React from 'react';
-import {TouchableHighlight} from 'react-native';
-import {View, StyleSheet, Text, Image, TextInput} from 'react-native';
+
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -60,13 +67,13 @@ function RegisterScreen({navigation}) {
         <Text style={{color: '#069DFF'}}>Terms of Service </Text>
         and <Text style={{color: '#069DFF'}}>Privacy Policy.</Text>
       </Text>
-      <TouchableHighlight onPress={() => navigation.replace('AppBottom')}>
+      <TouchableOpacity onPress={() => navigation.replace('AppBottom')}>
         <Image
           source={require('../assets/signupBtn.png')}
           resizeMode="contain"
           style={{width: wp('60%'), height: hp('18%'), marginLeft: wp('20%')}}
         />
-      </TouchableHighlight>
+      </TouchableOpacity>
     </View>
   );
 }

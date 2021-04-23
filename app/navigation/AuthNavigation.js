@@ -26,18 +26,6 @@ function AuthNavigation() {
     });
   }, []);
 
-  // useEffect(() => {
-  //   async function fetchtoken() {
-  //     const token = await AsyncStorage.getItem('token');
-  //     if (token) {
-  //       setLogged(true);
-  //     } else {
-  //       setLogged(false);
-  //     }
-  //   }
-  //   fetchtoken();
-  // }, []);
-
   if (isFirstLaunch === null) {
     return null;
   } else if (isFirstLaunch === true) {
@@ -71,35 +59,3 @@ function AuthNavigation() {
 }
 
 export default AuthNavigation;
-
-// import React from 'react';
-
-// import {createStackNavigator} from '@react-navigation/stack';
-
-// import LoginScreen from '../screens/LoginScreen';
-// import RegisterScreen from '../screens/RegisterScreen';
-// import QRScreen from '../screens/QRScreen';
-// import VerifyCode from '../screens/VerifyCode';
-// import Status from '../screens/Status';
-// import onBoardingScreen from '../screens/onBoardingScreen';
-
-// const Stack = createStackNavigator();
-
-// function AuthNavigation() {
-//   return (
-//     <Stack.Navigator
-//       initialRouteName="onBoard"
-//       screenOptions={{
-//         headerShown: false,
-//       }}>
-//       <Stack.Screen name="onBoard" component={onBoardingScreen} />
-//       <Stack.Screen name="LoginPage" component={LoginScreen} />
-//       <Stack.Screen name="Verify" component={VerifyCode} />
-//       <Stack.Screen name="RegisterPage" component={RegisterScreen} />
-//       <Stack.Screen name="QrScreen" component={QRScreen} />
-//       <Stack.Screen name="Status" component={Status} />
-//     </Stack.Navigator>
-//   );
-// }
-
-// export default AuthNavigation;

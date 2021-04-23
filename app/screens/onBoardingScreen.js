@@ -9,15 +9,17 @@ import {
 
 const dots = ({selected}) => {
   let backgroundColor;
-  backgroundColor = selected ? 'rgba(6,157,255,1.00)' : ' rgba(0, 0, 0, 0.8)';
+  backgroundColor = selected ? '#069DFF' : '#DBDBDB';
+
   return (
     <View
       style={{
-        width: 5,
-        height: 5,
+        width: wp('2.6%'),
+        height: hp('1.5%'),
         marginHorizontal: 5,
         backgroundColor,
-        marginBottom: 310,
+        marginBottom: 250,
+        borderRadius: wp('2.6%') / 2,
       }}
     />
   );
@@ -92,7 +94,7 @@ const styles = StyleSheet.create({
   },
   next: {
     marginBottom: 70,
-
+    width: wp('80%'),
     marginRight: 30,
   },
   nextImage: {

@@ -6,7 +6,13 @@ import Payment from '../screens/Payment';
 
 const Stack = createStackNavigator();
 
-const AppNavigation = () => {
+const AppNavigation = ({navigation,route}) => {
+  if( route.state && route.state.index > 1){
+    navigation.setOptions({tabBarVisible : false})
+  }
+  else{
+    navigation.setOptions({tabBarVisible: true})
+  }
   return (
     <Stack.Navigator
       initialRouteName="QrScreen"
@@ -14,6 +20,7 @@ const AppNavigation = () => {
       mode="card">
       <Stack.Screen name="QrScreen" component={QRScreen} />
       <Stack.Screen name="Status" component={Status} />
+      <Stack.Screen name="Pay" component={Payment} />
     </Stack.Navigator>
   );
 };
