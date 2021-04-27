@@ -3,10 +3,11 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {View, Text, Image, StyleSheet} from 'react-native';
 
 import home from '../screens/home';
-import ScanButton from './scan'
+import ScanButton from './scan';
 
 import AppNavigation from './AppNavigation';
-import ProfileNavigator from "./ProfileNavigator";
+import ProfileNavigator from './ProfileNavigator';
+import Profile from '../screens/Profile';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,9 +21,9 @@ const AppBottomNavigation = () => (
       showLabel: false,
       style: {
         backgroundColor: '#ffffff',
-        height: 45,
+        height: 48,
         elevation: 20,
-        shadowOffset:20
+        shadowOffset: 20,
       },
     }}>
     <Tab.Screen
@@ -40,7 +41,6 @@ const AppBottomNavigation = () => (
                 tintColor: focused ? '#069DFF' : '#000000',
               }}
             />
-
           </View>
         ),
       }}
@@ -51,10 +51,11 @@ const AppBottomNavigation = () => (
       options={{
         tabBarIcon: ({focused}) => (
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
-
-            <ScanButton  tintcolor={focused ? '#069DFF' : '#000000'}  />
-
-        </View>
+            <ScanButton
+              tintcolor={focused ? '#069DFF' : '#000000'}
+              color={focused ? '#069DFF' : '#000000'}
+            />
+          </View>
         ),
       }}
     />

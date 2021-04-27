@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   View,
   StyleSheet,
@@ -32,42 +31,22 @@ function RegisterScreen({navigation}) {
         style={{width: wp('60%'), height: hp('10%'), marginLeft: wp('10%')}}
       />
       <View style={{marginTop: wp('8%'), marginLeft: wp('10%')}}>
-        <Text style={{fontSize: wp('5%'), color: '#7C7C7C'}}>Username</Text>
-        <TextInput
-          placeholder="Enter Name"
-          style={{
-            color: 'black',
-            borderBottomWidth: 1,
-            borderBottomColor: '#E2E2E2',
-            marginRight: wp('10%'),
-          }}
-        />
+        <Text style={{fontSize: wp('4%'), color: '#7C7C7C'}}>Username</Text>
+        <TextInput placeholder="Enter Name" style={styles.name} />
       </View>
 
       <View style={{marginTop: wp('4%'), marginLeft: wp('10%')}}>
-        <Text style={{fontSize: wp('5%'), color: '#7C7C7C'}}>Email</Text>
-        <TextInput
-          placeholder="Enter Email Address"
-          style={{
-            color: '#030303',
-            borderBottomWidth: 1,
-            borderBottomColor: '#E2E2E2',
-            marginRight: wp('10%'),
-          }}
-        />
+        <Text style={{fontSize: wp('4%'), color: '#7C7C7C'}}>Phone Number</Text>
+        <TextInput placeholder="Enter Phone Number" style={styles.phone} />
       </View>
-      <Text
-        style={{
-          marginTop: wp('6%'),
-          marginLeft: wp('10%'),
-          fontSize: wp('3.6%'),
-          color: '#7C7C7C',
-        }}>
+      <Text style={styles.condition}>
         By continuing you agree to our{' '}
         <Text style={{color: '#069DFF'}}>Terms of Service </Text>
         and <Text style={{color: '#069DFF'}}>Privacy Policy.</Text>
       </Text>
-      <TouchableOpacity onPress={() => navigation.replace('AppBottom')}>
+      <TouchableOpacity
+        activeOpacity={0.6}
+        onPress={() => navigation.replace('AppBottom')}>
         <Image
           source={require('../assets/signupBtn.png')}
           resizeMode="contain"
@@ -81,6 +60,25 @@ function RegisterScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  condition: {
+    marginTop: wp('6%'),
+    marginLeft: wp('10%'),
+    fontSize: wp('3.3%'),
+    marginRight: wp('3%'),
+    color: '#7C7C7C',
+  },
+  phone: {
+    color: '#030303',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E2E2E2',
+    marginRight: wp('10%'),
+  },
+  name: {
+    color: 'black',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E2E2E2',
+    marginRight: wp('10%'),
   },
 });
 

@@ -44,9 +44,9 @@ const details = [
 ];
 
 export default function home({navigation}) {
-  const [paid, setPaid] = useState([]);
-  const [amount, setAmount] = useState([]);
-  const [name, setName] = useState([]);
+  // const [paid, setPaid] = useState([]);
+  // const [amount, setAmount] = useState([]);
+  // const [name, setName] = useState([]);
 
   // useEffect(() => {
   //   async function unpaid() {

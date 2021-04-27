@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   Image,
   StyleSheet,
@@ -16,33 +16,30 @@ import {
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RazorpayCheckout from 'react-native-razorpay';
+import io from 'socket.io-client';
 
 import {RazorpayApiKey} from '../Constants/config';
-
-import RadioButton from '../components/RadioButton';
 import '../Constants/Useragent';
 
-const PROP = [
-  {
-    key: '1',
-    text: 'Paytm',
-  },
-  {
-    key: '2',
-    text: 'Google Pay',
-  },
-  {
-    key: '3',
-    text: 'Net Banking',
-  },
-  {
-    key: '4',
-    text: 'Card',
-  },
-];
-
-export default function unPaid({navigation}) {
+export default function UnPaid({navigation}) {
   // const [isLoading, setLoading] = useState(true);
+  useEffect(() => {
+    async function value() {
+      const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+      const id = await AsyncStorage.getItem('id');
+
+      const socket = io.connect(
+        'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com',
+        {
+          query: {
+            chargerId: id,
+            token: token,
+          },
+        },
+      );
+    }
+    value();
+  });
 
   const disconnect = async () => {
     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
@@ -58,18 +55,10 @@ export default function unPaid({navigation}) {
     );
   };
 
-  const clearStorage = async () => {
-    try {
-      await AsyncStorage.removeItem('id');
-      alert('Storage successfully cleared!');
-    } catch (e) {
-      alert('Failed to clear the async storage.');
-    }
-  };
   const onPay = async () => {
     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
     const order = await fetch(
-      `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/instantiatePayment`,
+      'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
       {
         method: 'POST',
         headers: {
@@ -81,7 +70,7 @@ export default function unPaid({navigation}) {
 
     const orderData = await order.json();
 
-    console.log('OnPay');
+    // console.log('OnPay');
 
     var options = {
       description: 'Pending bill payment',
@@ -96,28 +85,23 @@ export default function unPaid({navigation}) {
       },
       theme: {color: '#a29bfe'},
     };
-    RazorpayCheckout.open(options)
-      .then(async function (response) {
-        const config = {
-          headers: {Authorization: token},
-        };
-        const data = {
-          orderCreationId: orderData.id,
-          razorpayPaymentId: response.razorpay_payment_id,
-          razorpayOrderId: response.razorpay_order_id,
-          razorpaySignature: response.razorpay_signature,
-        };
-        console.log(data);
-        const result = await axios
-          .post(
-            'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/madePayment',
-            data,
-            config,
-          )
-          .then(console.log)
-          .catch(console.log);
-      })
-      .catch(console.log);
+    RazorpayCheckout.open(options).then(async function (response) {
+      const config = {
+        headers: {Authorization: token},
+      };
+      const data = {
+        orderCreationId: orderData.id,
+        razorpayPaymentId: response.razorpay_payment_id,
+        razorpayOrderId: response.razorpay_order_id,
+        razorpaySignature: response.razorpay_signature,
+      };
+      // console.log(data);
+      const result = await axios.post(
+        'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/madePayment',
+        data,
+        config,
+      );
+    });
   };
 
   return (
@@ -141,9 +125,6 @@ export default function unPaid({navigation}) {
 
       <View>
         <Text style={styles.completePayment}>Complete Due Payment</Text>
-        <View style={styles.container}>
-          <RadioButton PROP={PROP} />
-        </View>
       </View>
       <View flexDirection="row" style={styles.paymentContainer}>
         <View flexDirection="column">
@@ -159,11 +140,9 @@ export default function unPaid({navigation}) {
         </View>
         <TouchableOpacity
           onPress={() =>
-            disconnect().then(() =>
-              onPay()
-                .then(() => navigation.replace('AppBottom'))
-                .then(() => clearStorage()),
-            )
+            disconnect()
+              .then(() => onPay())
+              .finally(() => navigation.replace('AppBottom'))
           }>
           <Image
             source={require('../assets/payNow.png')}
@@ -225,7 +204,7 @@ const styles = StyleSheet.create({
   },
   paymentContainer: {
     alignItems: 'center',
-    marginTop: wp('30%'),
+    marginTop: wp('90%'),
     borderRadius: 8,
     borderWidth: 0.3,
     height: hp('11%'),

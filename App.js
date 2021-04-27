@@ -6,11 +6,12 @@ import RNBootSplash from 'react-native-bootsplash';
 
 import AuthNavigation from './app/navigation/AuthNavigation';
 import AppBottomNavigation from './app/navigation/AppBottomNavigation';
-import Payment from './app/screens/Payment';
-import unPaid from './app/screens/unPaid';
+
+import UnPaid from './app/screens/unPaid';
 import Profile from './app/screens/Profile';
 import LoginScreen from './app/screens/LoginScreen';
 import RegisterScreen from './app/screens/RegisterScreen';
+import PaymentNavigation from './app/navigation/PaymentNavigation';
 
 const Stack = createStackNavigator();
 
@@ -25,7 +26,8 @@ function App() {
         initialRouteName="Auth">
         <Stack.Screen name="Auth" component={AuthNavigation} />
         <Stack.Screen name="AppBottom" component={AppBottomNavigation} />
-        <Stack.Screen name="unPaid" component={unPaid} />
+        <Stack.Screen name="Pay" component={PaymentNavigation} />
+        <Stack.Screen name="unPaid" component={UnPaid} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="LoginPage" component={LoginScreen} />
         <Stack.Screen name="RegisterPage" component={RegisterScreen} />

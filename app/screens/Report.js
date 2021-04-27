@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   View,
   StyleSheet,
@@ -6,24 +6,23 @@ import {
   TextInput,
   Image,
   TouchableOpacity,
-} from "react-native";
+} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
-} from "react-native-responsive-screen";
+} from 'react-native-responsive-screen';
 
-export default function Report({ navigation }) {
+export default function Report({navigation}) {
   return (
     <View style={styles.container}>
       <View flexDirection="row">
         <TouchableOpacity
-          style={{ marginTop: wp("7%"), marginLeft: wp("2%") }}
+          style={{marginTop: wp('7%'), marginLeft: wp('2%')}}
           activeOpacity={0.5}
-          onPress={() => navigation.goBack()}
-        >
+          onPress={() => navigation.goBack()}>
           <Image
-            source={require("../assets/Back1.png")}
-            style={{ height: hp("5%"), width: wp("10%") }}
+            source={require('../assets/Back1.png')}
+            style={{height: hp('5%'), width: wp('10%')}}
           />
         </TouchableOpacity>
         <Text style={styles.header}>Report issue</Text>
@@ -55,13 +54,13 @@ export default function Report({ navigation }) {
         />
       </View>
       <Image
-        source={require("../assets/submitBtn.png")}
+        source={require('../assets/submitBtn.png')}
         resizeMode="contain"
         style={{
-          height: hp("5%"),
-          width: wp("40%"),
-          marginLeft: wp("1%"),
-          marginTop: wp("5%"),
+          height: hp('5%'),
+          width: wp('40%'),
+          marginLeft: wp('1%'),
+          marginTop: wp('5%'),
         }}
       />
     </View>
@@ -71,50 +70,48 @@ export default function Report({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: '#ffffffff',
   },
   header: {
-    fontSize: wp("7%"),
-    color: "#000000",
-    marginTop: wp("6%"),
-    marginLeft: wp("6%"),
-    fontWeight: "bold",
+    fontSize: wp('7%'),
+    color: '#000000',
+    marginTop: wp('6%'),
+    marginLeft: wp('6%'),
+    fontWeight: 'bold',
   },
   subtitle: {
-    fontSize: wp("3%"),
-    color: "#000000",
-    marginTop: wp("4%"),
-    marginRight: wp("6%"),
-    marginLeft: wp("6%"),
-    lineHeight: wp("4%"),
+    fontSize: wp('3%'),
+    color: '#000000',
+    marginTop: wp('4%'),
+    marginRight: wp('6%'),
+    marginLeft: wp('6%'),
+    lineHeight: wp('4%'),
   },
   name: {
-    marginLeft: wp("6%"),
-    fontSize: wp("3%"),
-    color: "#000000",
-    marginTop: wp("4%"),
+    marginLeft: wp('6%'),
+    fontSize: wp('3%'),
+    color: '#000000',
+    marginTop: wp('4%'),
   },
   input: {
-    marginLeft: wp("6%"),
-    fontSize: wp("3%"),
-    color: "#7B7B7B",
-    marginTop: wp("2%"),
-    backgroundColor: "#EFEFEF",
-    marginRight: wp("8%"),
-    borderRadius: wp("6%") / 3,
+    marginLeft: wp('6%'),
+    fontSize: wp('3%'),
+    color: '#7B7B7B',
+    marginTop: wp('2%'),
+    backgroundColor: '#EFEFEF',
+    marginRight: wp('8%'),
+    borderRadius: wp('6%') / 3,
     padding: 4,
   },
   input2: {
-    marginLeft: wp("6%"),
-    fontSize: wp("3%"),
-    color: "#7B7B7B",
-    marginTop: wp("2%"),
-    backgroundColor: "#EFEFEF",
-    marginRight: wp("8%"),
-    borderRadius: wp("6%") / 3,
+    marginLeft: wp('6%'),
+    fontSize: wp('3%'),
+    color: '#7B7B7B',
+    marginTop: wp('2%'),
+    backgroundColor: '#EFEFEF',
+    marginRight: wp('8%'),
+    borderRadius: wp('6%') / 3,
     padding: 4,
-    height: hp("20%"),
+    height: hp('20%'),
   },
 });
-
-

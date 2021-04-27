@@ -72,11 +72,13 @@ function LoginScreen(props) {
   function onAuthStateChanged(user) {
     setUser(user);
 
-    if (user) setloggedIn(true);
+    if (user) {
+      setloggedIn(true);
+    }
   }
   const token = async function (idToken) {
     const res = await fetch(
-      `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/users/loginWithGoogle`,
+      'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/users/loginWithGoogle',
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -84,7 +86,7 @@ function LoginScreen(props) {
       },
     );
     const tokendata = await res.json();
-    console.log(tokendata.data.token);
+    // console.log(tokendata.data.token);
 
     try {
       await AsyncStorage.setItem('token', tokendata.data.token);

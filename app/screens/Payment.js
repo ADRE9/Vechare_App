@@ -22,40 +22,20 @@ import io from 'socket.io-client';
 
 import {RazorpayApiKey} from '../Constants/config';
 
-import RadioButton from '../components/RadioButton';
 import '../Constants/Useragent';
-
-const PROP = [
-  {
-    key: '1',
-    text: 'Paytm',
-  },
-  {
-    key: '2',
-    text: 'Google Pay',
-  },
-  {
-    key: '3',
-    text: 'Net Banking',
-  },
-  {
-    key: '4',
-    text: 'Card',
-  },
-];
 
 export default function Payment({navigation}) {
   // const [isLoading, setLoading] = useState(true);
   const [amount, setAmount] = useState([]);
+  const [amnt, setAmnt] = useState([]);
   const [energy, setEnergy] = useState([]);
+  const [time, setTime] = useState([]);
 
   useEffect(() => {
     async function value() {
       const token = `Bearer ${await AsyncStorage.getItem('token')}`;
       const id = await AsyncStorage.getItem('id');
 
-      console.log(id);
-      console.log(token);
       const socket = io.connect(
         'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com',
         {
@@ -67,16 +47,29 @@ export default function Payment({navigation}) {
       );
       socket.on('chargerConnected', (data) => {
         data = JSON.parse(data);
-        console.log(data);
-        setAmount((data.price * data.energy).toFixed(2));
+        setAmount(
+          (data.price * data.energy + data.price * data.energy * 0.15).toFixed(
+            2,
+          ),
+        );
+        setAmnt(data.price * data.energy);
         setEnergy(data.energy);
       });
+      try {
+        await AsyncStorage.setItem('amount', amount);
+        await AsyncStorage.setItem('amnt', amnt);
+      } catch (e) {
+        console.log(e);
+      }
+      try {
+        const jsonValue = JSON.stringify(energy);
+        await AsyncStorage.setItem('energy', jsonValue);
+      } catch (e) {
+        console.log(e);
+      }
     }
     value();
-  }, []);
-
-
-
+  });
 
   // const pay = () => {
   //   Alert.alert('Payment', 'Do you wish to Disconnect Charger?, Pay Now', [
@@ -95,8 +88,8 @@ export default function Payment({navigation}) {
   // };
 
   const disconnect = async () => {
-    const token = `Bearer ${await AsyncStorage.getItem("token")}`;
-    const id = await AsyncStorage.getItem("id");
+    const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+    const id = await AsyncStorage.getItem('id');
     await fetch(
       `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
       {
@@ -108,19 +101,10 @@ export default function Payment({navigation}) {
     );
   };
 
-  const clearStorage = async () => {
-    try {
-      await AsyncStorage.removeItem('id');
-      alert('Storage successfully cleared!');
-    } catch (e) {
-      alert('Failed to clear the async storage.');
-    }
-  };
-
   const onPay = async () => {
-    const token = `Bearer ${await AsyncStorage.getItem("token")}`;
+    const token = `Bearer ${await AsyncStorage.getItem('token')}`;
     const order = await fetch(
-      `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/instantiatePayment`,
+      'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
       {
         method: 'POST',
         headers: {
@@ -161,16 +145,15 @@ export default function Payment({navigation}) {
           razorpaySignature: response.razorpay_signature,
         };
         console.log(data);
-        const result = await axios
-          .post(
-            'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/madePayment',
-            data,
-            config,
-          )
-          .then(console.log)
-          .catch(console.log);
+        const result = await axios.post(
+          'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/madePayment',
+          data,
+          config,
+        );
       })
-      .catch(console.log);
+      .catch((err) => {
+        navigation.replace('AppBottom', {err});
+      });
   };
 
   return (
@@ -178,24 +161,50 @@ export default function Payment({navigation}) {
       <ScrollView>
         <View>
           <ImageBackground
-            source={require('../assets/details.png')}
+            source={require('../assets/chargeHeader.png')}
             style={{width: wp('100%'), height: hp('16%')}}
             resizeMode="cover">
-            <TouchableOpacity onPress={() => navigation.replace('Status')}>
-              <Image
-                source={require('../assets/Back.png')}
-                style={{
-                  width: wp('5%'),
-                  height: hp('3%'),
-                  marginLeft: wp('4%'),
-                  marginTop: wp('2%'),
-                }}
-              />
-            </TouchableOpacity>
+            <View flexDirection="row">
+              {/* <TouchableOpacity onPress={() => navigation.replace('AppBottom')}>
+                <Image
+                  source={require('../assets/Back.png')}
+                  style={{
+                    width: wp('7%'),
+                    height: hp('4%'),
+                    marginLeft: wp('6%'),
+                    marginTop: wp('8%'),
+                  }}
+                />
+              </TouchableOpacity> */}
+              <Text style={styles.txt}>Charging Details</Text>
+            </View>
           </ImageBackground>
         </View>
 
-        <View flexDirection="row">
+        <View flexDirection="column">
+          <View style={styles.box3} flexDirection="row">
+            <View flexDirection="row" style={{marginRight: wp('4%')}}>
+              <Image
+                source={require('../assets/time.png')}
+                style={{
+                  height: hp('5%'),
+                  width: wp('10%'),
+                  margin: wp('3%'),
+                  borderRadius: wp('10%') / 8,
+                }}
+              />
+              <View>
+                <Text style={styles.timeContainer}>Time</Text>
+                <Text style={{fontSize: wp('3.4%'), color: 'white'}}>
+                  Changed
+                </Text>
+              </View>
+            </View>
+            <View>
+              <Text style={styles.time}>2h 35min</Text>
+            </View>
+          </View>
+
           <View style={styles.box1} flexDirection="column">
             <View flexDirection="row">
               <Image
@@ -207,27 +216,20 @@ export default function Payment({navigation}) {
                   borderRadius: wp('10%') / 8,
                 }}
               />
-              <View>
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                    color: 'white',
-                    fontSize: wp('5%'),
-                    marginTop: wp('2%'),
-                  }}>
-                  Energy
-                </Text>
-                <Text style={{fontSize: wp('3.5%'), color: 'white'}}>
-                  consumed
+              <View style={{marginRight: wp('4%')}}>
+                <Text style={styles.energyContainer}>Energy</Text>
+                <Text style={{fontSize: wp('3.4%'), color: 'white'}}>
+                  Consumed
                 </Text>
               </View>
-            </View>
-            <View>
-              <Text style={styles.energy}>{energy} kWh</Text>
+              <View>
+                <Text style={styles.energy}>{energy} kWh</Text>
+              </View>
             </View>
           </View>
-          <View style={styles.box2} flexDirection="column">
-            <View flexDirection="row">
+
+          <View style={styles.box2} flexDirection="row">
+            <View flexDirection="row" style={{marginRight: wp('4%')}}>
               <Image
                 source={require('../assets/cost.png')}
                 style={{
@@ -238,56 +240,39 @@ export default function Payment({navigation}) {
                 }}
               />
               <View>
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                    color: 'white',
-                    fontSize: wp('5%'),
-                    marginTop: wp('2%'),
-                  }}>
-                  Amount
-                </Text>
-                <Text style={{fontSize: wp('3.5%'), color: 'white'}}>
+                <Text style={styles.AmtContainer}>Amount</Text>
+                <Text style={{fontSize: wp('3.4%'), color: 'white'}}>
                   Payable
                 </Text>
               </View>
             </View>
             <View>
-              <Text style={styles.amount}>{amount} INR</Text>
+              <Text style={styles.Amount}>
+                {'\u20B9'} {amount}
+              </Text>
             </View>
           </View>
         </View>
-        <View>
-          <Text style={styles.completePayment}>Complete Payment</Text>
-          <View style={styles.container}>
-            <RadioButton PROP={PROP} />
-          </View>
-        </View>
-        <View flexDirection="row" style={styles.paymentContainer}>
-          <View flexDirection="column">
-            <Text style={styles.payment}>
-              {'\u20B9'} {amount}
-            </Text>
-            <Image
-              source={require('../assets/view.png')}
-              style={{
-                height: hp('1.3%'),
-                width: wp('25%'),
-                marginLeft: wp('3%'),
-              }}
-              resizeMode="contain"
-            />
-          </View>
-          <TouchableOpacity onPress={() =>
-            disconnect()
-            .then(() => onPay().then(() => navigation.replace('AppBottom')))
-            .then(() => clearStorage())}>
+
+        <View flexDirection="row" style={styles.amountContainer}>
+          <Text style={styles.amount}>
+            {'\u20B9'} {amount}
+          </Text>
+
+          <TouchableOpacity
+            onPress={() =>
+              disconnect()
+                .then(() => onPay())
+                .finally(() => navigation.replace('PayDone'))
+            }>
             <Image
               source={require('../assets/payNow.png')}
               style={{
                 height: hp('6%'),
-                width: wp('60%'),
-                marginLeft: wp('7%'),
+                width: wp('50%'),
+                marginLeft: wp('12%'),
+                marginTop: wp('3%'),
+                borderRadius: wp('8%') / 4,
               }}
             />
           </TouchableOpacity>
@@ -300,58 +285,102 @@ export default function Payment({navigation}) {
 const styles = StyleSheet.create({
   cont: {
     flex: 1,
+    backgroundColor: 'white',
+  },
+  txt: {
+    color: 'white',
+    fontSize: wp('8%'),
+    fontWeight: 'bold',
+    letterSpacing: 2,
+    marginLeft: wp('8%'),
+    marginTop: wp('7%'),
   },
   box1: {
     backgroundColor: '#03AD70',
-    height: hp('19%'),
-    width: wp('40%'),
+    height: hp('16%'),
+    width: wp('70%'),
     borderRadius: hp('20%') / 8,
-    margin: wp('5%'),
+    marginLeft: wp('10%'),
     padding: 5,
     marginTop: hp('5%'),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   box2: {
     backgroundColor: '#2D9CDB',
-    height: hp('19%'),
-    width: wp('40%'),
+    height: hp('16%'),
+    width: wp('70%'),
     borderRadius: hp('20%') / 8,
-    margin: wp('5%'),
+    marginLeft: wp('10%'),
     padding: 5,
     marginTop: hp('5%'),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  energy: {
-    fontSize: wp('7%'),
-    color: 'white',
-    fontWeight: 'bold',
-    padding: wp('1%'),
-    marginTop: wp('4%'),
+  box3: {
+    backgroundColor: '#4B5358',
+    height: hp('16%'),
+    width: wp('70%'),
+    borderRadius: hp('20%') / 8,
+    marginLeft: wp('10%'),
+    padding: 5,
+    marginTop: hp('5%'),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   amount: {
-    fontSize: wp('7%'),
+    fontWeight: 'bold',
+    marginLeft: wp('5%'),
+    fontSize: wp('6%'),
+    marginTop: wp('2%'),
+    color: 'black',
+  },
+  amountContainer: {
+    alignItems: 'center',
+    marginTop: wp('26%'),
+    borderRadius: 8,
+    borderWidth: 0.3,
+    height: hp('10%'),
+  },
+  Amount: {
+    fontSize: wp('6%'),
     color: 'white',
     fontWeight: 'bold',
     padding: wp('1%'),
     marginTop: wp('4%'),
     marginLeft: wp('2%'),
   },
-  completePayment: {
-    marginLeft: wp('5%'),
-    marginTop: wp('3%'),
+  AmtContainer: {
     fontWeight: 'bold',
-    color: '#3D3D3D',
-    fontSize: wp('7%'),
+    color: 'white',
+    fontSize: wp('5.2%'),
+    marginTop: wp('2%'),
   },
-  paymentContainer: {
-    alignItems: 'center',
-    marginTop: wp('30%'),
-    borderRadius: 8,
-    borderWidth: 0.3,
-    height: hp('11%'),
-  },
-  payment: {
+  energy: {
+    fontSize: wp('6%'),
+    color: 'white',
     fontWeight: 'bold',
-    marginLeft: wp('5%'),
-    fontSize: wp('8%'),
-    color: 'black',
+    padding: wp('1%'),
+    marginTop: wp('4%'),
+  },
+  energyContainer: {
+    fontWeight: 'bold',
+    color: 'white',
+    fontSize: wp('5.2%'),
+    marginTop: wp('2%'),
+  },
+  time: {
+    fontSize: wp('6%'),
+    color: 'white',
+    fontWeight: 'bold',
+    padding: wp('1%'),
+    marginTop: wp('4%'),
+    marginLeft: wp('2%'),
+  },
+  timeContainer: {
+    fontWeight: 'bold',
+    color: 'white',
+    fontSize: wp('5.2%'),
+    marginTop: wp('2%'),
   },
 });

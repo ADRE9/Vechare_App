@@ -35,6 +35,7 @@ function AuthNavigation() {
         screenOptions={{
           headerShown: false,
         }}>
+        <Stack.Screen name="AuthLoad" component={AuthLoadingScreen} />
         <Stack.Screen name="onBoard" component={onBoardingScreen} />
         <Stack.Screen name="LoginPage" component={LoginScreen} />
         <Stack.Screen name="Verify" component={VerifyCode} />

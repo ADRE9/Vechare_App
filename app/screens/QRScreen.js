@@ -3,7 +3,6 @@ import {
   SafeAreaView,
   Text,
   View,
-  Linking,
   TouchableHighlight,
   PermissionsAndroid,
   Platform,
@@ -19,6 +18,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import Unpaid from '../components/Unpaid';
 
 export default function QRScreen({navigation}) {
   const [qrvalue, setQrvalue] = useState('');
@@ -80,7 +80,7 @@ export default function QRScreen({navigation}) {
       var token = `Bearer ${await AsyncStorage.getItem('token')}`;
       const value = await AsyncStorage.getItem('id');
       const res = await fetch(
-        `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/users/me`,
+        'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/users/me',
         {
           headers: {
             'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ export default function QRScreen({navigation}) {
     async function unpaid() {
       var token = `Bearer ${await AsyncStorage.getItem('token')}`;
       const res = await fetch(
-        `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/unpaid`,
+        'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/unpaid',
         {
           headers: {
             'Content-Type': 'application/json',
@@ -119,30 +119,7 @@ export default function QRScreen({navigation}) {
     return <View>{navigation.replace('Status')}</View>;
   } else if (paid === false) {
     return (
-      <SafeAreaView
-        style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <View style={styles.card}>
-          <Text
-            style={{
-              color: 'white',
-              marginTop: 10,
-              marginLeft: 10,
-              fontWeight: 'bold',
-              fontSize: 18,
-            }}>
-            Unpaid payment left {'\n'}₹ {amount}
-          </Text>
-          <TouchableOpacity
-            onPress={() => navigation.replace('unPaid')}
-            activeOpacity={0.5}
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text style={styles.pay}>Pay</Text>
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
+      <Unpaid amount={amount} onPress={() => navigation.replace('unPaid')} />
     );
   } else {
     return (
@@ -173,29 +150,20 @@ export default function QRScreen({navigation}) {
           </View>
         ) : (
           <View style={styles.container}>
-            {/* <Text style={styles.titleText}>QR Code Scanner</Text> */}
             <Text style={styles.textStyle}>
               {qrvalue ? navigation.replace('Status') : ''}
             </Text>
             {/* <Button
-            title="status"
-            onPress={() => navigation.navigate('Status')}
-          /> */}
+              title="status"
+              onPress={() => navigation.navigate('Status')}
+            /> */}
             <TouchableHighlight onPress={onOpneScanner}>
               <Image
                 source={require('../assets/scanner.png')}
                 style={{width: 250, height: 250}}
               />
             </TouchableHighlight>
-            <Text
-              style={{
-                marginTop: 30,
-                fontSize: 23,
-                fontWeight: 'bold',
-                width: '80%',
-              }}>
-              Charge via Station ID
-            </Text>
+            <Text style={styles.charge}>Charge via Station ID</Text>
             <Text
               style={{
                 fontSize: 15,
@@ -281,5 +249,11 @@ const styles = StyleSheet.create({
     borderRadius: wp('8%') / 4,
     backgroundColor: '#069DFF',
     marginTop: wp('3%'),
+  },
+  charge: {
+    marginTop: 30,
+    fontSize: 23,
+    fontWeight: 'bold',
+    width: '80%',
   },
 });

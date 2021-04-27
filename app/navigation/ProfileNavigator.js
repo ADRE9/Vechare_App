@@ -1,21 +1,20 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import FeedBack from "../screens/FeedBack";
-import Profile from "../screens/Profile";
-import Report from "../screens/Report";
-import EditProfile from '../screens/EditProfile'
-import WorkingScreen from '../screens/WorkingScreen'
-import ReferScreen from '../screens/ReferScreen'
-import About from '../screens/About'
+import FeedBack from '../screens/FeedBack';
+import Profile from '../screens/Profile';
+import Report from '../screens/Report';
+import EditProfile from '../screens/EditProfile';
+import WorkingScreen from '../screens/WorkingScreen';
+import ReferScreen from '../screens/ReferScreen';
+import About from '../screens/About';
 
 const Stack = createStackNavigator();
 
 const ProfileNavigator = ({navigation, route}) => {
-  if( route.state && route.state.index > 0){
-    navigation.setOptions({tabBarVisible : false})
-  }
-  else{
-    navigation.setOptions({tabBarVisible: true})
+  if (route.state && route.state.index > 0) {
+    navigation.setOptions({tabBarVisible: false});
+  } else {
+    navigation.setOptions({tabBarVisible: true});
   }
   return (
     <Stack.Navigator

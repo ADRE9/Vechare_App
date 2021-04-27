@@ -9,6 +9,7 @@ import {
   Image,
   Switch,
   ToastAndroid,
+  Button,
 } from 'react-native';
 import io from 'socket.io-client';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -20,9 +21,6 @@ import {
 import loader from '../components/loader';
 
 import '../Constants/Useragent';
-
-// const id = 'test';
-// let id;
 
 export default class Status extends Component {
   constructor(props) {
@@ -39,8 +37,8 @@ export default class Status extends Component {
     };
   }
   disconnect = async () => {
-    const token = `Bearer ${await AsyncStorage.getItem('token')}`
-    const id = await AsyncStorage.getItem('id')
+    const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+    const id = await AsyncStorage.getItem('id');
     const res = await fetch(
       `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
       {
@@ -57,11 +55,11 @@ export default class Status extends Component {
   };
 
   switchoff = async () => {
-    const token = `Bearer ${await AsyncStorage.getItem('token')}`
-    const id = await AsyncStorage.getItem('id')
+    const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+    const id = await AsyncStorage.getItem('id');
 
     fetch(
-      `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState`,
+      'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState',
       {
         method: 'PATCH',
         headers: {
@@ -77,11 +75,11 @@ export default class Status extends Component {
   };
   toggleSwitch = async () => {
     if (this.state.toggle === false) {
-      const token = `Bearer ${await AsyncStorage.getItem('token')}`
-      const id = await AsyncStorage.getItem('id')
+      const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+      const id = await AsyncStorage.getItem('id');
 
       fetch(
-        `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState`,
+        'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState',
         {
           method: 'PATCH',
           headers: {
@@ -112,7 +110,7 @@ export default class Status extends Component {
             text: 'Generate Bill',
             onPress: () =>
               this.switchoff().then(() =>
-                this.props.navigation.replace('Pay'),
+                this.props.navigation.replace('Charging'),
               ),
             style: 'cancel',
           },
@@ -213,7 +211,11 @@ export default class Status extends Component {
               <TouchableOpacity style={styles.details}>
                 <Text style={styles.text}>Price</Text>
                 <Text style={styles.value}>
-                  ₹ {(this.state.energy * this.state.price).toFixed(2)}
+                  ₹{' '}
+                  {(
+                    this.state.energy * this.state.price +
+                    this.state.energy * this.state.price * 0.15
+                  ).toFixed(2)}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -225,7 +227,7 @@ export default class Status extends Component {
 
               <TouchableOpacity style={styles.details}>
                 <Text style={styles.text}>Current</Text>
-                <Text style={styles.value}>{this.state.current} Amp</Text>
+                <Text style={styles.value}>{this.state.current} A</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.switch}>
@@ -236,16 +238,11 @@ export default class Status extends Component {
                 // onChange={this.message}
                 style={{transform: [{scaleX: 2.5}, {scaleY: 2.5}]}}
               />
+              {/* <Button
+                title="next"
+                onPress={() => this.props.navigation.replace('Pay')}
+              /> */}
             </View>
-            {/* {this.state.toggle === true
-              ? ToastAndroid.showWithGravityAndOffset(
-                  'Device Connected',
-                  ToastAndroid.LONG,
-                  ToastAndroid.CENTER,
-                  25,
-                  50,
-                )
-              : null} */}
           </View>
         ) : (
           <View
@@ -286,6 +283,7 @@ const styles = StyleSheet.create({
     height: hp('6%'),
     width: wp('33%'),
     fontSize: hp('3.5%'),
+    backgroundColor: '#F4F4F4',
   },
   switch: {
     height: hp('20%'),
