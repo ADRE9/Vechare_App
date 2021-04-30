@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -13,7 +13,6 @@ const Stack = createStackNavigator();
 
 function AuthNavigation() {
   const [isFirstLaunch, setIsFirstLaunch] = React.useState(null);
-  // const [isloggedIn, setLogged] = useState(null);
 
   useEffect(() => {
     AsyncStorage.getItem('alreadyLaunched').then((value) => {
@@ -50,7 +49,6 @@ function AuthNavigation() {
           headerShown: false,
         }}>
         <Stack.Screen name="AuthLoad" component={AuthLoadingScreen} />
-
         <Stack.Screen name="LoginPage" component={LoginScreen} />
         <Stack.Screen name="Verify" component={VerifyCode} />
         <Stack.Screen name="RegisterPage" component={RegisterScreen} />

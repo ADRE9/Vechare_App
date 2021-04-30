@@ -93,7 +93,7 @@ function Profile({navigation}) {
   if (paid === false) {
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView>
+        <ScrollView style={styles.container}>
           <View>
             <ImageBackground
               style={styles.imgCont}
@@ -110,7 +110,9 @@ function Profile({navigation}) {
                     Rohini/City , Delhi/State
                   </Text>
                 </View>
-                <Text style={styles.textCont3}>View Profile</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Edit')}>
+                  <Text style={styles.textCont3}>View Profile</Text>
+                </TouchableOpacity>
               </View>
             </ImageBackground>
           </View>
@@ -118,11 +120,7 @@ function Profile({navigation}) {
             <Text style={styles.imgCont2}>
               Electrify your Establishment today
             </Text>
-            <Image
-              source={require('../assets/profile1.png')}
-              resizeMode="contain"
-              style={styles.imgCont3}
-            />
+
             <Image
               source={require('../assets/profile2.png')}
               resizeMode="contain"
@@ -130,14 +128,18 @@ function Profile({navigation}) {
             />
           </View>
           <View>
-            <TouchableOpacity activeOpacity={0.5}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Work')}
+              activeOpacity={0.5}>
               <Image
                 source={require('../assets/img1.png')}
                 style={styles.item1}
                 resizeMode="contain"
               />
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.5}>
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => navigation.navigate('Refer')}>
               <Image
                 source={require('../assets/img2.png')}
                 style={styles.item2}
@@ -149,27 +151,31 @@ function Profile({navigation}) {
               onPress={() => navigation.navigate('Report')}>
               <Image
                 source={require('../assets/img3.png')}
-                resizeMode="contain"
                 style={styles.item2}
+                resizeMode="contain"
               />
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.5}
-              onPress={() => navigation.navigate('Feed')}>
+              onPress={() => navigation.navigate('Feedback')}>
               <Image
                 source={require('../assets/img4.png')}
                 style={styles.item2}
                 resizeMode="contain"
               />
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.5}>
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => navigation.navigate('Rate')}>
               <Image
                 source={require('../assets/img5.png')}
                 style={styles.item2}
                 resizeMode="contain"
               />
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.5}>
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => navigation.navigate('About')}>
               <Image
                 source={require('../assets/img6.png')}
                 style={{
@@ -182,7 +188,6 @@ function Profile({navigation}) {
               />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => sign()}
               activeOpacity={0.5}
               style={{
                 justifyContent: 'center',
@@ -237,27 +242,6 @@ function Profile({navigation}) {
               </TouchableOpacity>
             </View>
           </View>
-          {/* <View style={styles.card}>
-            <Text
-              style={{
-                color: 'white',
-                marginTop: 10,
-                marginLeft: 10,
-                fontWeight: 'bold',
-                fontSize: 18,
-              }}>
-              Unpaid payment left {'\n'}₹ {amount}
-            </Text>
-            <TouchableOpacity
-              onPress={() => navigation.replace('unPaid')}
-              activeOpacity={0.5}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={styles.pay}>Pay</Text>
-            </TouchableOpacity>
-          </View> */}
         </ScrollView>
         <UnpaidNotify
           amount={amount}
@@ -267,8 +251,8 @@ function Profile({navigation}) {
     );
   } else {
     return (
-      <SafeAreaView style={styles.container}>
-        <ScrollView>
+      <ScrollView style={styles.container}>
+        <SafeAreaView style={styles.container}>
           <View>
             <ImageBackground
               style={styles.imgCont}
@@ -295,16 +279,13 @@ function Profile({navigation}) {
             <Text style={styles.imgCont2}>
               Electrify your Establishment today
             </Text>
-            <Image
-              source={require('../assets/profile1.png')}
-              resizeMode="contain"
-              style={styles.imgCont3}
-            />
-            <Image
-              source={require('../assets/profile2.png')}
-              resizeMode="contain"
-              style={styles.imgCont4}
-            />
+            <TouchableOpacity onPress={() => navigation.navigate('Host')}>
+              <Image
+                source={require('../assets/profile2.png')}
+                resizeMode="contain"
+                style={styles.imgCont4}
+              />
+            </TouchableOpacity>
           </View>
           <View>
             <TouchableOpacity
@@ -367,7 +348,6 @@ function Profile({navigation}) {
               />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => sign()}
               activeOpacity={0.5}
               style={{
                 justifyContent: 'center',
@@ -422,8 +402,8 @@ function Profile({navigation}) {
               </TouchableOpacity>
             </View>
           </View>
-        </ScrollView>
-      </SafeAreaView>
+        </SafeAreaView>
+      </ScrollView>
     );
   }
 }
@@ -431,45 +411,46 @@ function Profile({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
-    height: hp('100%'),
+    backgroundColor: 'white',
   },
   imgCont: {
     width: wp('100%'),
-    height: hp('30%'),
+    height: hp('25%'),
   },
   textCont: {
     fontSize: wp('8%'),
     color: 'white',
-    fontWeight: 'bold',
-    marginTop: hp('4%'),
+    marginTop: hp('3%'),
     marginLeft: hp('4%'),
+    fontFamily: 'SF-Pro-Text-Bold',
   },
   loc: {
-    marginTop: hp('0.6%'),
-    marginLeft: wp('6%'),
-    height: hp('3%'),
-    width: wp('4%'),
+    marginTop: hp('0.4%'),
+    marginLeft: wp('8%'),
+    height: hp('1.8%'),
+    width: wp('2.6%'),
   },
   textCont2: {
     color: 'white',
-    fontSize: wp('4%'),
+    fontSize: wp('3%'),
     marginLeft: wp('3%'),
-    marginTop: wp('1%'),
+    marginTop: wp('0.5%'),
+    fontFamily: 'SF-Pro-Text-Semibold',
   },
   textCont3: {
     marginLeft: wp('8%'),
-    marginTop: wp('3%'),
-    fontSize: wp('4%'),
+    marginTop: wp('4%'),
+    fontSize: wp('3.4%'),
     color: 'white',
     textDecorationLine: 'underline',
+    fontFamily: 'SF-Pro-Text-Semibold',
   },
   imgCont2: {
     fontSize: wp('4%'),
     color: '#292929',
-    marginTop: -wp('13%'),
+    marginTop: -wp('8%'),
     marginLeft: wp('8%'),
-    fontWeight: 'bold',
+    fontFamily: 'SF-Pro-Text-Medium',
   },
   imgCont3: {
     height: hp('8%'),
@@ -479,7 +460,8 @@ const styles = StyleSheet.create({
   imgCont4: {
     height: hp('8%'),
     width: wp('80%'),
-    marginLeft: wp('4%'),
+    marginTop: wp('4%'),
+    marginLeft: -wp('5%'),
   },
   item1: {
     height: hp('6%'),
@@ -494,40 +476,18 @@ const styles = StyleSheet.create({
     marginTop: -wp('2%'),
   },
   icon: {
-    height: hp('4%'),
-    width: wp('6%'),
+    height: hp('3%'),
+    width: wp('5%'),
     marginLeft: wp('4%'),
     marginTop: wp('2%'),
   },
   logout: {
-    fontWeight: 'bold',
+    marginLeft: -wp('55%'),
     color: 'white',
     textAlign: 'center',
     marginBottom: wp('5%'),
-    height: hp('5%'),
-    width: wp('40%'),
-    padding: 6,
-    borderRadius: wp('8%') / 4,
-    backgroundColor: '#069DFF',
-    marginTop: wp('3%'),
-  },
-  card: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 8,
-    width: '100%',
-    height: 80,
-    borderWidth: 1,
-    borderRadius: 8,
-    backgroundColor: 'red',
-  },
-  pay: {
-    fontWeight: 'bold',
-    color: 'white',
-    textAlign: 'center',
-    marginBottom: wp('5%'),
-    height: hp('5%'),
-    width: wp('40%'),
+    height: hp('4%'),
+    width: wp('30%'),
     padding: 6,
     borderRadius: wp('8%') / 4,
     backgroundColor: '#069DFF',

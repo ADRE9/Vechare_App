@@ -16,18 +16,24 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
-const Card = ({status, dis, loc}) => {
+function Card({status, dis, loc}) {
   return (
-    <View style={styles.cont}>
+    <View style={styles.container}>
       <View style={{flexDirection: 'row'}}>
         <Image
           source={require('../assets/card-charge.png')}
-          style={{height: hp('4%'), width: wp('11%')}}
+          style={{height: hp('8%'), width: wp('14%')}}
           resizeMode="contain"
         />
 
         <View style={{flexDirection: 'column', marginLeft: 30}}>
-          <Text style={{fontSize: wp('3%'), right: wp('6%')}}>
+          <Text
+            style={{
+              fontSize: wp('6%'),
+              right: wp('6%'),
+              color: 'black',
+              fontFamily: 'SF-Pro-Display-Regular',
+            }}>
             PlugIn India
           </Text>
           <View style={{flexDirection: 'row'}}>
@@ -36,14 +42,14 @@ const Card = ({status, dis, loc}) => {
               style={{
                 right: wp('6%'),
                 top: hp('0.2%'),
-                width: wp('2%'),
-                height: hp('2%'),
+                width: wp('5%'),
+                height: hp('3%'),
               }}
             />
             <Text
               style={{
                 color: '#333333',
-                fontSize: wp('2%'),
+                fontSize: wp('3.5%'),
                 left: -wp('5%'),
                 top: hp('0.4%'),
               }}>
@@ -52,12 +58,12 @@ const Card = ({status, dis, loc}) => {
             <TouchableOpacity
               style={{
                 backgroundColor: '#CAEAFF',
-                padding: 3,
-                borderRadius: 8,
-                top: hp('0.1%'),
-                right: wp('0.7%'),
+                padding: wp('1.5%'),
+                borderRadius: wp('10%') / 4,
+                marginLeft: wp('24%'),
+                marginTop: -wp('1%'),
               }}>
-              <Text style={{fontSize: wp('2%'), fontWeight: 'bold'}}>
+              <Text style={{fontSize: wp('3%'), fontWeight: 'bold'}}>
                 {dis} km
               </Text>
             </TouchableOpacity>
@@ -67,21 +73,30 @@ const Card = ({status, dis, loc}) => {
 
       <Text
         style={{
-          fontSize: wp('2%'),
+          fontSize: wp('2.6%'),
+          color: '#484848',
           marginLeft: wp('2%'),
-          marginTop: hp('1.5%'),
+          marginTop: hp('1.2%'),
+          fontFamily: 'SF-Pro-Display-Regular',
         }}>
         {loc}
       </Text>
-      <View style={{flexDirection: 'row', margin: wp('2%')}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          margin: wp('2%'),
+          justifyContent: 'space-evenly',
+          marginHorizontal: 40,
+          right: wp('12%'),
+        }}>
         <TouchableOpacity activeOpacity={0.4}>
           <Image
             source={require('../assets/navigate.png')}
             style={{
-              height: hp('5%'),
-              width: wp('15%'),
+              height: hp('8%'),
+              width: wp('20%'),
               borderRadius: hp('4%') / 4,
-              top: -hp('2%'),
+              marginTop: -wp('2%'),
             }}
             resizeMode="contain"
           />
@@ -90,10 +105,11 @@ const Card = ({status, dis, loc}) => {
           <Image
             source={require('../assets/charge_now.png')}
             style={{
-              height: hp('5%'),
-              width: wp('15%'),
+              height: hp('8%'),
+              width: wp('20%'),
               borderRadius: hp('4%') / 4,
-              top: -hp('2%'),
+
+              marginTop: -wp('2%'),
             }}
             resizeMode="contain"
           />
@@ -101,27 +117,35 @@ const Card = ({status, dis, loc}) => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  cont: {
+  container: {
     borderRadius: 25,
-    borderWidth: 1,
+    borderColor: '#7c7c7c',
+    // borderWidth: 0.3,
     overflow: Platform.OS === 'android' ? 'hidden' : '',
-    padding: 5,
-    marginRight: wp('2%'),
-    marginTop: hp('3%'),
-    height: hp('13%'),
-    width: wp('40%'),
-    left: wp('2%'),
-    // elevation: 5,
-    // shadowColor: "black",
-    // shadowRadius: 4,
-    // shadowOpacity: 0.25,
-    // shadowOffset: {
-    //   height: 2,
-    //   width: 1,
-    // },
+    paddingLeft: wp('5%'),
+    paddingTop: wp('3%'),
+    padding: 25,
+    paddingBottom: wp('3%'),
+    marginRight: 35,
+    marginTop: hp('1%'),
+    marginBottom: hp('1%'),
+    height: hp('19.5%'),
+    width: wp('86%'),
+    left: wp('5%'),
+
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+
+    elevation: 4,
   },
 });
 

@@ -1,13 +1,13 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {focused} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {View, Text, Image, StyleSheet} from 'react-native';
 
-import home from '../screens/home';
 import ScanButton from './scan';
 
 import AppNavigation from './AppNavigation';
 import ProfileNavigator from './ProfileNavigator';
-import Profile from '../screens/Profile';
+import HomeNavigation from './Home Navigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,13 +22,20 @@ const AppBottomNavigation = () => (
       style: {
         backgroundColor: '#ffffff',
         height: 48,
-        elevation: 20,
-        shadowOffset: 20,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 5,
+        },
+        shadowOpacity: 0.36,
+        shadowRadius: 6.68,
+
+        elevation: 11,
       },
     }}>
     <Tab.Screen
       name="CHARGE"
-      component={home}
+      component={HomeNavigation}
       options={{
         tabBarIcon: ({focused}) => (
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -86,6 +93,11 @@ const styles = StyleSheet.create({
   imageContainer: {
     width: 25,
     height: 25,
+    tintColor: focused ? '#069DFF' : '#000000',
+  },
+  icon: {
+    width: 37,
+    height: 37,
     tintColor: focused ? '#069DFF' : '#000000',
   },
 });

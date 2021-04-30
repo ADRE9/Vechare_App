@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    top: 457,
+    top: 440,
   },
   btn: {
     position: 'absolute',

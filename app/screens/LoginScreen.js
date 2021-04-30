@@ -111,7 +111,7 @@ function LoginScreen(props) {
       <Image
         source={require('../assets/login.png')}
         style={{
-          width: wp('69%'),
+          width: wp('75%'),
           height: hp('38%'),
         }}
       />
@@ -122,7 +122,7 @@ function LoginScreen(props) {
           color: 'black',
           marginVertical: 20,
         }}>
-        Charge your vechicle {'\n'}with veCharge
+        Charge your vehicle {'\n'}with veCharge
       </Text>
       {!loggedIn ? (
         <GoogleSigninButton

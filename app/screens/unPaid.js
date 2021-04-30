@@ -23,37 +23,38 @@ import '../Constants/Useragent';
 
 export default function UnPaid({navigation}) {
   // const [isLoading, setLoading] = useState(true);
-  useEffect(() => {
-    async function value() {
-      const token = `Bearer ${await AsyncStorage.getItem('token')}`;
-      const id = await AsyncStorage.getItem('id');
 
-      const socket = io.connect(
-        'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com',
-        {
-          query: {
-            chargerId: id,
-            token: token,
-          },
-        },
-      );
-    }
-    value();
-  });
+  // useEffect(() => {
+  //   async function value() {
+  //     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+  //     const id = await AsyncStorage.getItem('id');
 
-  const disconnect = async () => {
-    var token = `Bearer ${await AsyncStorage.getItem('token')}`;
-    var id = await AsyncStorage.getItem('id');
-    await fetch(
-      `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token,
-        },
-      },
-    );
-  };
+  //     const socket = io.connect(
+  //       'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com',
+  //       {
+  //         query: {
+  //           chargerId: id,
+  //           token: token,
+  //         },
+  //       },
+  //     );
+  //   }
+  //   value();
+  // });
+
+  // const disconnect = async () => {
+  //   var token = `Bearer ${await AsyncStorage.getItem('token')}`;
+  //   var id = await AsyncStorage.getItem('id');
+  //   await fetch(
+  //     `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
+  //     {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: token,
+  //       },
+  //     },
+  //   );
+  // };
 
   const onPay = async () => {
     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
@@ -139,11 +140,7 @@ export default function UnPaid({navigation}) {
           />
         </View>
         <TouchableOpacity
-          onPress={() =>
-            disconnect()
-              .then(() => onPay())
-              .finally(() => navigation.replace('AppBottom'))
-          }>
+          onPress={() => onPay().then(() => navigation.replace('AppBottom'))}>
           <Image
             source={require('../assets/payNow.png')}
             style={{

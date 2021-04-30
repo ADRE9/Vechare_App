@@ -9,7 +9,7 @@ const Container = styled.View`
   background: white;
   justify-content: center;
   align-items: center;
-  elevation: 20;
+  elevation: 40;
 `;
 
 const InnerContainer = styled.View`
@@ -23,8 +23,8 @@ const InnerContainer = styled.View`
 
 const HiddenBox = styled.View`
   height: 55px;
-  width: 100px;
-  background: white;
+  width: 200px;
+  background: yellow;
   position: absolute;
   bottom: 0;
 `;
@@ -32,7 +32,6 @@ const HiddenBox = styled.View`
 function ScanButton({tintcolor, color}) {
   return (
     <Container>
-      <HiddenBox />
       <InnerContainer>
         <Image
           source={require('../assets/chargebottom.png')}

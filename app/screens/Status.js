@@ -8,7 +8,6 @@ import {
   Alert,
   Image,
   Switch,
-  ToastAndroid,
   Button,
 } from 'react-native';
 import io from 'socket.io-client';
@@ -34,6 +33,7 @@ export default class Status extends Component {
       power: '',
       energy: '',
       price: '',
+      time: [],
     };
   }
   disconnect = async () => {
@@ -73,6 +73,28 @@ export default class Status extends Component {
       },
     );
   };
+
+  storeData = async () => {
+    try {
+      await AsyncStorage.setItem(
+        'amount',
+        (
+          this.state.energy * this.state.price +
+          this.state.energy * this.state.price * 0.15
+        ).toFixed(2),
+      );
+      await AsyncStorage.setItem(
+        'amnt',
+        (this.state.energy * this.state.price).toFixed(2),
+      );
+      await AsyncStorage.setItem('energy', this.state.energy);
+      await AsyncStorage.setItem('time', this.state.time);
+      await AsyncStorage.removeItem('id');
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   toggleSwitch = async () => {
     if (this.state.toggle === false) {
       const token = `Bearer ${await AsyncStorage.getItem('token')}`;
@@ -98,22 +120,22 @@ export default class Status extends Component {
 
         'Do you wish to stop charging ?',
         [
-          // {
-          //   text: 'Generate Bill',
-          //   onPress: () =>
-          //     this.disconnect().then(() =>
-          //       this.props.navigation.replace('Payment'),
-          //     ),
-          // },
-
           {
             text: 'Generate Bill',
             onPress: () =>
-              this.switchoff().then(() =>
-                this.props.navigation.replace('Charging'),
-              ),
-            style: 'cancel',
+              this.disconnect()
+                .then(() => this.storeData())
+                .finally(() => this.props.navigation.replace('Charging')),
           },
+
+          // {
+          //   text: 'Generate Bill',
+          //   onPress: () =>
+          //     this.switchoff().then(() =>
+          //       this.props.navigation.replace('Charging'),
+          //     ),
+          //   style: 'cancel',
+          // },
           {
             text: 'No',
             onPress: () => console.log('No'),
@@ -165,6 +187,7 @@ export default class Status extends Component {
       this.setState({power: data.power});
       this.setState({current: data.current});
       this.setState({price: data.price});
+      this.setState({time: data.connectedTimestamp});
     });
 
     socket.on('statusChanged', (data) => {

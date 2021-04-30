@@ -18,6 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 function FinalChargeDetails(props) {
   const [amount, setAmount] = useState([]);
   const [energy, setEnergy] = useState([]);
+  const [currentDate, setCurrentDate] = useState('');
 
   useEffect(() => {
     async function data() {
@@ -29,15 +30,41 @@ function FinalChargeDetails(props) {
     data();
   }, []);
 
+  useEffect(() => {
+    var date = new Date().getDate(); //Current Date
+    var month = new Date().getMonth() + 1; //Current Month
+    var year = new Date().getFullYear(); //Current Year
+    var hours = new Date().getHours(); //Current Hours
+    var min = new Date().getMinutes(); //Current Minutes
+    var sec = new Date().getSeconds(); //Current Seconds
+    setCurrentDate(
+      date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec,
+    );
+  }, []);
+
   const clearStorage = async () => {
     try {
       await AsyncStorage.removeItem('amount');
+      await AsyncStorage.removeItem('amnt');
       await AsyncStorage.removeItem('energy');
       await AsyncStorage.removeItem('id');
     } catch (e) {
       console.log(e);
     }
   };
+  // const disconnect = async () => {
+  //   const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+  //   const id = await AsyncStorage.getItem('id');
+  //   await fetch(
+  //     `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
+  //     {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: token,
+  //       },
+  //     },
+  //   );
+  // };
 
   return (
     <ScrollView style={styles.cont}>
@@ -46,8 +73,17 @@ function FinalChargeDetails(props) {
           <ImageBackground
             source={require('../assets/finalCharge.png')}
             style={{width: wp('100%'), height: hp('16%')}}
-            resizeMode="cover"
-          />
+            resizeMode="cover">
+            <Image
+              source={require('../assets/Back.png')}
+              style={{
+                width: wp('5%'),
+                height: hp('3%'),
+                marginLeft: wp('3%'),
+                marginTop: wp('9%'),
+              }}
+            />
+          </ImageBackground>
         </View>
 
         <View flexDirection="row">
@@ -63,13 +99,36 @@ function FinalChargeDetails(props) {
                 }}
               />
               <View>
-                <Text style={styles.energyContainer}>Energy</Text>
-                <Text style={{fontSize: wp('3.5%'), color: 'white'}}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: wp('5%'),
+                    marginTop: wp('2%'),
+                    fontFamily: 'SF-Pro-Display-Medium',
+                  }}>
+                  Energy
+                </Text>
+                <Text
+                  style={{
+                    fontSize: wp('3.5%'),
+                    color: 'white',
+                    fontFamily: 'SF-Pro-Display-Regular',
+                  }}>
                   Consumed
                 </Text>
               </View>
             </View>
-            <Text style={styles.energy}>{energy} kWh</Text>
+            <Text
+              style={{
+                fontSize: wp('7%'),
+                color: 'white',
+                fontFamily: 'SF-Pro-Display-Semibold',
+                padding: wp('1%'),
+                marginTop: wp('4%'),
+                marginLeft: wp('3%'),
+              }}>
+              {energy} kWh
+            </Text>
           </View>
 
           <View style={styles.box2} flexDirection="column">
@@ -84,13 +143,36 @@ function FinalChargeDetails(props) {
                 }}
               />
               <View>
-                <Text style={styles.amountContainer}>Amount</Text>
-                <Text style={{fontSize: wp('3.5%'), color: 'white'}}>
+                <Text
+                  style={{
+                    fontFamily: 'SF-Pro-Display-Medium',
+                    color: 'white',
+                    fontSize: wp('5%'),
+                    marginTop: wp('2%'),
+                  }}>
+                  Amount
+                </Text>
+                <Text
+                  style={{
+                    fontSize: wp('3.5%'),
+                    color: 'white',
+                    fontFamily: 'SF-Pro-Display-Regular',
+                  }}>
                   Payable
                 </Text>
               </View>
             </View>
-            <Text style={styles.amount}>{amount} INR</Text>
+            <Text
+              style={{
+                fontSize: wp('8%'),
+                color: 'white',
+                fontFamily: 'SF-Pro-Display-Semibold',
+                padding: wp('1%'),
+                marginTop: wp('4%'),
+                marginLeft: wp('4%'),
+              }}>
+              {amount} INR
+            </Text>
           </View>
         </View>
         <Text
@@ -99,10 +181,19 @@ function FinalChargeDetails(props) {
             color: '#3D3D3D',
             marginTop: wp('4%'),
             marginLeft: wp('6%'),
+            fontFamily: 'SF-Pro-Display-Medium',
           }}>
-          14/03/21, 7:45 AM
+          {currentDate} AM
         </Text>
-        <Text style={styles.address}>
+        <Text
+          style={{
+            fontSize: wp('3.8%'),
+            color: '#484848',
+            marginTop: wp('2%'),
+            marginRight: wp('20%'),
+            marginLeft: wp('6%'),
+            fontFamily: 'SF-Pro-Display-Regular',
+          }}>
           Rohini Community Charging Station, B-5/30, New Delhi - 110034
         </Text>
         <View flexDirection="row">
@@ -123,15 +214,25 @@ function FinalChargeDetails(props) {
             />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          onPress={() =>
-            clearStorage().then(() => props.navigation.replace('AppBottom'))
-          }>
-          <Image
-            source={require('../assets/continue.png')}
-            style={styles.btn3}
-          />
-        </TouchableOpacity>
+        <View
+          style={{
+            marginLeft: wp('20%'),
+            marginTop: wp('16%'),
+            width: wp('60%'),
+          }}>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() =>
+              clearStorage().finally(() =>
+                props.navigation.replace('AppBottom'),
+              )
+            }>
+            <Image
+              source={require('../assets/continue.png')}
+              style={styles.btn3}
+            />
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
     </ScrollView>
   );
@@ -177,45 +278,7 @@ const styles = StyleSheet.create({
   btn3: {
     width: wp('60%'),
     height: hp('6%'),
-    marginLeft: wp('20%'),
     borderRadius: wp('6%') / 2,
-    marginTop: wp('16%'),
-  },
-  address: {
-    fontSize: wp('3.5%'),
-    color: '#484848',
-    marginTop: wp('2%'),
-    marginRight: wp('20%'),
-    marginLeft: wp('6%'),
-  },
-  amount: {
-    fontSize: wp('6%'),
-    color: 'white',
-    fontWeight: 'bold',
-    padding: wp('1%'),
-    marginTop: wp('4%'),
-    marginLeft: wp('2%'),
-  },
-  amountContainer: {
-    fontWeight: 'bold',
-    color: 'white',
-    fontSize: wp('5%'),
-    marginTop: wp('2%'),
-  },
-  energy: {
-    fontSize: wp('6%'),
-    color: 'white',
-    fontWeight: 'bold',
-    padding: wp('1%'),
-    marginTop: wp('4%'),
-    marginLeft: wp('3%'),
-  },
-  energyContainer: {
-    fontWeight: 'bold',
-    color: 'white',
-    fontSize: wp('5%'),
-    marginTop: wp('2%'),
   },
 });
-
 export default FinalChargeDetails;

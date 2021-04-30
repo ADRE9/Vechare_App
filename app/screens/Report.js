@@ -12,7 +12,7 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
-export default function Report({navigation}) {
+function Report({navigation}) {
   return (
     <View style={styles.container}>
       <View flexDirection="row">
@@ -70,7 +70,7 @@ export default function Report({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffffff',
+    backgroundColor: 'white',
   },
   header: {
     fontSize: wp('7%'),
@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
     marginTop: wp('6%'),
     marginLeft: wp('6%'),
     fontWeight: 'bold',
+    fontFamily: 'SF-Pro-Display-Black',
   },
   subtitle: {
     fontSize: wp('3%'),
@@ -86,12 +87,14 @@ const styles = StyleSheet.create({
     marginRight: wp('6%'),
     marginLeft: wp('6%'),
     lineHeight: wp('4%'),
+    fontFamily: 'OpenSans-Regular',
   },
   name: {
     marginLeft: wp('6%'),
     fontSize: wp('3%'),
     color: '#000000',
     marginTop: wp('4%'),
+    fontFamily: 'OpenSans-Regular',
   },
   input: {
     marginLeft: wp('6%'),
@@ -115,3 +118,5 @@ const styles = StyleSheet.create({
     height: hp('20%'),
   },
 });
+
+export default Report;

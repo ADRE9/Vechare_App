@@ -7,6 +7,9 @@ import EditProfile from '../screens/EditProfile';
 import WorkingScreen from '../screens/WorkingScreen';
 import ReferScreen from '../screens/ReferScreen';
 import About from '../screens/About';
+import HostScreen from '../screens/HostScreen';
+import RegisterHost from '../screens/RegisterHost';
+import BecomeHost from '../screens/BecomeHost';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +25,9 @@ const ProfileNavigator = ({navigation, route}) => {
       screenOptions={{headerShown: false}}
       mode="card">
       <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Host" component={HostScreen} />
+      <Stack.Screen name="RegisterHost" component={RegisterHost} />
+      <Stack.Screen name="BecomeHost" component={BecomeHost} />
       <Stack.Screen name="Feed" component={FeedBack} />
       <Stack.Screen name="Report" component={Report} />
       <Stack.Screen name="Edit" component={EditProfile} />

@@ -17,7 +17,7 @@ const Unpaid = ({amount, onPress}) => {
     <View style={styles.container}>
       <ImageBackground
         source={require('../assets/unpaidscreen.png')}
-        style={{width: wp('100%'), height: hp('96%')}}
+        style={{width: wp('100%'), height: hp('94%')}}
         resizeMode="cover"
       />
       <Text style={styles.txt}>₹ {amount}</Text>
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   txt: {
     position: 'absolute',
     marginTop: 276,
-    marginLeft: 23,
+    marginLeft: 20,
     fontSize: 26,
     color: 'white',
     fontWeight: 'bold',
