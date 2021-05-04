@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ImageBackground,
   SafeAreaView,
@@ -14,8 +14,25 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function EditProfile({navigation}) {
+  const [name, setName] = useState([]);
+  useEffect(() => {
+    async function value() {
+      const user = await AsyncStorage.getItem('name');
+      setName(user);
+      // console.log("name of user",user);
+    }
+    value();
+    console.log('edit profile SCreen');
+  }, []);
+
+  let pic = {
+    uri:
+      'https://lh3.googleusercontent.com/a-/AOh14Gh3xuRnCwIu4BJJnbvE58fR4RSWKSWIa03WjcQ9pek=s96-c',
+  };
+
   return (
     <SafeAreaView style={styles.cont}>
       <ScrollView style={styles.cont}>
@@ -37,10 +54,7 @@ function EditProfile({navigation}) {
           activeOpacity={0.5}
           onPress={() => console.log('pressed avatar')}
           style={styles.avatar}>
-          <Image
-            source={require('../assets/avatar.png')}
-            style={{height: hp('8%'), width: wp('16%')}}
-          />
+          <Image source={pic} style={{height: hp('8%'), width: wp('16%')}} />
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.5}
@@ -51,7 +65,7 @@ function EditProfile({navigation}) {
             style={{height: hp('4%'), width: wp('8%')}}
           />
         </TouchableOpacity>
-        <Text style={styles.name}>Moksh Garg</Text>
+        <Text style={styles.name}>{name}</Text>
         <View flexDirection="row" style={styles.cont4}>
           <Image source={require('../assets/loc.png')} style={styles.loc} />
           <Text style={styles.textCont2}>Rohini/City , Delhi/State</Text>

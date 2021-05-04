@@ -14,6 +14,7 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment';
 
 function FinalChargeDetails(props) {
   const [amount, setAmount] = useState([]);
@@ -26,20 +27,11 @@ function FinalChargeDetails(props) {
       const en = await AsyncStorage.getItem('energy');
       setAmount(am);
       setEnergy(en);
+      var date = moment().utcOffset('+05:30').format('MMMM Do YYYY, h:mm a');
+      setCurrentDate(date);
     }
     data();
-  }, []);
-
-  useEffect(() => {
-    var date = new Date().getDate(); //Current Date
-    var month = new Date().getMonth() + 1; //Current Month
-    var year = new Date().getFullYear(); //Current Year
-    var hours = new Date().getHours(); //Current Hours
-    var min = new Date().getMinutes(); //Current Minutes
-    var sec = new Date().getSeconds(); //Current Seconds
-    setCurrentDate(
-      date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec,
-    );
+    console.log('Final Charging Screen');
   }, []);
 
   const clearStorage = async () => {
@@ -52,19 +44,21 @@ function FinalChargeDetails(props) {
       console.log(e);
     }
   };
-  // const disconnect = async () => {
-  //   const token = `Bearer ${await AsyncStorage.getItem('token')}`;
-  //   const id = await AsyncStorage.getItem('id');
-  //   await fetch(
-  //     `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
-  //     {
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         Authorization: token,
-  //       },
-  //     },
-  //   );
-  // };
+  const disconnect = async () => {
+    const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+    const id = await AsyncStorage.getItem('idValue');
+    // const idValue = await AsyncStorage.getItem('id');
+    // console.log('Value of id', idValue);
+    await fetch(
+      `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      },
+    );
+  };
 
   return (
     <ScrollView style={styles.cont}>
@@ -74,7 +68,7 @@ function FinalChargeDetails(props) {
             source={require('../assets/finalCharge.png')}
             style={{width: wp('100%'), height: hp('16%')}}
             resizeMode="cover">
-            <Image
+            {/* <Image
               source={require('../assets/Back.png')}
               style={{
                 width: wp('5%'),
@@ -82,7 +76,7 @@ function FinalChargeDetails(props) {
                 marginLeft: wp('3%'),
                 marginTop: wp('9%'),
               }}
-            />
+            /> */}
           </ImageBackground>
         </View>
 
@@ -120,7 +114,7 @@ function FinalChargeDetails(props) {
             </View>
             <Text
               style={{
-                fontSize: wp('7%'),
+                fontSize: wp('6%'),
                 color: 'white',
                 fontFamily: 'SF-Pro-Display-Semibold',
                 padding: wp('1%'),
@@ -164,7 +158,7 @@ function FinalChargeDetails(props) {
             </View>
             <Text
               style={{
-                fontSize: wp('8%'),
+                fontSize: wp('6%'),
                 color: 'white',
                 fontFamily: 'SF-Pro-Display-Semibold',
                 padding: wp('1%'),
@@ -183,7 +177,7 @@ function FinalChargeDetails(props) {
             marginLeft: wp('6%'),
             fontFamily: 'SF-Pro-Display-Medium',
           }}>
-          {currentDate} AM
+          {currentDate}
         </Text>
         <Text
           style={{
@@ -223,9 +217,9 @@ function FinalChargeDetails(props) {
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={() =>
-              clearStorage().finally(() =>
-                props.navigation.replace('AppBottom'),
-              )
+              disconnect()
+                .then(() => clearStorage())
+                .finally(() => props.navigation.replace('AppBottom'))
             }>
             <Image
               source={require('../assets/continue.png')}

@@ -30,7 +30,7 @@ import CarouselRecent from '../components/CarouselRecent';
 export default function Home({navigation}) {
   // const [paid, setPaid] = useState([]);
   // const [amount, setAmount] = useState([]);
-  // const [name, setName] = useState([]);
+  const [name, setName] = useState([]);
 
   // useEffect(() => {
   //   async function unpaid() {
@@ -78,6 +78,16 @@ export default function Home({navigation}) {
   //     </View>
   //   );
   // }
+  useEffect(() => {
+    async function value() {
+      const user = await AsyncStorage.getItem('name');
+      setName(user);
+      // console.log("name of user",user);
+    }
+    value();
+    console.log('home SCreen');
+  }, []);
+
   return (
     <SafeAreaView style={styles.cont}>
       <ScrollView style={styles.cont}>
@@ -98,13 +108,13 @@ export default function Home({navigation}) {
               }}>
               <Text
                 style={{
-                  fontSize: 28,
+                  fontSize: 22,
                   color: 'white',
-                  marginRight: wp('47%'),
+                  marginRight: wp('37%'),
                   marginBottom: wp('20%'),
                   fontFamily: 'SF-Pro-Text-Bold',
                 }}>
-                Hello Moksh,
+                Hello {name},
               </Text>
             </View>
           </ImageBackground>

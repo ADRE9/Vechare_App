@@ -54,25 +54,25 @@ export default class Status extends Component {
     }
   };
 
-  switchoff = async () => {
-    const token = `Bearer ${await AsyncStorage.getItem('token')}`;
-    const id = await AsyncStorage.getItem('id');
+  // switchoff = async () => {
+  //   const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+  //   const id = await AsyncStorage.getItem('id');
 
-    fetch(
-      'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState',
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token,
-        },
-        body: JSON.stringify({
-          status: this.state.toggle === false ? 'ON' : 'OFF',
-          chargerId: id,
-        }),
-      },
-    );
-  };
+  //   fetch(
+  //     'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState',
+  //     {
+  //       method: 'PATCH',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: token,
+  //       },
+  //       body: JSON.stringify({
+  //         status: this.state.toggle === false ? 'ON' : 'OFF',
+  //         chargerId: id,
+  //       }),
+  //     },
+  //   );
+  // };
 
   storeData = async () => {
     try {
@@ -90,6 +90,7 @@ export default class Status extends Component {
       await AsyncStorage.setItem('energy', this.state.energy);
       await AsyncStorage.setItem('time', this.state.time);
       await AsyncStorage.removeItem('id');
+      console.log('store data of status screen');
     } catch (e) {
       console.log(e);
     }
@@ -159,6 +160,7 @@ export default class Status extends Component {
   // };
 
   async componentDidMount() {
+    console.log('Status screen');
     loader.load((v) => this.setState({loaded: true}));
     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
     const id = await AsyncStorage.getItem('id');

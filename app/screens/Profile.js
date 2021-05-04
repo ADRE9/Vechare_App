@@ -10,6 +10,7 @@ import {
   SafeAreaView,
   Image,
   ScrollView,
+  Linking,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
@@ -18,6 +19,9 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import Share from 'react-native-share';
+
+import files from '../../assets/filesBase64';
 import UnpaidNotify from '../components/UnpaidNotify';
 
 function Profile({navigation}) {
@@ -25,6 +29,7 @@ function Profile({navigation}) {
   const [user, setUser] = useState([]);
   const [paid, setPaid] = useState([]);
   const [amount, setAmount] = useState([]);
+  const [name, setName] = useState([]);
 
   const signOut = async () => {
     try {
@@ -37,6 +42,28 @@ function Profile({navigation}) {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const intsa = async () => {
+    const instagramURL = 'https://www.instagram.com/valerio_electric/';
+    return await Linking.openURL(instagramURL);
+  };
+  const twitter = async () => {
+    const twit = 'https://twitter.com/ValerioElectric';
+    return Linking.openURL(twit);
+  };
+  const Facebook = async () => {
+    const facebook = 'https://www.facebook.com/ValerioElectric';
+    return Linking.openURL(facebook);
+  };
+  const LinkedIn = async () => {
+    const link = 'https://www.linkedin.com/company/valerio-electric';
+    return Linking.openURL(link);
+  };
+
+  const website = async () => {
+    const web = 'https://www.valerioelectric.com/';
+    return Linking.openURL(web);
   };
 
   const sign = () => {
@@ -90,322 +117,187 @@ function Profile({navigation}) {
     unpaid();
   }, []);
 
-  if (paid === false) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.container}>
-          <View>
-            <ImageBackground
-              style={styles.imgCont}
-              source={require('../assets/profileScreen.png')}
-              resizeMode="cover">
-              <Text style={styles.textCont}>Moksh Garg</Text>
-              <View flexDirection="column">
-                <View flexDirection="row">
-                  <Image
-                    source={require('../assets/loc.png')}
-                    style={styles.loc}
-                  />
-                  <Text style={styles.textCont2}>
-                    Rohini/City , Delhi/State
-                  </Text>
-                </View>
-                <TouchableOpacity onPress={() => navigation.navigate('Edit')}>
-                  <Text style={styles.textCont3}>View Profile</Text>
-                </TouchableOpacity>
-              </View>
-            </ImageBackground>
-          </View>
-          <View>
-            <Text style={styles.imgCont2}>
-              Electrify your Establishment today
-            </Text>
+  useEffect(() => {
+    async function value() {
+      const user = await AsyncStorage.getItem('name');
+      setName(user);
+      // console.log("name of user",user);
+    }
+    value();
+  }, []);
 
+  const share = async () => {
+    const shareOptions = {
+      message:
+        'Are you the proud owner of an electric vehicle? \nOr are you thinking to buy one? \n \nCheck out veCharge - a mobile app to take care of all your EV needs! Locate charging points pre-book slots, monitor charging remotely & pay digitally for a seamless charging experience.\n \nPower up with veCharge ⚡\nDownload the app now ',
+      url: files.image1,
+    };
+    try {
+      await Share.open(shareOptions);
+    } catch (error) {
+      console.log('Error =>', error);
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.container}>
+        <View>
+          <ImageBackground
+            style={styles.imgCont}
+            source={require('../assets/profileScreen.png')}
+            resizeMode="cover">
+            <Text style={styles.textCont}>{name}</Text>
+            <View flexDirection="column">
+              <View flexDirection="row">
+                <Image
+                  source={require('../assets/loc.png')}
+                  style={styles.loc}
+                />
+                <Text style={styles.textCont2}>Rohini/City , Delhi/State</Text>
+              </View>
+              <TouchableOpacity onPress={() => navigation.navigate('Edit')}>
+                <Text style={styles.textCont3}>View Profile</Text>
+              </TouchableOpacity>
+            </View>
+          </ImageBackground>
+        </View>
+        <View>
+          <Text style={styles.imgCont2}>
+            Electrify your Establishment today
+          </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Host')}>
             <Image
               source={require('../assets/profile2.png')}
               resizeMode="contain"
               style={styles.imgCont4}
             />
-          </View>
-          <View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Work')}
-              activeOpacity={0.5}>
-              <Image
-                source={require('../assets/img1.png')}
-                style={styles.item1}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => navigation.navigate('Refer')}>
-              <Image
-                source={require('../assets/img2.png')}
-                style={styles.item2}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => navigation.navigate('Report')}>
-              <Image
-                source={require('../assets/img3.png')}
-                style={styles.item2}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => navigation.navigate('Feedback')}>
-              <Image
-                source={require('../assets/img4.png')}
-                style={styles.item2}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => navigation.navigate('Rate')}>
-              <Image
-                source={require('../assets/img5.png')}
-                style={styles.item2}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => navigation.navigate('About')}>
-              <Image
-                source={require('../assets/img6.png')}
-                style={{
-                  height: hp('6%'),
-                  width: wp('80%'),
-                  marginLeft: wp('8%'),
-                  marginTop: -wp('2%'),
-                }}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Work')}
+            activeOpacity={0.5}>
+            <Image
+              source={require('../assets/img1.png')}
+              style={styles.item1}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.5} onPress={share}>
+            <Image
+              source={require('../assets/img2.png')}
+              style={styles.item2}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => navigation.navigate('Report')}>
+            <Image
+              source={require('../assets/img3.png')}
+              style={styles.item2}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => navigation.navigate('Feed')}>
+            <Image
+              source={require('../assets/img4.png')}
+              style={styles.item2}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => navigation.navigate('Rate')}>
+            <Image
+              source={require('../assets/img5.png')}
+              style={styles.item2}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => navigation.navigate('About')}>
+            <Image
+              source={require('../assets/img6.png')}
               style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={styles.logout}>Logout</Text>
-            </TouchableOpacity>
+                height: hp('7%'),
+                width: wp('81%'),
+                marginLeft: wp('8%'),
+                marginTop: -wp('2%'),
+              }}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => sign()}
+            activeOpacity={0.5}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text style={styles.logout}>Logout</Text>
+          </TouchableOpacity>
 
-            <View flexDirection="row">
-              <Text
-                style={{
-                  color: '#292929',
-                  marginLeft: wp('8%'),
-                  marginTop: wp('3%'),
-                }}>
-                Connect with us
-              </Text>
-              <TouchableOpacity activeOpacity={0.5}>
-                <Image
-                  source={require('../assets/twitter.png')}
-                  style={styles.icon}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => console.log('btn clicked')}>
-                <Image
-                  source={require('../assets/fb.png')}
-                  style={styles.icon}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Image
-                  source={require('../assets/insta.png')}
-                  style={styles.icon}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Image
-                  source={require('../assets/in.png')}
-                  style={styles.icon}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Image
-                  source={require('../assets/net.png')}
-                  style={styles.icon}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-            </View>
+          <View flexDirection="row">
+            <Text
+              style={{
+                color: '#292929',
+                marginLeft: wp('8%'),
+                marginTop: wp('3%'),
+                fontSize: 17,
+              }}>
+              Connect with us
+            </Text>
+            <TouchableOpacity activeOpacity={0.5} onPress={twitter}>
+              <Image
+                source={require('../assets/twitter.png')}
+                style={styles.icon}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={Facebook}>
+              <Image
+                source={require('../assets/fb.png')}
+                style={styles.icon}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={intsa}>
+              <Image
+                source={require('../assets/insta.png')}
+                style={styles.icon}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={LinkedIn}>
+              <Image
+                source={require('../assets/in.png')}
+                style={styles.icon}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={website}>
+              <Image
+                source={require('../assets/net.png')}
+                style={styles.icon}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
           </View>
-        </ScrollView>
+        </View>
+      </ScrollView>
+      {paid === false ? (
         <UnpaidNotify
           amount={amount}
           onPress={() => navigation.replace('unPaid')}
         />
-      </SafeAreaView>
-    );
-  } else {
-    return (
-      <ScrollView style={styles.container}>
-        <SafeAreaView style={styles.container}>
-          <View>
-            <ImageBackground
-              style={styles.imgCont}
-              source={require('../assets/profileScreen.png')}
-              resizeMode="cover">
-              <Text style={styles.textCont}>Moksh Garg</Text>
-              <View flexDirection="column">
-                <View flexDirection="row">
-                  <Image
-                    source={require('../assets/loc.png')}
-                    style={styles.loc}
-                  />
-                  <Text style={styles.textCont2}>
-                    Rohini/City , Delhi/State
-                  </Text>
-                </View>
-                <TouchableOpacity onPress={() => navigation.navigate('Edit')}>
-                  <Text style={styles.textCont3}>View Profile</Text>
-                </TouchableOpacity>
-              </View>
-            </ImageBackground>
-          </View>
-          <View>
-            <Text style={styles.imgCont2}>
-              Electrify your Establishment today
-            </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Host')}>
-              <Image
-                source={require('../assets/profile2.png')}
-                resizeMode="contain"
-                style={styles.imgCont4}
-              />
-            </TouchableOpacity>
-          </View>
-          <View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Work')}
-              activeOpacity={0.5}>
-              <Image
-                source={require('../assets/img1.png')}
-                style={styles.item1}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => navigation.navigate('Refer')}>
-              <Image
-                source={require('../assets/img2.png')}
-                style={styles.item2}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => navigation.navigate('Report')}>
-              <Image
-                source={require('../assets/img3.png')}
-                style={styles.item2}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => navigation.navigate('Feed')}>
-              <Image
-                source={require('../assets/img4.png')}
-                style={styles.item2}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => navigation.navigate('Rate')}>
-              <Image
-                source={require('../assets/img5.png')}
-                style={styles.item2}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => navigation.navigate('About')}>
-              <Image
-                source={require('../assets/img6.png')}
-                style={{
-                  height: hp('6%'),
-                  width: wp('80%'),
-                  marginLeft: wp('8%'),
-                  marginTop: -wp('2%'),
-                }}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={styles.logout}>Logout</Text>
-            </TouchableOpacity>
-
-            <View flexDirection="row">
-              <Text
-                style={{
-                  color: '#292929',
-                  marginLeft: wp('8%'),
-                  marginTop: wp('3%'),
-                }}>
-                Connect with us
-              </Text>
-              <TouchableOpacity activeOpacity={0.5}>
-                <Image
-                  source={require('../assets/twitter.png')}
-                  style={styles.icon}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => console.log('btn clicked')}>
-                <Image
-                  source={require('../assets/fb.png')}
-                  style={styles.icon}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Image
-                  source={require('../assets/insta.png')}
-                  style={styles.icon}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Image
-                  source={require('../assets/in.png')}
-                  style={styles.icon}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Image
-                  source={require('../assets/net.png')}
-                  style={styles.icon}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </SafeAreaView>
-      </ScrollView>
-    );
-  }
+      ) : null}
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -418,7 +310,7 @@ const styles = StyleSheet.create({
     height: hp('25%'),
   },
   textCont: {
-    fontSize: wp('8%'),
+    fontSize: wp('7%'),
     color: 'white',
     marginTop: hp('3%'),
     marginLeft: hp('4%'),
@@ -470,14 +362,14 @@ const styles = StyleSheet.create({
     marginTop: wp('2%'),
   },
   item2: {
-    height: hp('6%'),
-    width: wp('80%'),
+    height: hp('7%'),
+    width: wp('81%'),
     marginLeft: wp('8%'),
     marginTop: -wp('2%'),
   },
   icon: {
-    height: hp('3%'),
-    width: wp('5%'),
+    height: hp('4%'),
+    width: wp('7%'),
     marginLeft: wp('4%'),
     marginTop: wp('2%'),
   },

@@ -14,11 +14,12 @@ const dots = ({selected}) => {
   return (
     <View
       style={{
-        width: wp('2.6%'),
-        height: hp('1.5%'),
+        width: wp('1.8%'),
+        height: hp('1%'),
         marginHorizontal: 5,
         backgroundColor,
         marginBottom: 250,
+        marginTop: -wp('8%'),
         borderRadius: wp('2.6%') / 2,
       }}
     />
@@ -50,6 +51,7 @@ function onBoardingScreen({navigation}) {
               />
             ),
             title: 'CHECK PRICES',
+            subtitle: '',
             containerStyles: {paddingBottom: 30},
           },
           {
@@ -61,6 +63,7 @@ function onBoardingScreen({navigation}) {
               />
             ),
             title: 'PRE-BOOK STATIONS',
+            subtitle: '',
           },
           {
             backgroundColor: '#fff',
@@ -81,6 +84,7 @@ function onBoardingScreen({navigation}) {
               />
             ),
             title: 'JOIN OUR NETWORK',
+            subtitle: '',
           },
         ]}
       />

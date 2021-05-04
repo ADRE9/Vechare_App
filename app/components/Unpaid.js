@@ -37,6 +37,7 @@ const Unpaid = ({amount, onPress}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 8,
   },
   btn: {
     position: 'absolute',

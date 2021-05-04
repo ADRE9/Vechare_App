@@ -11,69 +11,94 @@ import {
   Button,
   TouchableOpacity,
   TextInput,
+  ToastAndroid,
 } from 'react-native';
-import {CameraScreen} from 'react-native-camera-kit';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import QRCodeScanner from 'react-native-qrcode-scanner';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+
 import Unpaid from '../components/Unpaid';
 
 export default function QRScreen({navigation}) {
-  const [qrvalue, setQrvalue] = useState('');
   const [opneScanner, setOpneScanner] = useState(false);
   const [connect, setConnect] = useState([]);
   const [idvalue, setIdvalue] = useState([]);
   const [paid, setPaid] = useState([]);
   const [amount, setAmount] = useState([]);
 
-  const onBarcodeScan = (qrvalue) => {
+  const onBarcodeScan = async (e) => {
     // Called after te successful scanning of QRCode/Barcode
-    async function value() {
-      try {
-        await AsyncStorage.setItem('id', qrvalue);
-      } catch (e) {
-        console.log('error in token storing', e);
-      }
-    }
-    value();
-    setQrvalue(qrvalue);
-    setOpneScanner(false);
-  };
+    console.log(e.data);
+    const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+    const chargerID = await fetch(
+      `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/check/${e.data}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      },
+    );
 
-  const onOpneScanner = () => {
-    // To Start Scanning
-    if (Platform.OS === 'android') {
-      async function requestCameraPermission() {
+    const charger = await chargerID.json();
+
+    if (charger.status === 'success') {
+      async function value() {
         try {
-          const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.CAMERA,
-            {
-              title: 'Camera Permission',
-              message: 'App needs permission for camera access',
-            },
-          );
-          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            // If CAMERA Permission is granted
-            setQrvalue('');
-            setOpneScanner(true);
-          } else {
-            alert('CAMERA permission denied');
-          }
-        } catch (err) {
-          alert('Camera permission err', err);
-          console.warn(err);
+          await AsyncStorage.setItem('id', e.data);
+          await AsyncStorage.setItem('idValue', e.data);
+        } catch (e) {
+          console.log('error in token storing', e);
         }
       }
-
-      // Calling the camera permission function
-      requestCameraPermission();
+      value().then(() => navigation.replace('Status'));
     } else {
-      setQrvalue('');
-      setOpneScanner(true);
+      return ToastAndroid.showWithGravityAndOffset(
+        'Invalid Charger ID',
+        ToastAndroid.LONG,
+        ToastAndroid.CENTER,
+        25,
+        50,
+      );
     }
   };
+
+  // const onOpneScanner = () => {
+  //   // To Start Scanning
+  //   if (Platform.OS === 'android') {
+  //     async function requestCameraPermission() {
+  //       try {
+  //         const granted = await PermissionsAndroid.request(
+  //           PermissionsAndroid.PERMISSIONS.CAMERA,
+  //           {
+  //             title: 'Camera Permission',
+  //             message: 'App needs permission for camera access',
+  //           },
+  //         );
+  //         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+  //           // If CAMERA Permission is granted
+  //           setQrvalue('');
+  //           setOpneScanner(true);
+  //         } else {
+  //           alert('CAMERA permission denied');
+  //         }
+  //       } catch (err) {
+  //         alert('Camera permission err', err);
+  //         console.warn(err);
+  //       }
+  //     }
+  //
+  //     // Calling the camera permission function
+  //     requestCameraPermission();
+  //   } else {
+  //     setQrvalue('');
+  //     setOpneScanner(true);
+  //   }
+  // };
 
   useEffect(() => {
     async function connection() {
@@ -123,59 +148,44 @@ export default function QRScreen({navigation}) {
     );
   } else {
     return (
-      <SafeAreaView style={{flex: 1}}>
-        {opneScanner ? (
-          <View style={{flex: 0.5}}>
-            <CameraScreen
-              showFrame={true}
-              // Show/hide scan frame
-              scanBarcode={true}
-              // Can restrict for the QR Code only
-              laserColor={'blue'}
-              // Color can be of your choice
-              frameColor={'yellow'}
-              // If frame is visible then frame color
-              colorForScannerFrame={'black'}
-              // Scanner Frame color
-
-              // onReadCode={() =>
-              //   props.navigation.navigate('Status', {
-              //     value: qrvalue,
-              //   })
-              // }
-              onReadCode={(event) =>
-                onBarcodeScan(event.nativeEvent.codeStringValue)
-              }
-            />
-          </View>
-        ) : (
-          <View style={styles.container}>
-            <Text style={styles.textStyle}>
-              {qrvalue ? navigation.replace('Status') : ''}
-            </Text>
-            {/* <Button
-              title="status"
-              onPress={() => navigation.navigate('Status')}
-            /> */}
-            <TouchableHighlight onPress={onOpneScanner}>
-              <Image
-                source={require('../assets/scanner.png')}
-                style={{width: 250, height: 250}}
-              />
-            </TouchableHighlight>
+      <QRCodeScanner
+        onRead={onBarcodeScan}
+        containerStyle={{
+          backgroundColor: 'white',
+          flex: 1,
+        }}
+        cameraStyle={[{height: 350, width: 400, marginTop: -85}]}
+        markerStyle={{borderColor: '#626262', borderRadius: 30}}
+        //   flashMode={RNCamera.Constants.FlashMode.torch}
+        reactivate={false}
+        permissionDialogMessage="Need Permission to access Camera"
+        reactivateTimeout={10}
+        showMarker={true}
+        // topContent={
+        //   <Text style={styles.centerText}>
+        //     Go to <Text style={styles.textBold}>QrCode</Text> on your nearby
+        //     Station and scan the QR code.
+        //   </Text>
+        // }
+        bottomContent={
+          <View>
             <Text style={styles.charge}>Charge via Station ID</Text>
             <Text
               style={{
                 fontSize: 15,
                 marginTop: 35,
-                right: 95,
               }}>
               Enter code here
             </Text>
             <TextInput style={styles.input} placeholder="Enter station" />
+            <TouchableOpacity
+              style={styles.buttonTouchable}
+              onPress={() => navigation.replace('Status')}>
+              <Text style={styles.buttonText}>Next ➡ </Text>
+            </TouchableOpacity>
           </View>
-        )}
-      </SafeAreaView>
+        }
+      />
     );
   }
 }
@@ -223,7 +233,7 @@ const styles = StyleSheet.create({
     marginRight: 30,
     borderRadius: 30,
     padding: 5,
-    paddingLeft: 10,
+    // paddingLeft: 10,
     backgroundColor: '#e7e7e7',
     color: 'black',
     width: 280,
@@ -255,5 +265,22 @@ const styles = StyleSheet.create({
     fontSize: 23,
     fontWeight: 'bold',
     width: '80%',
+  },
+  centerText: {
+    flex: 1,
+    fontSize: 18,
+    padding: 32,
+    color: '#777',
+  },
+  textBold: {
+    fontWeight: '500',
+    color: '#000',
+  },
+  buttonText: {
+    fontSize: 21,
+    color: 'rgb(0,122,255)',
+  },
+  buttonTouchable: {
+    padding: 16,
   },
 });

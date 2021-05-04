@@ -44,7 +44,7 @@ export default function UnPaid({navigation}) {
 
   // const disconnect = async () => {
   //   var token = `Bearer ${await AsyncStorage.getItem('token')}`;
-  //   var id = await AsyncStorage.getItem('id');
+  //   var id = await AsyncStorage.getItem('idValue');
   //   await fetch(
   //     `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
   //     {
@@ -97,6 +97,7 @@ export default function UnPaid({navigation}) {
         razorpaySignature: response.razorpay_signature,
       };
       // console.log(data);
+      console.log('unpaid SCreen');
       const result = await axios.post(
         'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/madePayment',
         data,
@@ -112,7 +113,7 @@ export default function UnPaid({navigation}) {
           source={require('../assets/details.png')}
           style={{width: wp('100%'), height: hp('16%')}}
           resizeMode="cover">
-          <Image
+          {/* <Image
             source={require('../assets/Back.png')}
             style={{
               width: wp('5%'),
@@ -120,7 +121,7 @@ export default function UnPaid({navigation}) {
               marginLeft: wp('4%'),
               marginTop: wp('2%'),
             }}
-          />
+          /> */}
         </ImageBackground>
       </View>
 
@@ -140,7 +141,9 @@ export default function UnPaid({navigation}) {
           />
         </View>
         <TouchableOpacity
-          onPress={() => onPay().then(() => navigation.replace('AppBottom'))}>
+          onPress={() =>
+            onPay().finally(() => navigation.replace('AppBottom'))
+          }>
           <Image
             source={require('../assets/payNow.png')}
             style={{

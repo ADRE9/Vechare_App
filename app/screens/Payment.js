@@ -17,6 +17,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RazorpayCheckout from 'react-native-razorpay';
 import LinearGradient from 'react-native-linear-gradient';
+import moment from 'moment';
 
 import {RazorpayApiKey} from '../Constants/config';
 
@@ -40,17 +41,13 @@ export default function Payment({navigation}) {
       setAmount(am);
       setEnergy(en);
       setTime(tm);
-
+      var hours = new Date().getHours(); //Current Hours
+      var min = new Date().getMinutes(); //Current Minutes
+      setCurrenthour(hours);
+      setCurrentMin(min);
       console.log('time from status screen', tm);
     }
     data();
-  }, []);
-
-  useEffect(() => {
-    var hours = new Date().getHours(); //Current Hours
-    var min = new Date().getMinutes(); //Current Minutes
-    setCurrenthour(hours);
-    setCurrentMin(min);
   }, []);
 
   const chargeHours = new Date(time).getHours();
@@ -190,7 +187,8 @@ export default function Payment({navigation}) {
           razorpayOrderId: response.razorpay_order_id,
           razorpaySignature: response.razorpay_signature,
         };
-        console.log(data);
+        // console.log(data);
+        console.log('payment screen');
         const result = await axios.post(
           'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/madePayment',
           data,
@@ -373,21 +371,7 @@ export default function Payment({navigation}) {
           </LinearGradient>
         </View>
 
-        <View
-          flexDirection="row"
-          style={{
-            alignItems: 'center',
-            shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 1,
-            },
-            shadowOpacity: 0.18,
-            shadowRadius: 1.0,
-            elevation: 3,
-            height: hp('10%'),
-            marginTop: wp('14.8%'),
-          }}>
+        <View flexDirection="row" style={styles.amount}>
           <Text
             style={{
               fontFamily: 'SF-Pro-Display-Semibold',
@@ -400,9 +384,7 @@ export default function Payment({navigation}) {
           </Text>
 
           <TouchableOpacity
-            onPress={() =>
-              onPay().finally(() => navigation.replace('PayDone'))
-            }>
+            onPress={() => onPay().then(() => navigation.replace('PayDone'))}>
             <Image
               source={require('../assets/payNow.png')}
               style={{
@@ -465,5 +447,18 @@ const styles = StyleSheet.create({
     marginTop: hp('5%'),
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  amount: {
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+    elevation: 3,
+    height: hp('10%'),
+    marginTop: wp('14.8%'),
   },
 });

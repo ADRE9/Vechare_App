@@ -14,6 +14,7 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment';
 
 function BillingScreen(props) {
   const [amount, setAmount] = useState([]);
@@ -28,16 +29,12 @@ function BillingScreen(props) {
       setAmnt(amnt);
     }
     data();
+    console.log('Receipt SCreen');
   }, []);
 
   useEffect(() => {
-    var date = new Date().getDate(); //Current Date
-    var month = new Date().getMonth() + 1; //Current Month
-    var year = new Date().getFullYear(); //Current Year
-    var hours = new Date().getHours(); //Current Hours
-    var min = new Date().getMinutes(); //Current Minutes
-
-    setCurrentDate(date + '/' + month + '/' + year + ' ' + hours + ':' + min);
+    var date = moment().utcOffset('+05:30').format('MMMM Do YYYY, h:mm a');
+    setCurrentDate(date);
   }, []);
 
   return (
@@ -62,7 +59,7 @@ function BillingScreen(props) {
               source={require('../assets/car.png')}
               style={{width: wp('100%'), height: hp('35%')}}
               resizeMode="cover">
-              <Text style={styles.content1}>{currentDate} AM</Text>
+              <Text style={styles.content1}>{currentDate} </Text>
               <Text style={styles.content2}>
                 Rohini Community Charging Station, B-5/30, New Delhi - 110034
               </Text>

@@ -38,14 +38,20 @@ function LoginScreen(props) {
       return () => backHandler.remove();
     }, []),
   );
+
   const [loggedIn, setloggedIn] = useState(false);
   const [user, setUser] = useState([]);
+  // const [name, setName] = useState([]);
 
   const _signIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const {accessToken, idToken} = await GoogleSignin.signIn();
       setloggedIn(true);
+
+      const currentUser = await GoogleSignin.getCurrentUser();
+      // setName(currentUser);
+      await AsyncStorage.setItem('name', currentUser.user.name);
 
       const credential = auth.GoogleAuthProvider.credential(
         idToken,
