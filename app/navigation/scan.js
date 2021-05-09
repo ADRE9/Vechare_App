@@ -35,7 +35,7 @@ function ScanButton({tintcolor, color}) {
       <InnerContainer>
         <Image
           source={require('../assets/chargebottom.png')}
-          style={{width: 20, height: 30, bottom: 4, tintColor: tintcolor}}
+          style={{width: 20, height: 30, bottom: 2, tintColor: tintcolor}}
         />
         {/*<Image source={require('../assets/Union.png')} />*/}
         <Text style={{fontSize: 12, color: color}}>CHARGE</Text>

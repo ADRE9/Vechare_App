@@ -13,15 +13,17 @@ import {
   TextInput,
   ToastAndroid,
 } from 'react-native';
-
+import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import RazorpayCheckout from 'react-native-razorpay';
 
 import Unpaid from '../components/Unpaid';
+import {RazorpayApiKey} from '../Constants/config';
 
 export default function QRScreen({navigation}) {
   const [opneScanner, setOpneScanner] = useState(false);
@@ -67,39 +69,55 @@ export default function QRScreen({navigation}) {
     }
   };
 
-  // const onOpneScanner = () => {
-  //   // To Start Scanning
-  //   if (Platform.OS === 'android') {
-  //     async function requestCameraPermission() {
-  //       try {
-  //         const granted = await PermissionsAndroid.request(
-  //           PermissionsAndroid.PERMISSIONS.CAMERA,
-  //           {
-  //             title: 'Camera Permission',
-  //             message: 'App needs permission for camera access',
-  //           },
-  //         );
-  //         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-  //           // If CAMERA Permission is granted
-  //           setQrvalue('');
-  //           setOpneScanner(true);
-  //         } else {
-  //           alert('CAMERA permission denied');
-  //         }
-  //       } catch (err) {
-  //         alert('Camera permission err', err);
-  //         console.warn(err);
-  //       }
-  //     }
-  //
-  //     // Calling the camera permission function
-  //     requestCameraPermission();
-  //   } else {
-  //     setQrvalue('');
-  //     setOpneScanner(true);
-  //   }
-  // };
+  const onPay = async () => {
+    var token = `Bearer ${await AsyncStorage.getItem('token')}`;
+    const order = await fetch(
+      'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      },
+    );
 
+    const orderData = await order.json();
+
+    console.log('order data value', orderData);
+
+    var options = {
+      description: 'Pending bill payment',
+      curreny: 'INR',
+      amount: orderData.amount_due,
+      order_id: orderData.id,
+      key: RazorpayApiKey,
+      prefill: {
+        email: 'useremail@example.com',
+        contact: '9191919191',
+        name: 'John Doe',
+      },
+      theme: {color: '#a29bfe'},
+    };
+    RazorpayCheckout.open(options).then(async function (response) {
+      const config = {
+        headers: {Authorization: token},
+      };
+      const data = {
+        orderCreationId: orderData.id,
+        razorpayPaymentId: response.razorpay_payment_id,
+        razorpayOrderId: response.razorpay_order_id,
+        razorpaySignature: response.razorpay_signature,
+      };
+      // console.log(data);
+      console.log('unpaid SCreen');
+      const result = await axios.post(
+        'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/madePayment',
+        data,
+        config,
+      );
+    });
+  };
   useEffect(() => {
     async function connection() {
       var token = `Bearer ${await AsyncStorage.getItem('token')}`;
@@ -144,7 +162,10 @@ export default function QRScreen({navigation}) {
     return <View>{navigation.replace('Status')}</View>;
   } else if (paid === false) {
     return (
-      <Unpaid amount={amount} onPress={() => navigation.replace('unPaid')} />
+      <Unpaid
+        amount={amount}
+        onPress={() => onPay().finally(() => navigation.replace('AppBottom'))}
+      />
     );
   } else {
     return (
@@ -155,29 +176,27 @@ export default function QRScreen({navigation}) {
           flex: 1,
         }}
         cameraStyle={[{height: 350, width: 400, marginTop: -85}]}
-        markerStyle={{borderColor: '#626262', borderRadius: 30}}
+        markerStyle={{
+          borderColor: '#626262',
+          borderRadius: 30,
+          marginRight: wp('2%'),
+        }}
         //   flashMode={RNCamera.Constants.FlashMode.torch}
-        reactivate={false}
+        reactivate={true}
         permissionDialogMessage="Need Permission to access Camera"
-        reactivateTimeout={10}
+        reactivateTimeout={1000}
         showMarker={true}
-        // topContent={
-        //   <Text style={styles.centerText}>
-        //     Go to <Text style={styles.textBold}>QrCode</Text> on your nearby
-        //     Station and scan the QR code.
-        //   </Text>
-        // }
         bottomContent={
           <View>
             <Text style={styles.charge}>Charge via Station ID</Text>
             <Text
               style={{
                 fontSize: 15,
-                marginTop: 35,
+                marginTop: 25,
               }}>
               Enter code here
             </Text>
-            <TextInput style={styles.input} placeholder="Enter station" />
+            <TextInput style={styles.input} placeholder="   Enter station" />
             <TouchableOpacity
               style={styles.buttonTouchable}
               onPress={() => navigation.replace('Status')}>

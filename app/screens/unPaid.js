@@ -71,7 +71,7 @@ export default function UnPaid({navigation}) {
 
     const orderData = await order.json();
 
-    // console.log('OnPay');
+    console.log('order data value', orderData);
 
     var options = {
       description: 'Pending bill payment',

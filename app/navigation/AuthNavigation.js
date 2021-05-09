@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import VerifyCode from '../screens/VerifyCode';
-import onBoardingScreen from '../screens/onBoardingScreen';
+import OnBoardingScreen from '../screens/onBoardingScreen';
 
 import AuthLoadingScreen from '../screens/AuthLoadingScreem';
 
@@ -35,7 +35,7 @@ function AuthNavigation() {
           headerShown: false,
         }}>
         <Stack.Screen name="AuthLoad" component={AuthLoadingScreen} />
-        <Stack.Screen name="onBoard" component={onBoardingScreen} />
+        <Stack.Screen name="onBoard" component={OnBoardingScreen} />
         <Stack.Screen name="LoginPage" component={LoginScreen} />
         <Stack.Screen name="Verify" component={VerifyCode} />
         <Stack.Screen name="RegisterPage" component={RegisterScreen} />

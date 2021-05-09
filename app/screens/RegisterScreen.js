@@ -46,7 +46,12 @@ function RegisterScreen({navigation}) {
       </Text>
       <TouchableOpacity
         activeOpacity={0.6}
-        onPress={() => navigation.replace('AppBottom')}>
+        onPress={() =>
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'AppBottom'}],
+          })
+        }>
         <Image
           source={require('../assets/signupBtn.png')}
           resizeMode="contain"
@@ -60,6 +65,7 @@ function RegisterScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   },
   condition: {
     marginTop: wp('6%'),

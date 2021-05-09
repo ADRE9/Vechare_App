@@ -3,35 +3,45 @@ import {
   SafeAreaView,
   StyleSheet,
   View,
-  TextInput,
   Text,
-  ImageBackground,
   TouchableOpacity,
   Image,
   ScrollView,
-  FlatList,
-  Button,
 } from 'react-native';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import Card from '../components/Card';
-import Recent from '../components/Recent';
-
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import RNLocation from 'react-native-location';
+import {BoxShadow} from 'react-native-shadow';
 
 import {details, recentDetails} from '../Constants/DumyData';
 import Carousel from '../components/Carousel';
 import CarouselRecent from '../components/CarouselRecent';
+import {HomeScreen, Host} from 'svg';
+
+RNLocation.configure({
+  distanceFilter: null,
+});
 
 export default function Home({navigation}) {
   // const [paid, setPaid] = useState([]);
   // const [amount, setAmount] = useState([]);
   const [name, setName] = useState([]);
+  const [viewLocation, isViewLocation] = useState([]);
 
+  const shadowOpt = {
+    width: wp('60%'),
+    height: hp('5%'),
+    color: '#069DFF',
+    border: 12,
+    // radius: 6,
+    opacity: 0.2,
+    x: 12,
+    y: 24,
+    style: {marginBottom: hp('8%')},
+  };
   // useEffect(() => {
   //   async function unpaid() {
   //     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
@@ -83,68 +93,85 @@ export default function Home({navigation}) {
       const user = await AsyncStorage.getItem('name');
       setName(user);
       // console.log("name of user",user);
+      // User Location
+      let permission = await RNLocation.checkPermission({
+        ios: 'whenInUse', // or 'always'
+        android: {
+          detail: 'coarse', // or 'fine'
+        },
+      });
+
+      console.log(permission);
+
+      let location;
+      if (!permission) {
+        permission = await RNLocation.requestPermission({
+          ios: 'whenInUse',
+          android: {
+            detail: 'coarse',
+            rationale: {
+              title: 'We need to access your location',
+              message: 'We use your location to show where you are on the map',
+              buttonPositive: 'OK',
+              buttonNegative: 'Cancel',
+            },
+          },
+        });
+        console.log(permission);
+        location = await RNLocation.getLatestLocation({timeout: 100});
+        console.log(location);
+        isViewLocation(location);
+      } else {
+        location = await RNLocation.getLatestLocation({timeout: 100});
+        console.log(location);
+        isViewLocation(location);
+      }
     }
     value();
     console.log('home SCreen');
   }, []);
+  // useEffect(() => {
+  //   const getLocation = async () => {};
+  //   getLocation();
+  // }, []);
 
   return (
     <SafeAreaView style={styles.cont}>
       <ScrollView style={styles.cont}>
         <View>
-          <ImageBackground
-            source={require('../assets/chargeScreen.png')}
-            style={{width: wp('100%'), height: hp('18%')}}
-            resizeMode="cover">
-            <View
+          <HomeScreen width={wp('100%')} height={hp('22%')} />
+
+          <View
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: wp('5%'),
+              right: 0,
+              bottom: 0,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text
               style={{
-                position: 'absolute',
-                top: 0,
-                left: wp('5%'),
-                right: 0,
-                bottom: 0,
-                justifyContent: 'center',
-                alignItems: 'center',
+                fontSize: 20,
+                color: 'white',
+                marginRight: wp('34%'),
+                marginBottom: wp('15%'),
+                fontFamily: 'SF-Pro-Text-Bold',
               }}>
-              <Text
-                style={{
-                  fontSize: 22,
-                  color: 'white',
-                  marginRight: wp('37%'),
-                  marginBottom: wp('20%'),
-                  fontFamily: 'SF-Pro-Text-Bold',
-                }}>
-                Hello {name},
-              </Text>
-            </View>
-          </ImageBackground>
+              Hello {name},
+            </Text>
+          </View>
         </View>
-        {/* <View
-          style={{
-            marginTop: -50,
-            marginLeft: 10,
-            marginRight: 10,
-          }}
-        > */}
-        {/* <Searchbar
-            placeholder="Search for Charging Ports"
-            icon={<Feather name="search" size={40} color="#D2D2D2" />}
-            iconColor="#D2D2D2"
-            style={{ borderRadius: 25 }}
-          /> */}
-        {/* </View> */}
+
         <View>
           <TouchableOpacity
             onPress={() => navigation.navigate('Host')}
             activeOpacity={0.6}
-            style={{marginLeft: wp('15%'), marginTop: -wp('1%')}}>
-            <Image
-              source={require('../assets/host.png')}
-              style={{
-                width: wp('70%'),
-                height: hp('10%'),
-              }}
-            />
+            style={{marginLeft: wp('15%'), marginTop: -wp('6%')}}>
+            <BoxShadow setting={shadowOpt}>
+              <Host width={wp('70%')} height={hp('12%')} />
+            </BoxShadow>
           </TouchableOpacity>
         </View>
         <View>
@@ -153,7 +180,7 @@ export default function Home({navigation}) {
               style={{
                 fontFamily: 'SF-Pro-Display-Semibold',
                 color: '#181725',
-                fontSize: wp('5.2%'),
+                fontSize: wp('5%'),
                 marginTop: wp('2%'),
                 marginLeft: wp('5%'),
               }}>
@@ -175,22 +202,14 @@ export default function Home({navigation}) {
             </TouchableOpacity>
           </View>
           <Carousel data={details} />
-          {/*<ScrollView style={{ marginTop: -wp("2%") }}>*/}
-          {/*  <FlatList*/}
-          {/*    data={details}*/}
-          {/*    keyExtractor={(details) => details.id}*/}
-          {/*    horizontal={true}*/}
-          {/*    renderItem={({ item }) => (*/}
-          {/*      <Card status={item.status} dis={item.dis} loc={item.loc} />*/}
-          {/*    )}*/}
-          {/*  />*/}
-          {/*</ScrollView>*/}
         </View>
+
         <View>
           <View flexDirection="row">
             <Text
               style={{
-                fontSize: 25,
+                fontSize: 22,
+                marginTop: 15,
                 marginLeft: 30,
                 marginTop: 20,
                 fontFamily: 'SF-Pro-Display-Semibold',
@@ -202,7 +221,7 @@ export default function Home({navigation}) {
             <TouchableOpacity
               onPress={() => navigation.navigate('Session')}
               activeOpacity={0.5}
-              style={{marginLeft: wp('7%'), marginTop: wp('6%')}}>
+              style={{marginLeft: wp('10%'), marginTop: wp('6%')}}>
               <Image
                 style={{
                   width: wp('20%'),
@@ -215,16 +234,6 @@ export default function Home({navigation}) {
             </TouchableOpacity>
           </View>
           <CarouselRecent data={recentDetails} />
-          {/*<ScrollView style={{ marginTop: -wp("2%") }}>*/}
-          {/*  <FlatList*/}
-          {/*    data={recentDetails}*/}
-          {/*    keyExtractor={(details) => details.id}*/}
-          {/*    horizontal={true}*/}
-          {/*    renderItem={({ item }) => (*/}
-          {/*      <Recent days={item.days} dis={item.dis} loc={item.loc} />*/}
-          {/*    )}*/}
-          {/*  />*/}
-          {/*</ScrollView>*/}
         </View>
       </ScrollView>
     </SafeAreaView>

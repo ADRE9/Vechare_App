@@ -40,6 +40,8 @@ function FinalChargeDetails(props) {
       await AsyncStorage.removeItem('amnt');
       await AsyncStorage.removeItem('energy');
       await AsyncStorage.removeItem('id');
+      await AsyncStorage.removeItem('pyt');
+      await AsyncStorage.removeItem('pytId');
     } catch (e) {
       console.log(e);
     }

@@ -1,11 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {StyleSheet, Image, View, TouchableHighlight} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Image} from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import {Screen1, NextBtn, Screen2, Screen3, Screen4} from 'svg';
 
 const dots = ({selected}) => {
   let backgroundColor;
@@ -27,11 +28,11 @@ const dots = ({selected}) => {
 };
 
 const Next = ({...props}) => (
-  <TouchableHighlight style={styles.next} {...props}>
+  <TouchableOpacity style={styles.next} {...props}>
     <Image source={require('../assets/next.png')} style={styles.nextImage} />
-  </TouchableHighlight>
+  </TouchableOpacity>
 );
-function onBoardingScreen({navigation}) {
+function OnBoardingScreen({navigation}) {
   return (
     <View style={styles.container}>
       <Onboarding
@@ -40,51 +41,62 @@ function onBoardingScreen({navigation}) {
         bottomBarHighlight={false}
         NextButtonComponent={Next}
         titleStyles={{fontSize: 30, fontWeight: 'bold', bottom: 200}} // set default color for the title
-        onDone={() => navigation.replace('LoginPage')}
+        subTitleStyles={{color: 'white'}}
+        onDone={() =>
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'LoginPage'}],
+          })
+        }
         pages={[
           {
             backgroundColor: '#fff',
             image: (
-              <Image
-                source={require('../assets/screen1.png')}
-                style={styles.image}
+              <Screen1
+                width={wp('100%')}
+                height={hp('50%')}
+                marginBottom={140}
               />
             ),
             title: 'CHECK PRICES',
-            subtitle: '',
+            subtitle: '1',
             containerStyles: {paddingBottom: 30},
           },
           {
             backgroundColor: '#fff',
             image: (
-              <Image
-                source={require('../assets/screen2.png')}
-                style={styles.image}
+              <Screen2
+                width={wp('100%')}
+                height={hp('50%')}
+                marginBottom={140}
               />
             ),
             title: 'PRE-BOOK STATIONS',
-            subtitle: '',
+            subtitle: '1',
           },
           {
             backgroundColor: '#fff',
             image: (
-              <Image
-                source={require('../assets/screen3.png')}
-                style={styles.image}
+              <Screen3
+                width={wp('100%')}
+                height={hp('50%')}
+                marginBottom={140}
               />
             ),
             title: 'CONTROL & MONITOR',
+            subtitle: '1',
           },
           {
             backgroundColor: '#fff',
             image: (
-              <Image
-                source={require('../assets/screen4.png')}
-                style={styles.image}
+              <Screen4
+                width={wp('100%')}
+                height={hp('50%')}
+                marginBottom={140}
               />
             ),
             title: 'JOIN OUR NETWORK',
-            subtitle: '',
+            subtitle: '1',
           },
         ]}
       />
@@ -97,19 +109,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   next: {
-    marginBottom: 70,
-    width: wp('80%'),
-    marginRight: 30,
+    width: wp('83%'),
+    height: hp('15%'),
+    marginRight: wp('7.5%'),
+    // backgroundColor: 'yellow',
+    marginBottom: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   nextImage: {
     width: wp('80%'),
-    height: hp('8%'),
-  },
-  image: {
-    width: wp('100%'),
-    height: hp('50%'),
-    marginBottom: 140,
+    height: hp('8'),
+    borderRadius: wp('60%') / 20,
+    marginTop: hp('4%'),
   },
 });
 
-export default onBoardingScreen;
+export default OnBoardingScreen;

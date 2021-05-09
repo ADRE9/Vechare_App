@@ -52,6 +52,21 @@ export default class Status extends Component {
     if (resData.status === 'success') {
       this.setState({toggle: false});
     }
+    const order = await fetch(
+      'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      },
+    );
+    const orderData = await order.json();
+    console.log('order data of payment', orderData);
+    const jV = JSON.stringify(orderData.amount);
+    await AsyncStorage.setItem('pyt', jV);
+    await AsyncStorage.setItem('pytId', orderData.id);
   };
 
   // switchoff = async () => {
@@ -190,6 +205,7 @@ export default class Status extends Component {
       this.setState({current: data.current});
       this.setState({price: data.price});
       this.setState({time: data.connectedTimestamp});
+      console.log('Value of current', this.state.current);
     });
 
     socket.on('statusChanged', (data) => {
@@ -207,11 +223,14 @@ export default class Status extends Component {
       this.setState({voltage: log.voltage});
       this.setState({power: log.power});
       this.setState({current: log.current});
-      this.setState({current: log.price});
     });
     socket.on('error', (data) => {
       console.log(data);
     });
+    // socket.on('chargerDisconnected', (data) => {
+    //   console.log('charger disconnected from device', data);
+    // });
+
     socket.emit('connect_to_thing', id);
   }
 

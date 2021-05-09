@@ -17,6 +17,9 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RazorpayCheckout from 'react-native-razorpay';
 import LinearGradient from 'react-native-linear-gradient';
+import {Cost, EnergyConsumed, Time, ChargeHeader, PayBtn} from 'svg';
+import {BoxShadow} from 'react-native-shadow';
+
 import moment from 'moment';
 
 import {RazorpayApiKey} from '../Constants/config';
@@ -148,26 +151,48 @@ export default function Payment({navigation}) {
   //   payment();
   // }, []);
 
+  const shadowOpt = {
+    width: wp('100%'),
+    height: hp('18%'),
+    color: '#000000',
+    border: 10,
+    // radius: 6,
+    opacity: 0.2,
+    // x: 1,
+    y: 62,
+  };
+
   const onPay = async () => {
     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
-    const order = await fetch(
-      'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token,
-        },
-      },
-    );
-    const orderData = await order.json();
-    console.log(orderData);
+    // const order = await fetch(
+    //   'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
+    //   {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       Authorization: token,
+    //     },
+    //   },
+    // );
+    // const orderData = await order.json();
+    // console.log('order data of payment', orderData);
+
+    // if (orderData.status === 'fail') {
+    //   return navigation.replace('Pay');
+    // }
+
+    const pyt = await AsyncStorage.getItem('pyt');
+    const pytId = await AsyncStorage.getItem('pytId');
+
+    // if (pyt <= 1) {
+    //   return pyt === 1.5;
+    // }
 
     var options = {
       description: 'Electricity bill payment',
       curreny: 'INR',
-      amount: orderData.amount,
-      order_id: orderData.id,
+      amount: pyt,
+      order_id: pytId,
       key: RazorpayApiKey,
       prefill: {
         email: 'useremail@example.com',
@@ -182,7 +207,7 @@ export default function Payment({navigation}) {
           headers: {Authorization: token},
         };
         const data = {
-          orderCreationId: orderData.id,
+          orderCreationId: pytId,
           razorpayPaymentId: response.razorpay_payment_id,
           razorpayOrderId: response.razorpay_order_id,
           razorpaySignature: response.razorpay_signature,
@@ -201,42 +226,21 @@ export default function Payment({navigation}) {
   };
 
   return (
-    <ScrollView style={styles.cont}>
-      <SafeAreaView style={styles.cont}>
-        <View>
-          <ImageBackground
-            source={require('../assets/chargeHeader.png')}
-            style={{width: wp('100%'), height: hp('16%')}}
-            resizeMode="cover">
-            <View flexDirection="row">
-              {/* <TouchableOpacity onPress={() => console.log('btn ')}>
-                <Image
-                  source={require('../assets/Back.png')}
-                  style={{
-                    width: wp('7%'),
-                    height: hp('4%'),
-                    marginLeft: wp('6%'),
-                    marginTop: wp('8%'),
-                  }}
-                />
-              </TouchableOpacity> */}
-              <Text style={styles.txt}>Charging Details</Text>
-            </View>
-          </ImageBackground>
-        </View>
+    <SafeAreaView style={styles.cont}>
+      <ScrollView style={styles.cont}>
+        <ChargeHeader width={wp('100%')} height={hp('16%')} />
 
         <View flexDirection="column">
           <LinearGradient colors={['#4B5358', '#545B60']} style={styles.box3}>
-            <View flexDirection="row">
+            <View
+              flexDirection="row"
+              style={{justifyContent: 'center', alignItems: 'center'}}>
               <View flexDirection="row" style={{marginRight: wp('4%')}}>
-                <Image
-                  source={require('../assets/time.png')}
-                  style={{
-                    height: hp('6%'),
-                    width: wp('11%'),
-                    margin: wp('3%'),
-                    borderRadius: wp('10%') / 8,
-                  }}
+                <Time
+                  height={hp('6%')}
+                  width={wp('15%')}
+                  margin={wp('1%')}
+                  borderRadius={wp('10%') / 8}
                 />
                 <View>
                   <Text
@@ -261,11 +265,11 @@ export default function Payment({navigation}) {
               <View style={{marginRight: wp('2%')}}>
                 <Text
                   style={{
-                    fontSize: wp('6%'),
+                    fontSize: wp('5.6%'),
                     color: 'white',
                     fontFamily: 'SF-Pro-Display-Semibold',
                     padding: wp('1%'),
-                    marginTop: wp('5%'),
+                    marginTop: wp('6%'),
                     marginLeft: wp('6%'),
                   }}>
                   {currentHour - chargeHours}h {currentMin - chargeMinutes}min
@@ -276,15 +280,17 @@ export default function Payment({navigation}) {
 
           <LinearGradient colors={['#03AD70', '#059863']} style={styles.box1}>
             <View flexDirection="column">
-              <View flexDirection="row">
-                <Image
-                  source={require('../assets/energy-icon.png')}
-                  style={{
-                    height: hp('6%'),
-                    width: wp('11%'),
-                    margin: wp('3%'),
-                    borderRadius: wp('10%') / 8,
-                  }}
+              <View
+                flexDirection="row"
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <EnergyConsumed
+                  height={hp('6%')}
+                  width={wp('15%')}
+                  margin={wp('1%')}
+                  borderRadius={wp('10%') / 8}
                 />
                 <View style={{marginRight: wp('4%')}}>
                   <Text
@@ -308,12 +314,12 @@ export default function Payment({navigation}) {
                 <View style={{marginRight: wp('2%')}}>
                   <Text
                     style={{
-                      fontSize: wp('6%'),
+                      fontSize: wp('5.6%'),
                       color: 'white',
                       fontFamily: 'SF-Pro-Display-Semibold',
                       padding: wp('1%'),
-                      marginTop: wp('5%'),
-                      marginLeft: wp('6%'),
+                      marginTop: wp('6%'),
+                      marginLeft: wp('2%'),
                     }}>
                     {energy} kWh
                   </Text>
@@ -324,23 +330,21 @@ export default function Payment({navigation}) {
 
           <LinearGradient colors={['#2D9CDB', '#2C93CE']} style={styles.box2}>
             <View flexDirection="row">
-              <View flexDirection="row" style={{marginRight: wp('4%')}}>
-                <Image
-                  source={require('../assets/cost.png')}
-                  style={{
-                    height: hp('6%'),
-                    width: wp('11%'),
-                    margin: wp('3%'),
-                    borderRadius: wp('10%') / 8,
-                  }}
+              <View flexDirection="row">
+                <Cost
+                  height={hp('6%')}
+                  width={wp('15%')}
+                  // margin={wp('1%')}
+                  right={wp('8%')}
+                  borderRadius={wp('10%') / 8}
+                  position={'absolute'}
                 />
-                <View>
+                <View style={{position: 'absolute', left: wp('-6%')}}>
                   <Text
                     style={{
                       fontFamily: 'SF-Pro-Display-Medium',
                       color: 'white',
                       fontSize: wp('5.2%'),
-                      marginTop: wp('2%'),
                     }}>
                     Amount
                   </Text>
@@ -354,15 +358,15 @@ export default function Payment({navigation}) {
                   </Text>
                 </View>
               </View>
-              <View style={{marginRight: wp('2%')}}>
+              <View>
                 <Text
                   style={{
                     fontSize: wp('6%'),
                     color: 'white',
                     fontFamily: 'SF-Pro-Display-Semibold',
                     padding: wp('1%'),
-                    marginTop: wp('5%'),
-                    marginLeft: wp('5%'),
+                    marginTop: wp('3%'),
+                    left: wp('20%'),
                   }}>
                   {'\u20B9'} {amount}
                 </Text>
@@ -370,36 +374,43 @@ export default function Payment({navigation}) {
             </View>
           </LinearGradient>
         </View>
-
-        <View flexDirection="row" style={styles.amount}>
-          <Text
+        <BoxShadow setting={shadowOpt}>
+          <View
+            flexDirection="row"
             style={{
-              fontFamily: 'SF-Pro-Display-Semibold',
-              marginLeft: wp('5%'),
-              fontSize: wp('6%'),
-              marginTop: wp('2%'),
-              color: 'black',
+              alignItems: 'center',
+              height: hp('10%'),
+              marginTop: wp('15%'),
+              backgroundColor: 'white',
             }}>
-            {'\u20B9'} {amount}
-          </Text>
-
-          <TouchableOpacity
-            onPress={() => onPay().then(() => navigation.replace('PayDone'))}>
-            <Image
-              source={require('../assets/payNow.png')}
+            <Text
               style={{
-                height: hp('4.6%'),
-                width: wp('50%'),
+                fontFamily: 'SF-Pro-Display-Semibold',
+                marginLeft: wp('5%'),
+                fontSize: wp('5.6%'),
+                marginTop: wp('2%'),
+                color: 'black',
+              }}>
+              {'\u20B9'} {amount}
+            </Text>
+
+            <TouchableOpacity
+              style={{
                 marginLeft: wp('12%'),
                 marginTop: wp('5%'),
                 borderRadius: wp('8%') / 4,
+
                 marginBottom: wp('3%'),
               }}
-            />
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
-    </ScrollView>
+              onPress={() =>
+                onPay().then(() => navigation.replace('PayDetail'))
+              }>
+              <PayBtn height={hp('5%')} width={wp('50%')} />
+            </TouchableOpacity>
+          </View>
+        </BoxShadow>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -407,6 +418,11 @@ const styles = StyleSheet.create({
   cont: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  back: {
+    position: 'absolute',
+    top: 35,
+    left: 15,
   },
   txt: {
     color: 'white',
@@ -447,18 +463,5 @@ const styles = StyleSheet.create({
     marginTop: hp('5%'),
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  amount: {
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: 1.0,
-    elevation: 3,
-    height: hp('10%'),
-    marginTop: wp('14.8%'),
   },
 });

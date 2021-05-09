@@ -138,7 +138,7 @@ function LoginScreen(props) {
           onPress={_signIn}
         />
       ) : (
-        <View>{props.navigation.navigate('RegisterPage')}</View>
+        <View>{props.navigation.replace('RegisterPage')}</View>
       )}
     </View>
   );

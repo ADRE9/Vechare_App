@@ -1,32 +1,34 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, View, Text} from 'react-native';
-import firebase from '@react-native-firebase/app';
+import auth from '@react-native-firebase/auth';
 import Background from '../components/Background';
 import {theme} from '../Constants/theme';
 
 const AuthLoadingScreen = ({navigation}) => {
-  firebase.auth().onAuthStateChanged((user) => {
+  function onAuthStateChanged(user) {
     if (user) {
-      // User is logged in
-      navigation.replace('AppBottom');
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'AppBottom'}],
+      });
     } else {
-      // User is not logged in
       navigation.reset({
         index: 0,
         routes: [{name: 'LoginPage'}],
       });
     }
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
   });
 
+  console.log('auth loading screen');
   return (
     <Background>
       <ActivityIndicator size="large" color={theme.colors.primary} />
     </Background>
-    // <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-    //   <Text style={{fontSize: 30, fontWeight: 'bold'}}>
-    //     Openning the app...
-    //   </Text>
-    // </View>
   );
 };
 

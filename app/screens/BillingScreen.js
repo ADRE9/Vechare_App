@@ -6,7 +6,6 @@ import {
   Image,
   ScrollView,
   SafeAreaView,
-  ImageBackground,
   TouchableOpacity,
 } from 'react-native';
 import {
@@ -15,6 +14,8 @@ import {
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
+
+import {Receipt, ReceiptScreen} from 'svg';
 
 function BillingScreen(props) {
   const [amount, setAmount] = useState([]);
@@ -38,40 +39,27 @@ function BillingScreen(props) {
   }, []);
 
   return (
-    <SafeAreaView style={styles.cont}>
-      <ScrollView style={styles.cont}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.container}>
         <View flexDirection="column">
-          <ImageBackground
-            source={require('../assets/receipt.png')}
-            style={{width: wp('100%'), height: hp('16%')}}
-            resizeMode="cover">
-            <TouchableOpacity
-              onPress={() => props.navigation.goBack()}
-              style={styles.back}>
-              <Image
-                style={{width: wp('5%'), height: hp('3%')}}
-                source={require('../assets/Back.png')}
-              />
-            </TouchableOpacity>
-          </ImageBackground>
-          <View style={{marginTop: -wp('5%')}}>
-            <ImageBackground
-              source={require('../assets/car.png')}
-              style={{width: wp('100%'), height: hp('35%')}}
-              resizeMode="cover">
-              <Text style={styles.content1}>{currentDate} </Text>
-              <Text style={styles.content2}>
-                Rohini Community Charging Station, B-5/30, New Delhi - 110034
-              </Text>
-              <Text style={styles.receipt}>Receipt for Charging Session</Text>
-            </ImageBackground>
+          <Receipt width={wp('100%')} height={hp('16%')} />
+          <TouchableOpacity
+            onPress={() => props.navigation.goBack()}
+            style={styles.back}>
+            <Image
+              style={{width: wp('6%'), height: hp('3%')}}
+              source={require('../assets/Back.png')}
+            />
+          </TouchableOpacity>
+
+          <View style={{marginTop: -wp('5%'), paddingBottom: 20}}>
+            <ReceiptScreen width={wp('105%')} height={hp('35%')} />
+            <Text style={styles.content1}>{currentDate} </Text>
+            <Text style={styles.content2}>
+              Rohini Community Charging Station, B-5/30, New Delhi - 110034
+            </Text>
           </View>
-          <View
-            flexDirection="row"
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+          <View flexDirection="row">
             <Text style={styles.txt1}>Total</Text>
             <Text style={styles.txt2}>
               {'\u20B9'} {amount}
@@ -79,48 +67,28 @@ function BillingScreen(props) {
           </View>
           <View style={styles.line} />
 
-          <View
-            flexDirection="row"
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+          <View flexDirection="row">
             <Text style={styles.subtxt1}>Operator cost</Text>
             <Text style={styles.subtxt2}>
               {'\u20B9'} {amunt}
             </Text>
           </View>
 
-          <View
-            flexDirection="row"
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+          <View flexDirection="row">
             <Text style={styles.subtxt1}>Service charge</Text>
             <Text style={styles.subtxt2}>
               {'\u20B9'} {(amunt * 0.15).toFixed(2)}
             </Text>
           </View>
 
-          <View
-            flexDirection="row"
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+          <View flexDirection="row">
             <Text style={styles.subtxt3}>Taxes</Text>
             <Text style={styles.subtxt5}>{'\u20B9'} 00.00 </Text>
           </View>
 
           <View style={styles.line} />
 
-          <View
-            flexDirection="row"
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+          <View flexDirection="row">
             <Text style={styles.subtxt1}>Amount Paid</Text>
             <Text style={styles.subtxt4}>
               {'\u20B9'} {amount}
@@ -135,51 +103,45 @@ function BillingScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#FFFFFF',
   },
   back: {
     position: 'absolute',
     top: 35,
-    left: 6,
+    left: 15,
   },
   content1: {
     fontSize: wp('5%'),
     color: '#3D3D3D',
-    marginTop: wp('3%'),
+    marginTop: wp('4%'),
     marginLeft: wp('6%'),
     fontFamily: 'SF-Pro-Display-Medium',
+    position: 'absolute',
   },
   content2: {
-    fontSize: wp('3%'),
+    fontSize: wp('3.2%'),
     color: '#484848',
-    marginTop: wp('1.6%'),
+    marginTop: hp('6%'),
     marginRight: wp('40%'),
     marginLeft: wp('6%'),
     fontFamily: 'SF-Pro-Display-Regular',
+    position: 'absolute',
   },
-  receipt: {
-    width: wp('30%'),
-    fontSize: wp('5.2%'),
-    color: '#3D3D3D',
-    marginLeft: wp('5%'),
-    marginTop: wp('4%'),
-    fontFamily: 'SF-Pro-Display-Semibold',
-  },
+
   txt1: {
     color: '#3D3D3D',
     fontFamily: 'SF-Pro-Display-Semibold',
-    marginRight: wp('20%'),
     marginTop: wp('4%'),
     fontSize: wp('5.5%'),
-    marginLeft: wp('15%'),
+    marginLeft: wp('10%'),
+    position: 'absolute',
   },
   txt2: {
     color: '#3D3D3D',
     fontFamily: 'SF-Pro-Display-Semibold',
-    marginRight: wp('20%'),
     marginTop: wp('4%'),
     fontSize: wp('5.5%'),
-    marginLeft: wp('20%'),
+    marginLeft: wp('65%'),
   },
   line: {
     borderBottomColor: '#5F5F5F',
@@ -190,40 +152,39 @@ const styles = StyleSheet.create({
   },
   subtxt1: {
     color: '#3D3D3D',
-    marginRight: wp('20%'),
-    marginTop: wp('3%'),
+    paddingTop: 10,
     fontSize: wp('3.5%'),
     marginLeft: wp('10%'),
     fontFamily: 'SF-Pro-Display-Medium',
+    position: 'absolute',
+    left: wp('1%'),
   },
   subtxt2: {
     color: '#3D3D3D',
-    marginRight: wp('20%'),
     marginTop: wp('3%'),
     fontSize: wp('3.5%'),
-    marginLeft: wp('15%'),
+    marginLeft: wp('68%'),
     fontFamily: 'SF-Pro-Display-Medium',
   },
   subtxt3: {
     color: '#3D3D3D',
     marginTop: wp('3%'),
     fontSize: wp('3.5%'),
-    marginLeft: wp('10%'),
-    marginRight: wp('30'),
+    position: 'absolute',
+    left: wp('11%'),
   },
   subtxt4: {
     color: '#3D3D3D',
-    marginRight: wp('20%'),
     marginTop: wp('3%'),
     fontSize: wp('3.5%'),
-    marginLeft: wp('20%'),
+    marginLeft: wp('69%'),
   },
   subtxt5: {
     color: '#3D3D3D',
-    marginRight: wp('20%'),
+    paddingBottom: 10,
     marginTop: wp('3%'),
     fontSize: wp('3.5%'),
-    marginLeft: wp('22%'),
+    marginLeft: wp('68%'),
     fontFamily: 'SF-Pro-Display-Medium',
   },
 });
