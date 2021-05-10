@@ -9,6 +9,7 @@ import {
   Image,
   Switch,
   Button,
+  ToastAndroid,
 } from 'react-native';
 import io from 'socket.io-client';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -34,13 +35,14 @@ export default class Status extends Component {
       energy: '',
       price: '',
       time: [],
+      error: '',
     };
   }
   disconnect = async () => {
     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
     const id = await AsyncStorage.getItem('id');
     const res = await fetch(
-      `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
+      `http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -53,7 +55,7 @@ export default class Status extends Component {
       this.setState({toggle: false});
     }
     const order = await fetch(
-      'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
+      'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
       {
         method: 'POST',
         headers: {
@@ -74,7 +76,7 @@ export default class Status extends Component {
   //   const id = await AsyncStorage.getItem('id');
 
   //   fetch(
-  //     'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState',
+  //     'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState',
   //     {
   //       method: 'PATCH',
   //       headers: {
@@ -117,7 +119,7 @@ export default class Status extends Component {
       const id = await AsyncStorage.getItem('id');
 
       fetch(
-        'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState',
+        'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState',
         {
           method: 'PATCH',
           headers: {
@@ -141,7 +143,12 @@ export default class Status extends Component {
             onPress: () =>
               this.disconnect()
                 .then(() => this.storeData())
-                .finally(() => this.props.navigation.replace('Charging')),
+                .finally(() =>
+                  this.props.navigation.reset({
+                    index: 0,
+                    routes: [{name: 'Charging'}],
+                  }),
+                ),
           },
 
           // {
@@ -177,12 +184,13 @@ export default class Status extends Component {
   async componentDidMount() {
     console.log('Status screen');
     loader.load((v) => this.setState({loaded: true}));
+
     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
     const id = await AsyncStorage.getItem('id');
     console.log(id);
     console.log(token);
     const socket = io.connect(
-      'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com',
+      'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com',
       {
         query: {
           chargerId: id,
@@ -225,7 +233,18 @@ export default class Status extends Component {
       this.setState({current: log.current});
     });
     socket.on('error', (data) => {
-      console.log(data);
+      console.log('error about device', data);
+
+      async function error() {
+        await AsyncStorage.setItem('ervl', data);
+      }
+      error();
+
+      return this.props.navigation.replace('QrScreen', {
+        connection: 'reset',
+        error: 'Charger already connected to other device',
+      });
+      // this.setState({error: data});
     });
     // socket.on('chargerDisconnected', (data) => {
     //   console.log('charger disconnected from device', data);
@@ -275,6 +294,9 @@ export default class Status extends Component {
               </TouchableOpacity>
             </View>
             <View style={styles.switch}>
+              {/* <Text style={styles.textStyle}>
+                {navigation.getParam('value')}
+              </Text> */}
               <Switch
                 trackColor={{false: '#767577', true: '#81b0ff'}}
                 onValueChange={this.toggleSwitch}
@@ -282,6 +304,10 @@ export default class Status extends Component {
                 // onChange={this.message}
                 style={{transform: [{scaleX: 2.5}, {scaleY: 2.5}]}}
               />
+              <Text style={styles.textStyle}>
+                {this.state.toggle ? 'ON' : 'OFF'}
+              </Text>
+
               {/* <Button
                 title="next"
                 onPress={() => this.props.navigation.replace('Pay')}
@@ -341,5 +367,12 @@ const styles = StyleSheet.create({
     height: hp('15%'),
     width: wp('100%'),
     marginLeft: 0.5,
+  },
+  textStyle: {
+    marginTop: hp('2%'),
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#344953',
   },
 });

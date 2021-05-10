@@ -46,7 +46,7 @@ export default function Home({navigation}) {
   //   async function unpaid() {
   //     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
   //     const res = await fetch(
-  //       `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/unpaid`,
+  //       `http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/unpaid`,
   //       {
   //         headers: {
   //           'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export default function Home({navigation}) {
   //   async function connection() {
   //     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
   //     const res = await fetch(
-  //       `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/users/me`,
+  //       `http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/users/me`,
   //       {
   //         headers: {
   //           'Content-Type': 'application/json',

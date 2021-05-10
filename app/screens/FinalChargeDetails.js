@@ -42,6 +42,7 @@ function FinalChargeDetails(props) {
       await AsyncStorage.removeItem('id');
       await AsyncStorage.removeItem('pyt');
       await AsyncStorage.removeItem('pytId');
+      await AsyncStorage.removeItem('ervl');
     } catch (e) {
       console.log(e);
     }
@@ -52,7 +53,7 @@ function FinalChargeDetails(props) {
     // const idValue = await AsyncStorage.getItem('id');
     // console.log('Value of id', idValue);
     await fetch(
-      `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
+      `http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -221,7 +222,12 @@ function FinalChargeDetails(props) {
             onPress={() =>
               disconnect()
                 .then(() => clearStorage())
-                .finally(() => props.navigation.replace('AppBottom'))
+                .finally(() =>
+                  props.navigation.reset({
+                    index: 0,
+                    routes: [{name: 'AppBottom'}],
+                  }),
+                )
             }>
             <Image
               source={require('../assets/continue.png')}

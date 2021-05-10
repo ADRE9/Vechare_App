@@ -31,16 +31,14 @@ const HiddenBox = styled.View`
 
 function ScanButton({tintcolor, color}) {
   return (
-    <Container>
-      <InnerContainer>
-        <Image
-          source={require('../assets/chargebottom.png')}
-          style={{width: 20, height: 30, bottom: 2, tintColor: tintcolor}}
-        />
-        {/*<Image source={require('../assets/Union.png')} />*/}
-        <Text style={{fontSize: 12, color: color}}>CHARGE</Text>
-      </InnerContainer>
-    </Container>
+    <InnerContainer>
+      <Image
+        source={require('../assets/chargebottom.png')}
+        style={{width: 15, height: 25, bottom: 2, tintColor: tintcolor}}
+      />
+      {/*<Image source={require('../assets/Union.png')} />*/}
+      <Text style={{fontSize: 8, color: color}}>CHARGE</Text>
+    </InnerContainer>
   );
 }
 

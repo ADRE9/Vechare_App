@@ -65,7 +65,7 @@ export default function Payment({navigation}) {
   //     const id = await AsyncStorage.getItem('id');
 
   //     const socket = io.connect(
-  //       'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com',
+  //       'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com',
   //       {
   //         query: {
   //           chargerId: id,
@@ -119,7 +119,7 @@ export default function Payment({navigation}) {
   //   const token = `Bearer ${await AsyncStorage.getItem('token')}`;
   //   const id = await AsyncStorage.getItem('id');
   //   await fetch(
-  //     `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
+  //     `http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
   //     {
   //       headers: {
   //         'Content-Type': 'application/json',
@@ -133,7 +133,7 @@ export default function Payment({navigation}) {
   //   async function payment() {
   //     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
   //     const order = await fetch(
-  //       'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
+  //       'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
   //       {
   //         method: 'POST',
   //         headers: {
@@ -165,7 +165,7 @@ export default function Payment({navigation}) {
   const onPay = async () => {
     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
     // const order = await fetch(
-    //   'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
+    //   'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
     //   {
     //     method: 'POST',
     //     headers: {
@@ -184,23 +184,36 @@ export default function Payment({navigation}) {
     const pyt = await AsyncStorage.getItem('pyt');
     const pytId = await AsyncStorage.getItem('pytId');
 
-    // if (pyt <= 1) {
-    //   return pyt === 1.5;
-    // }
+    if (pyt <= 100) {
+      var options = {
+        description: 'Electricity bill payment',
+        curreny: 'INR',
+        amount: '150',
+        order_id: pytId,
+        key: RazorpayApiKey,
+        prefill: {
+          email: 'useremail@example.com',
+          contact: '9191919191',
+          name: 'John Doe',
+        },
+        theme: {color: '#a29bfe'},
+      };
+    } else {
+      var options = {
+        description: 'Electricity bill payment',
+        curreny: 'INR',
+        amount: pyt,
+        order_id: pytId,
+        key: RazorpayApiKey,
+        prefill: {
+          email: 'useremail@example.com',
+          contact: '9191919191',
+          name: 'John Doe',
+        },
+        theme: {color: '#a29bfe'},
+      };
+    }
 
-    var options = {
-      description: 'Electricity bill payment',
-      curreny: 'INR',
-      amount: pyt,
-      order_id: pytId,
-      key: RazorpayApiKey,
-      prefill: {
-        email: 'useremail@example.com',
-        contact: '9191919191',
-        name: 'John Doe',
-      },
-      theme: {color: '#a29bfe'},
-    };
     RazorpayCheckout.open(options)
       .then(async function (response) {
         const config = {
@@ -215,7 +228,7 @@ export default function Payment({navigation}) {
         // console.log(data);
         console.log('payment screen');
         const result = await axios.post(
-          'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/madePayment',
+          'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/madePayment',
           data,
           config,
         );

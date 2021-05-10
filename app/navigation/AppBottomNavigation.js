@@ -21,7 +21,7 @@ const AppBottomNavigation = () => (
       showLabel: false,
       style: {
         backgroundColor: '#ffffff',
-        height: 48,
+        height: 50,
         shadowColor: '#000',
         shadowOffset: {
           width: 0,

@@ -5,13 +5,16 @@ import {
   StyleSheet,
   Text,
   Alert,
-  ImageBackground,
+  TextInput,
   TouchableOpacity,
   SafeAreaView,
   Image,
   ScrollView,
   Linking,
+  KeyboardAvoidingView,
 } from 'react-native';
+import {Button, Overlay, Rating, AirbnbRating} from 'react-native-elements';
+
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -22,8 +25,8 @@ import {
 import Share from 'react-native-share';
 import axios from 'axios';
 import RazorpayCheckout from 'react-native-razorpay';
-import {RazorpayApiKey} from '../Constants/config';
 
+import {RazorpayApiKey} from '../Constants/config';
 import files from '../../assets/filesBase64';
 import UnpaidNotify from '../components/UnpaidNotify';
 import {
@@ -51,6 +54,15 @@ function Profile({navigation}) {
   const [paid, setPaid] = useState([]);
   const [amount, setAmount] = useState([]);
   const [name, setName] = useState([]);
+  const [visible, setVisible] = useState(false);
+
+  const toggleOverlay = () => {
+    setVisible(!visible);
+  };
+
+  const ratingCompleted = () => {
+    console.log('rating');
+  };
 
   const shadowOpt = {
     width: wp('52%'),
@@ -67,6 +79,7 @@ function Profile({navigation}) {
     try {
       await GoogleSignin.revokeAccess();
       await GoogleSignin.signOut();
+      await AsyncStorage.removeItem('ervl');
       auth()
         .signOut()
         .then(() => alert('You are signed out!'));
@@ -119,7 +132,7 @@ function Profile({navigation}) {
   const onPay = async () => {
     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
     const order = await fetch(
-      'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
+      'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
       {
         method: 'POST',
         headers: {
@@ -159,7 +172,7 @@ function Profile({navigation}) {
       // console.log(data);
       console.log('unpaid SCreen');
       const result = await axios.post(
-        'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/madePayment',
+        'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/madePayment',
         data,
         config,
       );
@@ -188,7 +201,7 @@ function Profile({navigation}) {
     async function unpaid() {
       var token = `Bearer ${await AsyncStorage.getItem('token')}`;
       const res = await fetch(
-        'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/unpaid',
+        'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/unpaid',
         {
           headers: {
             'Content-Type': 'application/json',
@@ -338,9 +351,7 @@ function Profile({navigation}) {
             </View>
             <View style={styles.line}></View>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => console.log('work')}
-            activeOpacity={0.5}>
+          <TouchableOpacity onPress={toggleOverlay} activeOpacity={0.5}>
             <View flexDirection="row">
               <Text style={styles.item1}>Rate us</Text>
               <Icon5
@@ -469,6 +480,61 @@ function Profile({navigation}) {
             />
           </TouchableOpacity>
         </View>
+        <Overlay
+          isVisible={visible}
+          onBackdropPress={toggleOverlay}
+          overlayStyle={{
+            top: 160,
+            flex: 0.4,
+            borderTopLeftRadius: 35,
+            borderTopRightRadius: 35,
+            backgroundColor: '#F6F6F6',
+          }}>
+          <ScrollView style={{width: 365, flex: 1, marginBottom: 20}}>
+            <Text
+              style={{
+                fontSize: 27,
+                marginLeft: 20,
+                padding: 5,
+                fontWeight: 'bold',
+              }}>
+              Rate your veCharge experience.
+            </Text>
+
+            <Rating
+              type="custom"
+              minValue={2}
+              startingValue={3}
+              onFinishRating={ratingCompleted}
+              style={{
+                paddingVertical: 15,
+                right: wp('3%'),
+              }}
+              ratingColor="#3498db"
+              tintColor="#F6F6F6"
+              ratingBackgroundColor="#D3D3D3"
+              imageSize={48}
+            />
+            <KeyboardAvoidingView>
+              <TextInput
+                multiline
+                placeholder="Describe your experience (optional)"
+                style={{
+                  borderWidth: 1,
+                  borderColor: '#525252',
+                  borderRadius: 16,
+                  textAlignVertical: 'top',
+                  textAlign: 'left',
+                  paddingLeft: 20,
+                  width: wp('78%'),
+                  height: hp('10%'),
+                  left: wp('6%'),
+                }}
+                numberOfLines={5}
+              />
+            </KeyboardAvoidingView>
+          </ScrollView>
+        </Overlay>
       </ScrollView>
       {paid === false ? (
         <UnpaidNotify
@@ -540,105 +606,6 @@ const styles = StyleSheet.create({
     marginLeft: wp('4%'),
     marginTop: wp('2%'),
   },
-  // logout: {
-  //   marginLeft: -wp("55%"),
-  //   color: "white",
-  //   textAlign: "center",
-  //   marginBottom: wp("5%"),
-  //   height: hp("4%"),
-  //   width: wp("30%"),
-  //   padding: 6,
-  //   borderRadius: wp("8%") / 4,
-  //   backgroundColor: "#069DFF",
-  //   marginTop: wp("3%"),
-  // },
 });
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: 'white',
-//   },
-//   imgCont: {
-//     width: wp('100%'),
-//     height: hp('25%'),
-//   },
-//   textCont: {
-//     fontSize: wp('7%'),
-//     color: 'white',
-//     marginTop: hp('3%'),
-//     marginLeft: hp('4%'),
-//     fontFamily: 'SF-Pro-Text-Bold',
-//   },
-//   loc: {
-//     marginTop: hp('0.4%'),
-//     marginLeft: wp('8%'),
-//     height: hp('1.8%'),
-//     width: wp('2.6%'),
-//   },
-//   textCont2: {
-//     color: 'white',
-//     fontSize: wp('3%'),
-//     marginLeft: wp('3%'),
-//     marginTop: wp('0.5%'),
-//     fontFamily: 'SF-Pro-Text-Semibold',
-//   },
-//   textCont3: {
-//     marginLeft: wp('8%'),
-//     marginTop: wp('4%'),
-//     fontSize: wp('3.4%'),
-//     color: 'white',
-//     textDecorationLine: 'underline',
-//     fontFamily: 'SF-Pro-Text-Semibold',
-//   },
-//   imgCont2: {
-//     fontSize: wp('4%'),
-//     color: '#292929',
-//     marginTop: -wp('8%'),
-//     marginLeft: wp('8%'),
-//     fontFamily: 'SF-Pro-Text-Medium',
-//   },
-//   imgCont3: {
-//     height: hp('8%'),
-//     width: wp('80%'),
-//     marginLeft: wp('4%'),
-//   },
-//   imgCont4: {
-//     height: hp('8%'),
-//     width: wp('80%'),
-//     marginTop: wp('4%'),
-//     marginLeft: -wp('5%'),
-//   },
-//   item1: {
-//     height: hp('6%'),
-//     width: wp('80%'),
-//     marginLeft: wp('8%'),
-//     marginTop: wp('2%'),
-//   },
-//   item2: {
-//     height: hp('7%'),
-//     width: wp('81%'),
-//     marginLeft: wp('8%'),
-//     marginTop: -wp('2%'),
-//   },
-//   icon: {
-//     height: hp('4%'),
-//     width: wp('7%'),
-//     marginLeft: wp('4%'),
-//     marginTop: wp('2%'),
-//   },
-//   logout: {
-//     marginLeft: -wp('55%'),
-//     color: 'white',
-//     textAlign: 'center',
-//     marginBottom: wp('5%'),
-//     height: hp('4%'),
-//     width: wp('30%'),
-//     padding: 6,
-//     borderRadius: wp('8%') / 4,
-//     backgroundColor: '#069DFF',
-//     marginTop: wp('3%'),
-//   },
-// });
 
 export default Profile;

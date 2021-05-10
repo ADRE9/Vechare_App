@@ -30,7 +30,7 @@ export default function UnPaid({navigation}) {
   //     const id = await AsyncStorage.getItem('id');
 
   //     const socket = io.connect(
-  //       'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com',
+  //       'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com',
   //       {
   //         query: {
   //           chargerId: id,
@@ -46,7 +46,7 @@ export default function UnPaid({navigation}) {
   //   var token = `Bearer ${await AsyncStorage.getItem('token')}`;
   //   var id = await AsyncStorage.getItem('idValue');
   //   await fetch(
-  //     `http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
+  //     `http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
   //     {
   //       headers: {
   //         'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export default function UnPaid({navigation}) {
   const onPay = async () => {
     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
     const order = await fetch(
-      'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
+      'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
       {
         method: 'POST',
         headers: {
@@ -99,7 +99,7 @@ export default function UnPaid({navigation}) {
       // console.log(data);
       console.log('unpaid SCreen');
       const result = await axios.post(
-        'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/payment/madePayment',
+        'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/madePayment',
         data,
         config,
       );

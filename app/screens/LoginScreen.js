@@ -57,7 +57,7 @@ function LoginScreen(props) {
         idToken,
         accessToken,
       );
-      // console.log(idToken);
+      // console.log('idToken by google', idToken);
       token(idToken);
       await auth().signInWithCredential(credential);
     } catch (error) {
@@ -84,7 +84,7 @@ function LoginScreen(props) {
   }
   const token = async function (idToken) {
     const res = await fetch(
-      'http://ec2-52-66-132-134.ap-south-1.compute.amazonaws.com/users/loginWithGoogle',
+      'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/users/loginWithGoogle',
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
