@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -15,6 +15,7 @@ import {
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
+
 
 function FinalChargeDetails(props) {
   const [amount, setAmount] = useState([]);
@@ -68,7 +69,7 @@ function FinalChargeDetails(props) {
         <View>
           <ImageBackground
             source={require('../assets/finalCharge.png')}
-            style={{width: wp('100%'), height: hp('16%')}}
+            style={{ width: wp('100%'), height: hp('16%') }}
             resizeMode="cover">
             {/* <Image
               source={require('../assets/Back.png')}
@@ -224,7 +225,7 @@ function FinalChargeDetails(props) {
                 .finally(() =>
                   props.navigation.reset({
                     index: 0,
-                    routes: [{name: 'AppBottom'}],
+                    routes: [{ name: 'AppBottom' }],
                   }),
                 )
             }>
@@ -264,14 +265,14 @@ const styles = StyleSheet.create({
   },
   btn1: {
     width: wp('38%'),
-    height: hp('5%'),
+    height: hp('5.5%'),
     marginLeft: wp('8%'),
     borderRadius: wp('6%') / 2,
     marginTop: wp('10%'),
   },
   btn2: {
     width: wp('38%'),
-    height: hp('5%'),
+    height: hp('5.5%'),
     marginLeft: wp('8%'),
     borderRadius: wp('6%') / 2,
     marginTop: wp('10%'),
