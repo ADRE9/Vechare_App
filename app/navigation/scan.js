@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Text} from 'react-native';
+import { Image, Text } from 'react-native';
 import styled from 'styled-components';
 
 const Container = styled.View`
@@ -29,15 +29,15 @@ const HiddenBox = styled.View`
   bottom: 0;
 `;
 
-function ScanButton({tintcolor, color}) {
+function ScanButton({ tintcolor, color }) {
   return (
     <InnerContainer>
       <Image
         source={require('../assets/chargebottom.png')}
-        style={{width: 15, height: 25, bottom: 2, tintColor: tintcolor}}
+        style={{ width: 20, height: 30, bottom: 2, tintColor: tintcolor }}
       />
       {/*<Image source={require('../assets/Union.png')} />*/}
-      <Text style={{fontSize: 8, color: color}}>CHARGE</Text>
+      <Text style={{ fontSize: 6, color: color }}>CHARGE</Text>
     </InnerContainer>
   );
 }

@@ -1,4 +1,4 @@
-import React, {useCallback, memo, useRef, useState} from 'react';
+import React, { useCallback, memo, useRef, useState } from 'react';
 import {
   FlatList,
   View,
@@ -13,7 +13,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
 // const details = Array.from({ length: 3 }).map((_, i) => {
 //   return {
@@ -45,17 +45,17 @@ const details = [
   },
 ];
 
-const Slide = memo(function Slide({data}) {
+const Slide = memo(function Slide({ data }) {
   return (
     <SafeAreaView style={styles.cardContainer}>
       <View style={styles.container}>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <Image
             source={require('../assets/card-charge.png')}
-            style={{height: hp('8%'), width: wp('14%')}}
+            style={{ height: hp('8%'), width: wp('14%') }}
             resizeMode="contain"
           />
-          <View style={{flexDirection: 'column', marginLeft: 30}}>
+          <View style={{ flexDirection: 'column', marginLeft: 30 }}>
             <Text
               style={{
                 fontSize: wp('6%'),
@@ -65,7 +65,7 @@ const Slide = memo(function Slide({data}) {
               }}>
               PlugIn India
             </Text>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <Image
                 source={require('../assets/tick.png')}
                 style={{
@@ -92,7 +92,7 @@ const Slide = memo(function Slide({data}) {
                   marginLeft: wp('24%'),
                   marginTop: -wp('1%'),
                 }}>
-                <Text style={{fontSize: wp('3%'), fontWeight: 'bold'}}>
+                <Text style={{ fontSize: wp('3%'), fontWeight: 'bold' }}>
                   {data.dis} km
                 </Text>
               </TouchableOpacity>
@@ -130,7 +130,7 @@ const Slide = memo(function Slide({data}) {
               resizeMode="contain"
             />
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.4} style={{left: wp('3%')}}>
+          <TouchableOpacity activeOpacity={0.4} style={{ left: wp('3%') }}>
             <Image
               source={require('../assets/charge_now.png')}
               style={{
@@ -149,7 +149,7 @@ const Slide = memo(function Slide({data}) {
   );
 });
 
-function Pagination({index}) {
+function Pagination({ index }) {
   return (
     <View style={styles.pagination} pointerEvents="none">
       {details.map((_, i) => {
@@ -207,7 +207,7 @@ export default function Carousel() {
     ),
   };
 
-  const renderItem = useCallback(function renderItem({item}) {
+  const renderItem = useCallback(function renderItem({ item }) {
     return <Slide data={item} />;
   }, []);
 
@@ -242,8 +242,8 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginHorizontal: 6,
   },
-  paginationDotActive: {backgroundColor: '#069DFF'},
-  paginationDotInactive: {backgroundColor: '#DBDBDB'},
+  paginationDotActive: { backgroundColor: '#069DFF' },
+  paginationDotInactive: { backgroundColor: '#DBDBDB' },
 
   carousel: {
     // backgroundColor: 'yellow',

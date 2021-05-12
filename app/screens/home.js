@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,18 +14,18 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import RNLocation from 'react-native-location';
-import {BoxShadow} from 'react-native-shadow';
+import { BoxShadow } from 'react-native-shadow';
 
-import {details, recentDetails} from '../Constants/DumyData';
+import { details, recentDetails } from '../Constants/DumyData';
 import Carousel from '../components/Carousel';
 import CarouselRecent from '../components/CarouselRecent';
-import {HomeScreen, Host} from 'svg';
+import { HomeScreen, Host } from 'svg';
 
 RNLocation.configure({
   distanceFilter: null,
 });
 
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
   // const [paid, setPaid] = useState([]);
   // const [amount, setAmount] = useState([]);
   const [name, setName] = useState([]);
@@ -40,7 +40,7 @@ export default function Home({navigation}) {
     opacity: 0.2,
     x: 12,
     y: 24,
-    style: {marginBottom: hp('8%')},
+    style: { marginBottom: hp('8%') },
   };
   // useEffect(() => {
   //   async function unpaid() {
@@ -118,11 +118,11 @@ export default function Home({navigation}) {
           },
         });
         console.log(permission);
-        location = await RNLocation.getLatestLocation({timeout: 100});
+        location = await RNLocation.getLatestLocation({ timeout: 100 });
         console.log(location);
         isViewLocation(location);
       } else {
-        location = await RNLocation.getLatestLocation({timeout: 100});
+        location = await RNLocation.getLatestLocation({ timeout: 100 });
         console.log(location);
         isViewLocation(location);
       }
@@ -155,7 +155,7 @@ export default function Home({navigation}) {
               style={{
                 fontSize: 20,
                 color: 'white',
-                marginRight: wp('30%'),
+                marginRight: wp('40%'),
                 marginBottom: wp('15%'),
                 fontFamily: 'SF-Pro-Text-Bold',
               }}>
@@ -168,7 +168,7 @@ export default function Home({navigation}) {
           <TouchableOpacity
             onPress={() => navigation.navigate('Host')}
             activeOpacity={0.6}
-            style={{marginLeft: wp('15%'), marginTop: -wp('6%')}}>
+            style={{ marginLeft: wp('15%'), marginTop: -wp('6%') }}>
             <BoxShadow setting={shadowOpt}>
               <Host width={wp('70%')} height={hp('12%')} />
             </BoxShadow>
@@ -188,11 +188,14 @@ export default function Home({navigation}) {
             <TouchableOpacity
               onPress={() => navigation.navigate('Station')}
               activeOpacity={0.5}
-              style={{marginLeft: wp('5%')}}>
+              style={{
+                marginLeft: wp('6%'),
+                marginTop: hp("0.5%"),
+              }}>
               <Image
                 style={{
                   width: wp('20%'),
-                  height: hp('3%'),
+                  height: hp('3.5%'),
                   borderRadius: wp('6%') / 2,
                 }}
                 source={require('../assets/more.png')}
@@ -218,7 +221,7 @@ export default function Home({navigation}) {
             <TouchableOpacity
               onPress={() => navigation.navigate('Session')}
               activeOpacity={0.5}
-              style={{marginLeft: wp('10%'), marginTop: wp('3%')}}>
+              style={{ marginLeft: wp('10%'), marginTop: wp('3%') }}>
               <Image
                 style={{
                   width: wp('20%'),

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -14,10 +14,10 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import {Button, Overlay, Rating, AirbnbRating} from 'react-native-elements';
+import { Button, Overlay, Rating, AirbnbRating } from 'react-native-elements';
 
 import auth from '@react-native-firebase/auth';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   heightPercentageToDP as hp,
@@ -27,7 +27,7 @@ import Share from 'react-native-share';
 import axios from 'axios';
 import RazorpayCheckout from 'react-native-razorpay';
 
-import {RazorpayApiKey} from '../Constants/config';
+import { RazorpayApiKey } from '../Constants/config';
 import files from '../../assets/filesBase64';
 import UnpaidNotify from '../components/UnpaidNotify';
 
@@ -50,9 +50,9 @@ import {
   Web,
   PlayStore,
 } from 'svg';
-import {BoxShadow} from 'react-native-shadow';
+import { BoxShadow } from 'react-native-shadow';
 
-function Profile({navigation}) {
+function Profile({ navigation }) {
   const [loggedIn, setloggedIn] = useState(false);
   const [user, setUser] = useState([]);
   const [paid, setPaid] = useState([]);
@@ -79,7 +79,7 @@ function Profile({navigation}) {
               <Image
                 style={styles.starImgStyle}
                 source={item <= defaultRating ? starfill : star}
-                // source={star}
+              // source={star}
               />
             </TouchableOpacity>
           );
@@ -124,7 +124,7 @@ function Profile({navigation}) {
     opacity: 0.2,
     x: 30,
     y: 22,
-    style: {marginBottom: hp('3%')},
+    style: { marginBottom: hp('3%') },
   };
   const signOut = async () => {
     try {
@@ -140,26 +140,26 @@ function Profile({navigation}) {
     }
   };
 
-  const intsa = async () => {
+  const intsa = () => {
     const instagramURL = 'https://www.instagram.com/valerio_electric/';
-    return await Linking.openURL(instagramURL);
+    Linking.openURL(instagramURL);
   };
-  const twitter = async () => {
+  const twitter = () => {
     const twit = 'https://twitter.com/ValerioElectric';
-    return Linking.openURL(twit);
+    Linking.openURL(twit);
   };
-  const Facebook = async () => {
+  const fb = () => {
     const facebook = 'https://www.facebook.com/ValerioElectric';
-    return Linking.openURL(facebook);
+    Linking.openURL(facebook);
   };
-  const LinkedIn = async () => {
+  const linkedIn = () => {
     const link = 'https://www.linkedin.com/company/valerio-electric';
-    return Linking.openURL(link);
+    Linking.openURL(link);
   };
 
-  const website = async () => {
+  const website = () => {
     const web = 'https://www.valerioelectric.com/';
-    return Linking.openURL(web);
+    Linking.openURL(web);
   };
 
   const sign = () => {
@@ -170,7 +170,7 @@ function Profile({navigation}) {
           signOut().then(() =>
             navigation.reset({
               index: 0,
-              routes: [{name: 'LoginPage'}],
+              routes: [{ name: 'LoginPage' }],
             }),
           ),
       },
@@ -208,11 +208,11 @@ function Profile({navigation}) {
         contact: '9191919191',
         name: 'John Doe',
       },
-      theme: {color: '#a29bfe'},
+      theme: { color: '#a29bfe' },
     };
     RazorpayCheckout.open(options).then(async function (response) {
       const config = {
-        headers: {Authorization: token},
+        headers: { Authorization: token },
       };
       const data = {
         orderCreationId: orderData.id,
@@ -344,6 +344,7 @@ function Profile({navigation}) {
           style={{
             marginLeft: wp('8%'),
             marginTop: wp('2%'),
+
           }}>
           <TouchableOpacity
             onPress={() => navigation.navigate('Work')}
@@ -403,7 +404,8 @@ function Profile({navigation}) {
             <View style={styles.line}></View>
           </TouchableOpacity>
           <TouchableOpacity onPress={toggleOverlay} activeOpacity={0.5}>
-            <View flexDirection="row">
+            <View flexDirection="row"
+            >
               <Text style={styles.item1}>Rate us</Text>
               <Icon5
                 height={hp('8%')}
@@ -440,27 +442,32 @@ function Profile({navigation}) {
             <Logout height={hp('10%')} width={wp('30%')} />
           </TouchableOpacity>
         </View>
-        <View flexDirection="row">
+        <View flexDirection="row"
+          style={{
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
           <Text
             style={{
               color: '#292929',
               fontSize: wp('3.6%'),
-              marginLeft: wp('8%'),
+              marginLeft: wp('0.3%'),
               marginTop: wp('2%'),
             }}>
             Connect with us
           </Text>
-          {/* <TouchableOpacity
+          <TouchableOpacity
             onPress={twitter}
             style={{
               marginLeft: wp('4%'),
-              marginTop: wp('2%'),
+              marginTop: wp('3%'),
             }}
             activeOpacity={0.5}>
-            <Twitter height={hp('4%')} width={wp('7%')} />
+            <Twitter height={hp('4.2%')} width={wp('7%')} />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={Facebook}
+            onPress={fb}
             style={{
               marginLeft: wp('4%'),
               marginTop: wp('2%'),
@@ -478,7 +485,7 @@ function Profile({navigation}) {
             <Instagram height={hp('3.6%')} width={wp('7%')} />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={LinkedIn}
+            onPress={linkedIn}
             style={{
               marginLeft: wp('4%'),
               marginTop: wp('2%'),
@@ -494,42 +501,8 @@ function Profile({navigation}) {
             }}
             activeOpacity={0.5}>
             <Web height={hp('3.6%')} width={wp('7%')} />
-          </TouchableOpacity> */}
-          <TouchableOpacity activeOpacity={0.5} onPress={twitter}>
-            <Image
-              source={require('../assets/twitter.png')}
-              style={styles.icon}
-              resizeMode="contain"
-            />
           </TouchableOpacity>
-          <TouchableOpacity onPress={Facebook}>
-            <Image
-              source={require('../assets/fb.png')}
-              style={styles.icon}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={intsa}>
-            <Image
-              source={require('../assets/insta.png')}
-              style={styles.icon}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={LinkedIn}>
-            <Image
-              source={require('../assets/in.png')}
-              style={styles.icon}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={website}>
-            <Image
-              source={require('../assets/net.png')}
-              style={styles.icon}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
+
         </View>
         <Overlay
           isVisible={visible}
@@ -543,7 +516,7 @@ function Profile({navigation}) {
           }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={{width: wp('100%'), flex: 1, marginBottom: 50}}>
+            style={{ width: wp('100%'), flex: 1, marginBottom: 50 }}>
             <Text
               style={{
                 fontSize: 30,
@@ -573,7 +546,7 @@ function Profile({navigation}) {
             <Bar />
 
             <KeyboardAvoidingView
-              style={{justifyContent: 'center', alignItems: 'center'}}>
+              style={{ justifyContent: 'center', alignItems: 'center' }}>
               <TextInput
                 style={{
                   paddingLeft: 15,
@@ -590,7 +563,7 @@ function Profile({navigation}) {
               />
             </KeyboardAvoidingView>
 
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity
                 onPress={toggleplay}
                 style={{
@@ -612,7 +585,7 @@ function Profile({navigation}) {
                     marginTop: hp('2%'),
                   }}
                 /> */}
-                <Text style={{fontSize: 15, color: 'white'}}>Submit</Text>
+                <Text style={{ fontSize: 15, color: 'white' }}>Submit</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -631,7 +604,7 @@ function Profile({navigation}) {
             }}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              style={{width: wp('100%'), flex: 1, marginBottom: 50}}>
+              style={{ width: wp('100%'), flex: 1, marginBottom: 50 }}>
               <Text
                 style={{
                   fontSize: 30,
@@ -655,7 +628,7 @@ function Profile({navigation}) {
               </Text>
               <TouchableOpacity
                 onPress={Open}
-                style={{marginTop: -wp('30%'), marginLeft: wp('10%')}}>
+                style={{ marginTop: -wp('30%'), marginLeft: wp('10%') }}>
                 <PlayStore height={hp('50%')} width={wp('50%')} />
               </TouchableOpacity>
             </ScrollView>
@@ -674,7 +647,7 @@ function Profile({navigation}) {
             }}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              style={{width: wp('100%'), flex: 1, marginBottom: 50}}>
+              style={{ width: wp('100%'), flex: 1, marginBottom: 50 }}>
               <Text
                 style={{
                   fontSize: 30,
@@ -698,7 +671,7 @@ function Profile({navigation}) {
               </Text>
               <TouchableOpacity
                 onPress={OpenIOS}
-                style={{marginTop: -wp('30%'), marginLeft: wp('10%')}}>
+                style={{ marginTop: -wp('30%'), marginLeft: wp('10%') }}>
                 <AppStore height={hp('50%')} width={wp('50%')} />
               </TouchableOpacity>
             </ScrollView>
