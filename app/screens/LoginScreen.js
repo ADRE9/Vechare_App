@@ -84,7 +84,7 @@ function LoginScreen(props) {
   }
   const token = async function (idToken) {
     const res = await fetch(
-      'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/users/loginWithGoogle',
+      'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/users/loginWithGoogle',
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

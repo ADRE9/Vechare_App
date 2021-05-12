@@ -40,3 +40,5 @@ export {default as EditHeader} from './editHeader.svg';
 // export { default as Avatar } from './avatar.svg'
 export {default as Pencil} from './pencil.svg';
 export {default as SaveBtn} from './saveBtn.svg';
+export {default as PlayStore} from './playStore.svg';
+export {default as AppStore} from './appStore.svg';

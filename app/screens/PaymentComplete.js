@@ -8,9 +8,9 @@ import {
 
 function PaymentComplete({navigation}) {
   setTimeout(() => {
-    navigation.replace('Details'); // Stack Name
+    navigation.navigate('Details'); // Stack Name
     console.log('payment complete');
-  }, 3000);
+  }, 2000);
 
   return (
     <View style={styles.container}>

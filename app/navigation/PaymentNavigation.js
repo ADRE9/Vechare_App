@@ -13,7 +13,7 @@ const ProfileNavigator = () => {
       screenOptions={{headerShown: false}}
       mode="card">
       <Stack.Screen name="PayMent" component={Payment} />
-      <Stack.Screen name="PayDone" component={PaymentComplete} />
+      {/* <Stack.Screen name="PayDone" component={PaymentComplete} /> */}
     </Stack.Navigator>
   );
 };

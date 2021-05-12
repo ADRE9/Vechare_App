@@ -25,7 +25,6 @@ function Card({status, dis, loc}) {
           style={{height: hp('8%'), width: wp('14%')}}
           resizeMode="contain"
         />
-
         <View style={{flexDirection: 'column', marginLeft: 30}}>
           <Text
             style={{

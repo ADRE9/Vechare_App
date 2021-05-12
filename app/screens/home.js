@@ -46,7 +46,7 @@ export default function Home({navigation}) {
   //   async function unpaid() {
   //     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
   //     const res = await fetch(
-  //       `http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/unpaid`,
+  //       `http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/unpaid`,
   //       {
   //         headers: {
   //           'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export default function Home({navigation}) {
   //   async function connection() {
   //     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
   //     const res = await fetch(
-  //       `http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/users/me`,
+  //       `http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/users/me`,
   //       {
   //         headers: {
   //           'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ export default function Home({navigation}) {
             style={{
               position: 'absolute',
               top: 0,
-              left: wp('5%'),
+              left: wp('-4%'),
               right: 0,
               bottom: 0,
               justifyContent: 'center',
@@ -155,7 +155,7 @@ export default function Home({navigation}) {
               style={{
                 fontSize: 20,
                 color: 'white',
-                marginRight: wp('34%'),
+                marginRight: wp('30%'),
                 marginBottom: wp('15%'),
                 fontFamily: 'SF-Pro-Text-Bold',
               }}>
@@ -180,8 +180,7 @@ export default function Home({navigation}) {
               style={{
                 fontFamily: 'SF-Pro-Display-Semibold',
                 color: '#181725',
-                fontSize: wp('5%'),
-                marginTop: wp('2%'),
+                fontSize: wp('5.7%'),
                 marginLeft: wp('5%'),
               }}>
               Charging Points Near Me
@@ -189,21 +188,19 @@ export default function Home({navigation}) {
             <TouchableOpacity
               onPress={() => navigation.navigate('Station')}
               activeOpacity={0.5}
-              style={{marginLeft: wp('10%'), marginTop: wp('2%')}}>
+              style={{marginLeft: wp('5%')}}>
               <Image
                 style={{
                   width: wp('20%'),
                   height: hp('3%'),
-
                   borderRadius: wp('6%') / 2,
                 }}
                 source={require('../assets/more.png')}
               />
             </TouchableOpacity>
           </View>
-          <Carousel data={details} />
         </View>
-
+        <Carousel />
         <View>
           <View flexDirection="row">
             <Text
@@ -211,7 +208,7 @@ export default function Home({navigation}) {
                 fontSize: 22,
                 marginTop: 15,
                 marginLeft: 30,
-                marginTop: 20,
+                marginTop: 10,
                 fontFamily: 'SF-Pro-Display-Semibold',
                 color: '#181725',
               }}>
@@ -221,7 +218,7 @@ export default function Home({navigation}) {
             <TouchableOpacity
               onPress={() => navigation.navigate('Session')}
               activeOpacity={0.5}
-              style={{marginLeft: wp('10%'), marginTop: wp('6%')}}>
+              style={{marginLeft: wp('10%'), marginTop: wp('3%')}}>
               <Image
                 style={{
                   width: wp('20%'),
@@ -233,8 +230,8 @@ export default function Home({navigation}) {
               />
             </TouchableOpacity>
           </View>
-          <CarouselRecent data={recentDetails} />
         </View>
+        <CarouselRecent />
       </ScrollView>
     </SafeAreaView>
   );
@@ -244,28 +241,5 @@ const styles = StyleSheet.create({
   cont: {
     flex: 1,
     backgroundColor: 'white',
-  },
-  // paragraph: {
-  //   margin: 24,
-  //   fontSize: 18,
-  //   fontWeight: "bold",
-  //   textAlign: "center",
-  //   color: "#34495e",
-  // },
-  activeCircle: {
-    borderRadius: wp('7%') / 2,
-    width: wp('2%'),
-    height: hp('1%'),
-    backgroundColor: '#069DFF',
-    marginLeft: wp('42%'),
-    marginTop: wp('3%'),
-  },
-  inactiveCircle: {
-    borderRadius: wp('7%') / 2,
-    width: wp('2%'),
-    height: hp('1%'),
-    backgroundColor: '#DBDBDB',
-    marginLeft: wp('3%'),
-    marginTop: wp('3%'),
   },
 });

@@ -8,11 +8,11 @@ import {
 
 function ChargingDone({navigation}) {
   setTimeout(() => {
-    navigation.replace('Pay'); // Stack Name
-    // navigation.reset({
-    //   index: 0,
-    //   routes: [{name: 'Pay'}],
-    // });
+    // navigation.replace('Pay'); // Stack Name
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'Pay'}],
+    });
   }, 2000);
 
   return (

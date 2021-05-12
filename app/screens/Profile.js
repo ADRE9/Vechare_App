@@ -12,6 +12,7 @@ import {
   ScrollView,
   Linking,
   KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import {Button, Overlay, Rating, AirbnbRating} from 'react-native-elements';
 
@@ -29,6 +30,7 @@ import RazorpayCheckout from 'react-native-razorpay';
 import {RazorpayApiKey} from '../Constants/config';
 import files from '../../assets/filesBase64';
 import UnpaidNotify from '../components/UnpaidNotify';
+
 import {
   ProfileHeader,
   Loc,
@@ -41,10 +43,12 @@ import {
   Icon6,
   Logout,
   Facebook,
+  AppStore,
   Instagram,
   Twitter,
   LinkedIn,
   Web,
+  PlayStore,
 } from 'svg';
 import {BoxShadow} from 'react-native-shadow';
 
@@ -55,13 +59,60 @@ function Profile({navigation}) {
   const [amount, setAmount] = useState([]);
   const [name, setName] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [visble, setVisble] = useState(false);
+  const [defaultRating, setdefaultRating] = useState(2);
+  const [maxRating, setmaxRating] = useState([1, 2, 3, 4, 5]);
+
+  const star = require('../assets/stars.png');
+  const starfill = require('../assets/Vector.png');
+
+  const Bar = () => {
+    return (
+      <View style={styles.customRatingStyle}>
+        {maxRating.map((item, key) => {
+          return (
+            <TouchableOpacity
+              activeOpacity={0.7}
+              key={item}
+              // style={{backgroundColor: 'yellow'}}
+              onPress={() => setdefaultRating(item)}>
+              <Image
+                style={styles.starImgStyle}
+                source={item <= defaultRating ? starfill : star}
+                // source={star}
+              />
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    );
+  };
 
   const toggleOverlay = () => {
     setVisible(!visible);
   };
+  const toggleplay = () => {
+    setVisble(!visble);
+  };
 
   const ratingCompleted = () => {
     console.log('rating');
+  };
+
+  const close = () => {
+    setVisble(!visble);
+    setVisible(!visible);
+  };
+
+  const Open = () => {
+    Linking.openURL('market://details?id=com.whatsapp');
+    //market://details?id=<<Package id>>
+  };
+
+  const OpenIOS = () => {
+    Linking.openURL(
+      'https://apps.apple.com/in/app/whatsapp-messenger/id310633997',
+    );
   };
 
   const shadowOpt = {
@@ -79,7 +130,7 @@ function Profile({navigation}) {
     try {
       await GoogleSignin.revokeAccess();
       await GoogleSignin.signOut();
-      await AsyncStorage.removeItem('ervl');
+      // await AsyncStorage.removeItem('ervl');
       auth()
         .signOut()
         .then(() => alert('You are signed out!'));
@@ -132,7 +183,7 @@ function Profile({navigation}) {
   const onPay = async () => {
     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
     const order = await fetch(
-      'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
+      'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
       {
         method: 'POST',
         headers: {
@@ -172,7 +223,7 @@ function Profile({navigation}) {
       // console.log(data);
       console.log('unpaid SCreen');
       const result = await axios.post(
-        'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/madePayment',
+        'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/madePayment',
         data,
         config,
       );
@@ -201,7 +252,7 @@ function Profile({navigation}) {
     async function unpaid() {
       var token = `Bearer ${await AsyncStorage.getItem('token')}`;
       const res = await fetch(
-        'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/unpaid',
+        'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/unpaid',
         {
           headers: {
             'Content-Type': 'application/json',
@@ -484,62 +535,180 @@ function Profile({navigation}) {
           isVisible={visible}
           onBackdropPress={toggleOverlay}
           overlayStyle={{
-            top: 160,
-            flex: 0.4,
-            borderTopLeftRadius: 35,
-            borderTopRightRadius: 35,
+            top: hp('25%'),
+            flex: 0.5,
+            borderTopLeftRadius: 45,
+            borderTopRightRadius: 45,
             backgroundColor: '#F6F6F6',
           }}>
-          <ScrollView style={{width: 365, flex: 1, marginBottom: 20}}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={{width: wp('100%'), flex: 1, marginBottom: 50}}>
             <Text
               style={{
-                fontSize: 27,
+                fontSize: 30,
                 marginLeft: 20,
-                padding: 5,
-                fontWeight: 'bold',
+                top: 5,
+                padding: 10,
+                fontFamily: 'SF-Pro-Display-Medium',
+                color: 'black',
               }}>
-              Rate your veCharge experience.
+              Rate your veCharge experience
             </Text>
 
-            <Rating
+            {/* <Rating
               type="custom"
-              minValue={2}
-              startingValue={3}
+              minValue={1}
+              defaultValue={2}
               onFinishRating={ratingCompleted}
               style={{
-                paddingVertical: 15,
-                right: wp('3%'),
+                top: -5,
+                // backgroundColor: 'yellow',
+                padding: 10,
               }}
               ratingColor="#3498db"
               tintColor="#F6F6F6"
               ratingBackgroundColor="#D3D3D3"
-              imageSize={48}
-            />
-            <KeyboardAvoidingView>
+            /> */}
+            <Bar />
+
+            <KeyboardAvoidingView
+              style={{justifyContent: 'center', alignItems: 'center'}}>
               <TextInput
-                multiline
-                placeholder="Describe your experience (optional)"
                 style={{
+                  paddingLeft: 15,
+                  textAlignVertical: 'top',
+                  marginTop: 10,
+                  width: '90%',
                   borderWidth: 1,
                   borderColor: '#525252',
-                  borderRadius: 16,
-                  textAlignVertical: 'top',
-                  textAlign: 'left',
-                  paddingLeft: 20,
-                  width: wp('78%'),
-                  height: hp('10%'),
-                  left: wp('6%'),
+                  flexWrap: 'wrap',
+                  borderRadius: 20,
                 }}
-                numberOfLines={5}
+                numberOfLines={4}
+                placeholder="Describe your experience(optional)"
               />
             </KeyboardAvoidingView>
+
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity
+                onPress={toggleplay}
+                style={{
+                  marginLeft: wp('70%'),
+                  marginTop: hp('2%'),
+                  backgroundColor: '#069DFF',
+                  padding: 10,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: hp('4%'),
+                  borderRadius: 10,
+                }}>
+                {/* <Image
+                  source={require('../assets/arrow.png')}
+                  style={{
+                    height: hp('5%'),
+                    width: wp('5%'),
+                    marginLeft: wp('80%'),
+                    marginTop: hp('2%'),
+                  }}
+                /> */}
+                <Text style={{fontSize: 15, color: 'white'}}>Submit</Text>
+              </TouchableOpacity>
+            </View>
           </ScrollView>
         </Overlay>
+        {Platform.OS === 'android' ? (
+          <Overlay
+            isVisible={visble}
+            onBackdropPress={close}
+            // fullScreen={false}
+            overlayStyle={{
+              top: hp('25%'),
+              flex: 0.5,
+              borderTopLeftRadius: 45,
+              borderTopRightRadius: 45,
+              backgroundColor: '#F6F6F6',
+            }}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={{width: wp('100%'), flex: 1, marginBottom: 50}}>
+              <Text
+                style={{
+                  fontSize: 30,
+                  marginLeft: 20,
+                  top: 5,
+                  padding: 10,
+                  fontFamily: 'SF-Pro-Display-Medium',
+                  color: 'black',
+                }}>
+                Rate your veCharge experience
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'SF-Pro-Display-Regular',
+                  color: '#252525',
+                  marginLeft: wp('8%'),
+                  fontSize: 20,
+                  marginTop: hp('5%'),
+                }}>
+                Please rate us on the Playstore too :)
+              </Text>
+              <TouchableOpacity
+                onPress={Open}
+                style={{marginTop: -wp('30%'), marginLeft: wp('10%')}}>
+                <PlayStore height={hp('50%')} width={wp('50%')} />
+              </TouchableOpacity>
+            </ScrollView>
+          </Overlay>
+        ) : (
+          <Overlay
+            isVisible={visble}
+            onBackdropPress={close}
+            // fullScreen={false}
+            overlayStyle={{
+              top: 190,
+              flex: 0.5,
+              borderTopLeftRadius: 35,
+              borderTopRightRadius: 35,
+              backgroundColor: '#F6F6F6',
+            }}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={{width: wp('100%'), flex: 1, marginBottom: 50}}>
+              <Text
+                style={{
+                  fontSize: 30,
+                  marginLeft: 20,
+                  top: 5,
+                  padding: 10,
+                  fontFamily: 'SF-Pro-Display-Medium',
+                  color: 'black',
+                }}>
+                Rate your veCharge experience
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'SF-Pro-Display-Regular',
+                  color: '#252525',
+                  marginLeft: wp('8%'),
+                  fontSize: 20,
+                  marginTop: hp('5%'),
+                }}>
+                Please rate us on the Playstore too :)
+              </Text>
+              <TouchableOpacity
+                onPress={OpenIOS}
+                style={{marginTop: -wp('30%'), marginLeft: wp('10%')}}>
+                <AppStore height={hp('50%')} width={wp('50%')} />
+              </TouchableOpacity>
+            </ScrollView>
+          </Overlay>
+        )}
       </ScrollView>
       {paid === false ? (
         <UnpaidNotify
           amount={amount}
-          onPress={() => onPay().finally(() => navigation.replace('AppBottom'))}
+          onPress={() => onPay().finally(() => navigation.replace('PayDetail'))}
         />
       ) : null}
     </SafeAreaView>
@@ -605,6 +774,17 @@ const styles = StyleSheet.create({
     width: wp('7%'),
     marginLeft: wp('4%'),
     marginTop: wp('2%'),
+  },
+  customRatingStyle: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    marginTop: 5,
+  },
+  starImgStyle: {
+    width: 40,
+    height: 40,
+    resizeMode: 'cover',
+    marginHorizontal: 10,
   },
 });
 

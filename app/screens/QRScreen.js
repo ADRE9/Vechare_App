@@ -35,9 +35,20 @@ export default function QRScreen({navigation, route}) {
     // Called after te successful scanning of QRCode/Barcode
     console.log(e.data);
     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
-    // console.log(token);
+    const tk = await AsyncStorage.getItem('token');
+
+    if (tk === null) {
+      return ToastAndroid.showWithGravityAndOffset(
+        'Server is down ',
+        ToastAndroid.LONG,
+        ToastAndroid.CENTER,
+        25,
+        50,
+      );
+    }
+    // console.log(tk);
     const chargerID = await fetch(
-      `http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/charger/check/${e.data}`,
+      `http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/charger/check/${e.data}`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +84,7 @@ export default function QRScreen({navigation, route}) {
   const Idtext = async () => {
     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
     const chargerID = await fetch(
-      `http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/charger/check/${id}`,
+      `http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/charger/check/${id}`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -97,7 +108,7 @@ export default function QRScreen({navigation, route}) {
     } else {
       return ToastAndroid.showWithGravityAndOffset(
         'Invalid Charger ID',
-        ToastAndroid.LONG,
+        ToastAndroid.SHORT,
         ToastAndroid.CENTER,
         25,
         50,
@@ -108,7 +119,7 @@ export default function QRScreen({navigation, route}) {
   const onPay = async () => {
     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
     const order = await fetch(
-      'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
+      'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
       {
         method: 'POST',
         headers: {
@@ -148,7 +159,7 @@ export default function QRScreen({navigation, route}) {
       // console.log(data);
       console.log('unpaid SCreen');
       const result = await axios.post(
-        'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/madePayment',
+        'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/madePayment',
         data,
         config,
       );
@@ -159,7 +170,7 @@ export default function QRScreen({navigation, route}) {
       var token = `Bearer ${await AsyncStorage.getItem('token')}`;
       const value = await AsyncStorage.getItem('id');
       const res = await fetch(
-        'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/users/me',
+        'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/users/me',
         {
           headers: {
             'Content-Type': 'application/json',
@@ -168,8 +179,8 @@ export default function QRScreen({navigation, route}) {
         },
       );
       const resData = await res.json();
-      const ervl = await AsyncStorage.getItem('ervl');
-      setErvalue(ervl);
+      // const ervl = await AsyncStorage.getItem('ervl');
+      // setErvalue(ervl);
 
       setConnect(value);
 
@@ -182,7 +193,7 @@ export default function QRScreen({navigation, route}) {
     async function unpaid() {
       var token = `Bearer ${await AsyncStorage.getItem('token')}`;
       const res = await fetch(
-        'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/unpaid',
+        'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/unpaid',
         {
           headers: {
             'Content-Type': 'application/json',
@@ -203,7 +214,7 @@ export default function QRScreen({navigation, route}) {
     return (
       <Unpaid
         amount={amount}
-        onPress={() => onPay().finally(() => navigation.replace('AppBottom'))}
+        onPress={() => onPay().then(() => navigation.replace('PayDetail'))}
       />
     );
   } else {
@@ -213,28 +224,24 @@ export default function QRScreen({navigation, route}) {
         containerStyle={styles.containerStyle}
         cameraStyle={styles.cameraStyle}
         markerStyle={{
-          borderColor: '#626262',
+          borderColor: '#069DFF',
           borderRadius: 30,
-          marginRight: wp('2%'),
+          justifyContent: 'center',
+          alignItems: 'center',
+          position: 'absolute',
         }}
         reactivate={true}
         permissionDialogMessage="Need Permission to access Camera"
-        reactivateTimeout={1000}
+        reactivateTimeout={1500}
         showMarker={true}
         bottomContent={
           <ScrollView>
-            <Text
-              style={{
-                fontSize: 15,
-                marginTop: 15,
-              }}>
-              {ervalue}
-            </Text>
             <Text style={styles.charge}>Charge via Station ID</Text>
             <Text
               style={{
                 fontSize: 15,
                 marginTop: 25,
+                left: 10,
               }}>
               Enter code here
             </Text>
@@ -263,7 +270,7 @@ const styles = StyleSheet.create({
   cameraStyle: {
     height: 350,
     width: 400,
-    marginTop: -85,
+    marginTop: -95,
   },
   input: {
     marginTop: 15,

@@ -35,14 +35,13 @@ export default class Status extends Component {
       energy: '',
       price: '',
       time: [],
-      error: '',
     };
   }
   disconnect = async () => {
     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
     const id = await AsyncStorage.getItem('id');
     const res = await fetch(
-      `http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
+      `http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +54,7 @@ export default class Status extends Component {
       this.setState({toggle: false});
     }
     const order = await fetch(
-      'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
+      'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
       {
         method: 'POST',
         headers: {
@@ -76,7 +75,7 @@ export default class Status extends Component {
   //   const id = await AsyncStorage.getItem('id');
 
   //   fetch(
-  //     'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState',
+  //     'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState',
   //     {
   //       method: 'PATCH',
   //       headers: {
@@ -119,7 +118,7 @@ export default class Status extends Component {
       const id = await AsyncStorage.getItem('id');
 
       fetch(
-        'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState',
+        'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState',
         {
           method: 'PATCH',
           headers: {
@@ -143,12 +142,7 @@ export default class Status extends Component {
             onPress: () =>
               this.disconnect()
                 .then(() => this.storeData())
-                .finally(() =>
-                  this.props.navigation.reset({
-                    index: 0,
-                    routes: [{name: 'Charging'}],
-                  }),
-                ),
+                .finally(() => this.props.navigation.navigate('Charging')),
           },
 
           // {
@@ -190,7 +184,7 @@ export default class Status extends Component {
     console.log(id);
     console.log(token);
     const socket = io.connect(
-      'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com',
+      'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com',
       {
         query: {
           chargerId: id,
@@ -235,16 +229,19 @@ export default class Status extends Component {
     socket.on('error', (data) => {
       console.log('error about device', data);
 
-      async function error() {
-        await AsyncStorage.setItem('ervl', data);
-      }
-      error();
-
-      return this.props.navigation.replace('QrScreen', {
-        connection: 'reset',
-        error: 'Charger already connected to other device',
-      });
-      // this.setState({error: data});
+      // return (
+      //   this.props.navigation.replace('QrScreen', {
+      //     connection: 'reset',
+      //     error: 'Charger already connected to other device',
+      //   }),
+      //   ToastAndroid.showWithGravityAndOffset(
+      //     'Charger already connected to other device',
+      //     ToastAndroid.LONG,
+      //     ToastAndroid.CENTER,
+      //     25,
+      //     50,
+      //   )
+      // );
     });
     // socket.on('chargerDisconnected', (data) => {
     //   console.log('charger disconnected from device', data);

@@ -7,8 +7,6 @@ import RNBootSplash from 'react-native-bootsplash';
 import AuthNavigation from './app/navigation/AuthNavigation';
 import AppBottomNavigation from './app/navigation/AppBottomNavigation';
 
-import Rating from './app/screens/Location';
-import UnPaid from './app/screens/unPaid';
 import Profile from './app/screens/Profile';
 import LoginScreen from './app/screens/LoginScreen';
 import RegisterScreen from './app/screens/RegisterScreen';

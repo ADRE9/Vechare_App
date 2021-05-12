@@ -65,7 +65,7 @@ export default function Payment({navigation}) {
   //     const id = await AsyncStorage.getItem('id');
 
   //     const socket = io.connect(
-  //       'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com',
+  //       'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com',
   //       {
   //         query: {
   //           chargerId: id,
@@ -119,7 +119,7 @@ export default function Payment({navigation}) {
   //   const token = `Bearer ${await AsyncStorage.getItem('token')}`;
   //   const id = await AsyncStorage.getItem('id');
   //   await fetch(
-  //     `http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
+  //     `http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
   //     {
   //       headers: {
   //         'Content-Type': 'application/json',
@@ -133,7 +133,7 @@ export default function Payment({navigation}) {
   //   async function payment() {
   //     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
   //     const order = await fetch(
-  //       'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
+  //       'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
   //       {
   //         method: 'POST',
   //         headers: {
@@ -159,13 +159,13 @@ export default function Payment({navigation}) {
     // radius: 6,
     opacity: 0.2,
     // x: 1,
-    y: 62,
+    y: 63,
   };
 
   const onPay = async () => {
     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
     // const order = await fetch(
-    //   'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
+    //   'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
     //   {
     //     method: 'POST',
     //     headers: {
@@ -184,35 +184,19 @@ export default function Payment({navigation}) {
     const pyt = await AsyncStorage.getItem('pyt');
     const pytId = await AsyncStorage.getItem('pytId');
 
-    if (pyt <= 100) {
-      var options = {
-        description: 'Electricity bill payment',
-        curreny: 'INR',
-        amount: '150',
-        order_id: pytId,
-        key: RazorpayApiKey,
-        prefill: {
-          email: 'useremail@example.com',
-          contact: '9191919191',
-          name: 'John Doe',
-        },
-        theme: {color: '#a29bfe'},
-      };
-    } else {
-      var options = {
-        description: 'Electricity bill payment',
-        curreny: 'INR',
-        amount: pyt,
-        order_id: pytId,
-        key: RazorpayApiKey,
-        prefill: {
-          email: 'useremail@example.com',
-          contact: '9191919191',
-          name: 'John Doe',
-        },
-        theme: {color: '#a29bfe'},
-      };
-    }
+    var options = {
+      description: 'Electricity bill payment',
+      curreny: 'INR',
+      amount: pyt,
+      order_id: pytId,
+      key: RazorpayApiKey,
+      prefill: {
+        email: 'useremail@example.com',
+        contact: '9191919191',
+        name: 'John Doe',
+      },
+      theme: {color: '#a29bfe'},
+    };
 
     RazorpayCheckout.open(options)
       .then(async function (response) {
@@ -228,11 +212,12 @@ export default function Payment({navigation}) {
         // console.log(data);
         console.log('payment screen');
         const result = await axios.post(
-          'http://ec2-65-2-128-103.ap-south-1.compute.amazonaws.com/payment/madePayment',
+          'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/madePayment',
           data,
           config,
         );
       })
+      .finally(() => navigation.replace('PayDetail'))
       .catch((err) => {
         navigation.replace('AppBottom', {err});
       });
@@ -392,7 +377,7 @@ export default function Payment({navigation}) {
             flexDirection="row"
             style={{
               alignItems: 'center',
-              height: hp('10%'),
+              height: hp('11%'),
               marginTop: wp('15%'),
               backgroundColor: 'white',
             }}>
@@ -401,7 +386,7 @@ export default function Payment({navigation}) {
                 fontFamily: 'SF-Pro-Display-Semibold',
                 marginLeft: wp('5%'),
                 fontSize: wp('5.6%'),
-                marginTop: wp('2%'),
+                marginTop: wp('1%'),
                 color: 'black',
               }}>
               {'\u20B9'} {amount}
@@ -409,15 +394,13 @@ export default function Payment({navigation}) {
 
             <TouchableOpacity
               style={{
-                marginLeft: wp('12%'),
-                marginTop: wp('5%'),
-                borderRadius: wp('8%') / 4,
+                left: wp('45%'),
 
+                borderRadius: wp('8%') / 4,
+                position: 'absolute',
                 marginBottom: wp('3%'),
               }}
-              onPress={() =>
-                onPay().then(() => navigation.replace('PayDetail'))
-              }>
+              onPress={() => onPay()}>
               <PayBtn height={hp('5%')} width={wp('50%')} />
             </TouchableOpacity>
           </View>
@@ -432,11 +415,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  back: {
-    position: 'absolute',
-    top: 35,
-    left: 15,
-  },
+  // back: {
+  //   position: 'absolute',
+  //   top: 35,
+  //   left: 15,
+  // },
   txt: {
     color: 'white',
     fontSize: wp('8%'),

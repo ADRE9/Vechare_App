@@ -25,8 +25,8 @@ function UnpaidNotify({onPress, amount}) {
         <Image
           source={require('../assets/unpayment.png')}
           style={{
-            height: hp('5%'),
-            width: wp('30%'),
+            height: hp('5.5%'),
+            width: wp('34%'),
           }}
         />
       </TouchableOpacity>
