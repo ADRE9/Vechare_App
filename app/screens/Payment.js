@@ -29,8 +29,7 @@ import '../Constants/Useragent';
 export default function Payment({navigation}) {
   // const [isLoading, setLoading] = useState(true);
   const [amount, setAmount] = useState([]);
-  const [price, setPrice] = useState([]);
-  const [id, setId] = useState([]);
+
   const [energy, setEnergy] = useState([]);
   const [time, setTime] = useState('');
   const [currentHour, setCurrenthour] = useState('');
@@ -65,7 +64,7 @@ export default function Payment({navigation}) {
   //     const id = await AsyncStorage.getItem('id');
 
   //     const socket = io.connect(
-  //       'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com',
+  //       'https://vecharge.app/api/v1',
   //       {
   //         query: {
   //           chargerId: id,
@@ -119,7 +118,7 @@ export default function Payment({navigation}) {
   //   const token = `Bearer ${await AsyncStorage.getItem('token')}`;
   //   const id = await AsyncStorage.getItem('id');
   //   await fetch(
-  //     `http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
+  //     `https://vecharge.app/api/v1/charger/removeChargerFromUser/${id}`,
   //     {
   //       headers: {
   //         'Content-Type': 'application/json',
@@ -133,7 +132,7 @@ export default function Payment({navigation}) {
   //   async function payment() {
   //     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
   //     const order = await fetch(
-  //       'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
+  //       'https://vecharge.app/api/v1/payment/instantiatePayment',
   //       {
   //         method: 'POST',
   //         headers: {
@@ -165,7 +164,7 @@ export default function Payment({navigation}) {
   const onPay = async () => {
     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
     // const order = await fetch(
-    //   'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
+    //   'https://vecharge.app/api/v1/payment/instantiatePayment',
     //   {
     //     method: 'POST',
     //     headers: {
@@ -212,7 +211,7 @@ export default function Payment({navigation}) {
         // console.log(data);
         console.log('payment screen');
         const result = await axios.post(
-          'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/madePayment',
+          'https://vecharge.app/api/v1/payment/madePayment',
           data,
           config,
         );

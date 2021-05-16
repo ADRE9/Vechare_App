@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -14,9 +14,31 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import SessionCard from '../components/SessionCard';
-import {DataSession} from '../Constants/DumyData';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function SessionScreen(props) {
+  const [value, setdata] = useState([]);
+
+  useEffect(() => {
+    async function dtl() {
+      const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+      const res = await fetch(
+        `https://vecharge.app/api/v1/payment/?page=2&limit=10`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: token,
+          },
+        },
+      );
+      const resData = await res.json();
+      setdata(resData.data.payments);
+      // console.log('Carousel Recent');
+    }
+    dtl();
+  });
+
   const header = () => {
     return (
       <View>
@@ -44,12 +66,16 @@ function SessionScreen(props) {
     <SafeAreaView style={styles.container}>
       <View>
         <FlatList
-          keyExtractor={(item) => item.id.toString()}
-          data={DataSession}
+          keyExtractor={(item) => item._id.toString()}
+          data={value}
           ListHeaderComponent={header}
           stickyHeaderIndices={[0]}
           renderItem={({item}) => (
-            <SessionCard status={item.status} days={item.days} loc={item.loc} />
+            <SessionCard
+              loc={item.chargerId.address}
+              amount={item.amount}
+              energy={item.energyConsumed}
+            />
           )}
         />
       </View>

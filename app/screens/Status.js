@@ -35,13 +35,14 @@ export default class Status extends Component {
       energy: '',
       price: '',
       time: [],
+      error: '',
     };
   }
   disconnect = async () => {
     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
     const id = await AsyncStorage.getItem('id');
     const res = await fetch(
-      `http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
+      `https://vecharge.app/api/v1/charger/removeChargerFromUser/${id}`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +55,7 @@ export default class Status extends Component {
       this.setState({toggle: false});
     }
     const order = await fetch(
-      'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
+      'https://vecharge.app/api/v1/payment/instantiatePayment',
       {
         method: 'POST',
         headers: {
@@ -75,7 +76,7 @@ export default class Status extends Component {
   //   const id = await AsyncStorage.getItem('id');
 
   //   fetch(
-  //     'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState',
+  //     'https://vecharge.app/api/v1/charger/chargerDesiredState',
   //     {
   //       method: 'PATCH',
   //       headers: {
@@ -117,20 +118,17 @@ export default class Status extends Component {
       const token = `Bearer ${await AsyncStorage.getItem('token')}`;
       const id = await AsyncStorage.getItem('id');
 
-      fetch(
-        'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/charger/chargerDesiredState',
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: token,
-          },
-          body: JSON.stringify({
-            status: this.state.toggle === false ? 'ON' : 'OFF',
-            chargerId: id,
-          }),
+      fetch('https://vecharge.app/api/v1/charger/chargerDesiredState', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
         },
-      );
+        body: JSON.stringify({
+          status: this.state.toggle === false ? 'ON' : 'OFF',
+          chargerId: id,
+        }),
+      });
     } else {
       Alert.alert(
         'Connection',
@@ -183,15 +181,12 @@ export default class Status extends Component {
     const id = await AsyncStorage.getItem('id');
     console.log(id);
     console.log(token);
-    const socket = io.connect(
-      'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com',
-      {
-        query: {
-          chargerId: id,
-          token: token,
-        },
+    const socket = io.connect('https://vecharge.app/api/v1', {
+      query: {
+        chargerId: id,
+        token: token,
       },
-    );
+    });
 
     socket.on('chargerConnected', (data) => {
       data = JSON.parse(data);
@@ -242,6 +237,7 @@ export default class Status extends Component {
       //     50,
       //   )
       // );
+      return this.setState({error: data});
     });
     // socket.on('chargerDisconnected', (data) => {
     //   console.log('charger disconnected from device', data);
@@ -301,10 +297,11 @@ export default class Status extends Component {
                 // onChange={this.message}
                 style={{transform: [{scaleX: 2.5}, {scaleY: 2.5}]}}
               />
+
               <Text style={styles.textStyle}>
                 {this.state.toggle ? 'ON' : 'OFF'}
               </Text>
-
+              {/* <Text style={styles.textStyle}>{this.state.error}</Text> */}
               {/* <Button
                 title="next"
                 onPress={() => this.props.navigation.replace('Pay')}

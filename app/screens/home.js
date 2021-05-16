@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -13,23 +13,15 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import RNLocation from 'react-native-location';
-import { BoxShadow } from 'react-native-shadow';
 
-import { details, recentDetails } from '../Constants/DumyData';
+import {BoxShadow} from 'react-native-shadow';
+
 import Carousel from '../components/Carousel';
 import CarouselRecent from '../components/CarouselRecent';
-import { HomeScreen, Host } from 'svg';
+import {HomeScreen, Host} from 'svg';
 
-RNLocation.configure({
-  distanceFilter: null,
-});
-
-export default function Home({ navigation }) {
-  // const [paid, setPaid] = useState([]);
-  // const [amount, setAmount] = useState([]);
+export default function Home({navigation}) {
   const [name, setName] = useState([]);
-  const [viewLocation, isViewLocation] = useState([]);
 
   const shadowOpt = {
     width: wp('60%'),
@@ -40,100 +32,18 @@ export default function Home({ navigation }) {
     opacity: 0.2,
     x: 12,
     y: 24,
-    style: { marginBottom: hp('8%') },
+    style: {marginBottom: hp('8%')},
   };
-  // useEffect(() => {
-  //   async function unpaid() {
-  //     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
-  //     const res = await fetch(
-  //       `http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/unpaid`,
-  //       {
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           Authorization: token,
-  //         },
-  //       },
-  //     );
-  //     const resData = await res.json();
-  //     setPaid(resData.data.payStatus);
-  //     setAmount(resData.data.amount);
 
-  //     console.log(resData.data.payStatus);
-  //   }
-  //   unpaid();
-  // }, []);
-
-  // useEffect(() => {
-  //   async function connection() {
-  //     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
-  //     const res = await fetch(
-  //       `http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/users/me`,
-  //       {
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           Authorization: token,
-  //         },
-  //       },
-  //     );
-  //     const resData = await res.json();
-  //     setName(resData.data.name);
-  //   }
-  //   connection();
-  // }, []);
-
-  // if (paid === false) {
-  //   return (
-  //     <View>
-  //       <Text>hello</Text>
-  //     </View>
-  //   );
-  // }
   useEffect(() => {
     async function value() {
       const user = await AsyncStorage.getItem('name');
       setName(user);
-      // console.log("name of user",user);
-      // User Location
-      let permission = await RNLocation.checkPermission({
-        ios: 'whenInUse', // or 'always'
-        android: {
-          detail: 'coarse', // or 'fine'
-        },
-      });
-
-      console.log(permission);
-
-      let location;
-      if (!permission) {
-        permission = await RNLocation.requestPermission({
-          ios: 'whenInUse',
-          android: {
-            detail: 'coarse',
-            rationale: {
-              title: 'We need to access your location',
-              message: 'We use your location to show where you are on the map',
-              buttonPositive: 'OK',
-              buttonNegative: 'Cancel',
-            },
-          },
-        });
-        console.log(permission);
-        location = await RNLocation.getLatestLocation({ timeout: 100 });
-        console.log(location);
-        isViewLocation(location);
-      } else {
-        location = await RNLocation.getLatestLocation({ timeout: 100 });
-        console.log(location);
-        isViewLocation(location);
-      }
     }
+
     value();
     console.log('home SCreen');
   }, []);
-  // useEffect(() => {
-  //   const getLocation = async () => {};
-  //   getLocation();
-  // }, []);
 
   return (
     <SafeAreaView style={styles.cont}>
@@ -168,7 +78,7 @@ export default function Home({ navigation }) {
           <TouchableOpacity
             onPress={() => navigation.navigate('Host')}
             activeOpacity={0.6}
-            style={{ marginLeft: wp('15%'), marginTop: -wp('6%') }}>
+            style={{marginLeft: wp('15%'), marginTop: -wp('6%')}}>
             <BoxShadow setting={shadowOpt}>
               <Host width={wp('70%')} height={hp('12%')} />
             </BoxShadow>
@@ -190,7 +100,7 @@ export default function Home({ navigation }) {
               activeOpacity={0.5}
               style={{
                 marginLeft: wp('6%'),
-                marginTop: hp("0.5%"),
+                marginTop: hp('0.5%'),
               }}>
               <Image
                 style={{
@@ -221,7 +131,7 @@ export default function Home({ navigation }) {
             <TouchableOpacity
               onPress={() => navigation.navigate('Session')}
               activeOpacity={0.5}
-              style={{ marginLeft: wp('10%'), marginTop: wp('3%') }}>
+              style={{marginLeft: wp('10%'), marginTop: wp('3%')}}>
               <Image
                 style={{
                   width: wp('20%'),

@@ -22,7 +22,7 @@ function StationCard({status, dis, loc}) {
           <View style={{flexDirection: 'column'}}>
             <View style={{flexDirection: 'row', marginTop: wp('1.4%')}}>
               <Image source={require('../assets/tick.png')} />
-              <Text style={styles.status}>{status}</Text>
+              <Text style={styles.status}>Available</Text>
             </View>
             <Text style={styles.loc}>{loc}</Text>
           </View>
@@ -108,8 +108,8 @@ const styles = StyleSheet.create({
     color: '#484848',
     fontFamily: 'SF-Pro-Display-Regular',
     fontSize: wp('2.5%'),
-    marginTop: wp('2%'),
-    marginRight: wp('38%'),
+    marginTop: wp('8%'),
+    position: 'absolute',
   },
   subtitle: {
     backgroundColor: '#00A2FD',
@@ -138,14 +138,14 @@ const styles = StyleSheet.create({
   },
   txt: {
     marginTop: wp('3%'),
-    marginLeft: -wp('25%'),
+    marginLeft: wp('20%'),
     color: 'black',
     fontFamily: 'SF-Pro-Display-Medium',
     fontSize: wp('2.6%'),
   },
   txt2: {
     marginTop: wp('2%'),
-    marginLeft: -wp('30%'),
+    marginLeft: wp('20%'),
     color: 'black',
     fontFamily: 'SF-Pro-Display-Medium',
     fontSize: wp('2.6%'),

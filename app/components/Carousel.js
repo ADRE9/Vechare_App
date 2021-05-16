@@ -1,4 +1,4 @@
-import React, { useCallback, memo, useRef, useState } from 'react';
+import React, {useCallback, memo, useRef, useState, useEffect} from 'react';
 import {
   FlatList,
   View,
@@ -13,181 +13,114 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
+import RNLocation from 'react-native-location';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
-// const details = Array.from({ length: 3 }).map((_, i) => {
-//   return {
-//     id: i,
-//     image: `https://picsum.photos/1440/2842?random=${i}`,
-//     title: `This is the title ${i + 1}!`,
-//     subtitle: `This is the subtitle ${i + 1}!`,
-//   };
-// });
-
-const details = [
-  {
-    id: '1',
-    status: 'Available',
-    dis: '1.3',
-    loc: 'Rohini Community Charging Station, B-5/30, 2nd Floor, Delhi',
-  },
-  {
-    id: '2',
-    status: 'Available',
-    dis: '12.4',
-    loc: 'Rohini Community Charging Station, B-5/30, 2nd Floor, Delhi',
-  },
-  {
-    id: '3',
-    status: 'Available',
-    dis: '1.3',
-    loc: 'Rohini Community Charging Station,..',
-  },
-];
-
-const Slide = memo(function Slide({ data }) {
-  return (
-    <SafeAreaView style={styles.cardContainer}>
-      <View style={styles.container}>
-        <View style={{ flexDirection: 'row' }}>
-          <Image
-            source={require('../assets/card-charge.png')}
-            style={{ height: hp('8%'), width: wp('14%') }}
-            resizeMode="contain"
-          />
-          <View style={{ flexDirection: 'column', marginLeft: 30 }}>
-            <Text
-              style={{
-                fontSize: wp('6%'),
-                right: wp('6%'),
-                color: 'black',
-                fontFamily: 'SF-Pro-Display-Regular',
-              }}>
-              PlugIn India
-            </Text>
-            <View style={{ flexDirection: 'row' }}>
-              <Image
-                source={require('../assets/tick.png')}
-                style={{
-                  right: wp('6%'),
-                  top: hp('0.2%'),
-                  width: wp('5%'),
-                  height: hp('3%'),
-                }}
-              />
-              <Text
-                style={{
-                  color: '#333333',
-                  fontSize: wp('3.5%'),
-                  left: -wp('5%'),
-                  top: hp('0.4%'),
-                }}>
-                {data.status}
-              </Text>
-              <TouchableOpacity
-                style={{
-                  backgroundColor: '#CAEAFF',
-                  padding: wp('1.5%'),
-                  borderRadius: wp('10%') / 4,
-                  marginLeft: wp('24%'),
-                  marginTop: -wp('1%'),
-                }}>
-                <Text style={{ fontSize: wp('3%'), fontWeight: 'bold' }}>
-                  {data.dis} km
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
-        <Text
-          style={{
-            fontSize: wp('2.6%'),
-            color: '#484848',
-            marginLeft: wp('2%'),
-            marginTop: hp('1.2%'),
-            fontFamily: 'SF-Pro-Display-Regular',
-          }}>
-          {data.loc}
-        </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            margin: wp('2%'),
-            justifyContent: 'space-evenly',
-            marginHorizontal: 40,
-            right: wp('12%'),
-          }}>
-          <TouchableOpacity activeOpacity={0.4}>
-            <Image
-              source={require('../assets/navigate.png')}
-              style={{
-                height: hp('8%'),
-                width: wp('20%'),
-                borderRadius: hp('4%') / 4,
-                marginTop: -wp('2%'),
-              }}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.4} style={{ left: wp('3%') }}>
-            <Image
-              source={require('../assets/charge_now.png')}
-              style={{
-                height: hp('8%'),
-                width: wp('20%'),
-                borderRadius: hp('4%') / 4,
-
-                marginTop: -wp('2%'),
-              }}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-    </SafeAreaView>
-  );
+RNLocation.configure({
+  distanceFilter: null,
 });
-
-function Pagination({ index }) {
-  return (
-    <View style={styles.pagination} pointerEvents="none">
-      {details.map((_, i) => {
-        return (
-          <View
-            key={i}
-            style={[
-              styles.paginationDot,
-              index === i
-                ? styles.paginationDotActive
-                : styles.paginationDotInactive,
-            ]}
-          />
-        );
-      })}
-    </View>
-  );
-}
 
 export default function Carousel() {
   const [index, setIndex] = useState(0);
   const indexRef = useRef(index);
+  const [value, setdata] = useState([]);
+  const [viewLocation, isViewLocation] = useState([]);
   indexRef.current = index;
+
+  function Pagination({index}) {
+    return (
+      <View style={styles.pagination} pointerEvents="none">
+        {value.map((_, i) => {
+          return (
+            <View
+              key={i}
+              style={[
+                styles.paginationDot,
+                index === i
+                  ? styles.paginationDotActive
+                  : styles.paginationDotInactive,
+              ]}
+            />
+          );
+        })}
+      </View>
+    );
+  }
+
   const onScroll = useCallback((event) => {
     const slideSize = event.nativeEvent.layoutMeasurement.width;
-    const index = event.nativeEvent.contentOffset.x / slideSize;
-    const roundIndex = Math.round(index);
+    const indexs = event.nativeEvent.contentOffset.x / slideSize;
+    const roundIndex = Math.round(indexs);
 
-    const distance = Math.abs(roundIndex - index);
+    const distance = Math.abs(roundIndex - indexs);
 
     // Prevent one pixel triggering setIndex in the middle
     // of the transition. With this we have to scroll a bit
     // more to trigger the index change.
-    const isNoMansLand = 0.4 < distance;
+    const isNoMansLand = distance > 0.4;
 
     if (roundIndex !== indexRef.current && !isNoMansLand) {
       setIndex(roundIndex);
     }
+  }, []);
+
+  useEffect(() => {
+    const getLocation = async () => {
+      let permission = await RNLocation.checkPermission({
+        ios: 'whenInUse', // or 'always'
+        android: {
+          detail: 'coarse', // or 'fine'
+        },
+      });
+
+      console.log(permission);
+
+      let location;
+      if (!permission) {
+        permission = await RNLocation.requestPermission({
+          ios: 'whenInUse',
+          android: {
+            detail: 'coarse',
+            rationale: {
+              title: 'We need to access your location',
+              message: 'We use your location to show where you are on the map',
+              buttonPositive: 'OK',
+              buttonNegative: 'Cancel',
+            },
+          },
+        });
+        console.log(permission);
+        location = await RNLocation.getLatestLocation({timeout: 100});
+        console.log(location);
+        isViewLocation(location);
+      } else {
+        location = await RNLocation.getLatestLocation({timeout: 100});
+        console.log(location);
+        isViewLocation(location);
+      }
+      const lat = location.latitude;
+      const long = location.longitude;
+      const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+      const res = await fetch(
+        `https://vecharge.app/api/v1/charger/nearestChargers/?page=1&limit=3`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: token,
+          },
+          body: JSON.stringify({
+            isActive: true,
+            coordinates: [long, lat],
+          }),
+        },
+      );
+      const resData = await res.json();
+      setdata(resData.data.nearestChargers);
+    };
+
+    getLocation();
   }, []);
 
   const flatListOptimizationProps = {
@@ -196,7 +129,7 @@ export default function Carousel() {
     removeClippedSubviews: true,
     scrollEventThrottle: 16,
     windowSize: 2,
-    keyExtractor: useCallback((s) => String(s.id), []),
+    keyExtractor: useCallback((s) => String(s._id), []),
     getItemLayout: useCallback(
       (_, index) => ({
         index,
@@ -207,31 +140,126 @@ export default function Carousel() {
     ),
   };
 
-  const renderItem = useCallback(function renderItem({ item }) {
-    return <Slide data={item} />;
-  }, []);
-
   return (
-    <>
+    <View>
       <FlatList
-        data={details}
+        data={value}
         style={styles.carousel}
-        renderItem={renderItem}
         pagingEnabled
         horizontal
         showsHorizontalScrollIndicator={false}
         bounces={false}
         onScroll={onScroll}
         {...flatListOptimizationProps}
+        renderItem={({item}) => (
+          <SafeAreaView style={styles.cardContainer}>
+            <View style={styles.container}>
+              <View style={{flexDirection: 'row'}}>
+                <Image
+                  source={require('../assets/card-charge.png')}
+                  style={{height: hp('8%'), width: wp('14%')}}
+                  resizeMode="contain"
+                />
+                <View style={{flexDirection: 'column', marginLeft: 30}}>
+                  <Text
+                    style={{
+                      fontSize: wp('6%'),
+                      right: wp('6%'),
+                      color: 'black',
+                      fontFamily: 'SF-Pro-Display-Regular',
+                    }}>
+                    PlugIn India
+                  </Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Image
+                      source={require('../assets/tick.png')}
+                      style={{
+                        right: wp('6%'),
+                        top: hp('0.2%'),
+                        width: wp('5%'),
+                        height: hp('3%'),
+                      }}
+                    />
+                    <Text
+                      style={{
+                        color: '#333333',
+                        fontSize: wp('3.5%'),
+                        left: -wp('5%'),
+                        top: hp('0.4%'),
+                      }}>
+                      Available
+                    </Text>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: '#CAEAFF',
+                        padding: wp('1.5%'),
+                        borderRadius: wp('10%') / 4,
+                        marginLeft: wp('20%'),
+                        marginTop: -wp('1%'),
+                      }}>
+                      <Text style={{fontSize: wp('3%'), fontWeight: 'bold'}}>
+                        {(item.distance / 1000).toFixed(2)} km
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+
+              <Text
+                style={{
+                  fontSize: wp('2.6%'),
+                  color: '#484848',
+                  marginLeft: wp('2%'),
+                  marginTop: hp('1.2%'),
+                  fontFamily: 'SF-Pro-Display-Regular',
+                }}>
+                {item.address}
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  margin: wp('2%'),
+                  justifyContent: 'space-evenly',
+                  marginHorizontal: 40,
+                  right: wp('12%'),
+                }}>
+                <TouchableOpacity activeOpacity={0.4}>
+                  <Image
+                    source={require('../assets/navigate.png')}
+                    style={{
+                      height: hp('8%'),
+                      width: wp('20%'),
+                      borderRadius: hp('4%') / 4,
+                      marginTop: -wp('2%'),
+                    }}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.4} style={{left: wp('3%')}}>
+                  <Image
+                    source={require('../assets/charge_now.png')}
+                    style={{
+                      height: hp('8%'),
+                      width: wp('20%'),
+                      borderRadius: hp('4%') / 4,
+
+                      marginTop: -wp('2%'),
+                    }}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </SafeAreaView>
+        )}
       />
       <Pagination index={index}></Pagination>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   pagination: {
-    bottom: windowHeight * 0.01,
     width: '100%',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -242,8 +270,8 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginHorizontal: 6,
   },
-  paginationDotActive: { backgroundColor: '#069DFF' },
-  paginationDotInactive: { backgroundColor: '#DBDBDB' },
+  paginationDotActive: {backgroundColor: '#069DFF'},
+  paginationDotInactive: {backgroundColor: '#DBDBDB'},
 
   carousel: {
     // backgroundColor: 'yellow',

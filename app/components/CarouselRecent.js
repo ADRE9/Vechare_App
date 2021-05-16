@@ -1,4 +1,4 @@
-import React, {useCallback, memo, useRef, useState} from 'react';
+import React, {useCallback, memo, useRef, useState, useEffect} from 'react';
 import {
   FlatList,
   View,
@@ -13,149 +13,74 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
-// const details = Array.from({ length: 3 }).map((_, i) => {
-//   return {
-//     id: i,
-//     image: `https://picsum.photos/1440/2842?random=${i}`,
-//     title: `This is the title ${i + 1}!`,
-//     subtitle: `This is the subtitle ${i + 1}!`,
-//   };
-// });
-
-const details = [
-  {
-    id: '1',
-    days: '3',
-    dis: '1.3',
-    loc: 'Rohini Community Charging Station, B-5/30, 2nd Floor, Delhi',
-  },
-  {
-    id: '2',
-    days: '3',
-    dis: '12.4',
-    loc: 'Rohini Community Charging Station, B-5/30, 2nd Floor, Delhi',
-  },
-  {
-    id: '3',
-    days: '3',
-    dis: '1.3',
-    loc: 'Rohini Community Charging Station, B-5/30, 2nd Floor, Delhi',
-  },
-];
-
-const Slide = memo(function Slide({data}) {
-  return (
-    <SafeAreaView style={styles.cardContainer}>
-      <View style={styles.container}>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{flexDirection: 'column'}}>
-            <Text style={styles.heading}>PlugIn India</Text>
-            <View style={{flexDirection: 'column'}}>
-              <View style={{flexDirection: 'row', marginTop: wp('2%')}}>
-                <Image source={require('../assets/tick.png')} />
-                <Text style={styles.status}>Available</Text>
-              </View>
-              <Text style={styles.loc}>{data.loc}</Text>
-            </View>
-          </View>
-          <View style={{flexDirection: 'column'}}>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={styles.subtitle}>{'\u20B9'} 500</Text>
-              <Text style={styles.subtitle2}>7.4 kwh</Text>
-            </View>
-            <Text style={styles.txt}>Last Charged: {data.days} days ago</Text>
-            <Text style={styles.txt2}>Operator: veCharge Community</Text>
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            margin: wp('2%'),
-            justifyContent: 'space-evenly',
-            right: wp('12%'),
-            marginHorizontal: 40,
-          }}>
-          <TouchableOpacity activeOpacity={0.4}>
-            <Image
-              source={require('../assets/navigate.png')}
-              style={{
-                height: hp('8%'),
-                width: wp('22%'),
-                borderRadius: hp('4%') / 4,
-                marginTop: -wp('2%'),
-              }}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.4} style={{left: wp('3%')}}>
-            <Image
-              source={require('../assets/charge_now.png')}
-              style={{
-                height: hp('8%'),
-                width: wp('23%'),
-                borderRadius: hp('4%') / 4,
-
-                marginTop: -wp('2%'),
-              }}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-    </SafeAreaView>
-  );
-});
-
-function Pagination({index}) {
-  return (
-    <View style={styles.pagination} pointerEvents="none">
-      {details.map((_, i) => {
-        return (
-          <View
-            key={i}
-            style={[
-              styles.paginationDot,
-              index === i
-                ? styles.paginationDotActive
-                : styles.paginationDotInactive,
-            ]}
-          />
-        );
-      })}
-    </View>
-  );
-}
+console.log('CarouselRecent');
 
 export default function CarouselRecent() {
   const [index, setIndex] = useState(0);
+  const [value, setdata] = useState([]);
   const indexRef = useRef(index);
   indexRef.current = index;
   const onScroll = useCallback((event) => {
     const slideSize = event.nativeEvent.layoutMeasurement.width;
-    const index = event.nativeEvent.contentOffset.x / slideSize;
-    const roundIndex = Math.round(index);
-
-    const distance = Math.abs(roundIndex - index);
-
+    const indexs = event.nativeEvent.contentOffset.x / slideSize;
+    const roundIndex = Math.round(indexs);
+    const distance = Math.abs(roundIndex - indexs);
     // Prevent one pixel triggering setIndex in the middle
     // of the transition. With this we have to scroll a bit
     // more to trigger the index change.
-    const isNoMansLand = 0.4 < distance;
-
+    const isNoMansLand = distance > 0.4;
     if (roundIndex !== indexRef.current && !isNoMansLand) {
       setIndex(roundIndex);
     }
   }, []);
-
+  function Pagination({index}) {
+    return (
+      <View style={styles.pagination} pointerEvents="none">
+        {value.map((_, i) => {
+          return (
+            <View
+              key={i}
+              style={[
+                styles.paginationDot,
+                index === i
+                  ? styles.paginationDotActive
+                  : styles.paginationDotInactive,
+              ]}
+            />
+          );
+        })}
+      </View>
+    );
+  }
+  useEffect(() => {
+    async function dtl() {
+      const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+      const res = await fetch(
+        `https://vecharge.app/api/v1/payment/?page=1&limit=3`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: token,
+          },
+        },
+      );
+      const resData = await res.json();
+      setdata(resData.data.payments);
+      // console.log('Carousel Recent');
+    }
+    dtl();
+  });
   const flatListOptimizationProps = {
     initialNumToRender: 0,
     maxToRenderPerBatch: 1,
     removeClippedSubviews: true,
     scrollEventThrottle: 16,
     windowSize: 2,
-    keyExtractor: useCallback((s) => String(s.id), []),
+    keyExtractor: useCallback((s) => String(s._id), []),
     getItemLayout: useCallback(
       (_, index) => ({
         index,
@@ -165,32 +90,90 @@ export default function CarouselRecent() {
       [],
     ),
   };
-
-  const renderItem = useCallback(function renderItem({item}) {
-    return <Slide data={item} />;
-  }, []);
-
+  // const renderItem = useCallback(function renderItem({item}) {
+  //   return <Slide data={item} />;
+  // }, []);
   return (
-    <>
+    <View>
       <FlatList
-        data={details}
+        data={value}
         style={styles.carousel}
-        renderItem={renderItem}
         pagingEnabled
         horizontal
         showsHorizontalScrollIndicator={false}
         bounces={false}
         onScroll={onScroll}
         {...flatListOptimizationProps}
+        renderItem={({item}) => (
+          <SafeAreaView style={styles.cardContainer}>
+            <View style={styles.container}>
+              <View style={{flexDirection: 'row'}}>
+                <View style={{flexDirection: 'column'}}>
+                  <Text style={styles.heading}>PlugIn India</Text>
+                  <View style={{flexDirection: 'column'}}>
+                    <View style={{flexDirection: 'row', marginTop: wp('2%')}}>
+                      <Image source={require('../assets/tick.png')} />
+                      <Text style={styles.status}>Available</Text>
+                    </View>
+                    <Text style={styles.loc}>{item.chargerId.address} </Text>
+                  </View>
+                </View>
+                <View style={{flexDirection: 'column'}}>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.subtitle}>
+                      {'\u20B9'} {item.amount}
+                    </Text>
+                    <Text style={styles.subtitle2}>
+                      {item.energyConsumed} kwh
+                    </Text>
+                  </View>
+                  <Text style={styles.txt}>Last Charged: ago</Text>
+                  <Text style={styles.txt2}>Operator: veCharge Community</Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  margin: wp('2%'),
+                  justifyContent: 'space-evenly',
+                  right: wp('12%'),
+                  marginHorizontal: 40,
+                }}>
+                <TouchableOpacity activeOpacity={0.4}>
+                  <Image
+                    source={require('../assets/navigate.png')}
+                    style={{
+                      height: hp('8%'),
+                      width: wp('22%'),
+                      borderRadius: hp('4%') / 4,
+                      marginTop: -wp('2%'),
+                    }}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.4} style={{left: wp('3%')}}>
+                  <Image
+                    source={require('../assets/charge_now.png')}
+                    style={{
+                      height: hp('8%'),
+                      width: wp('23%'),
+                      borderRadius: hp('4%') / 4,
+                      marginTop: -wp('2%'),
+                    }}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </SafeAreaView>
+        )}
       />
       <Pagination index={index}></Pagination>
-    </>
+    </View>
   );
 }
-
 const styles = StyleSheet.create({
   pagination: {
-    bottom: windowHeight * 0.01,
     width: '100%',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -203,10 +186,9 @@ const styles = StyleSheet.create({
   },
   paginationDotActive: {backgroundColor: '#069DFF'},
   paginationDotInactive: {backgroundColor: '#DBDBDB'},
-
   carousel: {
     // backgroundColor: 'yellow',
-    height: 190,
+    height: 177,
   },
   cardContainer: {
     height: windowHeight,
@@ -217,13 +199,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderColor: '#7c7c7c',
     // borderWidth: 0.3,
-
     paddingLeft: wp('4%'),
     paddingTop: wp('3%'),
     padding: 25,
     paddingBottom: wp('5%'),
     marginRight: wp('9%'),
-    marginTop: hp('2%'),
+    marginTop: hp('1%'),
     marginBottom: hp('1%'),
     height: hp('22%'),
     width: wp('87%'),
@@ -252,15 +233,16 @@ const styles = StyleSheet.create({
     color: '#484848',
     fontFamily: 'SF-Pro-Display-Regular',
     fontSize: wp('2.5%'),
-    marginTop: wp('3%'),
-    marginRight: wp('38%'),
+    marginTop: wp('10%'),
+    // marginRight: wp('38%'),
+    position: 'absolute',
   },
   subtitle: {
     backgroundColor: '#00A2FD',
     height: hp('3%'),
     width: wp('16%'),
     color: '#FFFFFF',
-    marginLeft: -wp('32%'),
+    marginLeft: wp('14%'),
     borderRadius: wp('12%') / 4,
     padding: 3,
     fontSize: wp('3%'),
@@ -282,14 +264,14 @@ const styles = StyleSheet.create({
   },
   txt: {
     marginTop: wp('3%'),
-    marginLeft: -wp('30%'),
+    marginLeft: wp('14.5%'),
     color: 'black',
     fontFamily: 'SF-Pro-Display-Medium',
     fontSize: wp('2.6%'),
   },
   txt2: {
     marginTop: wp('2%'),
-    marginLeft: -wp('32%'),
+    marginLeft: wp('14.5%'),
     color: 'black',
     fontFamily: 'SF-Pro-Display-Medium',
     fontSize: wp('2.6%'),

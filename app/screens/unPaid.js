@@ -30,7 +30,7 @@ export default function UnPaid({navigation}) {
   //     const id = await AsyncStorage.getItem('id');
 
   //     const socket = io.connect(
-  //       'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com',
+  //       'https://vecharge.app/api/v1',
   //       {
   //         query: {
   //           chargerId: id,
@@ -46,7 +46,7 @@ export default function UnPaid({navigation}) {
   //   var token = `Bearer ${await AsyncStorage.getItem('token')}`;
   //   var id = await AsyncStorage.getItem('idValue');
   //   await fetch(
-  //     `http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
+  //     `https://vecharge.app/api/v1/charger/removeChargerFromUser/${id}`,
   //     {
   //       headers: {
   //         'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export default function UnPaid({navigation}) {
   const onPay = async () => {
     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
     const order = await fetch(
-      'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
+      'https://vecharge.app/api/v1/payment/instantiatePayment',
       {
         method: 'POST',
         headers: {
@@ -99,7 +99,7 @@ export default function UnPaid({navigation}) {
       // console.log(data);
       console.log('unpaid SCreen');
       const result = await axios.post(
-        'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/madePayment',
+        'https://vecharge.app/api/v1/payment/madePayment',
         data,
         config,
       );

@@ -46,9 +46,9 @@ export default function QRScreen({navigation, route}) {
         50,
       );
     }
-    // console.log(tk);
+    // console.log('value of token');
     const chargerID = await fetch(
-      `http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/charger/check/${e.data}`,
+      `https://vecharge.app/api/v1/charger/check/${e.data}`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ export default function QRScreen({navigation, route}) {
   const Idtext = async () => {
     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
     const chargerID = await fetch(
-      `http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/charger/check/${id}`,
+      `https://vecharge.app/api/v1/charger/check/${id}`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -119,7 +119,7 @@ export default function QRScreen({navigation, route}) {
   const onPay = async () => {
     var token = `Bearer ${await AsyncStorage.getItem('token')}`;
     const order = await fetch(
-      'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/instantiatePayment',
+      'https://vecharge.app/api/v1/payment/instantiatePayment',
       {
         method: 'POST',
         headers: {
@@ -159,7 +159,7 @@ export default function QRScreen({navigation, route}) {
       // console.log(data);
       console.log('unpaid SCreen');
       const result = await axios.post(
-        'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/madePayment',
+        'https://vecharge.app/api/v1/payment/madePayment',
         data,
         config,
       );
@@ -169,15 +169,12 @@ export default function QRScreen({navigation, route}) {
     async function connection() {
       var token = `Bearer ${await AsyncStorage.getItem('token')}`;
       const value = await AsyncStorage.getItem('id');
-      const res = await fetch(
-        'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/users/me',
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: token,
-          },
+      const res = await fetch('https://vecharge.app/api/v1/users/me', {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
         },
-      );
+      });
       const resData = await res.json();
       // const ervl = await AsyncStorage.getItem('ervl');
       // setErvalue(ervl);
@@ -192,15 +189,12 @@ export default function QRScreen({navigation, route}) {
   useEffect(() => {
     async function unpaid() {
       var token = `Bearer ${await AsyncStorage.getItem('token')}`;
-      const res = await fetch(
-        'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/payment/unpaid',
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: token,
-          },
+      const res = await fetch('https://vecharge.app/api/v1/payment/unpaid', {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
         },
-      );
+      });
       const resData = await res.json();
       setPaid(resData.data.payStatus);
       setAmount(resData.data.amount);

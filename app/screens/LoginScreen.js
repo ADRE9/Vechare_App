@@ -13,6 +13,8 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import axios from 'axios';
+// import https from 'https';
 
 function LoginScreen(props) {
   useFocusEffect(
@@ -82,20 +84,22 @@ function LoginScreen(props) {
       setloggedIn(true);
     }
   }
+  // const agent = new https.Agent({
+  //   rejectUnauthorized: false,
+  // });
+
   const token = async function (idToken) {
-    const res = await fetch(
-      'http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/users/loginWithGoogle',
+    const res = await axios.post(
+      'https://vecharge.app/api/v1/users/loginWithGoogle',
       {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({token: idToken}),
+        token: idToken,
       },
     );
-    const tokendata = await res.json();
-    // console.log(tokendata.data.token);
+    const tokendata = res.data.data.token;
+    console.log('token from backend', tokendata);
 
     try {
-      await AsyncStorage.setItem('token', tokendata.data.token);
+      await AsyncStorage.setItem('token', tokendata);
     } catch (e) {
       console.log('error in token storing', e);
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -15,7 +15,6 @@ import {
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-
 
 function FinalChargeDetails(props) {
   const [amount, setAmount] = useState([]);
@@ -53,7 +52,7 @@ function FinalChargeDetails(props) {
     // const idValue = await AsyncStorage.getItem('id');
     // console.log('Value of id', idValue);
     await fetch(
-      `http://ec2-13-232-193-20.ap-south-1.compute.amazonaws.com/charger/removeChargerFromUser/${id}`,
+      `https://vecharge.app/api/v1/charger/removeChargerFromUser/${id}`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -69,7 +68,7 @@ function FinalChargeDetails(props) {
         <View>
           <ImageBackground
             source={require('../assets/finalCharge.png')}
-            style={{ width: wp('100%'), height: hp('16%') }}
+            style={{width: wp('100%'), height: hp('16%')}}
             resizeMode="cover">
             {/* <Image
               source={require('../assets/Back.png')}
@@ -225,7 +224,7 @@ function FinalChargeDetails(props) {
                 .finally(() =>
                   props.navigation.reset({
                     index: 0,
-                    routes: [{ name: 'AppBottom' }],
+                    routes: [{name: 'AppBottom'}],
                   }),
                 )
             }>

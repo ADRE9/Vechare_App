@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -13,10 +13,71 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import RNLocation from 'react-native-location';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import StationCard from '../components/StationCard';
 import {DummyData} from '../Constants/DumyData';
 
 function StationScreen(props) {
+  const [value, setdata] = useState([]);
+  const [viewLocation, isViewLocation] = useState([]);
+  useEffect(() => {
+    const getLocation = async () => {
+      let permission = await RNLocation.checkPermission({
+        ios: 'whenInUse', // or 'always'
+        android: {
+          detail: 'coarse', // or 'fine'
+        },
+      });
+
+      console.log(permission);
+
+      let location;
+      if (!permission) {
+        permission = await RNLocation.requestPermission({
+          ios: 'whenInUse',
+          android: {
+            detail: 'coarse',
+            rationale: {
+              title: 'We need to access your location',
+              message: 'We use your location to show where you are on the map',
+              buttonPositive: 'OK',
+              buttonNegative: 'Cancel',
+            },
+          },
+        });
+        console.log(permission);
+        location = await RNLocation.getLatestLocation({timeout: 100});
+        console.log(location);
+        isViewLocation(location);
+      } else {
+        location = await RNLocation.getLatestLocation({timeout: 100});
+        console.log(location);
+        isViewLocation(location);
+      }
+      const lat = location.latitude;
+      const long = location.longitude;
+      const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+      const res = await fetch(
+        `https://vecharge.app/api/v1/charger/nearestChargers/?page=1&limit=3`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: token,
+          },
+          body: JSON.stringify({
+            isActive: true,
+            coordinates: [long, lat],
+          }),
+        },
+      );
+      const resData = await res.json();
+      setdata(resData.data.nearestChargers);
+    };
+
+    getLocation();
+  }, []);
   const header = () => {
     return (
       <View>
@@ -44,12 +105,15 @@ function StationScreen(props) {
     <SafeAreaView style={styles.container}>
       <View>
         <FlatList
-          keyExtractor={(item) => item.id.toString()}
-          data={DummyData}
+          keyExtractor={(item) => item._id}
+          data={value}
           ListHeaderComponent={header}
           stickyHeaderIndices={[0]}
           renderItem={({item}) => (
-            <StationCard status={item.status} dis={item.dis} loc={item.loc} />
+            <StationCard
+              dis={(item.distance / 1000).toFixed(2)}
+              loc={item.address}
+            />
           )}
         />
       </View>
