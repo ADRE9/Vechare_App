@@ -62,7 +62,14 @@ function LoginScreen(props) {
       );
       // console.log('idToken by google', idToken);
       token(idToken);
-      await auth().signInWithCredential(credential);
+      await auth()
+        .signInWithCredential(credential)
+        .then(() =>
+          props.navigation.reset({
+            index: 0,
+            routes: [{name: 'AppBottom'}],
+          }),
+        );
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -188,14 +195,7 @@ function LoginScreen(props) {
         style={{width: 192, height: 48, marginBottom: 190}}
         size={GoogleSigninButton.Size.Wide}
         color={GoogleSigninButton.Color.Dark}
-        onPress={() =>
-          _signIn().then(() =>
-            props.navigation.reset({
-              index: 0,
-              routes: [{name: 'AppBottom'}],
-            }),
-          )
-        }
+        onPress={() => _signIn()}
       />
     </View>
   );

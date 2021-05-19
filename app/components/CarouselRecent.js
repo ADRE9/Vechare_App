@@ -69,8 +69,18 @@ export default function CarouselRecent() {
         },
       );
       const resData = await res.json();
+      // if (resData.data.payments === []) {
+      //   setdata({
+      //     _id: '1',
+      //     amount: 'No amount',
+      //     energyConsumed: '0',
+      //   });
+      // } else {
+      //   setdata(resData.data.payments);
+      // }
       setdata(resData.data.payments);
-      // console.log('Carousel Recent');
+
+      // console.log('Carousel Recent payments check', resData.data.payments);
     }
     dtl();
   });
