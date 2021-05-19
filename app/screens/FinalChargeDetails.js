@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -15,7 +15,7 @@ import {
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-import { ReceiptBtn, ReportBtn, Continue } from 'svg';
+import {ReceiptBtn, ReportBtn, Continue} from 'svg';
 
 function FinalChargeDetails(props) {
   const [amount, setAmount] = useState([]);
@@ -69,7 +69,7 @@ function FinalChargeDetails(props) {
         <View>
           <ImageBackground
             source={require('../assets/finalCharge.png')}
-            style={{ width: wp('100%'), height: hp('16%') }}
+            style={{width: wp('100%'), height: hp('16%')}}
             resizeMode="cover">
             {/* <Image
               source={require('../assets/Back.png')}
@@ -198,20 +198,14 @@ function FinalChargeDetails(props) {
             style={{
               marginLeft: wp('5%'),
               borderRadius: wp('6%') / 2,
-              marginTop: wp('10%')
+              marginTop: wp('10%'),
             }}
             activeOpacity={0.6}
-            onPress={
-              () =>
-                // props.navigation.navigate('Receipt')}
-                console.log("receipt")}
-          >
-
-            <ReceiptBtn
-              width={wp('42%')}
-              height={hp('5.5%')}
-
-            />
+            onPress={() =>
+              // props.navigation.navigate('Receipt')}
+              console.log('receipt')
+            }>
+            <ReceiptBtn width={wp('42%')} height={hp('5.5%')} />
           </TouchableOpacity>
           <TouchableOpacity
             style={{
@@ -220,16 +214,11 @@ function FinalChargeDetails(props) {
               marginTop: wp('10%'),
             }}
             activeOpacity={0.6}
-            onPress={
-              () =>
-                // props.navigation.navigate('Report')}
-                console.log("report")}
-          >
-            <ReportBtn
-              width={wp('42%')}
-              height={hp('5.5%')}
-
-            />
+            onPress={() =>
+              // props.navigation.navigate('Report')}
+              console.log('report')
+            }>
+            <ReportBtn width={wp('42%')} height={hp('5.5%')} />
           </TouchableOpacity>
         </View>
         <View
@@ -240,7 +229,7 @@ function FinalChargeDetails(props) {
           }}>
           <TouchableOpacity
             style={{
-              alignItems: "center"
+              alignItems: 'center',
             }}
             activeOpacity={0.5}
             onPress={() =>
@@ -252,20 +241,17 @@ function FinalChargeDetails(props) {
               //       routes: [{ name: 'AppBottom' }],
               //     }),
               //   )
-              console.log("yes")
+              console.log('yes')
             }>
-
             <Continue
               width={wp('66%')}
               height={hp('8%')}
               borderRadius={wp('6%') / 2}
-
-
             />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-    </ScrollView >
+    </ScrollView>
   );
 }
 

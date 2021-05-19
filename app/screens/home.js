@@ -120,7 +120,6 @@ export default function Home({navigation}) {
               <Text
                 style={{
                   fontSize: 22,
-                  marginTop: 15,
                   marginLeft: 30,
                   marginTop: 10,
                   fontFamily: 'SF-Pro-Display-Semibold',
