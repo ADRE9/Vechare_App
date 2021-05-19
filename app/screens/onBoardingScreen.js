@@ -29,23 +29,14 @@ const dots = ({selected}) => {
 
 const Next = ({...props}) => (
   <TouchableOpacity style={styles.next} {...props}>
-    <View
+    <Text
       style={{
-        backgroundColor: '#069DFF',
-        height: hp('6%'),
-        width: wp('80%'),
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: wp('1%'),
+        fontFamily: 'SF-Pro-Text-Bold',
+        color: 'white',
       }}>
-      <Text
-        style={{
-          fontFamily: 'SF-Pro-Text-Bold',
-          color: 'white',
-        }}>
-        NEXT
-      </Text>
-    </View>
+      NEXT
+    </Text>
+
     {/* <Image source={require('../assets/next.png')} style={styles.nextImage} /> */}
   </TouchableOpacity>
 );

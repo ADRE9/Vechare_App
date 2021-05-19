@@ -19,7 +19,7 @@ import {BoxShadow} from 'react-native-shadow';
 import loader from '../components/loader';
 import Carousel from '../components/Carousel';
 import CarouselRecent from '../components/CarouselRecent';
-import {HomeScreen, Host} from 'svg';
+import {HomeScreen, Host, More} from 'svg';
 
 export default function Home({navigation}) {
   const [name, setName] = useState([]);
@@ -110,13 +110,10 @@ export default function Home({navigation}) {
                   marginLeft: wp('6%'),
                   marginTop: hp('0.5%'),
                 }}>
-                <Image
-                  style={{
-                    width: wp('20%'),
-                    height: hp('3.5%'),
-                    borderRadius: wp('6%') / 2,
-                  }}
-                  source={require('../assets/more.png')}
+                <More
+                  width={wp('20%')}
+                  height={hp('3.5%')}
+                  borderRadius={wp('6%') / 2}
                 />
               </TouchableOpacity>
             </View>
@@ -140,14 +137,10 @@ export default function Home({navigation}) {
                 onPress={() => navigation.navigate('Session')}
                 activeOpacity={0.5}
                 style={{marginLeft: wp('10%'), marginTop: wp('3%')}}>
-                <Image
-                  style={{
-                    width: wp('20%'),
-                    height: hp('3%'),
-
-                    borderRadius: wp('6%') / 2,
-                  }}
-                  source={require('../assets/more.png')}
+                <More
+                  width={wp('20%')}
+                  height={hp('3.5%')}
+                  borderRadius={wp('6%') / 2}
                 />
               </TouchableOpacity>
             </View>
