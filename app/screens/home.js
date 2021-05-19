@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -13,15 +13,17 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import LottieView from 'lottie-react-native';
+import {BoxShadow} from 'react-native-shadow';
 
-import { BoxShadow } from 'react-native-shadow';
-
+import loader from '../components/loader';
 import Carousel from '../components/Carousel';
 import CarouselRecent from '../components/CarouselRecent';
-import { HomeScreen, Host } from 'svg';
+import {HomeScreen, Host} from 'svg';
 
-export default function Home({ navigation }) {
+export default function Home({navigation}) {
   const [name, setName] = useState([]);
+  const [load, setLoad] = useState([]);
 
   const shadowOpt = {
     width: wp('60%'),
@@ -32,10 +34,11 @@ export default function Home({ navigation }) {
     opacity: 0.2,
     x: 12,
     y: 24,
-    style: { marginBottom: hp('8%') },
+    style: {marginBottom: hp('8%')},
   };
 
   useEffect(() => {
+    loader.loading((v) => setLoad(true));
     async function value() {
       const user = await AsyncStorage.getItem('name');
       setName(user.split(' ')[0]);
@@ -47,109 +50,119 @@ export default function Home({ navigation }) {
 
   return (
     <SafeAreaView style={styles.cont}>
-      <ScrollView style={styles.cont}>
-        <View>
-          <HomeScreen width={wp('100%')} height={hp('22%')} />
+      {load ? (
+        <ScrollView style={styles.cont}>
+          <View>
+            <HomeScreen width={wp('100%')} height={hp('22%')} />
 
-          <View
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: wp('-4%'),
-              right: 0,
-              bottom: 0,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text
+            <View
               style={{
-                fontSize: 20,
-                color: 'white',
-                position: "absolute",
-                top: 40,
-                left: 40,
-                marginBottom: wp('15%'),
-                fontFamily: 'SF-Pro-Text-Bold',
+                position: 'absolute',
+                top: 0,
+                left: wp('-4%'),
+                right: 0,
+                bottom: 0,
+                justifyContent: 'center',
+                alignItems: 'center',
               }}>
-              Hello {name},
-            </Text>
-          </View>
-        </View>
-
-        <View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Host')}
-            activeOpacity={0.6}
-            style={{ marginLeft: wp('15%'), marginTop: -wp('6%') }}>
-            <BoxShadow setting={shadowOpt}>
-              <Host width={wp('70%')} height={hp('12%')} />
-            </BoxShadow>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <View flexDirection="row">
-            <Text
-              style={{
-                fontFamily: 'SF-Pro-Display-Semibold',
-                color: '#181725',
-                fontSize: wp('5.7%'),
-                marginLeft: wp('5%'),
-                marginTop: hp("0.1%")
-              }}>
-              Charging Points Near Me
-            </Text>
-
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Station')}
-              activeOpacity={0.5}
-              style={{
-                marginLeft: wp('6%'),
-                marginTop: hp('0.5%'),
-              }}>
-              <Image
+              <Text
                 style={{
-                  width: wp('20%'),
-                  height: hp('3.5%'),
-                  borderRadius: wp('6%') / 2,
-                }}
-                source={require('../assets/more.png')}
-              />
+                  fontSize: 20,
+                  color: 'white',
+                  position: 'absolute',
+                  top: 40,
+                  left: 40,
+                  marginBottom: wp('15%'),
+                  fontFamily: 'SF-Pro-Text-Bold',
+                }}>
+                Hello {name},
+              </Text>
+            </View>
+          </View>
+
+          <View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Host')}
+              activeOpacity={0.6}
+              style={{marginLeft: wp('15%'), marginTop: -wp('6%')}}>
+              <BoxShadow setting={shadowOpt}>
+                <Host width={wp('70%')} height={hp('12%')} />
+              </BoxShadow>
             </TouchableOpacity>
           </View>
-        </View>
-        <Carousel />
-        <View>
-          <View flexDirection="row">
-            <Text
-              style={{
-                fontSize: 22,
-                marginTop: 15,
-                marginLeft: 30,
-                marginTop: 10,
-                fontFamily: 'SF-Pro-Display-Semibold',
-                color: '#181725',
-              }}>
-              Recent Sessions
-            </Text>
-
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Session')}
-              activeOpacity={0.5}
-              style={{ marginLeft: wp('10%'), marginTop: wp('3%') }}>
-              <Image
+          <View>
+            <View flexDirection="row">
+              <Text
                 style={{
-                  width: wp('20%'),
-                  height: hp('3%'),
+                  fontFamily: 'SF-Pro-Display-Semibold',
+                  color: '#181725',
+                  fontSize: wp('5.7%'),
+                  marginLeft: wp('5%'),
+                  marginTop: hp('0.1%'),
+                }}>
+                Charging Points Near Me
+              </Text>
 
-                  borderRadius: wp('6%') / 2,
-                }}
-                source={require('../assets/more.png')}
-              />
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Station')}
+                activeOpacity={0.5}
+                style={{
+                  marginLeft: wp('6%'),
+                  marginTop: hp('0.5%'),
+                }}>
+                <Image
+                  style={{
+                    width: wp('20%'),
+                    height: hp('3.5%'),
+                    borderRadius: wp('6%') / 2,
+                  }}
+                  source={require('../assets/more.png')}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
+          <Carousel />
+          <View>
+            <View flexDirection="row">
+              <Text
+                style={{
+                  fontSize: 22,
+                  marginTop: 15,
+                  marginLeft: 30,
+                  marginTop: 10,
+                  fontFamily: 'SF-Pro-Display-Semibold',
+                  color: '#181725',
+                }}>
+                Recent Sessions
+              </Text>
+
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Session')}
+                activeOpacity={0.5}
+                style={{marginLeft: wp('10%'), marginTop: wp('3%')}}>
+                <Image
+                  style={{
+                    width: wp('20%'),
+                    height: hp('3%'),
+
+                    borderRadius: wp('6%') / 2,
+                  }}
+                  source={require('../assets/more.png')}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <CarouselRecent />
+        </ScrollView>
+      ) : (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <LottieView
+            autoPlay
+            loop
+            source={require('../assets/animations/loading.json')}
+          />
         </View>
-        <CarouselRecent />
-      </ScrollView>
+      )}
     </SafeAreaView>
   );
 }

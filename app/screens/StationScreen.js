@@ -91,7 +91,7 @@ function StationScreen(props) {
           }}>
           <TouchableOpacity
             activeOpacity={0.5}
-            style={{backgroundColor: 'yellow'}}
+            // style={{backgroundColor: 'yellow'}}
             onPress={() => props.navigation.goBack()}>
             <Image
               source={require('../assets/Back.png')}
