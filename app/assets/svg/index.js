@@ -45,3 +45,4 @@ export { default as AppStore } from './appStore.svg';
 export { default as FailedBtn } from './failedBtn.svg';
 export { default as UnpaidBg } from './unpaidBg.svg';
 export { default as Error } from './error.svg';
+export { default as More } from './More.svg';

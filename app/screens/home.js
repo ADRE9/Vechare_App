@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,14 +14,14 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import LottieView from 'lottie-react-native';
-import {BoxShadow} from 'react-native-shadow';
+import { BoxShadow } from 'react-native-shadow';
 
 import loader from '../components/loader';
 import Carousel from '../components/Carousel';
 import CarouselRecent from '../components/CarouselRecent';
-import {HomeScreen, Host} from 'svg';
+import { HomeScreen, Host, More } from 'svg';
 
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
   const [name, setName] = useState([]);
   const [load, setLoad] = useState([]);
 
@@ -34,7 +34,7 @@ export default function Home({navigation}) {
     opacity: 0.2,
     x: 12,
     y: 24,
-    style: {marginBottom: hp('8%')},
+    style: { marginBottom: hp('8%') },
   };
 
   useEffect(() => {
@@ -84,7 +84,7 @@ export default function Home({navigation}) {
             <TouchableOpacity
               onPress={() => navigation.navigate('Host')}
               activeOpacity={0.6}
-              style={{marginLeft: wp('15%'), marginTop: -wp('6%')}}>
+              style={{ marginLeft: wp('15%'), marginTop: -wp('6%') }}>
               <BoxShadow setting={shadowOpt}>
                 <Host width={wp('70%')} height={hp('12%')} />
               </BoxShadow>
@@ -110,13 +110,11 @@ export default function Home({navigation}) {
                   marginLeft: wp('6%'),
                   marginTop: hp('0.5%'),
                 }}>
-                <Image
-                  style={{
-                    width: wp('20%'),
-                    height: hp('3.5%'),
-                    borderRadius: wp('6%') / 2,
-                  }}
-                  source={require('../assets/more.png')}
+                <More
+                  width={wp('20%')}
+                  height={hp('3.5%')}
+                  borderRadius={wp('6%') / 2}
+
                 />
               </TouchableOpacity>
             </View>
@@ -139,15 +137,12 @@ export default function Home({navigation}) {
               <TouchableOpacity
                 onPress={() => navigation.navigate('Session')}
                 activeOpacity={0.5}
-                style={{marginLeft: wp('10%'), marginTop: wp('3%')}}>
-                <Image
-                  style={{
-                    width: wp('20%'),
-                    height: hp('3%'),
+                style={{ marginLeft: wp('10%'), marginTop: wp('3%') }}>
+                <More
+                  width={wp('20%')}
+                  height={hp('3.5%')}
+                  borderRadius={wp('6%') / 2}
 
-                    borderRadius: wp('6%') / 2,
-                  }}
-                  source={require('../assets/more.png')}
                 />
               </TouchableOpacity>
             </View>
@@ -155,7 +150,7 @@ export default function Home({navigation}) {
           <CarouselRecent />
         </ScrollView>
       ) : (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <LottieView
             autoPlay
             loop
