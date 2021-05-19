@@ -46,3 +46,6 @@ export { default as FailedBtn } from './failedBtn.svg';
 export { default as UnpaidBg } from './unpaidBg.svg';
 export { default as Error } from './error.svg';
 export { default as More } from './More.svg';
+export { default as ReceiptBtn } from './receiptBtn.svg';
+export { default as ReportBtn } from './reportBtn.svg';
+export { default as Continue } from './continue.svg';

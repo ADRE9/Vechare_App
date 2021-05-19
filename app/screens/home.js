@@ -110,11 +110,7 @@ export default function Home({navigation}) {
                   marginLeft: wp('6%'),
                   marginTop: hp('0.5%'),
                 }}>
-                <More
-                  width={wp('20%')}
-                  height={hp('3.5%')}
-                  borderRadius={wp('6%') / 2}
-                />
+                <More width={wp('20%')} height={hp('3.8%')} />
               </TouchableOpacity>
             </View>
           </View>
@@ -137,11 +133,7 @@ export default function Home({navigation}) {
                 onPress={() => navigation.navigate('Session')}
                 activeOpacity={0.5}
                 style={{marginLeft: wp('10%'), marginTop: wp('3%')}}>
-                <More
-                  width={wp('20%')}
-                  height={hp('3.5%')}
-                  borderRadius={wp('6%') / 2}
-                />
+                <More width={wp('20%')} height={hp('3.8%')} />
               </TouchableOpacity>
             </View>
           </View>

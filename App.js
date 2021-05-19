@@ -22,7 +22,6 @@ function App() {
     RNBootSplash.hide({duration: 250});
   }, []);
   return (
-    // <OnBoardingScreen />
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
