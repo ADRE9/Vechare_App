@@ -14,6 +14,8 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LottieView from 'lottie-react-native';
+import {ActivityIndicator} from 'react-native';
 const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
 console.log('CarouselRecent');
@@ -21,6 +23,7 @@ console.log('CarouselRecent');
 export default function CarouselRecent() {
   const [index, setIndex] = useState(0);
   const [value, setdata] = useState([]);
+  const [isLoading, setLoading] = useState(true);
   const indexRef = useRef(index);
   indexRef.current = index;
   const onScroll = useCallback((event) => {
@@ -67,7 +70,9 @@ export default function CarouselRecent() {
             Authorization: token,
           },
         },
-      );
+      )
+        .catch((error) => alert(error))
+        .finally(() => setLoading(false));
       const resData = await res.json();
       // if (resData.data.payments === []) {
       //   setdata({
@@ -83,7 +88,7 @@ export default function CarouselRecent() {
       // console.log('Carousel Recent payments check', resData.data.payments);
     }
     dtl();
-  });
+  }, []);
   const flatListOptimizationProps = {
     initialNumToRender: 0,
     maxToRenderPerBatch: 1,
@@ -104,81 +109,98 @@ export default function CarouselRecent() {
   //   return <Slide data={item} />;
   // }, []);
   return (
-    <View>
-      <FlatList
-        data={value}
-        style={styles.carousel}
-        pagingEnabled
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        bounces={false}
-        onScroll={onScroll}
-        {...flatListOptimizationProps}
-        renderItem={({item}) => (
-          <SafeAreaView style={styles.cardContainer}>
-            <View style={styles.container}>
-              <View style={{flexDirection: 'row'}}>
-                <View style={{flexDirection: 'column'}}>
-                  <Text style={styles.heading}>PlugIn India</Text>
+    <View
+      style={{
+        height: 195,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      {isLoading === true ? (
+        <LottieView
+          autoPlay
+          loop
+          source={require('../assets/animations/loading.json')}
+        />
+      ) : (
+        <FlatList
+          data={value}
+          style={styles.carousel}
+          pagingEnabled
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          bounces={false}
+          onScroll={onScroll}
+          {...flatListOptimizationProps}
+          renderItem={({item}) => (
+            <SafeAreaView style={styles.cardContainer}>
+              <View style={styles.container}>
+                <View style={{flexDirection: 'row'}}>
                   <View style={{flexDirection: 'column'}}>
-                    <View style={{flexDirection: 'row', marginTop: wp('2%')}}>
-                      <Image source={require('../assets/tick.png')} />
-                      <Text style={styles.status}>Available</Text>
+                    <Text style={styles.heading}>{item.chargerId._id}</Text>
+                    <View style={{flexDirection: 'column'}}>
+                      <View style={{flexDirection: 'row', marginTop: wp('2%')}}>
+                        <Image source={require('../assets/tick.png')} />
+                        <Text style={styles.status}>Available</Text>
+                      </View>
+                      <Text style={styles.loc}>{item.chargerId.address} </Text>
                     </View>
-                    <Text style={styles.loc}>{item.chargerId.address} </Text>
+                  </View>
+                  <View style={{flexDirection: 'column'}}>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={styles.subtitle}>
+                        {'\u20B9'} {item.amount}
+                      </Text>
+                      <Text style={styles.subtitle2}>
+                        {item.energyConsumed} kwh
+                      </Text>
+                    </View>
+                    <Text style={styles.txt}>Last Charged: ago</Text>
+                    <Text style={styles.txt2}>
+                      Operator: veCharge Community
+                    </Text>
                   </View>
                 </View>
-                <View style={{flexDirection: 'column'}}>
-                  <View style={{flexDirection: 'row'}}>
-                    <Text style={styles.subtitle}>
-                      {'\u20B9'} {item.amount}
-                    </Text>
-                    <Text style={styles.subtitle2}>
-                      {item.energyConsumed} kwh
-                    </Text>
-                  </View>
-                  <Text style={styles.txt}>Last Charged: ago</Text>
-                  <Text style={styles.txt2}>Operator: veCharge Community</Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  margin: wp('2%'),
-                  justifyContent: 'space-evenly',
-                  right: wp('12%'),
-                  marginHorizontal: 40,
-                }}>
-                <TouchableOpacity activeOpacity={0.4}>
-                  <Image
-                    source={require('../assets/navigate.png')}
-                    style={{
-                      height: hp('8%'),
-                      width: wp('22%'),
-                      borderRadius: hp('4%') / 4,
-                      marginTop: -wp('2%'),
-                    }}
-                    resizeMode="contain"
-                  />
-                </TouchableOpacity>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    margin: wp('2%'),
+                    justifyContent: 'space-evenly',
+                    right: wp('12%'),
+                    marginHorizontal: 40,
+                  }}>
+                  <TouchableOpacity activeOpacity={0.4}>
+                    <Image
+                      source={require('../assets/navigate.png')}
+                      style={{
+                        height: hp('8%'),
+                        width: wp('22%'),
+                        borderRadius: hp('4%') / 4,
+                        marginTop: -wp('2%'),
+                      }}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
 
-                <TouchableOpacity activeOpacity={0.4} style={{left: wp('3%')}}>
-                  <Image
-                    source={require('../assets/charge_now.png')}
-                    style={{
-                      height: hp('8%'),
-                      width: wp('23%'),
-                      borderRadius: hp('4%') / 4,
-                      marginTop: -wp('2%'),
-                    }}
-                    resizeMode="contain"
-                  />
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.4}
+                    style={{left: wp('3%')}}>
+                    <Image
+                      source={require('../assets/charge_now.png')}
+                      style={{
+                        height: hp('8%'),
+                        width: wp('23%'),
+                        borderRadius: hp('4%') / 4,
+                        marginTop: -wp('2%'),
+                      }}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          </SafeAreaView>
-        )}
-      />
+            </SafeAreaView>
+          )}
+        />
+      )}
       <Pagination index={index}></Pagination>
     </View>
   );
@@ -254,7 +276,7 @@ const styles = StyleSheet.create({
     height: hp('3%'),
     width: wp('16%'),
     color: '#FFFFFF',
-    marginLeft: wp('14%'),
+    marginLeft: wp('21%'),
     borderRadius: wp('12%') / 4,
     padding: 3,
     fontSize: wp('3%'),
@@ -276,14 +298,14 @@ const styles = StyleSheet.create({
   },
   txt: {
     marginTop: wp('3%'),
-    marginLeft: wp('14.5%'),
+    marginLeft: wp('22%'),
     color: 'black',
     fontFamily: 'SF-Pro-Display-Medium',
     fontSize: wp('2.6%'),
   },
   txt2: {
     marginTop: wp('2%'),
-    marginLeft: wp('14.5%'),
+    marginLeft: wp('22%'),
     color: 'black',
     fontFamily: 'SF-Pro-Display-Medium',
     fontSize: wp('2.6%'),

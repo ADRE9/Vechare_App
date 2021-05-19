@@ -107,7 +107,7 @@ function EditProfile({navigation}) {
         <View style={styles.cont2}>
           <Text style={styles.txt}>Full Name</Text>
           <View style={styles.inputCont}>
-            <TextInput style={styles.input}>Moksh Garg</TextInput>
+            <TextInput style={styles.input}>{name}</TextInput>
           </View>
         </View>
         <View style={styles.cont2}>

@@ -92,9 +92,6 @@ function LoginScreen(props) {
       setloggedIn(true);
     }
   }
-  // const agent = new https.Agent({
-  //   rejectUnauthorized: false,
-  // });
 
   const token = async function (idToken) {
     const res = await axios.post(

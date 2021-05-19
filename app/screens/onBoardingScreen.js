@@ -33,6 +33,7 @@ const Next = ({...props}) => (
       style={{
         fontFamily: 'SF-Pro-Text-Bold',
         color: 'white',
+        fontSize: 18,
       }}>
       NEXT
     </Text>
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
     marginRight: wp('8%'),
     marginBottom: 80,
     backgroundColor: '#069DFF',
-    height: hp('6%'),
+    height: hp('7%'),
     width: wp('80%'),
     borderRadius: wp('1%'),
   },

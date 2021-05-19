@@ -201,10 +201,7 @@ function FinalChargeDetails(props) {
               marginTop: wp('10%'),
             }}
             activeOpacity={0.6}
-            onPress={() =>
-              // props.navigation.navigate('Receipt')}
-              console.log('receipt')
-            }>
+            onPress={() => props.navigation.navigate('Receipt')}>
             <ReceiptBtn width={wp('42%')} height={hp('5.5%')} />
           </TouchableOpacity>
           <TouchableOpacity
@@ -214,10 +211,7 @@ function FinalChargeDetails(props) {
               marginTop: wp('10%'),
             }}
             activeOpacity={0.6}
-            onPress={() =>
-              // props.navigation.navigate('Report')}
-              console.log('report')
-            }>
+            onPress={() => props.navigation.navigate('Report')}>
             <ReportBtn width={wp('42%')} height={hp('5.5%')} />
           </TouchableOpacity>
         </View>
@@ -233,15 +227,14 @@ function FinalChargeDetails(props) {
             }}
             activeOpacity={0.5}
             onPress={() =>
-              // disconnect()
-              //   .then(() => clearStorage())
-              //   .finally(() =>
-              //     props.navigation.reset({
-              //       index: 0,
-              //       routes: [{ name: 'AppBottom' }],
-              //     }),
-              //   )
-              console.log('yes')
+              disconnect()
+                .then(() => clearStorage())
+                .finally(() =>
+                  props.navigation.reset({
+                    index: 0,
+                    routes: [{name: 'AppBottom'}],
+                  }),
+                )
             }>
             <Continue
               width={wp('66%')}

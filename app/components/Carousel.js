@@ -14,6 +14,7 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import RNLocation from 'react-native-location';
+import LottieView from 'lottie-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
@@ -25,6 +26,7 @@ export default function Carousel() {
   const [index, setIndex] = useState(0);
   const indexRef = useRef(index);
   const [value, setdata] = useState([]);
+  const [isLoading, setLoading] = useState(true);
   const [viewLocation, isViewLocation] = useState([]);
   indexRef.current = index;
 
@@ -115,7 +117,9 @@ export default function Carousel() {
             coordinates: [long, lat],
           }),
         },
-      );
+      )
+        .catch((error) => alert(error))
+        .finally(() => setLoading(false));
       const resData = await res.json();
       setdata(resData.data.nearestChargers);
     };
@@ -141,118 +145,134 @@ export default function Carousel() {
   };
 
   return (
-    <View>
-      <FlatList
-        data={value}
-        style={styles.carousel}
-        pagingEnabled
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        bounces={false}
-        onScroll={onScroll}
-        {...flatListOptimizationProps}
-        renderItem={({item}) => (
-          <SafeAreaView style={styles.cardContainer}>
-            <View style={styles.container}>
-              <View style={{flexDirection: 'row'}}>
-                <Image
-                  source={require('../assets/card-charge.png')}
-                  style={{height: hp('8%'), width: wp('14%')}}
-                  resizeMode="contain"
-                />
-                <View style={{flexDirection: 'column', marginLeft: 30}}>
-                  <Text
-                    style={{
-                      fontSize: wp('6%'),
-                      right: wp('6%'),
-                      color: 'black',
-                      fontFamily: 'SF-Pro-Display-Regular',
-                    }}>
-                    PlugIn India
-                  </Text>
-                  <View style={{flexDirection: 'row'}}>
-                    <Image
-                      source={require('../assets/tick.png')}
-                      style={{
-                        right: wp('6%'),
-                        top: hp('0.2%'),
-                        width: wp('5%'),
-                        height: hp('3%'),
-                      }}
-                    />
+    <View
+      style={{
+        height: 195,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      {isLoading === true ? (
+        <LottieView
+          autoPlay
+          loop
+          source={require('../assets/animations/loading.json')}
+        />
+      ) : (
+        <FlatList
+          data={value}
+          style={styles.carousel}
+          pagingEnabled
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          bounces={false}
+          onScroll={onScroll}
+          {...flatListOptimizationProps}
+          renderItem={({item}) => (
+            <SafeAreaView style={styles.cardContainer}>
+              <View style={styles.container}>
+                <View style={{flexDirection: 'row'}}>
+                  <Image
+                    source={require('../assets/card-charge.png')}
+                    style={{height: hp('8%'), width: wp('14%')}}
+                    resizeMode="contain"
+                  />
+                  <View style={{flexDirection: 'column', marginLeft: 30}}>
                     <Text
                       style={{
-                        color: '#333333',
-                        fontSize: wp('3.5%'),
-                        left: -wp('5%'),
-                        top: hp('0.4%'),
+                        fontSize: wp('6%'),
+                        right: wp('6%'),
+                        color: 'black',
+                        fontFamily: 'SF-Pro-Display-Regular',
                       }}>
-                      Available
+                      {item._id}
                     </Text>
-                    <TouchableOpacity
-                      style={{
-                        backgroundColor: '#CAEAFF',
-                        padding: wp('1.5%'),
-                        borderRadius: wp('10%') / 4,
-                        marginLeft: wp('20%'),
-                        marginTop: -wp('1%'),
-                      }}>
-                      <Text style={{fontSize: wp('3%'), fontWeight: 'bold'}}>
-                        {(item.distance / 1000).toFixed(2)} km
+                    <View style={{flexDirection: 'row'}}>
+                      <Image
+                        source={require('../assets/tick.png')}
+                        style={{
+                          right: wp('6%'),
+                          top: hp('0.2%'),
+                          width: wp('5%'),
+                          height: hp('3%'),
+                        }}
+                      />
+                      <Text
+                        style={{
+                          color: '#333333',
+                          fontSize: wp('3.5%'),
+                          left: -wp('5%'),
+                          top: hp('0.4%'),
+                        }}>
+                        Available
                       </Text>
-                    </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          backgroundColor: '#CAEAFF',
+                          padding: wp('1.5%'),
+                          borderRadius: wp('10%') / 4,
+                          marginLeft: wp('20%'),
+                          marginTop: -wp('1%'),
+                        }}>
+                        <Text style={{fontSize: wp('3%'), fontWeight: 'bold'}}>
+                          {(item.distance / 1000).toFixed(2)} km
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 </View>
-              </View>
 
-              <Text
-                style={{
-                  fontSize: wp('2.6%'),
-                  color: '#484848',
-                  marginLeft: wp('2%'),
-                  marginTop: hp('1.2%'),
-                  fontFamily: 'SF-Pro-Display-Regular',
-                }}>
-                {item.address}
-              </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  margin: wp('2%'),
-                  justifyContent: 'space-evenly',
-                  marginHorizontal: 40,
-                  right: wp('12%'),
-                }}>
-                <TouchableOpacity activeOpacity={0.4}>
-                  <Image
-                    source={require('../assets/navigate.png')}
-                    style={{
-                      height: hp('8%'),
-                      width: wp('20%'),
-                      borderRadius: hp('4%') / 4,
-                      marginTop: -wp('2%'),
-                    }}
-                    resizeMode="contain"
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.4} style={{left: wp('3%')}}>
-                  <Image
-                    source={require('../assets/charge_now.png')}
-                    style={{
-                      height: hp('8%'),
-                      width: wp('20%'),
-                      borderRadius: hp('4%') / 4,
+                <Text
+                  style={{
+                    fontSize: wp('2.6%'),
+                    color: '#484848',
+                    marginLeft: wp('2%'),
+                    marginTop: hp('1.2%'),
+                    fontFamily: 'SF-Pro-Display-Regular',
+                  }}>
+                  {item.address}
+                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    margin: wp('2%'),
+                    justifyContent: 'space-evenly',
+                    marginHorizontal: 40,
+                    right: wp('12%'),
+                  }}>
+                  <TouchableOpacity activeOpacity={0.4}>
+                    <Image
+                      source={require('../assets/navigate.png')}
+                      style={{
+                        height: hp('8%'),
+                        width: wp('20%'),
+                        borderRadius: hp('4%') / 4,
+                        marginTop: -wp('2%'),
+                      }}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.4}
+                    style={{left: wp('3%')}}>
+                    <Image
+                      source={require('../assets/charge_now.png')}
+                      style={{
+                        height: hp('8%'),
+                        width: wp('20%'),
+                        borderRadius: hp('4%') / 4,
 
-                      marginTop: -wp('2%'),
-                    }}
-                    resizeMode="contain"
-                  />
-                </TouchableOpacity>
+                        marginTop: -wp('2%'),
+                      }}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          </SafeAreaView>
-        )}
-      />
+            </SafeAreaView>
+          )}
+        />
+      )}
+
       <Pagination index={index}></Pagination>
     </View>
   );

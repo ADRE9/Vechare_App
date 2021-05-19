@@ -50,103 +50,92 @@ export default function Home({navigation}) {
 
   return (
     <SafeAreaView style={styles.cont}>
-      {load ? (
-        <ScrollView style={styles.cont}>
-          <View>
-            <HomeScreen width={wp('100%')} height={hp('22%')} />
-
-            <View
+      <ScrollView style={styles.cont}>
+        <View>
+          <HomeScreen width={wp('100%')} height={hp('22%')} />
+          <View
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: wp('-4%'),
+              right: 0,
+              bottom: 0,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text
               style={{
+                fontSize: 20,
+                color: 'white',
                 position: 'absolute',
-                top: 0,
-                left: wp('-4%'),
-                right: 0,
-                bottom: 0,
-                justifyContent: 'center',
-                alignItems: 'center',
+                top: 40,
+                left: 40,
+                marginBottom: wp('15%'),
+                fontFamily: 'SF-Pro-Text-Bold',
               }}>
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: 'white',
-                  position: 'absolute',
-                  top: 40,
-                  left: 40,
-                  marginBottom: wp('15%'),
-                  fontFamily: 'SF-Pro-Text-Bold',
-                }}>
-                Hello {name},
-              </Text>
-            </View>
+              Hello {name},
+            </Text>
           </View>
+        </View>
 
-          <View>
+        <View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Host')}
+            activeOpacity={0.6}
+            style={{marginLeft: wp('15%'), marginTop: -wp('6%')}}>
+            <BoxShadow setting={shadowOpt}>
+              <Host width={wp('70%')} height={hp('12%')} />
+            </BoxShadow>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <View flexDirection="row">
+            <Text
+              style={{
+                fontFamily: 'SF-Pro-Display-Semibold',
+                color: '#181725',
+                fontSize: wp('5.7%'),
+                marginLeft: wp('5%'),
+                marginTop: hp('0.1%'),
+              }}>
+              Charging Points Near Me
+            </Text>
+
             <TouchableOpacity
-              onPress={() => navigation.navigate('Host')}
-              activeOpacity={0.6}
-              style={{marginLeft: wp('15%'), marginTop: -wp('6%')}}>
-              <BoxShadow setting={shadowOpt}>
-                <Host width={wp('70%')} height={hp('12%')} />
-              </BoxShadow>
+              onPress={() => navigation.navigate('Station')}
+              activeOpacity={0.5}
+              style={{
+                marginLeft: wp('6%'),
+                marginTop: hp('0.5%'),
+              }}>
+              <More width={wp('20%')} height={hp('3.8%')} />
             </TouchableOpacity>
           </View>
-          <View>
-            <View flexDirection="row">
-              <Text
-                style={{
-                  fontFamily: 'SF-Pro-Display-Semibold',
-                  color: '#181725',
-                  fontSize: wp('5.7%'),
-                  marginLeft: wp('5%'),
-                  marginTop: hp('0.1%'),
-                }}>
-                Charging Points Near Me
-              </Text>
-
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Station')}
-                activeOpacity={0.5}
-                style={{
-                  marginLeft: wp('6%'),
-                  marginTop: hp('0.5%'),
-                }}>
-                <More width={wp('20%')} height={hp('3.8%')} />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <Carousel />
-          <View>
-            <View flexDirection="row">
-              <Text
-                style={{
-                  fontSize: 22,
-                  marginLeft: 30,
-                  marginTop: 10,
-                  fontFamily: 'SF-Pro-Display-Semibold',
-                  color: '#181725',
-                }}>
-                Recent Sessions
-              </Text>
-
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Session')}
-                activeOpacity={0.5}
-                style={{marginLeft: wp('10%'), marginTop: wp('3%')}}>
-                <More width={wp('20%')} height={hp('3.8%')} />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <CarouselRecent />
-        </ScrollView>
-      ) : (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <LottieView
-            autoPlay
-            loop
-            source={require('../assets/animations/loading.json')}
-          />
         </View>
-      )}
+        <Carousel />
+        <View>
+          <View flexDirection="row">
+            <Text
+              style={{
+                fontSize: 22,
+                marginLeft: 30,
+                marginTop: 10,
+                fontFamily: 'SF-Pro-Display-Semibold',
+                color: '#181725',
+              }}>
+              Recent Sessions
+            </Text>
+
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Session')}
+              activeOpacity={0.5}
+              style={{marginLeft: wp('10%'), marginTop: wp('3%')}}>
+              <More width={wp('20%')} height={hp('3.8%')} />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <CarouselRecent />
+      </ScrollView>
     </SafeAreaView>
   );
 }
