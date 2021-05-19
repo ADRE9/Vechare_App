@@ -161,6 +161,7 @@ export default function CarouselRecent() {
                     resizeMode="contain"
                   />
                 </TouchableOpacity>
+
                 <TouchableOpacity activeOpacity={0.4} style={{left: wp('3%')}}>
                   <Image
                     source={require('../assets/charge_now.png')}
@@ -187,6 +188,7 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     flexDirection: 'row',
+    // marginBottom: 20,
   },
   paginationDot: {
     width: 8,

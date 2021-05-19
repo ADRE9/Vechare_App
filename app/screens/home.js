@@ -13,8 +13,8 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import {BoxShadow} from 'react-native-shadow';
 import LottieView from 'lottie-react-native';
+import {BoxShadow} from 'react-native-shadow';
 
 import loader from '../components/loader';
 import Carousel from '../components/Carousel';
@@ -23,7 +23,7 @@ import {HomeScreen, Host} from 'svg';
 
 export default function Home({navigation}) {
   const [name, setName] = useState([]);
-  const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState([]);
 
   const shadowOpt = {
     width: wp('60%'),
@@ -69,7 +69,9 @@ export default function Home({navigation}) {
                 style={{
                   fontSize: 20,
                   color: 'white',
-                  marginRight: wp('40%'),
+                  position: 'absolute',
+                  top: 40,
+                  left: 40,
                   marginBottom: wp('15%'),
                   fontFamily: 'SF-Pro-Text-Bold',
                 }}>
@@ -96,9 +98,11 @@ export default function Home({navigation}) {
                   color: '#181725',
                   fontSize: wp('5.7%'),
                   marginLeft: wp('5%'),
+                  marginTop: hp('0.1%'),
                 }}>
                 Charging Points Near Me
               </Text>
+
               <TouchableOpacity
                 onPress={() => navigation.navigate('Station')}
                 activeOpacity={0.5}
