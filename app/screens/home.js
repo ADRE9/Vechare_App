@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,13 +14,13 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
-import {BoxShadow} from 'react-native-shadow';
+import { BoxShadow } from 'react-native-shadow';
 
 import Carousel from '../components/Carousel';
 import CarouselRecent from '../components/CarouselRecent';
-import {HomeScreen, Host} from 'svg';
+import { HomeScreen, Host } from 'svg';
 
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
   const [name, setName] = useState([]);
 
   const shadowOpt = {
@@ -32,7 +32,7 @@ export default function Home({navigation}) {
     opacity: 0.2,
     x: 12,
     y: 24,
-    style: {marginBottom: hp('8%')},
+    style: { marginBottom: hp('8%') },
   };
 
   useEffect(() => {
@@ -65,7 +65,9 @@ export default function Home({navigation}) {
               style={{
                 fontSize: 20,
                 color: 'white',
-                marginRight: wp('40%'),
+                position: "absolute",
+                top: 40,
+                left: 40,
                 marginBottom: wp('15%'),
                 fontFamily: 'SF-Pro-Text-Bold',
               }}>
@@ -78,7 +80,7 @@ export default function Home({navigation}) {
           <TouchableOpacity
             onPress={() => navigation.navigate('Host')}
             activeOpacity={0.6}
-            style={{marginLeft: wp('15%'), marginTop: -wp('6%')}}>
+            style={{ marginLeft: wp('15%'), marginTop: -wp('6%') }}>
             <BoxShadow setting={shadowOpt}>
               <Host width={wp('70%')} height={hp('12%')} />
             </BoxShadow>
@@ -92,9 +94,11 @@ export default function Home({navigation}) {
                 color: '#181725',
                 fontSize: wp('5.7%'),
                 marginLeft: wp('5%'),
+                marginTop: hp("0.1%")
               }}>
               Charging Points Near Me
             </Text>
+
             <TouchableOpacity
               onPress={() => navigation.navigate('Station')}
               activeOpacity={0.5}
@@ -131,7 +135,7 @@ export default function Home({navigation}) {
             <TouchableOpacity
               onPress={() => navigation.navigate('Session')}
               activeOpacity={0.5}
-              style={{marginLeft: wp('10%'), marginTop: wp('3%')}}>
+              style={{ marginLeft: wp('10%'), marginTop: wp('3%') }}>
               <Image
                 style={{
                   width: wp('20%'),

@@ -1,4 +1,4 @@
-import React, {useCallback, memo, useRef, useState, useEffect} from 'react';
+import React, { useCallback, memo, useRef, useState, useEffect } from 'react';
 import {
   FlatList,
   View,
@@ -14,7 +14,7 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
 console.log('CarouselRecent');
 
@@ -36,7 +36,7 @@ export default function CarouselRecent() {
       setIndex(roundIndex);
     }
   }, []);
-  function Pagination({index}) {
+  function Pagination({ index }) {
     return (
       <View style={styles.pagination} pointerEvents="none">
         {value.map((_, i) => {
@@ -104,22 +104,22 @@ export default function CarouselRecent() {
         bounces={false}
         onScroll={onScroll}
         {...flatListOptimizationProps}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <SafeAreaView style={styles.cardContainer}>
             <View style={styles.container}>
-              <View style={{flexDirection: 'row'}}>
-                <View style={{flexDirection: 'column'}}>
+              <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'column' }}>
                   <Text style={styles.heading}>PlugIn India</Text>
-                  <View style={{flexDirection: 'column'}}>
-                    <View style={{flexDirection: 'row', marginTop: wp('2%')}}>
+                  <View style={{ flexDirection: 'column' }}>
+                    <View style={{ flexDirection: 'row', marginTop: wp('2%') }}>
                       <Image source={require('../assets/tick.png')} />
                       <Text style={styles.status}>Available</Text>
                     </View>
                     <Text style={styles.loc}>{item.chargerId.address} </Text>
                   </View>
                 </View>
-                <View style={{flexDirection: 'column'}}>
-                  <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'column' }}>
+                  <View style={{ flexDirection: 'row' }}>
                     <Text style={styles.subtitle}>
                       {'\u20B9'} {item.amount}
                     </Text>
@@ -151,7 +151,8 @@ export default function CarouselRecent() {
                     resizeMode="contain"
                   />
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.4} style={{left: wp('3%')}}>
+
+                <TouchableOpacity activeOpacity={0.4} style={{ left: wp('3%') }}>
                   <Image
                     source={require('../assets/charge_now.png')}
                     style={{
@@ -163,7 +164,9 @@ export default function CarouselRecent() {
                     resizeMode="contain"
                   />
                 </TouchableOpacity>
+
               </View>
+
             </View>
           </SafeAreaView>
         )}
@@ -177,6 +180,7 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     flexDirection: 'row',
+    // marginBottom: 20,
   },
   paginationDot: {
     width: 8,
@@ -184,8 +188,8 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginHorizontal: 6,
   },
-  paginationDotActive: {backgroundColor: '#069DFF'},
-  paginationDotInactive: {backgroundColor: '#DBDBDB'},
+  paginationDotActive: { backgroundColor: '#069DFF' },
+  paginationDotInactive: { backgroundColor: '#DBDBDB' },
   carousel: {
     // backgroundColor: 'yellow',
     height: 177,
