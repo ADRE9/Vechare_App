@@ -112,8 +112,7 @@ export default function Home({ navigation }) {
                 }}>
                 <More
                   width={wp('20%')}
-                  height={hp('3.5%')}
-                  borderRadius={wp('6%') / 2}
+                  height={hp('3.8%')}
 
                 />
               </TouchableOpacity>
@@ -140,8 +139,7 @@ export default function Home({ navigation }) {
                 style={{ marginLeft: wp('10%'), marginTop: wp('3%') }}>
                 <More
                   width={wp('20%')}
-                  height={hp('3.5%')}
-                  borderRadius={wp('6%') / 2}
+                  height={hp('3.8%')}
 
                 />
               </TouchableOpacity>
