@@ -195,30 +195,40 @@ function FinalChargeDetails(props) {
         </Text>
         <View flexDirection="row">
           <TouchableOpacity
+            style={{
+              marginLeft: wp('5%'),
+              borderRadius: wp('6%') / 2,
+              marginTop: wp('10%')
+            }}
             activeOpacity={0.6}
-            onPress={() => props.navigation.navigate('Receipt')}>
-            {/* <Image
-              source={require('../assets/receiptBtn.png')}
-              style={styles.btn1}
-            /> */}
+            onPress={
+              () =>
+                // props.navigation.navigate('Receipt')}
+                console.log("receipt")}
+          >
+
             <ReceiptBtn
               width={wp('42%')}
               height={hp('5.5%')}
-              marginLeft={wp('5%')}
-              borderRadius={wp('6%') / 2}
-              marginTop={wp('10%')}
+
             />
           </TouchableOpacity>
           <TouchableOpacity
+            style={{
+              marginLeft: wp('6%'),
+              borderRadius: wp('6%') / 2,
+              marginTop: wp('10%'),
+            }}
             activeOpacity={0.6}
-            onPress={() => props.navigation.navigate('Report')}>
-
+            onPress={
+              () =>
+                // props.navigation.navigate('Report')}
+                console.log("report")}
+          >
             <ReportBtn
               width={wp('42%')}
               height={hp('5.5%')}
-              marginLeft={wp('6%')}
-              borderRadius={wp('6%') / 2}
-              marginTop={wp('10%')}
+
             />
           </TouchableOpacity>
         </View>
@@ -234,14 +244,15 @@ function FinalChargeDetails(props) {
             }}
             activeOpacity={0.5}
             onPress={() =>
-              disconnect()
-                .then(() => clearStorage())
-                .finally(() =>
-                  props.navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'AppBottom' }],
-                  }),
-                )
+              // disconnect()
+              //   .then(() => clearStorage())
+              //   .finally(() =>
+              //     props.navigation.reset({
+              //       index: 0,
+              //       routes: [{ name: 'AppBottom' }],
+              //     }),
+              //   )
+              console.log("yes")
             }>
 
             <Continue
@@ -254,7 +265,7 @@ function FinalChargeDetails(props) {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-    </ScrollView>
+    </ScrollView >
   );
 }
 
