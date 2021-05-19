@@ -23,7 +23,7 @@ import {HomeScreen, Host} from 'svg';
 
 export default function Home({navigation}) {
   const [name, setName] = useState([]);
-  const [load, setLoad] = useState([]);
+  const [load, setLoad] = useState(false);
 
   const shadowOpt = {
     width: wp('60%'),

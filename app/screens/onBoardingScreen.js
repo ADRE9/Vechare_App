@@ -29,14 +29,6 @@ const dots = ({selected}) => {
 
 const Next = ({...props}) => (
   <TouchableOpacity style={styles.next} {...props}>
-<<<<<<< HEAD
-    <Text
-      style={{
-        fontFamily: "SF-Pro-Text-Bold",
-        color: "white",
-      }}>NEXT</Text>
-
-=======
     <View
       style={{
         backgroundColor: '#069DFF',
@@ -54,7 +46,6 @@ const Next = ({...props}) => (
         NEXT
       </Text>
     </View>
->>>>>>> 3a582234c5008101f77d691deea5ac4156fe4a77
     {/* <Image source={require('../assets/next.png')} style={styles.nextImage} /> */}
   </TouchableOpacity>
 );
@@ -135,14 +126,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   next: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginRight: wp('8%'),
     marginBottom: 80,
-    backgroundColor: "#069DFF",
-    height: hp("6%"),
+    backgroundColor: '#069DFF',
+    height: hp('6%'),
     width: wp('80%'),
-    borderRadius: wp("1%")
+    borderRadius: wp('1%'),
   },
   nextImage: {
     width: wp('80%'),
