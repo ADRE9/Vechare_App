@@ -8,45 +8,45 @@
 // });
 
 // export default function Location(props) {
-//   const [viewLocation, isViewLocation] = useState([]);
+// const [viewLocation, isViewLocation] = useState([]);
 
-//   useEffect(() => {
-//     const getLocation = async () => {
-//       let permission = await RNLocation.checkPermission({
-//         ios: 'whenInUse', // or 'always'
+// useEffect(() => {
+//   const getLocation = async () => {
+//     let permission = await RNLocation.checkPermission({
+//       ios: 'whenInUse', // or 'always'
+//       android: {
+//         detail: 'coarse', // or 'fine'
+//       },
+//     });
+
+//     console.log(permission);
+
+//     let location;
+//     if (!permission) {
+//       permission = await RNLocation.requestPermission({
+//         ios: 'whenInUse',
 //         android: {
-//           detail: 'coarse', // or 'fine'
+//           detail: 'coarse',
+//           rationale: {
+//             title: 'We need to access your location',
+//             message: 'We use your location to show where you are on the map',
+//             buttonPositive: 'OK',
+//             buttonNegative: 'Cancel',
+//           },
 //         },
 //       });
-
 //       console.log(permission);
-
-//       let location;
-//       if (!permission) {
-//         permission = await RNLocation.requestPermission({
-//           ios: 'whenInUse',
-//           android: {
-//             detail: 'coarse',
-//             rationale: {
-//               title: 'We need to access your location',
-//               message: 'We use your location to show where you are on the map',
-//               buttonPositive: 'OK',
-//               buttonNegative: 'Cancel',
-//             },
-//           },
-//         });
-//         console.log(permission);
-//         location = await RNLocation.getLatestLocation({timeout: 100});
-//         console.log(location);
-//         isViewLocation(location);
-//       } else {
-//         location = await RNLocation.getLatestLocation({timeout: 100});
-//         console.log(location);
-//         isViewLocation(location);
-//       }
-//     };
-//     getLocation();
-//   }, []);
+//       location = await RNLocation.getLatestLocation({timeout: 100});
+//       console.log(location);
+//       isViewLocation(location);
+//     } else {
+//       location = await RNLocation.getLatestLocation({timeout: 100});
+//       console.log(location);
+//       isViewLocation(location);
+//     }
+//   };
+//   getLocation();
+// }, []);
 
 //   return (
 //     <View style={styles.container}>

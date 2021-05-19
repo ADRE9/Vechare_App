@@ -2,33 +2,45 @@ import React from 'react';
 import {
   View,
   StyleSheet,
-  ImageBackground,
   Text,
-  Image,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import {UnpaidBg, FailedBtn, Error} from 'svg';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+console.log(windowWidth);
+console.log(windowHeight);
 
 const Unpaid = ({amount, onPress}) => {
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={require('../assets/unpaidscreen.png')}
-        style={{width: wp('100%'), height: hp('94%')}}
-        resizeMode="cover"
-      />
-      <Text style={styles.txt}>₹ {amount}</Text>
-      <TouchableOpacity onPress={onPress} style={styles.btn}>
-        <Image
-          source={require('../assets/unpayment.png')}
-          style={{
-            height: hp('5.5%'),
-            width: wp('35%'),
-          }}
+      {/* <UnpaidBg
+        width={wp("100%")}
+        height={hp("90%")}
+      /> */}
+      <View style={{flexDirection: 'row'}}>
+        <Text style={styles.heading}>Confirm Payment</Text>
+        <Error
+          marginTop={windowWidth > 350 ? hp('5%') : hp('3%')}
+          marginLeft={hp('8%')}
+          width={wp('15%')}
         />
+      </View>
+      <Text style={styles.subtext}>
+        Please pay your dues from last charging session.
+      </Text>
+      <Text style={styles.subtext2}>
+        To continue using the veCharge, please pay
+      </Text>
+      <Text style={styles.txt}>₹ {amount}</Text>
+      <TouchableOpacity style={styles.btn} onPress={onPress}>
+        <FailedBtn height={hp('5.5%')} width={wp('35%')} />
       </TouchableOpacity>
     </View>
   );
@@ -37,21 +49,41 @@ const Unpaid = ({amount, onPress}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
     backgroundColor: '#FF4E50',
   },
   btn: {
-    position: 'absolute',
-    marginTop: 346,
-    marginLeft: 15,
+    marginTop: hp('10%'),
+    marginLeft: wp('4%'),
+    height: hp('5.5%'),
+    width: wp('35%'),
+  },
+  heading: {
+    fontFamily: 'SF-Pro-Display-Semibold',
+    color: 'white',
+    fontSize: 24,
+    marginTop: hp('20%'),
+    marginLeft: wp('8%'),
+  },
+  subtext: {
+    fontSize: windowWidth > 350 ? 16 : 15,
+    fontFamily: 'SF-Pro-Display-Medium',
+    color: 'white',
+    marginLeft: wp('8%'),
+    marginTop: hp('3%'),
+  },
+  subtext2: {
+    fontSize: windowWidth > 350 ? 14 : 12,
+    fontFamily: 'SF-Pro-Display-Medium',
+    color: 'white',
+    marginLeft: wp('8%'),
+    marginTop: hp('4%'),
   },
   txt: {
-    position: 'absolute',
-    marginTop: 276,
-    marginLeft: 20,
-    fontSize: 26,
     color: 'white',
-    fontWeight: 'bold',
+    fontFamily: 'SF-Pro-Display-Semibold',
+    marginLeft: wp('8%'),
+    marginTop: hp('2%'),
+    fontSize: windowWidth > 350 ? 24 : 22,
   },
 });
 

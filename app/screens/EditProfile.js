@@ -20,10 +20,13 @@ import {EditHeader, Pencil, SaveBtn, Loc} from 'svg';
 
 function EditProfile({navigation}) {
   const [name, setName] = useState([]);
+  const [mail, setMail] = useState([]);
   useEffect(() => {
     async function value() {
       const user = await AsyncStorage.getItem('name');
+      const mailid = await AsyncStorage.getItem('mail');
       setName(user);
+      setMail(mailid);
       // console.log("name of user",user);
     }
     value();
@@ -97,7 +100,7 @@ function EditProfile({navigation}) {
               textContentType="emailAddress"
               keyboardType="email-address"
               autoCapitalize="none">
-              Mokshgarg003@gmail.com
+              {mail}
             </TextInput>
           </View>
         </View>

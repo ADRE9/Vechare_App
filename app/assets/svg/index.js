@@ -42,3 +42,6 @@ export {default as Pencil} from './pencil.svg';
 export {default as SaveBtn} from './saveBtn.svg';
 export {default as PlayStore} from './playStore.svg';
 export {default as AppStore} from './appStore.svg';
+export {default as FailedBtn} from './failedBtn.svg';
+export {default as UnpaidBg} from './unpaidBg.svg';
+export {default as Error} from './error.svg';

@@ -38,7 +38,7 @@ export default function Home({navigation}) {
   useEffect(() => {
     async function value() {
       const user = await AsyncStorage.getItem('name');
-      setName(user);
+      setName(user.split(' ')[0]);
     }
 
     value();

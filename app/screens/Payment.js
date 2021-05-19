@@ -29,7 +29,6 @@ import '../Constants/Useragent';
 export default function Payment({navigation}) {
   // const [isLoading, setLoading] = useState(true);
   const [amount, setAmount] = useState([]);
-
   const [energy, setEnergy] = useState([]);
   const [time, setTime] = useState('');
   const [currentHour, setCurrenthour] = useState('');
@@ -182,6 +181,8 @@ export default function Payment({navigation}) {
 
     const pyt = await AsyncStorage.getItem('pyt');
     const pytId = await AsyncStorage.getItem('pytId');
+    const mail = await AsyncStorage.getItem('mail');
+    const name = await AsyncStorage.getItem('name');
 
     var options = {
       description: 'Electricity bill payment',
@@ -190,9 +191,9 @@ export default function Payment({navigation}) {
       order_id: pytId,
       key: RazorpayApiKey,
       prefill: {
-        email: 'useremail@example.com',
-        contact: '9191919191',
-        name: 'John Doe',
+        email: mail,
+        contact: 'Add Contact here',
+        name: name,
       },
       theme: {color: '#a29bfe'},
     };

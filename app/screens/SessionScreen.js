@@ -46,11 +46,12 @@ function SessionScreen(props) {
         <View
           style={{
             position: 'absolute',
-            left: 10,
-            top: 19,
+            left: 15,
+            top: 20,
           }}>
           <TouchableOpacity
             activeOpacity={0.5}
+            // style={{backgroundColor: 'yellow'}}
             onPress={() => props.navigation.goBack()}>
             <Image
               source={require('../assets/Back.png')}

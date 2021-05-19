@@ -40,7 +40,8 @@ function StationScreen(props) {
             detail: 'coarse',
             rationale: {
               title: 'We need to access your location',
-              message: 'We use your location to show where you are on the map',
+              message:
+                'We use your location to show where are the nearest Charger points Located',
               buttonPositive: 'OK',
               buttonNegative: 'Cancel',
             },
@@ -90,6 +91,7 @@ function StationScreen(props) {
           }}>
           <TouchableOpacity
             activeOpacity={0.5}
+            style={{backgroundColor: 'yellow'}}
             onPress={() => props.navigation.goBack()}>
             <Image
               source={require('../assets/Back.png')}

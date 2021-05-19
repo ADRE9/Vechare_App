@@ -14,7 +14,7 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import axios from 'axios';
-// import https from 'https';
+import RNLocation from 'react-native-location';
 
 function LoginScreen(props) {
   useFocusEffect(
@@ -54,6 +54,7 @@ function LoginScreen(props) {
       const currentUser = await GoogleSignin.getCurrentUser();
       // setName(currentUser);
       await AsyncStorage.setItem('name', currentUser.user.name);
+      await AsyncStorage.setItem('mail', currentUser.user.email);
 
       const credential = auth.GoogleAuthProvider.credential(
         idToken,
@@ -115,6 +116,45 @@ function LoginScreen(props) {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
+  const [viewLocation, isViewLocation] = useState([]);
+
+  useEffect(() => {
+    const getLocation = async () => {
+      let permission = await RNLocation.checkPermission({
+        ios: 'whenInUse', // or 'always'
+        android: {
+          detail: 'coarse', // or 'fine'
+        },
+      });
+
+      console.log(permission);
+
+      let location;
+      if (!permission) {
+        permission = await RNLocation.requestPermission({
+          ios: 'whenInUse',
+          android: {
+            detail: 'coarse',
+            rationale: {
+              title: 'We need to access your location',
+              message: 'We use your location to show where you are on the map',
+              buttonPositive: 'OK',
+              buttonNegative: 'Cancel',
+            },
+          },
+        });
+        console.log(permission);
+        location = await RNLocation.getLatestLocation({timeout: 100});
+        // console.log(location);
+        isViewLocation(location);
+      } else {
+        location = await RNLocation.getLatestLocation({timeout: 100});
+        // console.log(location);
+        isViewLocation(location);
+      }
+    };
+    getLocation();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -134,7 +174,7 @@ function LoginScreen(props) {
         }}>
         Charge your vehicle {'\n'}with veCharge
       </Text>
-      {!loggedIn ? (
+      {/* {!loggedIn ? (
         <GoogleSigninButton
           style={{width: 192, height: 48, marginBottom: 190}}
           size={GoogleSigninButton.Size.Wide}
@@ -142,8 +182,21 @@ function LoginScreen(props) {
           onPress={_signIn}
         />
       ) : (
-        <View>{props.navigation.replace('RegisterPage')}</View>
-      )}
+        <View>{props.navigation.navigate('AppBottom')}</View>
+      )} */}
+      <GoogleSigninButton
+        style={{width: 192, height: 48, marginBottom: 190}}
+        size={GoogleSigninButton.Size.Wide}
+        color={GoogleSigninButton.Color.Dark}
+        onPress={() =>
+          _signIn().then(() =>
+            props.navigation.reset({
+              index: 0,
+              routes: [{name: 'AppBottom'}],
+            }),
+          )
+        }
+      />
     </View>
   );
 }
