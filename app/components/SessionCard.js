@@ -12,19 +12,25 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import moment from 'moment';
 
-function SessionCard({amount, days, loc, energy}) {
+function SessionCard({amount, days, loc, energy, device}) {
+  function DateCh({tm}) {
+    return moment(tm, 'YYYYMMDD').fromNow();
+  }
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row'}}>
         <View style={{flexDirection: 'column'}}>
-          <Text style={styles.heading}>PlugIn India</Text>
+          <Text style={styles.heading}>{device}</Text>
           <View style={{flexDirection: 'column'}}>
             <View style={{flexDirection: 'row', marginTop: wp('1.2%')}}>
               <Image source={require('../assets/tick.png')} />
               <Text style={styles.status}>Available</Text>
             </View>
-            <Text style={styles.subtxt}>Last Charged: {days} days ago</Text>
+            <Text style={styles.subtxt}>
+              Last Charged: <DateCh tm={days}></DateCh>
+            </Text>
             <Text style={styles.loc}>{loc}</Text>
           </View>
         </View>
@@ -40,7 +46,7 @@ function SessionCard({amount, days, loc, energy}) {
         <View style={{flexDirection: 'row', marginTop: wp('3%')}}>
           <TouchableOpacity
             activeOpacity={0.4}
-            style={{marginLeft: -wp('42%'), marginTop: wp('16%')}}>
+            style={{marginLeft: -wp('43%'), marginTop: wp('16%')}}>
             <Image
               source={require('../assets/navigate.png')}
               style={{
@@ -53,7 +59,7 @@ function SessionCard({amount, days, loc, energy}) {
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.4}
-            style={{marginLeft: -wp('18%'), marginTop: wp('16%')}}>
+            style={{marginLeft: -wp('20%'), marginTop: wp('16%')}}>
             <Image
               source={require('../assets/charge_now.png')}
               style={{

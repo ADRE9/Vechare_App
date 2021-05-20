@@ -16,11 +16,11 @@ import {
 import RNLocation from 'react-native-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StationCard from '../components/StationCard';
-import {DummyData} from '../Constants/DumyData';
 
 function StationScreen(props) {
   const [value, setdata] = useState([]);
   const [viewLocation, isViewLocation] = useState([]);
+
   useEffect(() => {
     const getLocation = async () => {
       let permission = await RNLocation.checkPermission({
@@ -115,6 +115,7 @@ function StationScreen(props) {
             <StationCard
               dis={(item.distance / 1000).toFixed(2)}
               loc={item.address}
+              device={item._id}
             />
           )}
         />

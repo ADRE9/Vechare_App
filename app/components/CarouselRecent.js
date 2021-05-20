@@ -15,7 +15,8 @@ import {
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LottieView from 'lottie-react-native';
-import {ActivityIndicator} from 'react-native';
+
+import moment from 'moment';
 const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
 console.log('CarouselRecent');
@@ -26,6 +27,7 @@ export default function CarouselRecent() {
   const [isLoading, setLoading] = useState(true);
   const indexRef = useRef(index);
   indexRef.current = index;
+
   const onScroll = useCallback((event) => {
     const slideSize = event.nativeEvent.layoutMeasurement.width;
     const indexs = event.nativeEvent.contentOffset.x / slideSize;
@@ -39,6 +41,7 @@ export default function CarouselRecent() {
       setIndex(roundIndex);
     }
   }, []);
+
   function Pagination({index}) {
     return (
       <View style={styles.pagination} pointerEvents="none">
@@ -58,6 +61,7 @@ export default function CarouselRecent() {
       </View>
     );
   }
+
   useEffect(() => {
     async function dtl() {
       const token = `Bearer ${await AsyncStorage.getItem('token')}`;
@@ -105,9 +109,10 @@ export default function CarouselRecent() {
       [],
     ),
   };
-  // const renderItem = useCallback(function renderItem({item}) {
-  //   return <Slide data={item} />;
-  // }, []);
+
+  function DateCh({tm}) {
+    return moment(tm, 'YYYYMMDD').fromNow();
+  }
   return (
     <View
       style={{
@@ -154,7 +159,9 @@ export default function CarouselRecent() {
                         {item.energyConsumed} kwh
                       </Text>
                     </View>
-                    <Text style={styles.txt}>Last Charged: ago</Text>
+                    <Text style={styles.txt}>
+                      Last Charged: <DateCh tm={item.createdAt}></DateCh>
+                    </Text>
                     <Text style={styles.txt2}>
                       Operator: veCharge Community
                     </Text>

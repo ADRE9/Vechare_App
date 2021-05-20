@@ -8,34 +8,48 @@ import {
   ScrollView,
   SafeAreaView,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import SessionCard from '../components/SessionCard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function SessionScreen(props) {
-  const [value, setdata] = useState([]);
+import SessionCard from '../components/SessionCard';
 
+function SessionScreen(props) {
+  const [loading, setLoading] = useState(true);
+  const [value, setdata] = useState([]);
+  const [offset, setOffset] = useState(5);
+
+  async function dtl() {
+    const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+    setLoading(true);
+    fetch(`https://vecharge.app/api/v1/payment/?page=1&limit=${offset}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        //Successful response from the API Call
+        setOffset(offset + 1);
+        //After the response increasing the offset for the next API call.
+        setdata([...value, ...responseJson.data.payments]);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    // const resData = await res.json();
+    // setdata(resData.data.payments);
+    // console.log('Carousel Recent');
+  }
   useEffect(() => {
-    async function dtl() {
-      const token = `Bearer ${await AsyncStorage.getItem('token')}`;
-      const res = await fetch(
-        `https://vecharge.app/api/v1/payment/?page=2&limit=10`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: token,
-          },
-        },
-      );
-      const resData = await res.json();
-      setdata(resData.data.payments);
-      // console.log('Carousel Recent');
-    }
     dtl();
   });
 
@@ -63,6 +77,22 @@ function SessionScreen(props) {
     );
   };
 
+  const renderFooter = () => {
+    return (
+      <View style={styles.footer}>
+        {/* <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={dtl}
+          //On Click of button calling getData function to load more data
+          style={styles.loadMoreBtn}>
+          <Text style={styles.btnText}>Load More</Text>
+          {loading ? <ActivityIndicator color="#2D9CDB" size="large" /> : null}
+        </TouchableOpacity> */}
+        {loading ? <ActivityIndicator color="#2D9CDB" size="large" /> : null}
+      </View>
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -71,11 +101,14 @@ function SessionScreen(props) {
           data={value}
           ListHeaderComponent={header}
           stickyHeaderIndices={[0]}
+          ListFooterComponent={renderFooter}
           renderItem={({item}) => (
             <SessionCard
+              device={item.chargerId._id}
               loc={item.chargerId.address}
               amount={item.amount}
               energy={item.energyConsumed}
+              days={item.createdAt}
             />
           )}
         />
@@ -92,6 +125,25 @@ const styles = StyleSheet.create({
   img: {
     height: hp('22%'),
     width: wp('100%'),
+  },
+  footer: {
+    // padding: 10,
+
+    justifyContent: 'center',
+    alignItems: 'center',
+    // flexDirection: 'row',
+  },
+  loadMoreBtn: {
+    padding: 10,
+    borderRadius: 4,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btnText: {
+    color: 'white',
+    fontSize: 15,
+    textAlign: 'center',
   },
 });
 

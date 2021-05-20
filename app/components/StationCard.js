@@ -13,12 +13,12 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
-function StationCard({status, dis, loc}) {
+function StationCard({dis, loc, device}) {
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row'}}>
         <View style={{flexDirection: 'column'}}>
-          <Text style={styles.heading}>PlugIn India</Text>
+          <Text style={styles.heading}>{device}</Text>
           <View style={{flexDirection: 'column'}}>
             <View style={{flexDirection: 'row', marginTop: wp('1.4%')}}>
               <Image source={require('../assets/tick.png')} />
@@ -27,42 +27,44 @@ function StationCard({status, dis, loc}) {
             <Text style={styles.loc}>{loc}</Text>
           </View>
         </View>
-        <View
-          style={{
-            flexDirection: 'column',
-            marginTop: -wp('1%'),
-          }}>
-          <Text style={styles.txt}>Distance: {dis} Km away</Text>
-          <Text style={styles.txt2}>Operator: veCharge Community</Text>
-        </View>
-        <View style={{flexDirection: 'row', marginTop: wp('3%')}}>
-          <TouchableOpacity
-            activeOpacity={0.4}
-            style={{marginLeft: -wp('38%'), marginTop: wp('8%')}}>
-            <Image
-              source={require('../assets/navigate.png')}
-              style={{
-                height: hp('7%'),
-                width: wp('18%'),
-                borderRadius: hp('4%') / 4,
-              }}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.4}
-            style={{marginLeft: -wp('17%'), marginTop: wp('8%')}}>
-            <Image
-              source={require('../assets/charge_now.png')}
-              style={{
-                height: hp('7%'),
-                width: wp('18%'),
+        <View style={{position: 'absolute', left: wp('27%')}}>
+          <View
+            style={{
+              flexDirection: 'column',
+              marginTop: -wp('1%'),
+            }}>
+            <Text style={styles.txt}>Distance: {dis} Km away</Text>
+            <Text style={styles.txt2}>Operator: veCharge Community</Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity
+              activeOpacity={0.4}
+              style={{marginLeft: wp('14%')}}>
+              <Image
+                source={require('../assets/navigate.png')}
+                style={{
+                  height: hp('7%'),
+                  width: wp('18%'),
+                  borderRadius: hp('4%') / 4,
+                }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.4}
+              style={{marginLeft: wp('6%')}}>
+              <Image
+                source={require('../assets/charge_now.png')}
+                style={{
+                  height: hp('7%'),
+                  width: wp('18%'),
 
-                borderRadius: hp('4%') / 4,
-              }}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
+                  borderRadius: hp('4%') / 4,
+                }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
@@ -142,6 +144,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontFamily: 'SF-Pro-Display-Medium',
     fontSize: wp('2.6%'),
+    // position: 'absolute',
   },
   txt2: {
     marginTop: wp('2%'),
