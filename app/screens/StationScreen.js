@@ -48,11 +48,11 @@ function StationScreen(props) {
           },
         });
         console.log(permission);
-        location = await RNLocation.getLatestLocation({timeout: 100});
+        location = await RNLocation.getLatestLocation({timeout: 2000});
         console.log(location);
         isViewLocation(location);
       } else {
-        location = await RNLocation.getLatestLocation({timeout: 100});
+        location = await RNLocation.getLatestLocation({timeout: 2000});
         console.log(location);
         isViewLocation(location);
       }
@@ -116,6 +116,8 @@ function StationScreen(props) {
               dis={(item.distance / 1000).toFixed(2)}
               loc={item.address}
               device={item._id}
+              lat={item.location.coordinates[1]}
+              long={item.location.coordinates[0]}
             />
           )}
         />

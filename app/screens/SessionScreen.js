@@ -22,10 +22,12 @@ function SessionScreen(props) {
   const [loading, setLoading] = useState(true);
   const [value, setdata] = useState([]);
   const [offset, setOffset] = useState(5);
+  const [isListEnd, setIsListEnd] = useState(false);
 
   async function dtl() {
-    const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+    // if (!loading && !isListEnd) {
     setLoading(true);
+    const token = `Bearer ${await AsyncStorage.getItem('token')}`;
     fetch(`https://vecharge.app/api/v1/payment/?page=1&limit=${offset}`, {
       method: 'GET',
       headers: {
@@ -35,23 +37,25 @@ function SessionScreen(props) {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        //Successful response from the API Call
-        setOffset(offset + 1);
-        //After the response increasing the offset for the next API call.
-        setdata([...value, ...responseJson.data.payments]);
-        setLoading(false);
+        if (responseJson.data.payments.length > 0) {
+          //Successful response from the API Call
+          setOffset(offset + 1);
+          //After the response increasing the offset for the next API call.
+          setdata([...value, ...responseJson.data.payments]);
+          setLoading(false);
+        } else {
+          setIsListEnd(true);
+          setLoading(false);
+        }
       })
       .catch((error) => {
         console.error(error);
       });
-
-    // const resData = await res.json();
-    // setdata(resData.data.payments);
-    // console.log('Carousel Recent');
+    // }
   }
   useEffect(() => {
     dtl();
-  });
+  }, []);
 
   const header = () => {
     return (
@@ -109,8 +113,12 @@ function SessionScreen(props) {
               amount={item.amount}
               energy={item.energyConsumed}
               days={item.createdAt}
+              lat={item.chargerId.location.coordinates[1]}
+              long={item.chargerId.location.coordinates[0]}
             />
           )}
+          onEndReached={dtl}
+          onEndReachedThreshold={0.5}
         />
       </View>
     </SafeAreaView>

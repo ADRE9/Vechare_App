@@ -8,6 +8,8 @@ import {
   Image,
   TouchableOpacity,
   SafeAreaView,
+  Platform,
+  Linking,
 } from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -113,6 +115,31 @@ export default function CarouselRecent() {
   function DateCh({tm}) {
     return moment(tm, 'YYYYMMDD').fromNow();
   }
+
+  function OpenGps({latitude, longitude}) {
+    const openGps = () => {
+      var scheme =
+        Platform.OS === 'ios' ? 'maps://app?daddr=' : 'google.navigation:q=';
+      var url = scheme + `${latitude}+${longitude}`;
+      Linking.openURL(url);
+    };
+
+    return (
+      <TouchableOpacity activeOpacity={0.4} onPress={openGps}>
+        <Image
+          source={require('../assets/navigate.png')}
+          style={{
+            height: hp('8%'),
+            width: wp('22%'),
+            borderRadius: hp('4%') / 4,
+            marginTop: -wp('2%'),
+          }}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
+    );
+  }
+
   return (
     <View
       style={{
@@ -175,19 +202,11 @@ export default function CarouselRecent() {
                     right: wp('12%'),
                     marginHorizontal: 40,
                   }}>
-                  <TouchableOpacity activeOpacity={0.4}>
-                    <Image
-                      source={require('../assets/navigate.png')}
-                      style={{
-                        height: hp('8%'),
-                        width: wp('22%'),
-                        borderRadius: hp('4%') / 4,
-                        marginTop: -wp('2%'),
-                      }}
-                      resizeMode="contain"
-                    />
-                  </TouchableOpacity>
-
+                  <OpenGps
+                    latitude={item.chargerId.location.coordinates[1]}
+                    longitude={
+                      item.chargerId.location.coordinates[0]
+                    }></OpenGps>
                   <TouchableOpacity
                     activeOpacity={0.4}
                     style={{left: wp('3%')}}>

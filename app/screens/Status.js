@@ -181,7 +181,7 @@ export default class Status extends Component {
     const id = await AsyncStorage.getItem('id');
     console.log(id);
     console.log(token);
-    const socket = io.connect('https://vecharge.app/api/v1', {
+    const socket = io.connect('https://vecharge.app', {
       query: {
         chargerId: id,
         token: token,
@@ -237,7 +237,7 @@ export default class Status extends Component {
       //     50,
       //   )
       // );
-      return this.setState({error: data});
+      // return this.setState({error: data});
     });
     // socket.on('chargerDisconnected', (data) => {
     //   console.log('charger disconnected from device', data);
@@ -287,14 +287,10 @@ export default class Status extends Component {
               </TouchableOpacity>
             </View>
             <View style={styles.switch}>
-              {/* <Text style={styles.textStyle}>
-                {navigation.getParam('value')}
-              </Text> */}
               <Switch
                 trackColor={{false: '#767577', true: '#81b0ff'}}
                 onValueChange={this.toggleSwitch}
                 value={this.state.toggle}
-                // onChange={this.message}
                 style={{transform: [{scaleX: 2.5}, {scaleY: 2.5}]}}
               />
 
