@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -14,10 +14,10 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import {Button, Overlay, Rating, AirbnbRating} from 'react-native-elements';
+import { Button, Overlay, Rating, AirbnbRating } from 'react-native-elements';
 
 import auth from '@react-native-firebase/auth';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   heightPercentageToDP as hp,
@@ -27,7 +27,7 @@ import Share from 'react-native-share';
 import axios from 'axios';
 import RazorpayCheckout from 'react-native-razorpay';
 
-import {RazorpayApiKey} from '../Constants/config';
+import { RazorpayApiKey } from '../Constants/config';
 import files from '../../assets/filesBase64';
 import UnpaidNotify from '../components/UnpaidNotify';
 
@@ -49,10 +49,12 @@ import {
   LinkedIn,
   Web,
   PlayStore,
+  Visit,
+  Visit1
 } from 'svg';
-import {BoxShadow} from 'react-native-shadow';
+import { BoxShadow } from 'react-native-shadow';
 
-function Profile({navigation}) {
+function Profile({ navigation }) {
   const [loggedIn, setloggedIn] = useState(false);
   const [user, setUser] = useState([]);
   const [paid, setPaid] = useState([]);
@@ -79,7 +81,7 @@ function Profile({navigation}) {
               <Image
                 style={styles.starImgStyle}
                 source={item <= defaultRating ? starfill : star}
-                // source={star}
+              // source={star}
               />
             </TouchableOpacity>
           );
@@ -122,9 +124,9 @@ function Profile({navigation}) {
     border: 10,
     // radius: 6,
     opacity: 0.2,
-    x: 30,
-    y: 22,
-    style: {marginBottom: hp('3%')},
+    x: 52,
+    y: 10,
+    style: { marginBottom: hp('3%') },
   };
   const signOut = async () => {
     try {
@@ -170,7 +172,7 @@ function Profile({navigation}) {
           signOut().then(() =>
             navigation.reset({
               index: 0,
-              routes: [{name: 'LoginPage'}],
+              routes: [{ name: 'LoginPage' }],
             }),
           ),
       },
@@ -208,11 +210,11 @@ function Profile({navigation}) {
         contact: '9191919191',
         name: 'John Doe',
       },
-      theme: {color: '#a29bfe'},
+      theme: { color: '#a29bfe' },
     };
     RazorpayCheckout.open(options).then(async function (response) {
       const config = {
-        headers: {Authorization: token},
+        headers: { Authorization: token },
       };
       const data = {
         orderCreationId: orderData.id,
@@ -300,7 +302,7 @@ function Profile({navigation}) {
                 width={wp('4%')}
                 position={'absolute'}
                 top={-hp('18.5%')}
-                left={wp('14%')}
+                left={wp('15%')}
               />
               <Text style={styles.textCont2}>Rohini/City , Delhi/State</Text>
             </View>
@@ -324,13 +326,16 @@ function Profile({navigation}) {
             Electrify your Establishment today
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Host')}>
-            <View>
+            <View style={{
+              position: 'absolute',
+              top: -hp('1%'),
+              left: -wp("5%")
+            }}>
               <BoxShadow setting={shadowOpt}>
                 <Host
                   height={hp('8%')}
                   width={wp('80%')}
-                  marginTop={wp('3%')}
-                  marginLeft={-wp('5%')}
+
                 />
               </BoxShadow>
             </View>
@@ -340,7 +345,7 @@ function Profile({navigation}) {
         <View
           style={{
             marginLeft: wp('8%'),
-            marginTop: wp('2%'),
+            marginTop: wp('12%'),
           }}>
           <TouchableOpacity
             onPress={() => navigation.navigate('Work')}
@@ -459,7 +464,7 @@ function Profile({navigation}) {
               marginTop: wp('3%'),
             }}
             activeOpacity={0.5}>
-            <Twitter height={hp('4.2%')} width={wp('7%')} />
+            <Twitter height={hp('4.2%')} width={wp('7.8%')} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={fb}
@@ -504,13 +509,13 @@ function Profile({navigation}) {
           overlayStyle={{
             top: hp('25%'),
             flex: 0.5,
-            borderTopLeftRadius: 45,
-            borderTopRightRadius: 45,
+            borderTopLeftRadius: 75,
+            borderTopRightRadius: 75,
             backgroundColor: '#F6F6F6',
           }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={{width: wp('100%'), flex: 1, marginBottom: 50}}>
+            style={{ width: wp('100%'), flex: 1, marginBottom: 50 }}>
             <Text
               style={{
                 fontSize: 30,
@@ -540,7 +545,7 @@ function Profile({navigation}) {
             <Bar />
 
             <KeyboardAvoidingView
-              style={{justifyContent: 'center', alignItems: 'center'}}>
+              style={{ justifyContent: 'center', alignItems: 'center' }}>
               <TextInput
                 style={{
                   paddingLeft: 15,
@@ -557,7 +562,7 @@ function Profile({navigation}) {
               />
             </KeyboardAvoidingView>
 
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row', }}>
               <TouchableOpacity
                 onPress={toggleplay}
                 style={{
@@ -565,21 +570,12 @@ function Profile({navigation}) {
                   marginTop: hp('2%'),
                   backgroundColor: '#069DFF',
                   padding: 10,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: hp('4%'),
+
+                  height: hp('6%'),
                   borderRadius: 10,
                 }}>
-                {/* <Image
-                  source={require('../assets/arrow.png')}
-                  style={{
-                    height: hp('5%'),
-                    width: wp('5%'),
-                    marginLeft: wp('80%'),
-                    marginTop: hp('2%'),
-                  }}
-                /> */}
-                <Text style={{fontSize: 15, color: 'white'}}>Submit</Text>
+
+                <Text style={{ fontSize: 15, color: 'white' }}>Submit</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -598,7 +594,7 @@ function Profile({navigation}) {
             }}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              style={{width: wp('100%'), flex: 1, marginBottom: 50}}>
+              style={{ width: wp('100%'), flex: 1, marginBottom: 50 }}>
               <Text
                 style={{
                   fontSize: 30,
@@ -610,21 +606,33 @@ function Profile({navigation}) {
                 }}>
                 Rate your veCharge experience
               </Text>
+
               <Text
                 style={{
                   fontFamily: 'SF-Pro-Display-Regular',
                   color: '#252525',
                   marginLeft: wp('8%'),
                   fontSize: 20,
-                  marginTop: hp('5%'),
+                  marginTop: hp('2%'),
                 }}>
                 Please rate us on the Playstore too :)
               </Text>
+
               <TouchableOpacity
-                onPress={Open}
-                style={{marginTop: -wp('30%'), marginLeft: wp('10%')}}>
-                <PlayStore height={hp('50%')} width={wp('50%')} />
+                onPress={Open}>
+                <Visit
+                  height={hp("10%")}
+                  width={wp("60%")}
+                  marginLeft={wp("5%")}
+                  marginTop={hp("1%")}
+
+                />
               </TouchableOpacity>
+              <PlayStore
+                height={hp("10%")}
+                width={wp("40%")}
+                marginLeft={wp("8%")}
+              />
             </ScrollView>
           </Overlay>
         ) : (
@@ -641,7 +649,7 @@ function Profile({navigation}) {
             }}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              style={{width: wp('100%'), flex: 1, marginBottom: 50}}>
+              style={{ width: wp('100%'), flex: 1, marginBottom: 50 }}>
               <Text
                 style={{
                   fontSize: 30,
@@ -653,6 +661,7 @@ function Profile({navigation}) {
                 }}>
                 Rate your veCharge experience
               </Text>
+
               <Text
                 style={{
                   fontFamily: 'SF-Pro-Display-Regular',
@@ -661,13 +670,28 @@ function Profile({navigation}) {
                   fontSize: 20,
                   marginTop: hp('5%'),
                 }}>
-                Please rate us on the Playstore too :)
+                Please rate us on the App store too :)
               </Text>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={OpenIOS}
-                style={{marginTop: -wp('30%'), marginLeft: wp('10%')}}>
+                style={{ marginTop: -wp('30%'), marginLeft: wp('10%') }}>
                 <AppStore height={hp('50%')} width={wp('50%')} />
+              </TouchableOpacity> */}
+              <TouchableOpacity
+                onPress={OpenIOS}>
+                <Visit1
+                  height={hp("10%")}
+                  width={wp("60%")}
+                  marginLeft={wp("5%")}
+                  marginTop={hp("1%")}
+
+                />
               </TouchableOpacity>
+              <AppStore
+                height={hp("10%")}
+                width={wp("40%")}
+                marginLeft={wp("8%")}
+              />
             </ScrollView>
           </Overlay>
         )}
@@ -691,9 +715,9 @@ const styles = StyleSheet.create({
   textCont: {
     fontSize: wp('8%'),
     color: 'white',
-    marginTop: hp('4%'),
-    marginLeft: hp('8%'),
     position: 'absolute',
+    top: hp("4%"),
+    left: wp("14%"),
     fontFamily: 'SF-Pro-Text-Bold',
   },
 
@@ -703,7 +727,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -hp('17%'),
     left: wp('20%'),
-
     fontFamily: 'SF-Pro-Text-Semibold',
   },
   textCont3: {
@@ -715,8 +738,9 @@ const styles = StyleSheet.create({
   imgCont2: {
     fontSize: wp('4%'),
     color: '#292929',
-    marginTop: -wp('12%'),
-    marginLeft: wp('8%'),
+    position: 'absolute',
+    top: -hp('5%'),
+    left: wp("8%"),
     fontFamily: 'SF-Pro-Text-Medium',
   },
   imgCont3: {
