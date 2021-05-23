@@ -220,9 +220,6 @@ export default function QRScreen({navigation, route}) {
         markerStyle={{
           borderColor: '#069DFF',
           borderRadius: 30,
-          justifyContent: 'center',
-          alignItems: 'center',
-          position: 'absolute',
         }}
         reactivate={true}
         permissionDialogMessage="Need Permission to access Camera"

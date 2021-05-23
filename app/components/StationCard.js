@@ -7,13 +7,39 @@ import {
   ImageBackground,
   TouchableOpacity,
   Platform,
+  Linking,
 } from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
-function StationCard({dis, loc, device}) {
+function StationCard({dis, loc, device, lat, long}) {
+  function OpenGps({latitude, longitude}) {
+    const openGps = () => {
+      var scheme =
+        Platform.OS === 'ios' ? 'maps://app?daddr=' : 'google.navigation:q=';
+      var url = scheme + `${latitude}+${longitude}`;
+      Linking.openURL(url);
+    };
+
+    return (
+      <TouchableOpacity
+        activeOpacity={0.4}
+        style={{marginLeft: wp('14%')}}
+        onPress={openGps}>
+        <Image
+          source={require('../assets/navigate.png')}
+          style={{
+            height: hp('7%'),
+            width: wp('18%'),
+            borderRadius: hp('4%') / 4,
+          }}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
+    );
+  }
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row'}}>
@@ -37,19 +63,7 @@ function StationCard({dis, loc, device}) {
             <Text style={styles.txt2}>Operator: veCharge Community</Text>
           </View>
           <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity
-              activeOpacity={0.4}
-              style={{marginLeft: wp('14%')}}>
-              <Image
-                source={require('../assets/navigate.png')}
-                style={{
-                  height: hp('7%'),
-                  width: wp('18%'),
-                  borderRadius: hp('4%') / 4,
-                }}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
+            <OpenGps latitude={lat} longitude={long}></OpenGps>
             <TouchableOpacity
               activeOpacity={0.4}
               style={{marginLeft: wp('6%')}}>
@@ -58,7 +72,6 @@ function StationCard({dis, loc, device}) {
                 style={{
                   height: hp('7%'),
                   width: wp('18%'),
-
                   borderRadius: hp('4%') / 4,
                 }}
                 resizeMode="contain"

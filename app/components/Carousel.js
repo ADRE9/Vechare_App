@@ -8,6 +8,9 @@ import {
   Image,
   TouchableOpacity,
   SafeAreaView,
+  Platform,
+  Linking,
+  Alert,
 } from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -17,10 +20,6 @@ import RNLocation from 'react-native-location';
 import LottieView from 'lottie-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
-
-RNLocation.configure({
-  distanceFilter: null,
-});
 
 export default function Carousel() {
   const [index, setIndex] = useState(0);
@@ -122,6 +121,10 @@ export default function Carousel() {
         .finally(() => setLoading(false));
       const resData = await res.json();
       setdata(resData.data.nearestChargers);
+      console.log(
+        'Location of device',
+        resData.data.nearestChargers[0].location.coordinates[1],
+      );
     };
 
     getLocation();
@@ -143,6 +146,30 @@ export default function Carousel() {
       [],
     ),
   };
+
+  function OpenGps({latitude, longitude}) {
+    const openGps = () => {
+      var scheme =
+        Platform.OS === 'ios' ? 'maps://app?daddr=' : 'google.navigation:q=';
+      var url = scheme + `${latitude}+${longitude}`;
+      Linking.openURL(url);
+    };
+
+    return (
+      <TouchableOpacity activeOpacity={0.4} onPress={openGps}>
+        <Image
+          source={require('../assets/navigate.png')}
+          style={{
+            height: hp('8%'),
+            width: wp('20%'),
+            borderRadius: hp('4%') / 4,
+            marginTop: -wp('2%'),
+          }}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
+    );
+  }
 
   return (
     <View
@@ -239,18 +266,9 @@ export default function Carousel() {
                     marginHorizontal: 40,
                     right: wp('12%'),
                   }}>
-                  <TouchableOpacity activeOpacity={0.4}>
-                    <Image
-                      source={require('../assets/navigate.png')}
-                      style={{
-                        height: hp('8%'),
-                        width: wp('20%'),
-                        borderRadius: hp('4%') / 4,
-                        marginTop: -wp('2%'),
-                      }}
-                      resizeMode="contain"
-                    />
-                  </TouchableOpacity>
+                  <OpenGps
+                    latitude={item.location.coordinates[1]}
+                    longitude={item.location.coordinates[0]}></OpenGps>
                   <TouchableOpacity
                     activeOpacity={0.4}
                     style={{left: wp('3%')}}>

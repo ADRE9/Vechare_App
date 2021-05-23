@@ -1,6 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity, Image, Text} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Image,
+  Text,
+  Pressable,
+} from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 import {
   heightPercentageToDP as hp,
@@ -29,16 +36,16 @@ const dots = ({selected}) => {
 
 const Next = ({...props}) => (
   <TouchableOpacity style={styles.next} {...props}>
-    <Text
+    {/* <Text
       style={{
         fontFamily: 'SF-Pro-Text-Bold',
         color: 'white',
         fontSize: 18,
       }}>
       NEXT
-    </Text>
+    </Text> */}
 
-    {/* <Image source={require('../assets/next.png')} style={styles.nextImage} /> */}
+    <Image source={require('../assets/next.png')} style={styles.nextImage} />
   </TouchableOpacity>
 );
 function OnBoardingScreen({navigation}) {
@@ -121,9 +128,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: wp('8%'),
-    marginBottom: 80,
-    backgroundColor: '#069DFF',
-    height: hp('7%'),
+    marginBottom: 85,
+    // backgroundColor: '#069DFF',
+    height: hp('6%'),
     width: wp('80%'),
     borderRadius: wp('1%'),
   },

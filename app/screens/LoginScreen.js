@@ -101,7 +101,7 @@ function LoginScreen(props) {
       },
     );
     const tokendata = res.data.data.token;
-    console.log('token from backend', tokendata);
+    // console.log('token from backend', tokendata);
 
     try {
       await AsyncStorage.setItem('token', tokendata);
@@ -148,11 +148,11 @@ function LoginScreen(props) {
           },
         });
         console.log(permission);
-        location = await RNLocation.getLatestLocation({timeout: 100});
+        location = await RNLocation.getLatestLocation({timeout: 2000});
         // console.log(location);
         isViewLocation(location);
       } else {
-        location = await RNLocation.getLatestLocation({timeout: 100});
+        location = await RNLocation.getLatestLocation({timeout: 2000});
         // console.log(location);
         isViewLocation(location);
       }

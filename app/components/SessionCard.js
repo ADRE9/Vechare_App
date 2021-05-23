@@ -7,6 +7,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   Platform,
+  Linking,
 } from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -14,10 +15,36 @@ import {
 } from 'react-native-responsive-screen';
 import moment from 'moment';
 
-function SessionCard({amount, days, loc, energy, device}) {
+function SessionCard({amount, days, loc, energy, device, lat, long}) {
   function DateCh({tm}) {
     return moment(tm, 'YYYYMMDD').fromNow();
   }
+  function OpenGps({latitude, longitude}) {
+    const openGps = () => {
+      var scheme =
+        Platform.OS === 'ios' ? 'maps://app?daddr=' : 'google.navigation:q=';
+      var url = scheme + `${latitude}+${longitude}`;
+      Linking.openURL(url);
+    };
+
+    return (
+      <TouchableOpacity
+        activeOpacity={0.4}
+        onPress={openGps}
+        style={{marginLeft: wp('10%')}}>
+        <Image
+          source={require('../assets/navigate.png')}
+          style={{
+            height: hp('7%'),
+            width: wp('20%'),
+            borderRadius: hp('4%') / 4,
+          }}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row'}}>
@@ -34,43 +61,32 @@ function SessionCard({amount, days, loc, energy, device}) {
             <Text style={styles.loc}>{loc}</Text>
           </View>
         </View>
-        <View style={{flexDirection: 'column', marginTop: -wp('1%')}}>
-          <Text style={styles.txt2}>Operator: veCharge Community</Text>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.subtitle}>
-              {'\u20B9'} {amount}
-            </Text>
-            <Text style={styles.subtitle2}>{energy} kwh</Text>
+        <View style={{position: 'absolute', left: wp('30%')}}>
+          <View style={{flexDirection: 'column', marginTop: -wp('1%')}}>
+            <Text style={styles.txt2}>Operator: veCharge Community</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.subtitle}>
+                {'\u20B9'} {amount}
+              </Text>
+              <Text style={styles.subtitle2}>{energy} kwh</Text>
+            </View>
           </View>
-        </View>
-        <View style={{flexDirection: 'row', marginTop: wp('3%')}}>
-          <TouchableOpacity
-            activeOpacity={0.4}
-            style={{marginLeft: -wp('43%'), marginTop: wp('16%')}}>
-            <Image
-              source={require('../assets/navigate.png')}
-              style={{
-                height: hp('7%'),
-                width: wp('20%'),
-                borderRadius: hp('4%') / 4,
-              }}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.4}
-            style={{marginLeft: -wp('20%'), marginTop: wp('16%')}}>
-            <Image
-              source={require('../assets/charge_now.png')}
-              style={{
-                height: hp('7%'),
-                width: wp('20%'),
-
-                borderRadius: hp('4%') / 4,
-              }}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
+          <View style={{flexDirection: 'row'}}>
+            <OpenGps latitude={lat} longitude={long}></OpenGps>
+            <TouchableOpacity
+              activeOpacity={0.4}
+              style={{marginLeft: wp('4%')}}>
+              <Image
+                source={require('../assets/charge_now.png')}
+                style={{
+                  height: hp('7%'),
+                  width: wp('20%'),
+                  borderRadius: hp('4%') / 4,
+                }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
@@ -85,9 +101,9 @@ const styles = StyleSheet.create({
     paddingLeft: wp('5%'),
     padding: 10,
     marginVertical: hp('1%'),
-    top: hp('-9%'),
+    top: hp('-10.5%'),
     marginBottom: hp('1%'),
-    height: hp('19%'),
+    height: hp('17%'),
     width: wp('94%'),
     left: wp('3%'),
     backgroundColor: 'white',
