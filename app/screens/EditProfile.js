@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ImageBackground,
   SafeAreaView,
@@ -17,9 +17,9 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomBack from '../components/CustomBack';
 
-import { EditHeader, Pencil, SaveBtn, Loc } from 'svg';
+import {EditHeader, Pencil, SaveBtn, Loc} from 'svg';
 
-function EditProfile({ navigation }) {
+function EditProfile({navigation}) {
   const [name, setName] = useState([]);
   const [mail, setMail] = useState([]);
   useEffect(() => {
@@ -47,9 +47,7 @@ function EditProfile({ navigation }) {
           activeOpacity={0.5}
           onPress={() => navigation.goBack()}
           style={styles.backBtn}>
-
           <CustomBack />
-
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.5}

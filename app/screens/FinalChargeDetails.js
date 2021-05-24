@@ -16,6 +16,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 import {ReceiptBtn, ReportBtn, Continue} from 'svg';
+import CustomBack from '../components/CustomBack';
 
 function FinalChargeDetails(props) {
   const [amount, setAmount] = useState([]);
@@ -70,19 +71,18 @@ function FinalChargeDetails(props) {
           <ImageBackground
             source={require('../assets/finalCharge.png')}
             style={{width: wp('100%'), height: hp('16%')}}
-            resizeMode="cover">
-            {/* <Image
-              source={require('../assets/Back.png')}
-              style={{
-                width: wp('5%'),
-                height: hp('3%'),
-                marginLeft: wp('3%'),
-                marginTop: wp('9%'),
-              }}
-            /> */}
-          </ImageBackground>
+            resizeMode="cover"></ImageBackground>
         </View>
-
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={{
+            position: 'absolute',
+            left: 15,
+            top: 32,
+          }}
+          onPress={() => props.navigation.goBack()}>
+          <CustomBack />
+        </TouchableOpacity>
         <View flexDirection="row" style={{justifyContent: 'center'}}>
           <View style={styles.box1} flexDirection="column">
             <View flexDirection="row">

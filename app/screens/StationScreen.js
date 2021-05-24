@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -16,6 +16,7 @@ import {
 import RNLocation from 'react-native-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StationCard from '../components/StationCard';
+import CustomBack from '../components/CustomBack';
 
 function StationScreen(props) {
   const [value, setdata] = useState([]);
@@ -48,11 +49,11 @@ function StationScreen(props) {
           },
         });
         console.log(permission);
-        location = await RNLocation.getLatestLocation({timeout: 2000});
+        location = await RNLocation.getLatestLocation({ timeout: 2000 });
         console.log(location);
         isViewLocation(location);
       } else {
-        location = await RNLocation.getLatestLocation({timeout: 2000});
+        location = await RNLocation.getLatestLocation({ timeout: 2000 });
         console.log(location);
         isViewLocation(location);
       }
@@ -83,22 +84,21 @@ function StationScreen(props) {
     return (
       <View>
         <Image style={styles.img} source={require('../assets/stations.png')} />
-        <View
+
+        <TouchableOpacity
+          activeOpacity={0.5}
           style={{
             position: 'absolute',
             left: 15,
-            top: 20,
-          }}>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            // style={{backgroundColor: 'yellow'}}
-            onPress={() => props.navigation.goBack()}>
-            <Image
-              source={require('../assets/Back.png')}
-              style={{height: hp('4%'), width: wp('8%')}}
-            />
-          </TouchableOpacity>
-        </View>
+            top: 30,
+          }}
+          onPress={() => props.navigation.goBack()}>
+          <CustomBack
+
+          />
+
+        </TouchableOpacity>
+
       </View>
     );
   };
@@ -111,7 +111,7 @@ function StationScreen(props) {
           data={value}
           ListHeaderComponent={header}
           stickyHeaderIndices={[0]}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <StationCard
               dis={(item.distance / 1000).toFixed(2)}
               loc={item.address}

@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 
 import {Receipt, ReceiptBg, Car1} from 'svg';
+import CustomBack from '../components/CustomBack';
 
 function BillingScreen(props) {
   const [amount, setAmount] = useState([]);
@@ -43,13 +44,16 @@ function BillingScreen(props) {
       <ScrollView style={styles.container}>
         <View flexDirection="column">
           <Receipt width={wp('100%')} height={hp('16%')} />
+
           <TouchableOpacity
-            onPress={() => props.navigation.goBack()}
-            style={styles.back}>
-            <Image
-              style={{width: wp('6%'), height: hp('3%')}}
-              source={require('../assets/Back.png')}
-            />
+            activeOpacity={0.5}
+            style={{
+              position: 'absolute',
+              left: 15,
+              top: 30,
+            }}
+            onPress={() => props.navigation.goBack()}>
+            <CustomBack />
           </TouchableOpacity>
           <View style={{position: 'absolute', top: 94}}>
             <ReceiptBg width={wp('100%')} height={hp('30%')} />

@@ -12,6 +12,8 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import CustomBackLight from '../components/CustomBackLight';
+import {Submit} from 'svg';
 
 import TextInput from '../components/TextInput';
 import Button from '../components/Button';
@@ -29,13 +31,14 @@ function Report({navigation}) {
         <KeyboardAvoidingView>
           <View flexDirection="row">
             <TouchableOpacity
-              style={{marginTop: wp('7%'), marginLeft: wp('2%')}}
               activeOpacity={0.5}
+              style={{
+                position: 'absolute',
+                left: 20,
+                top: 20,
+              }}
               onPress={() => navigation.goBack()}>
-              <Image
-                source={require('../assets/Back1.png')}
-                style={{height: hp('5%'), width: wp('10%')}}
-              />
+              <CustomBackLight />
             </TouchableOpacity>
 
             <Text style={styles.header}>Report issue</Text>
@@ -140,9 +143,10 @@ const styles = StyleSheet.create({
   header: {
     fontSize: wp('7%'),
     color: '#000000',
-    marginTop: wp('6%'),
-    marginLeft: wp('6%'),
-    fontFamily: 'SF-Pro-Display-Bold',
+    marginTop: wp('4%'),
+    marginLeft: wp('20%'),
+    fontWeight: 'bold',
+    fontFamily: 'SF-Pro-Display-Black',
   },
   subtitle: {
     fontSize: wp('3.3%'),
