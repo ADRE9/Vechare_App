@@ -17,6 +17,10 @@ import OnBoardingScreen from './app/screens/onBoardingScreen';
 import BillingScreen from './app/screens/BillingScreen';
 import Payment from './app/screens/Payment';
 import UnpaidNotify from './app/components/UnpaidNotify';
+import StationScreen from './app/screens/StationScreen';
+import HostScreen from './app/screens/HostScreen'
+import WorkingScreen from './app/screens/WorkingScreen'
+import Report from './app/screens/Report'
 
 const Stack = createStackNavigator();
 
@@ -25,7 +29,7 @@ function App() {
     RNBootSplash.hide({ duration: 250 });
   }, []);
   return (
-    // <UnpaidNotify />
+    // <Report />
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}

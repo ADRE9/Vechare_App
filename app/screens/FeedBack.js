@@ -11,19 +11,34 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import CustomBackLight from '../components/CustomBackLight';
+import { Submit } from 'svg';
 
-export default function FeedBack({navigation}) {
+export default function FeedBack({ navigation }) {
   return (
     <View style={styles.container}>
       <View flexDirection="row">
-        <TouchableOpacity
-          style={{marginTop: wp('7%'), marginLeft: wp('2%')}}
+        {/* <TouchableOpacity
+          style={{ marginTop: wp('7%'), marginLeft: wp('2%') }}
           activeOpacity={0.5}
           onPress={() => navigation.goBack()}>
           <Image
             source={require('../assets/Back1.png')}
-            style={{height: hp('5%'), width: wp('10%')}}
+            style={{ height: hp('5%'), width: wp('10%') }}
           />
+        </TouchableOpacity> */}
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={{
+            position: 'absolute',
+            left: 20,
+            top: 20,
+          }}
+          onPress={() => navigation.goBack()}>
+          <CustomBackLight
+
+          />
+
         </TouchableOpacity>
 
         <Text style={styles.header}>Give Feedback</Text>
@@ -52,9 +67,10 @@ export default function FeedBack({navigation}) {
           style={styles.input2}
           multiline={true}
           placeholder="Enter Message"
+          textAlignVertical="top"
         />
       </View>
-      <Image
+      {/* <Image
         source={require('../assets/submitBtn.png')}
         resizeMode="contain"
         style={{
@@ -63,7 +79,23 @@ export default function FeedBack({navigation}) {
           marginLeft: wp('1%'),
           marginTop: wp('5%'),
         }}
-      />
+      /> */}
+      <TouchableOpacity style={{
+        marginLeft: wp('1%'),
+        marginTop: wp('7%'),
+        height: hp('5%'),
+        width: wp('40%')
+
+      }}
+        onPress={() => console.log("submit")}
+        activeOpacity={0.6}
+      >
+        <Submit
+          height={hp('5%')}
+          width={wp('40%')}
+
+        />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -76,8 +108,8 @@ const styles = StyleSheet.create({
   header: {
     fontSize: wp('7%'),
     color: '#000000',
-    marginTop: wp('6%'),
-    marginLeft: wp('6%'),
+    marginTop: wp('4%'),
+    marginLeft: wp('20%'),
     fontFamily: 'SF-Pro-Display-Bold',
   },
   subtitle: {

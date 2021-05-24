@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -17,6 +17,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import SessionCard from '../components/SessionCard';
+import CustomBack from '../components/CustomBack';
 
 function SessionScreen(props) {
   const [loading, setLoading] = useState(true);
@@ -61,22 +62,21 @@ function SessionScreen(props) {
     return (
       <View>
         <Image style={styles.img} source={require('../assets/session.png')} />
-        <View
+
+        <TouchableOpacity
+          activeOpacity={0.5}
           style={{
             position: 'absolute',
-            left: 15,
+            left: 12,
             top: 20,
-          }}>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            // style={{backgroundColor: 'yellow'}}
-            onPress={() => props.navigation.goBack()}>
-            <Image
-              source={require('../assets/Back.png')}
-              style={{height: hp('4%'), width: wp('8%')}}
-            />
-          </TouchableOpacity>
-        </View>
+          }}
+          onPress={() => props.navigation.goBack()}>
+          <CustomBack
+
+          />
+
+        </TouchableOpacity>
+
       </View>
     );
   };
@@ -106,7 +106,7 @@ function SessionScreen(props) {
           ListHeaderComponent={header}
           stickyHeaderIndices={[0]}
           ListFooterComponent={renderFooter}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <SessionCard
               device={item.chargerId._id}
               loc={item.chargerId.address}

@@ -56,4 +56,15 @@ export { default as Car1 } from './car1.svg';
 export { default as Visit } from './visit.svg';
 export { default as Visit1 } from './visit2.svg';
 export { default as BackBtn } from './back.svg';
+export { default as HostBtn } from './hostBtn.svg';
+export { default as Book } from './book.svg';
+export { default as BackLight } from './backLight.svg';
+export { default as Submit } from './submit.svg';
+export { default as Work1 } from './work1.svg';
+export { default as Img1 } from './img1.svg';
+export { default as Img2 } from './img2.svg';
+export { default as Img3 } from './img3.svg';
+export { default as BecomeHostBtn } from './becomeHostBtn.svg';
+
+
 

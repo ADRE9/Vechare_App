@@ -11,19 +11,26 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import CustomBackLight from '../components/CustomBackLight';
+import { Submit } from 'svg';
 
-function Report({navigation}) {
+
+function Report({ navigation }) {
   return (
     <View style={styles.container}>
       <View flexDirection="row">
         <TouchableOpacity
-          style={{marginTop: wp('7%'), marginLeft: wp('2%')}}
           activeOpacity={0.5}
+          style={{
+            position: 'absolute',
+            left: 20,
+            top: 20,
+          }}
           onPress={() => navigation.goBack()}>
-          <Image
-            source={require('../assets/Back1.png')}
-            style={{height: hp('5%'), width: wp('10%')}}
+          <CustomBackLight
+
           />
+
         </TouchableOpacity>
         <Text style={styles.header}>Report issue</Text>
       </View>
@@ -51,18 +58,25 @@ function Report({navigation}) {
           style={styles.input2}
           multiline={true}
           placeholder="Enter Message"
+          textAlignVertical="top"
         />
       </View>
-      <Image
-        source={require('../assets/submitBtn.png')}
-        resizeMode="contain"
-        style={{
-          height: hp('5%'),
-          width: wp('40%'),
-          marginLeft: wp('1%'),
-          marginTop: wp('5%'),
-        }}
-      />
+      <TouchableOpacity style={{
+        marginLeft: wp('1%'),
+        marginTop: wp('7%'),
+        height: hp('5%'),
+        width: wp('30%')
+
+      }}
+        onPress={() => console.log("submit")}
+        activeOpacity={0.6}
+      >
+        <Submit
+          height={hp('5%')}
+          width={wp('40%')}
+
+        />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -75,8 +89,8 @@ const styles = StyleSheet.create({
   header: {
     fontSize: wp('7%'),
     color: '#000000',
-    marginTop: wp('6%'),
-    marginLeft: wp('6%'),
+    marginTop: wp('4%'),
+    marginLeft: wp('20%'),
     fontWeight: 'bold',
     fontFamily: 'SF-Pro-Display-Black',
   },

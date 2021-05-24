@@ -12,6 +12,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import { HostBtn } from 'svg';
 
 function HostScreen(props) {
   return (
@@ -26,13 +27,18 @@ function HostScreen(props) {
           activeOpacity={0.5}
           onPress={() => props.navigation.navigate('RegisterHost')}
           style={{ marginTop: wp('20%'), marginLeft: wp('12%') }}>
-          <Image
+          {/* <Image
             source={require('../assets/hostBtn.png')}
             style={{
               height: hp('7%'),
               width: wp('70%'),
               borderRadius: wp('40%') / 8,
             }}
+          /> */}
+          <HostBtn
+            height={hp('7%')}
+            width={wp('70%')}
+
           />
         </TouchableOpacity>
       </ScrollView>

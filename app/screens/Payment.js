@@ -25,6 +25,7 @@ import moment from 'moment';
 import { RazorpayApiKey } from '../Constants/config';
 
 import '../Constants/Useragent';
+import CustomBack from '../components/CustomBack';
 
 export default function Payment({ navigation }) {
   // const [isLoading, setLoading] = useState(true);
@@ -227,7 +228,19 @@ export default function Payment({ navigation }) {
     <SafeAreaView style={styles.cont}>
       <ScrollView style={styles.cont}>
         <ChargeHeader width={wp('100%')} height={hp('16%')} />
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={{
+            position: 'absolute',
+            left: 15,
+            top: 30,
+          }}
+          onPress={() => props.navigation.goBack()}>
+          <CustomBack
 
+          />
+
+        </TouchableOpacity>
         <View flexDirection="column"
           style={{ alignItems: "center", justifyContent: "center" }}>
           <LinearGradient colors={['#4B5358', '#545B60']} style={styles.box3}>

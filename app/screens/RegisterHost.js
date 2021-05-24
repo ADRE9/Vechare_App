@@ -14,6 +14,8 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import CustomBack from '../components/CustomBack';
+import { Book } from 'svg';
 
 function RegisterHost(props) {
   return (
@@ -24,21 +26,19 @@ function RegisterHost(props) {
           resizeMode="cover"
           style={styles.register}
         />
-        <View
+        <TouchableOpacity
+          activeOpacity={0.5}
           style={{
             position: 'absolute',
             left: 15,
             top: 30,
-          }}>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            onPress={() => props.navigation.goBack()}>
-            <Image
-              source={require('../assets/Back.png')}
-              style={{height: hp('4%'), width: wp('8%')}}
-            />
-          </TouchableOpacity>
-        </View>
+          }}
+          onPress={() => props.navigation.goBack()}>
+          <CustomBack
+
+          />
+
+        </TouchableOpacity>
         <View>
           <Text style={styles.heading}>Name</Text>
           <TextInput style={styles.input} placeholder="Enter Name" />
@@ -63,7 +63,7 @@ function RegisterHost(props) {
             alignItems: 'center',
             marginTop: wp('14%'),
           }}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => props.navigation.navigate('BecomeHost')}>
             <Image
@@ -74,6 +74,22 @@ function RegisterHost(props) {
 
                 borderRadius: wp('40%') / 10,
               }}
+            />
+          </TouchableOpacity> */}
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => console.log('book call')}>
+            {/* <Image
+              source={require('../assets/book.png')}
+              style={{
+                height: hp('7%'),
+                width: wp('70%'),
+                borderRadius: wp('40%') / 10,
+              }}
+            /> */}
+            <Book
+              height={hp('7%')}
+              width={wp('70%')}
             />
           </TouchableOpacity>
         </View>
