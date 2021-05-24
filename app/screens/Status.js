@@ -17,6 +17,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import LottieView from 'lottie-react-native';
 
 import loader from '../components/loader';
 
@@ -307,9 +308,11 @@ export default class Status extends Component {
         ) : (
           <View
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{fontSize: 25, fontWeight: 'bold'}}>
-              Connecting to device 🔌🔌...
-            </Text>
+            <LottieView
+              autoPlay
+              loop
+              source={require('../assets/animations/connecting.json')}
+            />
           </View>
         )}
       </View>

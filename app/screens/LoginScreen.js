@@ -61,16 +61,10 @@ function LoginScreen(props) {
         idToken,
         accessToken,
       );
-      console.log('idToken by google', idToken);
+      // await AsyncStorage.setItem('googletoken', idToken);
+      // console.log('idToken by google', idToken);
       token(idToken);
-      await auth()
-        .signInWithCredential(credential)
-        .then(() =>
-          props.navigation.reset({
-            index: 0,
-            routes: [{name: 'AppBottom'}],
-          }),
-        );
+      await auth().signInWithCredential(credential);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -101,13 +95,27 @@ function LoginScreen(props) {
         token: idToken,
       },
     );
-    const tokendata = res.data;
+    const tokenmail = res.data.data.email;
     // console.log('token from backend', tokendata);
+    const mailId = await AsyncStorage.getItem('mail');
 
-    try {
-      await AsyncStorage.setItem('token', tokendata);
-    } catch (e) {
-      console.log('error in token storing', e);
+    if (tokenmail === mailId) {
+      await AsyncStorage.setItem('googletoken', idToken);
+      return props.navigation.reset({
+        index: 0,
+        routes: [{name: 'RegisterPage'}],
+      });
+    } else {
+      const tokendata = res.data.data.token;
+      try {
+        await AsyncStorage.setItem('token', tokendata);
+      } catch (e) {
+        console.log('error in token storing', e);
+      }
+      return props.navigation.reset({
+        index: 0,
+        routes: [{name: 'AppBottom'}],
+      });
     }
   };
 

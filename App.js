@@ -12,10 +12,8 @@ import LoginScreen from './app/screens/LoginScreen';
 import RegisterScreen from './app/screens/RegisterScreen';
 import PaymentNavigation from './app/navigation/PaymentNavigation';
 import DetailNavigation from './app/navigation/DetailNavigation';
-import FinalChargeDetails from './app/screens/FinalChargeDetails';
+
 import OnBoardingScreen from './app/screens/onBoardingScreen';
-import BillingScreen from './app/screens/BillingScreen';
-import Payment from './app/screens/Payment';
 
 const Stack = createStackNavigator();
 function App() {
@@ -23,7 +21,6 @@ function App() {
     RNBootSplash.hide({duration: 250});
   }, []);
   return (
-    // <UnpaidNotify />
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false}}

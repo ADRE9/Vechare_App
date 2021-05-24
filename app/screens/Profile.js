@@ -54,7 +54,7 @@ import {
 } from 'svg';
 import {BoxShadow} from 'react-native-shadow';
 
-function Profile({navigation}) {
+export default function Profile({navigation}) {
   const [loggedIn, setloggedIn] = useState(false);
   const [user, setUser] = useState([]);
   const [paid, setPaid] = useState([]);
@@ -95,10 +95,6 @@ function Profile({navigation}) {
   };
   const toggleplay = () => {
     setVisble(!visble);
-  };
-
-  const ratingCompleted = () => {
-    console.log('rating');
   };
 
   const close = () => {
@@ -525,20 +521,6 @@ function Profile({navigation}) {
               Rate your veCharge experience
             </Text>
 
-            {/* <Rating
-              type="custom"
-              minValue={1}
-              defaultValue={2}
-              onFinishRating={ratingCompleted}
-              style={{
-                top: -5,
-                // backgroundColor: 'yellow',
-                padding: 10,
-              }}
-              ratingColor="#3498db"
-              tintColor="#F6F6F6"
-              ratingBackgroundColor="#D3D3D3"
-            /> */}
             <Bar />
 
             <KeyboardAvoidingView
@@ -664,13 +646,8 @@ function Profile({navigation}) {
                   fontSize: 20,
                   marginTop: hp('5%'),
                 }}>
-                Please rate us on the App store too :)
+                Please rate us on the App store too :
               </Text>
-              {/* <TouchableOpacity
-                onPress={OpenIOS}
-                style={{ marginTop: -wp('30%'), marginLeft: wp('10%') }}>
-                <AppStore height={hp('50%')} width={wp('50%')} />
-              </TouchableOpacity> */}
               <TouchableOpacity onPress={OpenIOS}>
                 <Visit1
                   height={hp('10%')}
@@ -770,5 +747,3 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
 });
-
-export default Profile;
