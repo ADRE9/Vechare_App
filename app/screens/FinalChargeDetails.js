@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -15,7 +15,7 @@ import {
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-import {ReceiptBtn, ReportBtn, Continue} from 'svg';
+import { ReceiptBtn, ReportBtn, Continue } from 'svg';
 
 function FinalChargeDetails(props) {
   const [amount, setAmount] = useState([]);
@@ -69,7 +69,7 @@ function FinalChargeDetails(props) {
         <View>
           <ImageBackground
             source={require('../assets/finalCharge.png')}
-            style={{width: wp('100%'), height: hp('16%')}}
+            style={{ width: wp('100%'), height: hp('16%') }}
             resizeMode="cover">
             {/* <Image
               source={require('../assets/Back.png')}
@@ -83,15 +83,16 @@ function FinalChargeDetails(props) {
           </ImageBackground>
         </View>
 
-        <View flexDirection="row">
+        <View flexDirection="row" style={{ justifyContent: "center" }}>
           <View style={styles.box1} flexDirection="column">
             <View flexDirection="row">
               <Image
                 source={require('../assets/energy-icon.png')}
                 style={{
                   height: hp('5%'),
-                  width: wp('10%'),
-                  margin: wp('3%'),
+                  width: wp('8.5%'),
+                  marginLeft: wp('2%'),
+                  marginTop: hp("2%"),
                   borderRadius: wp('10%') / 8,
                 }}
               />
@@ -99,16 +100,19 @@ function FinalChargeDetails(props) {
                 <Text
                   style={{
                     color: 'white',
-                    fontSize: wp('5%'),
-                    marginTop: wp('2%'),
+                    fontSize: wp('3.8%'),
+                    marginTop: wp('3.9%'),
+                    marginLeft: wp("2.6%"),
                     fontFamily: 'SF-Pro-Display-Medium',
                   }}>
                   Energy
                 </Text>
                 <Text
                   style={{
-                    fontSize: wp('3.5%'),
+                    fontSize: wp('3%'),
                     color: 'white',
+
+                    marginLeft: wp("2.6%"),
                     fontFamily: 'SF-Pro-Display-Regular',
                   }}>
                   Consumed
@@ -117,7 +121,7 @@ function FinalChargeDetails(props) {
             </View>
             <Text
               style={{
-                fontSize: wp('6%'),
+                fontSize: wp('5%'),
                 color: 'white',
                 fontFamily: 'SF-Pro-Display-Semibold',
                 padding: wp('1%'),
@@ -134,25 +138,28 @@ function FinalChargeDetails(props) {
                 source={require('../assets/cost.png')}
                 style={{
                   height: hp('5%'),
-                  width: wp('10%'),
-                  margin: wp('3%'),
+                  width: wp('8.5%'),
+                  marginLeft: wp('2%'),
+                  marginTop: hp("2%"),
                   borderRadius: wp('10%') / 8,
                 }}
               />
               <View>
                 <Text
                   style={{
-                    fontFamily: 'SF-Pro-Display-Medium',
                     color: 'white',
-                    fontSize: wp('5%'),
-                    marginTop: wp('2%'),
+                    fontSize: wp('3.8%'),
+                    marginTop: wp('3.9%'),
+                    marginLeft: wp("2.6%"),
+                    fontFamily: 'SF-Pro-Display-Medium',
                   }}>
                   Amount
                 </Text>
                 <Text
                   style={{
-                    fontSize: wp('3.5%'),
+                    fontSize: wp('3%'),
                     color: 'white',
+                    marginLeft: wp("2.6%"),
                     fontFamily: 'SF-Pro-Display-Regular',
                   }}>
                   Payable
@@ -161,12 +168,12 @@ function FinalChargeDetails(props) {
             </View>
             <Text
               style={{
-                fontSize: wp('6%'),
+                fontSize: wp('5%'),
                 color: 'white',
                 fontFamily: 'SF-Pro-Display-Semibold',
                 padding: wp('1%'),
                 marginTop: wp('4%'),
-                marginLeft: wp('4%'),
+                marginLeft: wp('3%'),
               }}>
               {amount} INR
             </Text>
@@ -177,7 +184,7 @@ function FinalChargeDetails(props) {
             fontSize: wp('6%'),
             color: '#3D3D3D',
             marginTop: wp('4%'),
-            marginLeft: wp('6%'),
+            marginLeft: wp('10%'),
             fontFamily: 'SF-Pro-Display-Medium',
           }}>
           {currentDate}
@@ -188,7 +195,7 @@ function FinalChargeDetails(props) {
             color: '#484848',
             marginTop: wp('2%'),
             marginRight: wp('20%'),
-            marginLeft: wp('6%'),
+            marginLeft: wp('10%'),
             fontFamily: 'SF-Pro-Display-Regular',
           }}>
           Rohini Community Charging Station, B-5/30, New Delhi - 110034
@@ -196,30 +203,32 @@ function FinalChargeDetails(props) {
         <View flexDirection="row">
           <TouchableOpacity
             style={{
-              marginLeft: wp('5%'),
+              marginLeft: wp('10%'),
               borderRadius: wp('6%') / 2,
               marginTop: wp('10%'),
             }}
             activeOpacity={0.6}
             onPress={() => props.navigation.navigate('Receipt')}>
-            <ReceiptBtn width={wp('42%')} height={hp('5.5%')} />
+            <ReceiptBtn width={wp('38%')} height={hp('6%')} />
           </TouchableOpacity>
           <TouchableOpacity
             style={{
-              marginLeft: wp('6%'),
+              marginLeft: wp('5%'),
               borderRadius: wp('6%') / 2,
               marginTop: wp('10%'),
             }}
             activeOpacity={0.6}
             onPress={() => props.navigation.navigate('Report')}>
-            <ReportBtn width={wp('42%')} height={hp('5.5%')} />
+            <ReportBtn width={wp('38%')} height={hp('6%')} />
           </TouchableOpacity>
         </View>
         <View
           style={{
-            marginLeft: wp('20%'),
+
+            marginLeft: wp('19%'),
             marginTop: wp('16%'),
             width: wp('60%'),
+
           }}>
           <TouchableOpacity
             style={{
@@ -232,15 +241,17 @@ function FinalChargeDetails(props) {
                 .finally(() =>
                   props.navigation.reset({
                     index: 0,
-                    routes: [{name: 'AppBottom'}],
+                    routes: [{ name: 'AppBottom' }],
                   }),
                 )
             }>
+
             <Continue
-              width={wp('66%')}
+              width={wp('68%')}
               height={hp('8%')}
               borderRadius={wp('6%') / 2}
             />
+
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -255,18 +266,18 @@ const styles = StyleSheet.create({
   },
   box1: {
     backgroundColor: '#03AD70',
-    height: hp('19%'),
-    width: wp('40%'),
-    borderRadius: hp('20%') / 8,
+    height: hp('17%'),
+    width: wp('35%'),
+    borderRadius: hp('20%') / 14,
     margin: wp('5%'),
     padding: 5,
     marginTop: hp('5%'),
   },
   box2: {
     backgroundColor: '#2D9CDB',
-    height: hp('19%'),
-    width: wp('40%'),
-    borderRadius: hp('20%') / 8,
+    height: hp('17%'),
+    width: wp('35%'),
+    borderRadius: hp('20%') / 14,
     margin: wp('5%'),
     padding: 5,
     marginTop: hp('5%'),
