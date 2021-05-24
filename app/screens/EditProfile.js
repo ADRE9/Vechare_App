@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ImageBackground,
   SafeAreaView,
@@ -15,10 +15,11 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CustomBack from '../components/CustomBack';
 
-import {EditHeader, Pencil, SaveBtn, Loc} from 'svg';
+import { EditHeader, Pencil, SaveBtn, Loc } from 'svg';
 
-function EditProfile({navigation}) {
+function EditProfile({ navigation }) {
   const [name, setName] = useState([]);
   const [mail, setMail] = useState([]);
   useEffect(() => {
@@ -41,14 +42,14 @@ function EditProfile({navigation}) {
     <ScrollView style={styles.cont}>
       <SafeAreaView style={styles.cont}>
         <EditHeader height={hp('40%')} width={wp('100%')} />
+
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={() => navigation.goBack()}
           style={styles.backBtn}>
-          <Image
-            source={require('../assets/Back.png')}
-            style={{height: hp('4%'), width: wp('10%')}}
-          />
+
+          <CustomBack />
+
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.5}

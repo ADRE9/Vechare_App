@@ -10,26 +10,26 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import {UnpaidBg, FailedBtn, Error} from 'svg';
+import { UnpaidBg, FailedBtn, Error } from 'svg';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 console.log(windowWidth);
 console.log(windowHeight);
 
-const Unpaid = ({amount, onPress}) => {
+const Unpaid = ({ amount, onPress }) => {
   return (
     <View style={styles.container}>
       {/* <UnpaidBg
         width={wp("100%")}
         height={hp("90%")}
       /> */}
-      <View style={{flexDirection: 'row'}}>
+      <View style={{ flexDirection: 'row' }}>
         <Text style={styles.heading}>Confirm Payment</Text>
         <Error
-          marginTop={windowWidth > 350 ? hp('5%') : hp('3%')}
+          marginTop={windowWidth > 350 ? hp('6%') : hp('3%')}
           marginLeft={hp('8%')}
-          width={wp('15%')}
+          width={windowWidth > 350 ? wp('18%') : wp("15%")}
         />
       </View>
       <Text style={styles.subtext}>
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     marginTop: hp('10%'),
-    marginLeft: wp('4%'),
+    marginLeft: wp('8%'),
     height: hp('5.5%'),
     width: wp('35%'),
   },

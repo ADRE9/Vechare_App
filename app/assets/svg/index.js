@@ -55,3 +55,5 @@ export { default as ReceiptBg } from './receiptBg.svg';
 export { default as Car1 } from './car1.svg';
 export { default as Visit } from './visit.svg';
 export { default as Visit1 } from './visit2.svg';
+export { default as BackBtn } from './back.svg';
+
