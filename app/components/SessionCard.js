@@ -62,7 +62,7 @@ function SessionCard({amount, days, loc, energy, device, lat, long}) {
           </View>
         </View>
         <View style={{position: 'absolute', left: wp('30%')}}>
-          <View style={{flexDirection: 'column', marginTop: -wp('1%')}}>
+          <View style={{flexDirection: 'column', marginTop: -wp('3%')}}>
             <Text style={styles.txt2}>Operator: veCharge Community</Text>
             <View style={{flexDirection: 'row'}}>
               <Text style={styles.subtitle}>
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     padding: 3,
     fontSize: wp('3%'),
     textAlign: 'center',
-    marginTop: -wp('18%'),
+    marginTop: -wp('16%'),
     marginRight: wp('10%'),
   },
   subtitle2: {
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     padding: 3,
     fontSize: wp('3%'),
     textAlign: 'center',
-    marginTop: -wp('18%'),
+    marginTop: -wp('16%'),
   },
 });
 

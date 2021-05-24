@@ -113,7 +113,7 @@ export default function CarouselRecent() {
   };
 
   function DateCh({tm}) {
-    return moment(tm, 'YYYYMMDD').fromNow();
+    return moment(tm, 'YYYYMMDD HHmm').fromNow();
   }
 
   function OpenGps({latitude, longitude}) {
