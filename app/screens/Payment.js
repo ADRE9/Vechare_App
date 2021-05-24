@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   StyleSheet,
@@ -17,16 +17,16 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RazorpayCheckout from 'react-native-razorpay';
 import LinearGradient from 'react-native-linear-gradient';
-import { Cost, EnergyConsumed, Time, ChargeHeader, PayBtn } from 'svg';
-import { BoxShadow } from 'react-native-shadow';
+import {Cost, EnergyConsumed, Time, ChargeHeader, PayBtn} from 'svg';
+import {BoxShadow} from 'react-native-shadow';
 
 import moment from 'moment';
 
-import { RazorpayApiKey } from '../Constants/config';
+import {RazorpayApiKey} from '../Constants/config';
 
 import '../Constants/Useragent';
 
-export default function Payment({ navigation }) {
+export default function Payment({navigation}) {
   // const [isLoading, setLoading] = useState(true);
   const [amount, setAmount] = useState([]);
   const [energy, setEnergy] = useState([]);
@@ -195,13 +195,13 @@ export default function Payment({ navigation }) {
         contact: 'Add Contact here',
         name: name,
       },
-      theme: { color: '#a29bfe' },
+      theme: {color: '#a29bfe'},
     };
 
     RazorpayCheckout.open(options)
       .then(async function (response) {
         const config = {
-          headers: { Authorization: token },
+          headers: {Authorization: token},
         };
         const data = {
           orderCreationId: pytId,
@@ -219,7 +219,7 @@ export default function Payment({ navigation }) {
       })
       .finally(() => navigation.replace('PayDetail'))
       .catch((err) => {
-        navigation.replace('AppBottom', { err });
+        navigation.replace('AppBottom', {err});
       });
   };
 
@@ -228,21 +228,23 @@ export default function Payment({ navigation }) {
       <ScrollView style={styles.cont}>
         <ChargeHeader width={wp('100%')} height={hp('16%')} />
 
-        <View flexDirection="column"
-          style={{ alignItems: "center", justifyContent: "center" }}>
+        <View
+          flexDirection="column"
+          style={{alignItems: 'center', justifyContent: 'center'}}>
           <LinearGradient colors={['#4B5358', '#545B60']} style={styles.box3}>
             <View
               style={{
-                justifyContent: 'center', alignItems: 'center',
-                flexDirection: "row",
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'row',
               }}>
-              <View style={{
-                flexDirection: "row"
-              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                }}>
                 <Time
                   height={hp('6%')}
                   width={wp('15%')}
-
                   borderRadius={wp('10%') / 8}
                 />
                 <View>
@@ -251,7 +253,6 @@ export default function Payment({ navigation }) {
                       fontFamily: 'SF-Pro-Display-Medium',
                       color: 'white',
                       fontSize: wp('5%'),
-
                     }}>
                     Time
                   </Text>
@@ -265,7 +266,7 @@ export default function Payment({ navigation }) {
                   </Text>
                 </View>
               </View>
-              <View style={{ marginRight: wp('2%') }}>
+              <View style={{marginRight: wp('2%')}}>
                 <Text
                   style={{
                     fontSize: wp('5.6%'),
@@ -282,7 +283,7 @@ export default function Payment({ navigation }) {
           </LinearGradient>
 
           <LinearGradient colors={['#03AD70', '#059863']} style={styles.box1}>
-            <View style={{ flexDirection: "column" }}>
+            <View style={{flexDirection: 'column'}}>
               <View
                 flexDirection="row"
                 style={{
@@ -292,16 +293,14 @@ export default function Payment({ navigation }) {
                 <EnergyConsumed
                   height={hp('6%')}
                   width={wp('15%')}
-
                   borderRadius={wp('10%') / 8}
                 />
-                <View style={{ marginRight: wp('4%') }}>
+                <View style={{marginRight: wp('4%')}}>
                   <Text
                     style={{
                       fontFamily: 'SF-Pro-Display-Medium',
                       color: 'white',
                       fontSize: wp('5%'),
-
                     }}>
                     Energy
                   </Text>
@@ -314,7 +313,7 @@ export default function Payment({ navigation }) {
                     Consumed
                   </Text>
                 </View>
-                <View style={{ marginRight: wp('2%') }}>
+                <View style={{marginRight: wp('2%')}}>
                   <Text
                     style={{
                       fontSize: wp('5.6%'),
@@ -342,7 +341,7 @@ export default function Payment({ navigation }) {
                   borderRadius={wp('10%') / 8}
                   position={'absolute'}
                 />
-                <View style={{ position: 'absolute', left: wp('-6%') }}>
+                <View style={{position: 'absolute', left: wp('-6%')}}>
                   <Text
                     style={{
                       fontFamily: 'SF-Pro-Display-Medium',
@@ -385,7 +384,6 @@ export default function Payment({ navigation }) {
               height: hp('11%'),
               marginTop: wp('35%'),
               backgroundColor: 'white',
-
             }}>
             <Text
               style={{
@@ -411,7 +409,7 @@ export default function Payment({ navigation }) {
           </View>
         </BoxShadow>
       </ScrollView>
-    </SafeAreaView >
+    </SafeAreaView>
   );
 }
 

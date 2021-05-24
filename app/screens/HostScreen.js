@@ -25,7 +25,7 @@ function HostScreen(props) {
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={() => props.navigation.navigate('RegisterHost')}
-          style={{ marginTop: wp('20%'), marginLeft: wp('12%') }}>
+          style={{marginTop: wp('20%'), marginLeft: wp('12%')}}>
           <Image
             source={require('../assets/hostBtn.png')}
             style={{

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -15,7 +15,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 
-import { Receipt, ReceiptBg, Car1 } from 'svg';
+import {Receipt, ReceiptBg, Car1} from 'svg';
 
 function BillingScreen(props) {
   const [amount, setAmount] = useState([]);
@@ -47,13 +47,12 @@ function BillingScreen(props) {
             onPress={() => props.navigation.goBack()}
             style={styles.back}>
             <Image
-              style={{ width: wp('6%'), height: hp('3%') }}
+              style={{width: wp('6%'), height: hp('3%')}}
               source={require('../assets/Back.png')}
             />
           </TouchableOpacity>
-          <View style={{ position: "absolute", top: 94 }}>
-            <ReceiptBg width={wp('100%')} height={hp('30%')}
-            />
+          <View style={{position: 'absolute', top: 94}}>
+            <ReceiptBg width={wp('100%')} height={hp('30%')} />
 
             <Text style={styles.content1}>{currentDate} </Text>
             <Text style={styles.content2}>
@@ -192,13 +191,12 @@ const styles = StyleSheet.create({
     fontFamily: 'SF-Pro-Display-Medium',
   },
   txt: {
-    fontFamily: "SF-Pro-Display-Semibold",
-    position: "absolute",
+    fontFamily: 'SF-Pro-Display-Semibold',
+    position: 'absolute',
     top: 180,
     left: 20,
     fontSize: 20,
-
-  }
+  },
 });
 
 export default BillingScreen;

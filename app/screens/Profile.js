@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -14,10 +14,10 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { Button, Overlay, Rating, AirbnbRating } from 'react-native-elements';
+import {Button, Overlay, Rating, AirbnbRating} from 'react-native-elements';
 
 import auth from '@react-native-firebase/auth';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   heightPercentageToDP as hp,
@@ -27,7 +27,7 @@ import Share from 'react-native-share';
 import axios from 'axios';
 import RazorpayCheckout from 'react-native-razorpay';
 
-import { RazorpayApiKey } from '../Constants/config';
+import {RazorpayApiKey} from '../Constants/config';
 import files from '../../assets/filesBase64';
 import UnpaidNotify from '../components/UnpaidNotify';
 
@@ -50,11 +50,11 @@ import {
   Web,
   PlayStore,
   Visit,
-  Visit1
+  Visit1,
 } from 'svg';
-import { BoxShadow } from 'react-native-shadow';
+import {BoxShadow} from 'react-native-shadow';
 
-function Profile({ navigation }) {
+function Profile({navigation}) {
   const [loggedIn, setloggedIn] = useState(false);
   const [user, setUser] = useState([]);
   const [paid, setPaid] = useState([]);
@@ -81,7 +81,7 @@ function Profile({ navigation }) {
               <Image
                 style={styles.starImgStyle}
                 source={item <= defaultRating ? starfill : star}
-              // source={star}
+                // source={star}
               />
             </TouchableOpacity>
           );
@@ -126,7 +126,7 @@ function Profile({ navigation }) {
     opacity: 0.2,
     x: 52,
     y: 10,
-    style: { marginBottom: hp('3%') },
+    style: {marginBottom: hp('3%')},
   };
   const signOut = async () => {
     try {
@@ -172,7 +172,7 @@ function Profile({ navigation }) {
           signOut().then(() =>
             navigation.reset({
               index: 0,
-              routes: [{ name: 'LoginPage' }],
+              routes: [{name: 'LoginPage'}],
             }),
           ),
       },
@@ -210,11 +210,11 @@ function Profile({ navigation }) {
         contact: '9191919191',
         name: 'John Doe',
       },
-      theme: { color: '#a29bfe' },
+      theme: {color: '#a29bfe'},
     };
     RazorpayCheckout.open(options).then(async function (response) {
       const config = {
-        headers: { Authorization: token },
+        headers: {Authorization: token},
       };
       const data = {
         orderCreationId: orderData.id,
@@ -326,17 +326,14 @@ function Profile({ navigation }) {
             Electrify your Establishment today
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Host')}>
-            <View style={{
-              position: 'absolute',
-              top: -hp('1%'),
-              left: -wp("5%")
-            }}>
+            <View
+              style={{
+                position: 'absolute',
+                top: -hp('1%'),
+                left: -wp('5%'),
+              }}>
               <BoxShadow setting={shadowOpt}>
-                <Host
-                  height={hp('8%')}
-                  width={wp('80%')}
-
-                />
+                <Host height={hp('8%')} width={wp('80%')} />
               </BoxShadow>
             </View>
           </TouchableOpacity>
@@ -515,7 +512,7 @@ function Profile({ navigation }) {
           }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={{ width: wp('100%'), flex: 1, marginBottom: 50 }}>
+            style={{width: wp('100%'), flex: 1, marginBottom: 50}}>
             <Text
               style={{
                 fontSize: 30,
@@ -545,7 +542,7 @@ function Profile({ navigation }) {
             <Bar />
 
             <KeyboardAvoidingView
-              style={{ justifyContent: 'center', alignItems: 'center' }}>
+              style={{justifyContent: 'center', alignItems: 'center'}}>
               <TextInput
                 style={{
                   paddingLeft: 15,
@@ -562,7 +559,7 @@ function Profile({ navigation }) {
               />
             </KeyboardAvoidingView>
 
-            <View style={{ flexDirection: 'row', }}>
+            <View style={{flexDirection: 'row'}}>
               <TouchableOpacity
                 onPress={toggleplay}
                 style={{
@@ -574,8 +571,7 @@ function Profile({ navigation }) {
                   height: hp('6%'),
                   borderRadius: 10,
                 }}>
-
-                <Text style={{ fontSize: 15, color: 'white' }}>Submit</Text>
+                <Text style={{fontSize: 15, color: 'white'}}>Submit</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -594,7 +590,7 @@ function Profile({ navigation }) {
             }}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              style={{ width: wp('100%'), flex: 1, marginBottom: 50 }}>
+              style={{width: wp('100%'), flex: 1, marginBottom: 50}}>
               <Text
                 style={{
                   fontSize: 30,
@@ -618,20 +614,18 @@ function Profile({ navigation }) {
                 Please rate us on the Playstore too :)
               </Text>
 
-              <TouchableOpacity
-                onPress={Open}>
+              <TouchableOpacity onPress={Open}>
                 <Visit
-                  height={hp("10%")}
-                  width={wp("60%")}
-                  marginLeft={wp("5%")}
-                  marginTop={hp("1%")}
-
+                  height={hp('10%')}
+                  width={wp('60%')}
+                  marginLeft={wp('5%')}
+                  marginTop={hp('1%')}
                 />
               </TouchableOpacity>
               <PlayStore
-                height={hp("10%")}
-                width={wp("40%")}
-                marginLeft={wp("8%")}
+                height={hp('10%')}
+                width={wp('40%')}
+                marginLeft={wp('8%')}
               />
             </ScrollView>
           </Overlay>
@@ -649,7 +643,7 @@ function Profile({ navigation }) {
             }}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              style={{ width: wp('100%'), flex: 1, marginBottom: 50 }}>
+              style={{width: wp('100%'), flex: 1, marginBottom: 50}}>
               <Text
                 style={{
                   fontSize: 30,
@@ -677,20 +671,18 @@ function Profile({ navigation }) {
                 style={{ marginTop: -wp('30%'), marginLeft: wp('10%') }}>
                 <AppStore height={hp('50%')} width={wp('50%')} />
               </TouchableOpacity> */}
-              <TouchableOpacity
-                onPress={OpenIOS}>
+              <TouchableOpacity onPress={OpenIOS}>
                 <Visit1
-                  height={hp("10%")}
-                  width={wp("60%")}
-                  marginLeft={wp("5%")}
-                  marginTop={hp("1%")}
-
+                  height={hp('10%')}
+                  width={wp('60%')}
+                  marginLeft={wp('5%')}
+                  marginTop={hp('1%')}
                 />
               </TouchableOpacity>
               <AppStore
-                height={hp("10%")}
-                width={wp("40%")}
-                marginLeft={wp("8%")}
+                height={hp('10%')}
+                width={wp('40%')}
+                marginLeft={wp('8%')}
               />
             </ScrollView>
           </Overlay>
@@ -716,8 +708,8 @@ const styles = StyleSheet.create({
     fontSize: wp('8%'),
     color: 'white',
     position: 'absolute',
-    top: hp("4%"),
-    left: wp("14%"),
+    top: hp('4%'),
+    left: wp('14%'),
     fontFamily: 'SF-Pro-Text-Bold',
   },
 
@@ -740,7 +732,7 @@ const styles = StyleSheet.create({
     color: '#292929',
     position: 'absolute',
     top: -hp('5%'),
-    left: wp("8%"),
+    left: wp('8%'),
     fontFamily: 'SF-Pro-Text-Medium',
   },
   imgCont3: {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -15,7 +15,7 @@ import {
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-import { ReceiptBtn, ReportBtn, Continue } from 'svg';
+import {ReceiptBtn, ReportBtn, Continue} from 'svg';
 
 function FinalChargeDetails(props) {
   const [amount, setAmount] = useState([]);
@@ -69,7 +69,7 @@ function FinalChargeDetails(props) {
         <View>
           <ImageBackground
             source={require('../assets/finalCharge.png')}
-            style={{ width: wp('100%'), height: hp('16%') }}
+            style={{width: wp('100%'), height: hp('16%')}}
             resizeMode="cover">
             {/* <Image
               source={require('../assets/Back.png')}
@@ -83,7 +83,7 @@ function FinalChargeDetails(props) {
           </ImageBackground>
         </View>
 
-        <View flexDirection="row" style={{ justifyContent: "center" }}>
+        <View flexDirection="row" style={{justifyContent: 'center'}}>
           <View style={styles.box1} flexDirection="column">
             <View flexDirection="row">
               <Image
@@ -92,7 +92,7 @@ function FinalChargeDetails(props) {
                   height: hp('5%'),
                   width: wp('8.5%'),
                   marginLeft: wp('2%'),
-                  marginTop: hp("2%"),
+                  marginTop: hp('2%'),
                   borderRadius: wp('10%') / 8,
                 }}
               />
@@ -102,7 +102,7 @@ function FinalChargeDetails(props) {
                     color: 'white',
                     fontSize: wp('3.8%'),
                     marginTop: wp('3.9%'),
-                    marginLeft: wp("2.6%"),
+                    marginLeft: wp('2.6%'),
                     fontFamily: 'SF-Pro-Display-Medium',
                   }}>
                   Energy
@@ -112,7 +112,7 @@ function FinalChargeDetails(props) {
                     fontSize: wp('3%'),
                     color: 'white',
 
-                    marginLeft: wp("2.6%"),
+                    marginLeft: wp('2.6%'),
                     fontFamily: 'SF-Pro-Display-Regular',
                   }}>
                   Consumed
@@ -140,7 +140,7 @@ function FinalChargeDetails(props) {
                   height: hp('5%'),
                   width: wp('8.5%'),
                   marginLeft: wp('2%'),
-                  marginTop: hp("2%"),
+                  marginTop: hp('2%'),
                   borderRadius: wp('10%') / 8,
                 }}
               />
@@ -150,7 +150,7 @@ function FinalChargeDetails(props) {
                     color: 'white',
                     fontSize: wp('3.8%'),
                     marginTop: wp('3.9%'),
-                    marginLeft: wp("2.6%"),
+                    marginLeft: wp('2.6%'),
                     fontFamily: 'SF-Pro-Display-Medium',
                   }}>
                   Amount
@@ -159,7 +159,7 @@ function FinalChargeDetails(props) {
                   style={{
                     fontSize: wp('3%'),
                     color: 'white',
-                    marginLeft: wp("2.6%"),
+                    marginLeft: wp('2.6%'),
                     fontFamily: 'SF-Pro-Display-Regular',
                   }}>
                   Payable
@@ -224,11 +224,9 @@ function FinalChargeDetails(props) {
         </View>
         <View
           style={{
-
             marginLeft: wp('19%'),
             marginTop: wp('16%'),
             width: wp('60%'),
-
           }}>
           <TouchableOpacity
             style={{
@@ -241,17 +239,15 @@ function FinalChargeDetails(props) {
                 .finally(() =>
                   props.navigation.reset({
                     index: 0,
-                    routes: [{ name: 'AppBottom' }],
+                    routes: [{name: 'AppBottom'}],
                   }),
                 )
             }>
-
             <Continue
               width={wp('68%')}
               height={hp('8%')}
               borderRadius={wp('6%') / 2}
             />
-
           </TouchableOpacity>
         </View>
       </SafeAreaView>

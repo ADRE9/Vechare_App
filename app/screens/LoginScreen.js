@@ -1,13 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Image, Alert, BackHandler, Text } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, StyleSheet, Image, Alert, BackHandler, Text} from 'react-native';
 import {
   GoogleSignin,
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   heightPercentageToDP as hp,
@@ -15,8 +15,7 @@ import {
 } from 'react-native-responsive-screen';
 import axios from 'axios';
 import RNLocation from 'react-native-location';
-import { Login, Google } from 'svg';
-
+import {Login, Google} from 'svg';
 
 function LoginScreen(props) {
   useFocusEffect(
@@ -28,7 +27,7 @@ function LoginScreen(props) {
             onPress: () => null,
             style: 'cancel',
           },
-          { text: 'YES', onPress: () => BackHandler.exitApp() },
+          {text: 'YES', onPress: () => BackHandler.exitApp()},
         ]);
         return true;
       };
@@ -50,7 +49,7 @@ function LoginScreen(props) {
   const _signIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
-      const { accessToken, idToken } = await GoogleSignin.signIn();
+      const {accessToken, idToken} = await GoogleSignin.signIn();
       setloggedIn(true);
 
       const currentUser = await GoogleSignin.getCurrentUser();
@@ -62,14 +61,14 @@ function LoginScreen(props) {
         idToken,
         accessToken,
       );
-      // console.log('idToken by google', idToken);
+      console.log('idToken by google', idToken);
       token(idToken);
       await auth()
         .signInWithCredential(credential)
         .then(() =>
           props.navigation.reset({
             index: 0,
-            routes: [{ name: 'AppBottom' }],
+            routes: [{name: 'AppBottom'}],
           }),
         );
     } catch (error) {
@@ -102,7 +101,7 @@ function LoginScreen(props) {
         token: idToken,
       },
     );
-    const tokendata = res.data.data.token;
+    const tokendata = res.data;
     // console.log('token from backend', tokendata);
 
     try {
@@ -150,11 +149,11 @@ function LoginScreen(props) {
           },
         });
         console.log(permission);
-        location = await RNLocation.getLatestLocation({ timeout: 2000 });
+        location = await RNLocation.getLatestLocation({timeout: 2000});
         // console.log(location);
         isViewLocation(location);
       } else {
-        location = await RNLocation.getLatestLocation({ timeout: 2000 });
+        location = await RNLocation.getLatestLocation({timeout: 2000});
         // console.log(location);
         isViewLocation(location);
       }
@@ -164,34 +163,24 @@ function LoginScreen(props) {
 
   return (
     <View style={styles.container}>
-      <View style={{ marginBottom: hp("33%") }}>
-        <Login
-          width={wp('70%')}
-
-          height={hp('36%')}
-        />
+      <View style={{marginBottom: hp('33%')}}>
+        <Login width={wp('70%')} height={hp('36%')} />
         <Text
           style={{
             fontSize: 22,
-            fontFamily: "SF-Pro-Display-Semibold",
+            fontFamily: 'SF-Pro-Display-Semibold',
             fontWeight: 'bold',
             color: 'black',
-            marginTop: hp("3%"),
-            marginLeft: wp("5%")
+            marginTop: hp('3%'),
+            marginLeft: wp('5%'),
           }}>
           Charge your vehicle {'\n'}with veCharge
-      </Text>
+        </Text>
       </View>
 
-      <View style={{ position: "absolute", top: 420, left: wp("19%") }}>
-        <Google
-          width={wp("52%")}
-          height={hp("10")}
-
-          onPress={() => _signIn()}
-        />
+      <View style={{position: 'absolute', top: 420, left: wp('19%')}}>
+        <Google width={wp('52%')} height={hp('10')} onPress={() => _signIn()} />
       </View>
-
     </View>
   );
 }
