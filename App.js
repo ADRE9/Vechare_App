@@ -18,13 +18,12 @@ import BillingScreen from './app/screens/BillingScreen';
 import Payment from './app/screens/Payment';
 
 const Stack = createStackNavigator();
-
 function App() {
   useEffect(() => {
     RNBootSplash.hide({duration: 250});
   }, []);
   return (
-    // <Profile />
+    // <UnpaidNotify />
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false}}

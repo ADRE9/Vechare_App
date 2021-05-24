@@ -28,18 +28,17 @@ const dots = ({selected}) => {
 };
 
 const Next = ({...props}) => (
-  <TouchableOpacity style={styles.next} {...props}>
-    {/* <Text
-      style={{
-        fontFamily: 'SF-Pro-Text-Bold',
-        color: 'white',
-        fontSize: 18,
-      }}>
-      NEXT
-    </Text> */}
-
-    <Image source={require('../assets/next.png')} style={styles.nextImage} />
-  </TouchableOpacity>
+  <Button
+    title="NEXT"
+    {...props}
+    containerStyle={{
+      marginLeft: wp('10%'),
+      marginBottom: hp('10%'),
+      marginRight: wp('10%'),
+    }}
+    buttonStyle={{height: hp('7%'), width: wp('80%')}}
+    titleStyle={{fontFamily: 'SF-Pro-Text-Bold'}}
+  />
 );
 
 function OnBoardingScreen({navigation}) {
@@ -121,17 +120,10 @@ const styles = StyleSheet.create({
   next: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: wp('8%'),
-    marginBottom: 85,
-    // backgroundColor: '#069DFF',
-    height: hp('6%'),
-    width: wp('80%'),
-    borderRadius: wp('1%'),
   },
   nextImage: {
     width: wp('80%'),
     height: hp('8'),
-    borderRadius: wp('60%') / 20,
     marginTop: hp('4%'),
   },
 });

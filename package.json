@@ -40,6 +40,7 @@
     "react-native-qrcode-scanner": "^1.5.4",
     "react-native-razorpay": "^2.2.4",
     "react-native-reanimated": "^2.1.0",
+    "react-native-reanimated-switch": "0.0.3",
     "react-native-responsive-screen": "^1.4.2",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^2.18.1",
