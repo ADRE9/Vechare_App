@@ -22,12 +22,15 @@ import {EditHeader, Pencil, SaveBtn, Loc} from 'svg';
 function EditProfile({navigation}) {
   const [name, setName] = useState([]);
   const [mail, setMail] = useState([]);
+  const [picture, setPicture] = useState([]);
   useEffect(() => {
     async function value() {
       const user = await AsyncStorage.getItem('name');
       const mailid = await AsyncStorage.getItem('mail');
+      const profile = await AsyncStorage.getItem('pic');
       setName(user);
       setMail(mailid);
+      setPicture(profile);
       // console.log("name of user",user);
     }
     value();
@@ -35,8 +38,7 @@ function EditProfile({navigation}) {
   }, []);
 
   let pic = {
-    uri:
-      'https://lh3.googleusercontent.com/a-/AOh14Gh3xuRnCwIu4BJJnbvE58fR4RSWKSWIa03WjcQ9pek=s96-c',
+    uri: picture,
   };
   return (
     <ScrollView style={styles.cont}>

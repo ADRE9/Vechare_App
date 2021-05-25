@@ -17,8 +17,10 @@ import {
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LottieView from 'lottie-react-native';
-
 import moment from 'moment';
+
+import {Navigate, ChargeNow, Tick} from 'svg';
+
 const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
 console.log('CarouselRecent');
@@ -113,7 +115,7 @@ export default function CarouselRecent() {
   };
 
   function DateCh({tm}) {
-    return moment(tm, 'YYYYMMDD HHmm').fromNow();
+    return moment(tm, 'YYYYMMDD hhmmss').fromNow();
   }
 
   function OpenGps({latitude, longitude}) {
@@ -126,15 +128,11 @@ export default function CarouselRecent() {
 
     return (
       <TouchableOpacity activeOpacity={0.4} onPress={openGps}>
-        <Image
-          source={require('../assets/navigate.png')}
-          style={{
-            height: hp('8%'),
-            width: wp('22%'),
-            borderRadius: hp('4%') / 4,
-            marginTop: -wp('2%'),
-          }}
-          resizeMode="contain"
+        <Navigate
+          height={hp('8%')}
+          width={wp('22%')}
+          borderRadius={hp('4%') / 4}
+          marginTop={-wp('2%')}
         />
       </TouchableOpacity>
     );
@@ -171,7 +169,7 @@ export default function CarouselRecent() {
                     <Text style={styles.heading}>{item.chargerId._id}</Text>
                     <View style={{flexDirection: 'column'}}>
                       <View style={{flexDirection: 'row', marginTop: wp('2%')}}>
-                        <Image source={require('../assets/tick.png')} />
+                        <Tick height={hp('3%')} width={wp('5%')} />
                         <Text style={styles.status}>Available</Text>
                       </View>
                       <Text style={styles.loc}>{item.chargerId.address} </Text>
@@ -210,15 +208,11 @@ export default function CarouselRecent() {
                   <TouchableOpacity
                     activeOpacity={0.4}
                     style={{left: wp('3%')}}>
-                    <Image
-                      source={require('../assets/charge_now.png')}
-                      style={{
-                        height: hp('8%'),
-                        width: wp('23%'),
-                        borderRadius: hp('4%') / 4,
-                        marginTop: -wp('2%'),
-                      }}
-                      resizeMode="contain"
+                    <ChargeNow
+                      height={hp('8%')}
+                      width={wp('23%')}
+                      borderRadius={hp('4%') / 4}
+                      marginTop={-wp('2%')}
                     />
                   </TouchableOpacity>
                 </View>

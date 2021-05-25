@@ -14,6 +14,8 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
+import {Navigate, ChargeNow, Tick} from 'svg';
+
 function StationCard({dis, loc, device, lat, long}) {
   function OpenGps({latitude, longitude}) {
     const openGps = () => {
@@ -28,14 +30,10 @@ function StationCard({dis, loc, device, lat, long}) {
         activeOpacity={0.4}
         style={{marginLeft: wp('14%')}}
         onPress={openGps}>
-        <Image
-          source={require('../assets/navigate.png')}
-          style={{
-            height: hp('7%'),
-            width: wp('18%'),
-            borderRadius: hp('4%') / 4,
-          }}
-          resizeMode="contain"
+        <Navigate
+          height={hp('7%')}
+          width={wp('18%')}
+          borderRadius={hp('4%') / 4}
         />
       </TouchableOpacity>
     );
@@ -47,7 +45,7 @@ function StationCard({dis, loc, device, lat, long}) {
           <Text style={styles.heading}>{device}</Text>
           <View style={{flexDirection: 'column'}}>
             <View style={{flexDirection: 'row', marginTop: wp('1.4%')}}>
-              <Image source={require('../assets/tick.png')} />
+              <Tick height={hp('3%')} width={wp('5%')} />
               <Text style={styles.status}>Available</Text>
             </View>
             <Text style={styles.loc}>{loc}</Text>
@@ -67,14 +65,10 @@ function StationCard({dis, loc, device, lat, long}) {
             <TouchableOpacity
               activeOpacity={0.4}
               style={{marginLeft: wp('6%')}}>
-              <Image
-                source={require('../assets/charge_now.png')}
-                style={{
-                  height: hp('7%'),
-                  width: wp('18%'),
-                  borderRadius: hp('4%') / 4,
-                }}
-                resizeMode="contain"
+              <ChargeNow
+                height={hp('7%')}
+                width={wp('18%')}
+                borderRadius={hp('4%') / 4}
               />
             </TouchableOpacity>
           </View>

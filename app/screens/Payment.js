@@ -228,7 +228,7 @@ export default function Payment({navigation}) {
     <SafeAreaView style={styles.cont}>
       <ScrollView style={styles.cont}>
         <ChargeHeader width={wp('100%')} height={hp('16%')} />
-        <TouchableOpacity
+        {/* <TouchableOpacity
           activeOpacity={0.5}
           style={{
             position: 'absolute',
@@ -237,7 +237,7 @@ export default function Payment({navigation}) {
           }}
           onPress={() => navigation.goBack()}>
           <CustomBack />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View
           flexDirection="column"
           style={{alignItems: 'center', justifyContent: 'center'}}>

@@ -19,6 +19,8 @@ import {
 import RNLocation from 'react-native-location';
 import LottieView from 'lottie-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import {Navigate, ChargeNow, ChargeBox, Tick} from 'svg';
 const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
 export default function Carousel() {
@@ -157,15 +159,11 @@ export default function Carousel() {
 
     return (
       <TouchableOpacity activeOpacity={0.4} onPress={openGps}>
-        <Image
-          source={require('../assets/navigate.png')}
-          style={{
-            height: hp('8%'),
-            width: wp('20%'),
-            borderRadius: hp('4%') / 4,
-            marginTop: -wp('2%'),
-          }}
-          resizeMode="contain"
+        <Navigate
+          height={hp('8%')}
+          width={wp('20%')}
+          borderRadius={hp('4%') / 4}
+          marginTop={-wp('2%')}
         />
       </TouchableOpacity>
     );
@@ -198,11 +196,7 @@ export default function Carousel() {
             <SafeAreaView style={styles.cardContainer}>
               <View style={styles.container}>
                 <View style={{flexDirection: 'row'}}>
-                  <Image
-                    source={require('../assets/card-charge.png')}
-                    style={{height: hp('8%'), width: wp('14%')}}
-                    resizeMode="contain"
-                  />
+                  <ChargeBox height={hp('8%')} width={wp('14%')} />
                   <View style={{flexDirection: 'column', marginLeft: 30}}>
                     <Text
                       style={{
@@ -222,6 +216,12 @@ export default function Carousel() {
                           width: wp('5%'),
                           height: hp('3%'),
                         }}
+                      />
+                      <Tick
+                        height={hp('3%')}
+                        width={wp('5%')}
+                        top={hp('0.2%')}
+                        right={wp('6%')}
                       />
                       <Text
                         style={{
@@ -272,16 +272,11 @@ export default function Carousel() {
                   <TouchableOpacity
                     activeOpacity={0.4}
                     style={{left: wp('3%')}}>
-                    <Image
-                      source={require('../assets/charge_now.png')}
-                      style={{
-                        height: hp('8%'),
-                        width: wp('20%'),
-                        borderRadius: hp('4%') / 4,
-
-                        marginTop: -wp('2%'),
-                      }}
-                      resizeMode="contain"
+                    <ChargeNow
+                      height={hp('8%')}
+                      width={wp('20%')}
+                      borderRadius={hp('4%') / 4}
+                      marginTop={-wp('2%')}
                     />
                   </TouchableOpacity>
                 </View>

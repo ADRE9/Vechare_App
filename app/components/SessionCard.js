@@ -15,6 +15,8 @@ import {
 } from 'react-native-responsive-screen';
 import moment from 'moment';
 
+import {Navigate, ChargeNow, Tick} from 'svg';
+
 function SessionCard({amount, days, loc, energy, device, lat, long}) {
   function DateCh({tm}) {
     return moment(tm, 'YYYYMMDD').fromNow();
@@ -32,14 +34,10 @@ function SessionCard({amount, days, loc, energy, device, lat, long}) {
         activeOpacity={0.4}
         onPress={openGps}
         style={{marginLeft: wp('10%')}}>
-        <Image
-          source={require('../assets/navigate.png')}
-          style={{
-            height: hp('7%'),
-            width: wp('20%'),
-            borderRadius: hp('4%') / 4,
-          }}
-          resizeMode="contain"
+        <Navigate
+          height={hp('8%')}
+          width={wp('20%')}
+          borderRadius={hp('4%') / 4}
         />
       </TouchableOpacity>
     );
@@ -52,7 +50,7 @@ function SessionCard({amount, days, loc, energy, device, lat, long}) {
           <Text style={styles.heading}>{device}</Text>
           <View style={{flexDirection: 'column'}}>
             <View style={{flexDirection: 'row', marginTop: wp('1.2%')}}>
-              <Image source={require('../assets/tick.png')} />
+              <Tick height={hp('3%')} width={wp('5%')} />
               <Text style={styles.status}>Available</Text>
             </View>
             <Text style={styles.subtxt}>
@@ -76,14 +74,10 @@ function SessionCard({amount, days, loc, energy, device, lat, long}) {
             <TouchableOpacity
               activeOpacity={0.4}
               style={{marginLeft: wp('4%')}}>
-              <Image
-                source={require('../assets/charge_now.png')}
-                style={{
-                  height: hp('7%'),
-                  width: wp('20%'),
-                  borderRadius: hp('4%') / 4,
-                }}
-                resizeMode="contain"
+              <ChargeNow
+                height={hp('8%')}
+                width={wp('20%')}
+                borderRadius={hp('4%') / 4}
               />
             </TouchableOpacity>
           </View>
