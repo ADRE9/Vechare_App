@@ -10,6 +10,8 @@ import About from '../screens/About';
 import HostScreen from '../screens/HostScreen';
 import RegisterHost from '../screens/RegisterHost';
 import BecomeHost from '../screens/BecomeHost';
+import Terms from '../screens/Terms';
+import Privacy from '../screens/Privacy';
 
 const Stack = createStackNavigator();
 
@@ -33,6 +35,9 @@ const ProfileNavigator = ({ navigation, route }) => {
       <Stack.Screen name="Edit" component={EditProfile} />
       <Stack.Screen name="Work" component={WorkingScreen} />
       <Stack.Screen name="About" component={About} />
+      <Stack.Screen name="Terms" component={Terms} />
+      <Stack.Screen name="Privacy" component={Privacy} />
+
     </Stack.Navigator>
   );
 };

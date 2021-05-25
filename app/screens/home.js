@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,27 +14,27 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import LottieView from 'lottie-react-native';
-import {BoxShadow} from 'react-native-shadow';
+import { BoxShadow } from 'react-native-shadow';
 
 import loader from '../components/loader';
 import Carousel from '../components/Carousel';
 import CarouselRecent from '../components/CarouselRecent';
-import {HomeScreen, Host, More} from 'svg';
+import { HomeScreen, Host, More } from 'svg';
 
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
   const [name, setName] = useState([]);
   const [load, setLoad] = useState(false);
 
   const shadowOpt = {
-    width: wp('60%'),
-    height: hp('5%'),
+    width: wp('62%'),
+    height: hp('5.6%'),
     color: '#069DFF',
     border: 12,
     // radius: 6,
     opacity: 0.2,
-    x: 12,
-    y: 24,
-    style: {marginBottom: hp('8%')},
+    x: 14,
+    y: 23,
+    style: { marginBottom: hp('8%') },
   };
 
   useEffect(() => {
@@ -65,10 +65,10 @@ export default function Home({navigation}) {
             }}>
             <Text
               style={{
-                fontSize: 20,
+                fontSize: 28,
                 color: 'white',
                 position: 'absolute',
-                top: 40,
+                top: 30,
                 left: 40,
                 marginBottom: wp('15%'),
                 fontFamily: 'SF-Pro-Text-Bold',
@@ -82,7 +82,7 @@ export default function Home({navigation}) {
           <TouchableOpacity
             onPress={() => navigation.navigate('Host')}
             activeOpacity={0.6}
-            style={{marginLeft: wp('15%'), marginTop: -wp('6%')}}>
+            style={{ marginLeft: wp('15%'), marginTop: -wp('6%') }}>
             <BoxShadow setting={shadowOpt}>
               <Host width={wp('70%')} height={hp('12%')} />
             </BoxShadow>
@@ -129,7 +129,7 @@ export default function Home({navigation}) {
             <TouchableOpacity
               onPress={() => navigation.navigate('Session')}
               activeOpacity={0.5}
-              style={{marginLeft: wp('10%'), marginTop: wp('3%')}}>
+              style={{ marginLeft: wp('10%'), marginTop: wp('3%') }}>
               <More width={wp('20%')} height={hp('3.8%')} />
             </TouchableOpacity>
           </View>

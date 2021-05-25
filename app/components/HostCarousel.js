@@ -1,4 +1,4 @@
-import React, {useCallback, memo, useRef, useState} from 'react';
+import React, { useCallback, memo, useRef, useState } from 'react';
 import {
   FlatList,
   View,
@@ -7,12 +7,14 @@ import {
   StyleSheet,
   Image,
   SafeAreaView,
+  TouchableOpacity
 } from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
+
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
 // const slideList = Array.from({length: 3}).map((_, i) => {
 //   return {
@@ -42,26 +44,27 @@ const slideList = [
     id: 3,
     title: 'Complete automated solution',
     subtitle:
-      'Monitor and analyze the charging status of all your devices in realtime via veCharge dashboard. The device is zero maintenance product requiring no human intervention.',
+      'Monitor and analyze the charging status of all your devices in realtime via veCharge dashboard. The device is a zero maintenance product requiring no human intervention.',
     image: require('../assets/host3.png'),
   },
 ];
 
-const Slide = memo(function Slide({data}) {
+const Slide = memo(function Slide({ data }) {
   return (
     <SafeAreaView style={styles.slide}>
       <View style={styles.container}>
         <Image source={data.image} style={styles.slideImage} />
       </View>
-      <View style={{padding: 15, paddingHorizontal: 25}}>
+      <View style={{ padding: 15, paddingHorizontal: 25 }}>
         <Text style={styles.slideTitle}>{data.title}</Text>
         <Text style={styles.slideSubtitle}>{data.subtitle}</Text>
       </View>
+
     </SafeAreaView>
   );
 });
 
-function Pagination({index}) {
+function Pagination({ index }) {
   return (
     <View style={styles.pagination} pointerEvents="none">
       {slideList.map((_, i) => {
@@ -119,7 +122,7 @@ export default function HostCarousel() {
     ),
   };
 
-  const renderItem = useCallback(function renderItem({item}) {
+  const renderItem = useCallback(function renderItem({ item }) {
     return <Slide data={item} />;
   }, []);
 
@@ -142,7 +145,9 @@ export default function HostCarousel() {
         onScroll={onScroll}
         {...flatListOptimizationProps}
       />
+
       <Pagination index={index}></Pagination>
+
     </View>
   );
 }
@@ -171,9 +176,19 @@ const styles = StyleSheet.create({
     shadowRadius: 2.62,
     elevation: 4,
   },
-  slideImage: {width: windowWidth * 0.5, height: windowHeight * 0.23},
-  slideTitle: {fontSize: 20, top: 40, fontWeight: 'bold'},
-  slideSubtitle: {fontSize: 14, marginTop: 40},
+  slideImage: { width: windowWidth * 0.5, height: windowHeight * 0.23 },
+  slideTitle: {
+    fontSize: windowWidth > 350 ? 18 : 14,
+    marginTop: hp("6%"),
+    fontFamily: "SF-Pro-Text-Semibold",
+    color: "#0D0D0D"
+  },
+  slideSubtitle: {
+    fontSize: windowWidth > 350 ? 13 : 10,
+    marginTop: hp("0.5%"),
+    fontFamily: "SF-Pro-Text-Regular",
+    color: "#373737"
+  },
 
   pagination: {
     position: 'absolute',
@@ -188,8 +203,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     marginTop: 15,
   },
-  paginationDotActive: {backgroundColor: '#069DFF'},
-  paginationDotInactive: {backgroundColor: '#DBDBDB'},
+  paginationDotActive: { backgroundColor: '#069DFF' },
+  paginationDotInactive: { backgroundColor: '#DBDBDB' },
 
   carousel: {
     flex: 1,

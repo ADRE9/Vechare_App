@@ -15,10 +15,10 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import {BecomeHostBtn} from 'svg';
+import { BecomeHostBtn } from 'svg';
 import HostCarousel from '../components/HostCarousel';
 
-function HostScreen({navigation}) {
+function HostScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.cont}>
       <TouchableOpacity
@@ -30,16 +30,30 @@ function HostScreen({navigation}) {
         <Image
           source={require('../assets/Back4.png')}
           style={{
-            height: hp('4 % '),
+            height: hp('4.1 % '),
             width: wp('7.5 % '),
           }}
         />
       </TouchableOpacity>
       <Text style={styles.header}>
         Power up {'\n'}your Parking with {'\n'}
-        <Text style={{color: '#2279B9'}}>veCharge Point</Text>
+        <Text style={{ color: '#2279B9' }}>veCharge Point</Text>
       </Text>
       <HostCarousel />
+      <TouchableOpacity
+        activeOpacity={0.6}
+        style={{
+          position: "absolute",
+          top: hp("85%"),
+          left: wp("14%"),
+        }}
+        onPress={() => navigation.navigate("RegisterHost")}
+      >
+        <BecomeHostBtn
+
+          width={wp("65%")}
+        />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }

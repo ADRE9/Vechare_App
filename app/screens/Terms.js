@@ -14,7 +14,6 @@ import {
 import CustomBackLight from '../components/CustomBackLight';
 import { Submit } from 'svg';
 
-
 function Terms({ navigation }) {
     return (
         <View style={styles.container}>
