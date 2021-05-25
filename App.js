@@ -14,6 +14,7 @@ import PaymentNavigation from './app/navigation/PaymentNavigation';
 import DetailNavigation from './app/navigation/DetailNavigation';
 
 import OnBoardingScreen from './app/screens/onBoardingScreen';
+import HostScreen from './app/screens/HostScreen';
 
 const Stack = createStackNavigator();
 function App() {
