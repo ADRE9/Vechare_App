@@ -31,7 +31,7 @@ function HostScreen({ navigation }) {
         <Image
           source={require("../assets/Back4.png")}
           style={{
-            height: hp("4 % "), width: wp("7.3 % ")
+            height: hp("4 % "), width: wp("7.5 % ")
           }}
         />
 
