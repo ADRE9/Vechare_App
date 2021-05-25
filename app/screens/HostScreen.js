@@ -30,7 +30,7 @@ function HostScreen({navigation}) {
         <Image
           source={require('../assets/Back4.png')}
           style={{
-            height: hp('4 % '),
+            height: hp('4.1 % '),
             width: wp('7.5 % '),
           }}
         />
@@ -40,6 +40,16 @@ function HostScreen({navigation}) {
         <Text style={{color: '#2279B9'}}>veCharge Point</Text>
       </Text>
       <HostCarousel />
+      <TouchableOpacity
+        activeOpacity={0.6}
+        style={{
+          position: 'absolute',
+          top: hp('85%'),
+          left: wp('14%'),
+        }}
+        onPress={() => navigation.navigate('RegisterHost')}>
+        <BecomeHostBtn width={wp('65%')} />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }

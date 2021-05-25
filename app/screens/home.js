@@ -26,14 +26,14 @@ export default function Home({navigation}) {
   const [load, setLoad] = useState(false);
 
   const shadowOpt = {
-    width: wp('60%'),
-    height: hp('5%'),
+    width: wp('62%'),
+    height: hp('5.6%'),
     color: '#069DFF',
     border: 12,
     // radius: 6,
     opacity: 0.2,
-    x: 12,
-    y: 24,
+    x: 14,
+    y: 23,
     style: {marginBottom: hp('8%')},
   };
 
@@ -65,10 +65,10 @@ export default function Home({navigation}) {
             }}>
             <Text
               style={{
-                fontSize: 20,
+                fontSize: 28,
                 color: 'white',
                 position: 'absolute',
-                top: 40,
+                top: 30,
                 left: 40,
                 marginBottom: wp('15%'),
                 fontFamily: 'SF-Pro-Text-Bold',

@@ -31,14 +31,18 @@ function About({ navigation }) {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity activeOpacity={0.7}>
+      <TouchableOpacity activeOpacity={0.7}
+        onPress={() => navigation.navigate("Terms")}
+      >
         <View>
           <Text style={styles.line2}>Terms of Service</Text>
           <View style={styles.line}></View>
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity activeOpacity={0.7}>
+      <TouchableOpacity activeOpacity={0.7}
+        onPress={() => navigation.navigate("Privacy")}
+      >
         <View>
           <Text style={styles.line2}>Privacy Policy</Text>
           <View style={styles.line}></View>
