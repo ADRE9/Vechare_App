@@ -18,8 +18,11 @@ import moment from 'moment';
 import {Navigate, ChargeNow, Tick} from 'svg';
 
 function SessionCard({amount, days, loc, energy, device, lat, long}) {
+  // function DateCh({tm}) {
+  //   return moment(tm, 'YYYYMMDD').fromNow();
+  // }
   function DateCh({tm}) {
-    return moment(tm, 'YYYYMMDD').fromNow();
+    return moment(tm).startOf('minutes').fromNow();
   }
   function OpenGps({latitude, longitude}) {
     const openGps = () => {

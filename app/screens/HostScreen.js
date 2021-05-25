@@ -30,8 +30,8 @@ function HostScreen({navigation}) {
         <Image
           source={require('../assets/Back4.png')}
           style={{
-            height: hp('4.1 % '),
-            width: wp('7.5 % '),
+            height: hp('4.2 % '),
+            width: wp('7.9 % '),
           }}
         />
       </TouchableOpacity>

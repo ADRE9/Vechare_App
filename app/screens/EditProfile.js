@@ -15,31 +15,55 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CustomBack from '../components/CustomBack';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 
+import CustomBack from '../components/CustomBack';
 import {EditHeader, Pencil, SaveBtn, Loc} from 'svg';
 
 function EditProfile({navigation}) {
   const [name, setName] = useState([]);
   const [mail, setMail] = useState([]);
-  const [picture, setPicture] = useState([]);
+  // const [picture, setPicture] = useState('');
+  const [userInfo, setUserInfo] = useState(null);
   useEffect(() => {
     async function value() {
       const user = await AsyncStorage.getItem('name');
       const mailid = await AsyncStorage.getItem('mail');
-      const profile = await AsyncStorage.getItem('pic');
+
       setName(user);
       setMail(mailid);
-      setPicture(profile);
-      // console.log("name of user",user);
+      // setPicture(profile);
+      // console.log(picture);
+      // console.log(profile);
     }
+    const _getCurrentUserInfo = async () => {
+      try {
+        let info = await GoogleSignin.signInSilently();
+        console.log('User Info --> ', info);
+        setUserInfo(info.user.photo);
+        console.log(info.user.photo);
+      } catch (error) {
+        if (error.code === statusCodes.SIGN_IN_REQUIRED) {
+          alert('User has not signed in yet');
+          console.log('User has not signed in yet');
+        } else {
+          alert("Unable to get user's info");
+          console.log("Unable to get user's info");
+        }
+      }
+    };
     value();
+    _getCurrentUserInfo();
     console.log('edit profile SCreen');
   }, []);
 
-  let pic = {
-    uri: picture,
-  };
+  // let pic = {
+  //   uri: picture,
+  // };
   return (
     <ScrollView style={styles.cont}>
       <SafeAreaView style={styles.cont}>
@@ -56,7 +80,7 @@ function EditProfile({navigation}) {
           onPress={() => console.log('pressed avatar')}
           style={styles.avatar}>
           <Image
-            source={pic}
+            source={{uri: userInfo}}
             style={{
               height: hp('10%'),
               width: wp('18%'),

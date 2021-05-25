@@ -114,10 +114,13 @@ export default function CarouselRecent() {
     ),
   };
 
-  function DateCh({tm}) {
-    return moment(tm, 'YYYYMMDD hhmmss').fromNow();
-  }
+  // function DateCh({tm}) {
+  //   return moment(tm, 'YYYYMMDD hhmmss').fromNow();
+  // }
 
+  function DateCh({tm}) {
+    return moment(tm).startOf('minutes').fromNow();
+  }
   function OpenGps({latitude, longitude}) {
     const openGps = () => {
       var scheme =
@@ -139,12 +142,7 @@ export default function CarouselRecent() {
   }
 
   return (
-    <View
-      style={{
-        height: 195,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
+    <View>
       {isLoading === true ? (
         <LottieView
           autoPlay
@@ -242,7 +240,7 @@ const styles = StyleSheet.create({
   paginationDotInactive: {backgroundColor: '#DBDBDB'},
   carousel: {
     // backgroundColor: 'yellow',
-    height: 177,
+    height: 190,
   },
   cardContainer: {
     height: windowHeight,

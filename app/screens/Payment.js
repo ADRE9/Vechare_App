@@ -58,6 +58,10 @@ export default function Payment({navigation}) {
     'charge hour + charge minutes',
     chargeHours + ' ' + chargeMinutes,
   );
+
+  function DateCh({tm}) {
+    return moment(tm).startOf('minutes').fromNow();
+  }
   // useEffect(() => {
   //   async function value() {
   //     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
@@ -279,14 +283,14 @@ export default function Payment({navigation}) {
               <View style={{marginRight: wp('2%')}}>
                 <Text
                   style={{
-                    fontSize: wp('5.6%'),
+                    fontSize: wp('5%'),
                     color: 'white',
                     fontFamily: 'SF-Pro-Display-Semibold',
                     padding: wp('1%'),
                     marginTop: wp('6%'),
                     marginLeft: wp('6%'),
                   }}>
-                  {currentHour - chargeHours}h {currentMin - chargeMinutes}min
+                  <DateCh tm={time}></DateCh>
                 </Text>
               </View>
             </View>

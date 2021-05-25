@@ -26,7 +26,7 @@ import moment from 'moment';
 import '../Constants/Useragent';
 
 function Date({tm}) {
-  return moment(tm, 'YYYYMMDD hhmmss').fromNow();
+  return moment(tm).startOf('m').fromNow();
 }
 
 export default class Status extends Component {
@@ -267,7 +267,11 @@ export default class Status extends Component {
 
             <View
               flexDirection="column"
-              style={{alignItems: 'center', justifyContent: 'center'}}>
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: hp('13%'),
+              }}>
               <LinearGradient
                 colors={['#4B5358', '#545B60']}
                 style={styles.box3}>
@@ -280,6 +284,8 @@ export default class Status extends Component {
                   <View
                     style={{
                       flexDirection: 'row',
+                      position: 'absolute',
+                      left: -wp('17%'),
                     }}>
                     <Time
                       height={hp('6%')}
@@ -308,12 +314,12 @@ export default class Status extends Component {
                   <View style={{marginRight: wp('2%')}}>
                     <Text
                       style={{
-                        fontSize: wp('5.6%'),
+                        fontSize: wp('5%'),
                         color: 'white',
                         fontFamily: 'SF-Pro-Display-Semibold',
                         padding: wp('1%'),
                         marginTop: wp('6%'),
-                        marginLeft: wp('6%'),
+                        left: wp('18%'),
                       }}>
                       <Date tm={this.state.time}></Date>
                     </Text>
@@ -331,29 +337,37 @@ export default class Status extends Component {
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}>
-                    <EnergyConsumed
-                      height={hp('6%')}
-                      width={wp('15%')}
-                      borderRadius={wp('10%') / 8}
-                    />
-                    <View style={{marginRight: wp('4%')}}>
-                      <Text
-                        style={{
-                          fontFamily: 'SF-Pro-Display-Medium',
-                          color: 'white',
-                          fontSize: wp('5%'),
-                        }}>
-                        Energy
-                      </Text>
-                      <Text
-                        style={{
-                          fontFamily: 'SF-Pro-Display-Regular',
-                          fontSize: wp('3.4%'),
-                          color: 'white',
-                        }}>
-                        Consumed
-                      </Text>
+                    <View
+                      style={{
+                        position: 'absolute',
+                        flexDirection: 'row',
+                        right: 45,
+                      }}>
+                      <EnergyConsumed
+                        height={hp('6%')}
+                        width={wp('15%')}
+                        borderRadius={wp('10%') / 8}
+                      />
+                      <View style={{marginRight: wp('4%')}}>
+                        <Text
+                          style={{
+                            fontFamily: 'SF-Pro-Display-Medium',
+                            color: 'white',
+                            fontSize: wp('5%'),
+                          }}>
+                          Energy
+                        </Text>
+                        <Text
+                          style={{
+                            fontFamily: 'SF-Pro-Display-Regular',
+                            fontSize: wp('3.4%'),
+                            color: 'white',
+                          }}>
+                          Consumed
+                        </Text>
+                      </View>
                     </View>
+
                     <View style={{marginRight: wp('2%')}}>
                       <Text
                         style={{
@@ -362,7 +376,7 @@ export default class Status extends Component {
                           fontFamily: 'SF-Pro-Display-Semibold',
                           padding: wp('1%'),
                           marginTop: wp('6%'),
-                          marginLeft: wp('2%'),
+                          left: wp('22%'),
                         }}>
                         {this.state.energy} kWh
                       </Text>
@@ -375,7 +389,12 @@ export default class Status extends Component {
                 colors={['#2D9CDB', '#2C93CE']}
                 style={styles.box2}>
                 <View flexDirection="row">
-                  <View flexDirection="row">
+                  <View
+                    style={{
+                      position: 'absolute',
+                      flexDirection: 'row',
+                      left: -wp('3%'),
+                    }}>
                     <Cost
                       height={hp('6%')}
                       width={wp('15%')}
