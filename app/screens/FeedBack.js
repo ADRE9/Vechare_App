@@ -12,6 +12,12 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import {nameValidator} from '../helpers/nameValidator';
+import {numberValidator} from '../helpers/numberValidator';
+import {emailValidator} from '../helpers/emailValidator';
+
 import CustomBackLight from '../components/CustomBackLight';
 import {Submit} from 'svg';
 
@@ -25,6 +31,39 @@ export default function FeedBack({navigation}) {
   const [msg, setMsg] = useState({value: '', error: ''});
   const [loading, setLoading] = useState();
 
+  const onSignUpPressed = async () => {
+    const nameError = nameValidator(name.value);
+    const numberError = numberValidator(number.value);
+    const mailError = emailValidator(mail.value);
+    const msgError = nameValidator(msg.value);
+    if (nameError || numberError || mailError || msgError) {
+      setName({...name, error: nameError});
+      setNumber({...number, error: numberError});
+      setMail({...mail, error: mailError});
+      setMsg({...msg, error: msgError});
+      return;
+    }
+    setLoading(true);
+    const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+    let config = {
+      headers: {
+        Authorization: token,
+      },
+    };
+    const data = {
+      name: name.value,
+      message: msg.value,
+      phoneNumber: number.value,
+      emailAddress: mail.value,
+    };
+    await axios
+      .post('https://vecharge.app/api/v1/email/feedback/app', data, config)
+      .catch(() => alert('Form not Submitted Try Again'))
+      .then(() => setLoading(false))
+      .then(() => alert('Form submitted Successfully'))
+      .finally(() => navigation.goBack());
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -35,7 +74,7 @@ export default function FeedBack({navigation}) {
               style={{
                 position: 'absolute',
                 left: 20,
-                top: 20,
+                top: 16,
               }}
               onPress={() => navigation.goBack()}>
               <CustomBackLight />
@@ -76,6 +115,8 @@ export default function FeedBack({navigation}) {
             errorText={number.error}
             placeholder={'Enter Phone Number'}
             style={styles.input}
+            maxLength={10}
+            keyboardType="phone-pad"
             mode="flat"
           />
 
@@ -90,6 +131,7 @@ export default function FeedBack({navigation}) {
             placeholder={'Enter Email Address'}
             style={styles.input}
             mode="flat"
+            keyboardType="email-address"
           />
 
           {/* <Text style={styles.name}>Enter Message</Text> */}
@@ -120,13 +162,14 @@ export default function FeedBack({navigation}) {
             loading={loading}
             mode="contained"
             uppercase={false}
+            onPress={onSignUpPressed}
             style={{
               marginTop: 24,
               backgroundColor: '#069DFF',
               width: '30%',
               height: 40,
               paddingVertical: 1,
-              bottom: 12,
+              bottom: 18,
               marginLeft: wp('8%'),
             }}>
             Submit
@@ -145,7 +188,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: wp('7%'),
     color: '#000000',
-    marginTop: wp('4%'),
+    marginTop: wp('3%'),
     marginLeft: wp('20%'),
     fontFamily: 'SF-Pro-Display-Bold',
   },

@@ -92,11 +92,11 @@ export default function Carousel() {
           },
         });
         console.log(permission);
-        location = await RNLocation.getLatestLocation({timeout: 100});
+        location = await RNLocation.getLatestLocation({timeout: 2000});
         console.log(location);
         isViewLocation(location);
       } else {
-        location = await RNLocation.getLatestLocation({timeout: 100});
+        location = await RNLocation.getLatestLocation({timeout: 2000});
         console.log(location);
         isViewLocation(location);
       }

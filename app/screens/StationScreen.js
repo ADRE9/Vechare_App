@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -49,11 +49,11 @@ function StationScreen(props) {
           },
         });
         console.log(permission);
-        location = await RNLocation.getLatestLocation({ timeout: 2000 });
+        location = await RNLocation.getLatestLocation({timeout: 2000});
         console.log(location);
         isViewLocation(location);
       } else {
-        location = await RNLocation.getLatestLocation({ timeout: 2000 });
+        location = await RNLocation.getLatestLocation({timeout: 2000});
         console.log(location);
         isViewLocation(location);
       }
@@ -93,12 +93,8 @@ function StationScreen(props) {
             top: 30,
           }}
           onPress={() => props.navigation.goBack()}>
-          <CustomBack
-
-          />
-
+          <CustomBack />
         </TouchableOpacity>
-
       </View>
     );
   };
@@ -111,7 +107,7 @@ function StationScreen(props) {
           data={value}
           ListHeaderComponent={header}
           stickyHeaderIndices={[0]}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <StationCard
               dis={(item.distance / 1000).toFixed(2)}
               loc={item.address}

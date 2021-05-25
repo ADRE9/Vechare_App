@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -71,12 +71,8 @@ function SessionScreen(props) {
             top: 20,
           }}
           onPress={() => props.navigation.goBack()}>
-          <CustomBack
-
-          />
-
+          <CustomBack />
         </TouchableOpacity>
-
       </View>
     );
   };
@@ -106,7 +102,7 @@ function SessionScreen(props) {
           ListHeaderComponent={header}
           stickyHeaderIndices={[0]}
           ListFooterComponent={renderFooter}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <SessionCard
               device={item.chargerId._id}
               loc={item.chargerId.address}
