@@ -14,11 +14,12 @@ function WorkingScreen({ navigation }) {
           marginTop: hp("4%"),
           marginLeft: wp("6%")
         }}
+        onPress={() => navigation.goBack()}
       >
         <Image
           source={require("../assets/Back4.png")}
           style={{
-            height: hp("4 % "), width: wp("7.3 % ")
+            height: hp("4 % "), width: wp("7.5 % ")
           }}
         />
       </TouchableOpacity>

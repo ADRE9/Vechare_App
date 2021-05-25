@@ -5,39 +5,44 @@ import {
   Text,
   ScrollView,
   SafeAreaView,
-  TouchableOpacity,
   Image,
+  ImageBackground,
+  TextInput,
+  TouchableOpacity,
+  FlatList
 } from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import {HostBtn} from 'svg';
+import { BecomeHostBtn } from 'svg';
 
-function HostScreen(props) {
+
+function HostScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.cont}>
-      <ScrollView style={styles.cont}>
-        <Text style={styles.heading}>Power Up your Parking</Text>
-        <Text style={styles.txt}>Host multiple charging points</Text>
-        <Text style={styles.txt}>Set up your own prices</Text>
-        <Text style={styles.txt}>Monitor and analyze in real-time</Text>
-        <Text style={styles.txt}>Withdraw to your account</Text>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => props.navigation.navigate('RegisterHost')}
-          style={{marginTop: wp('20%'), marginLeft: wp('12%')}}>
-          {/* <Image
-            source={require('../assets/hostBtn.png')}
-            style={{
-              height: hp('7%'),
-              width: wp('70%'),
-              borderRadius: wp('40%') / 8,
-            }}
-          /> */}
-          <HostBtn height={hp('7%')} width={wp('70%')} />
-        </TouchableOpacity>
-      </ScrollView>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={{
+          marginTop: hp("2%"),
+          marginLeft: wp("8%")
+        }}
+      >
+        <Image
+          source={require("../assets/Back4.png")}
+          style={{
+            height: hp("4 % "), width: wp("7.5 % ")
+          }}
+        />
+
+      </TouchableOpacity>
+      <Text style={styles.header}>
+        Power up {'\n'}your Parking with {'\n'}<Text style={{ color: "#2279B9" }}>veCharge Point</Text>
+      </Text>
+
+      <FlatList
+
+      />
     </SafeAreaView>
   );
 }
@@ -47,22 +52,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  heading: {
-    fontSize: wp('11%'),
-    color: '#181725',
-    marginLeft: wp('8%'),
-    marginTop: wp('16%'),
-    marginRight: wp('26%'),
-    lineHeight: wp('13%'),
-    fontFamily: 'SF-Pro-Display-Semibold',
-  },
-  txt: {
-    marginLeft: wp('10%'),
-    marginTop: wp('14%'),
-    color: '#7C7C7C',
-    fontSize: wp('4%'),
-    fontFamily: 'SF-Pro-Display-Semibold',
-  },
+  header: {
+    fontFamily: "SF-Pro-Display-Semibold",
+    fontSize: 36,
+    color: "#181725",
+    marginLeft: wp("10%"),
+    marginTop: hp("3%"),
+    letterSpacing: 1,
+  }
 });
 
 export default HostScreen;

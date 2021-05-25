@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -14,10 +14,10 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import {Button, Overlay, Rating, AirbnbRating} from 'react-native-elements';
+import { Button, Overlay, Rating, AirbnbRating } from 'react-native-elements';
 
 import auth from '@react-native-firebase/auth';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   heightPercentageToDP as hp,
@@ -27,7 +27,7 @@ import Share from 'react-native-share';
 import axios from 'axios';
 import RazorpayCheckout from 'react-native-razorpay';
 
-import {RazorpayApiKey} from '../Constants/config';
+import { RazorpayApiKey } from '../Constants/config';
 import files from '../../assets/filesBase64';
 import UnpaidNotify from '../components/UnpaidNotify';
 
@@ -52,9 +52,9 @@ import {
   Visit,
   Visit1,
 } from 'svg';
-import {BoxShadow} from 'react-native-shadow';
+import { BoxShadow } from 'react-native-shadow';
 
-export default function Profile({navigation}) {
+export default function Profile({ navigation }) {
   const [loggedIn, setloggedIn] = useState(false);
   const [user, setUser] = useState([]);
   const [paid, setPaid] = useState([]);
@@ -81,7 +81,7 @@ export default function Profile({navigation}) {
               <Image
                 style={styles.starImgStyle}
                 source={item <= defaultRating ? starfill : star}
-                // source={star}
+              // source={star}
               />
             </TouchableOpacity>
           );
@@ -122,7 +122,7 @@ export default function Profile({navigation}) {
     opacity: 0.2,
     x: 52,
     y: 10,
-    style: {marginBottom: hp('3%')},
+    style: { marginBottom: hp('3%') },
   };
   const signOut = async () => {
     try {
@@ -168,7 +168,7 @@ export default function Profile({navigation}) {
           signOut().then(() =>
             navigation.reset({
               index: 0,
-              routes: [{name: 'LoginPage'}],
+              routes: [{ name: 'LoginPage' }],
             }),
           ),
       },
@@ -206,11 +206,11 @@ export default function Profile({navigation}) {
         contact: '9191919191',
         name: 'John Doe',
       },
-      theme: {color: '#a29bfe'},
+      theme: { color: '#a29bfe' },
     };
     RazorpayCheckout.open(options).then(async function (response) {
       const config = {
-        headers: {Authorization: token},
+        headers: { Authorization: token },
       };
       const data = {
         orderCreationId: orderData.id,
@@ -321,17 +321,18 @@ export default function Profile({navigation}) {
           <Text style={styles.imgCont2}>
             Electrify your Establishment today
           </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Host')}>
-            <View
-              style={{
-                position: 'absolute',
-                top: -hp('1%'),
-                left: -wp('5%'),
-              }}>
-              <BoxShadow setting={shadowOpt}>
-                <Host height={hp('8%')} width={wp('80%')} />
-              </BoxShadow>
-            </View>
+          <TouchableOpacity
+            style={{
+              position: 'absolute',
+              top: -hp('1%'),
+              left: -wp('5%'),
+            }}
+            onPress={() => navigation.navigate('Host')}>
+
+            <BoxShadow setting={shadowOpt}>
+              <Host height={hp('8%')} width={wp('80%')} />
+            </BoxShadow>
+
           </TouchableOpacity>
         </View>
 
@@ -508,7 +509,7 @@ export default function Profile({navigation}) {
           }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={{width: wp('100%'), flex: 1, marginBottom: 50}}>
+            style={{ width: wp('100%'), flex: 1, marginBottom: 50 }}>
             <Text
               style={{
                 fontSize: 30,
@@ -524,7 +525,7 @@ export default function Profile({navigation}) {
             <Bar />
 
             <KeyboardAvoidingView
-              style={{justifyContent: 'center', alignItems: 'center'}}>
+              style={{ justifyContent: 'center', alignItems: 'center' }}>
               <TextInput
                 style={{
                   paddingLeft: 15,
@@ -541,7 +542,7 @@ export default function Profile({navigation}) {
               />
             </KeyboardAvoidingView>
 
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity
                 onPress={toggleplay}
                 style={{
@@ -553,7 +554,7 @@ export default function Profile({navigation}) {
                   height: hp('6%'),
                   borderRadius: 10,
                 }}>
-                <Text style={{fontSize: 15, color: 'white'}}>Submit</Text>
+                <Text style={{ fontSize: 15, color: 'white' }}>Submit</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -572,7 +573,7 @@ export default function Profile({navigation}) {
             }}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              style={{width: wp('100%'), flex: 1, marginBottom: 50}}>
+              style={{ width: wp('100%'), flex: 1, marginBottom: 50 }}>
               <Text
                 style={{
                   fontSize: 30,
@@ -625,7 +626,7 @@ export default function Profile({navigation}) {
             }}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              style={{width: wp('100%'), flex: 1, marginBottom: 50}}>
+              style={{ width: wp('100%'), flex: 1, marginBottom: 50 }}>
               <Text
                 style={{
                   fontSize: 30,
@@ -665,13 +666,15 @@ export default function Profile({navigation}) {
           </Overlay>
         )}
       </ScrollView>
-      {paid === false ? (
-        <UnpaidNotify
-          amount={amount}
-          onPress={() => onPay().finally(() => navigation.replace('PayDetail'))}
-        />
-      ) : null}
-    </SafeAreaView>
+      {
+        paid === false ? (
+          <UnpaidNotify
+            amount={amount}
+            onPress={() => onPay().finally(() => navigation.replace('PayDetail'))}
+          />
+        ) : null
+      }
+    </SafeAreaView >
   );
 }
 
