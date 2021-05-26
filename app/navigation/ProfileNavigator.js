@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import FeedBack from '../screens/FeedBack';
 import Profile from '../screens/Profile';
 import Report from '../screens/Report';
@@ -15,16 +15,16 @@ import Privacy from '../screens/Privacy';
 
 const Stack = createStackNavigator();
 
-const ProfileNavigator = ({ navigation, route }) => {
+const ProfileNavigator = ({navigation, route}) => {
   if (route.state && route.state.index > 0) {
-    navigation.setOptions({ tabBarVisible: false });
+    navigation.setOptions({tabBarVisible: false});
   } else {
-    navigation.setOptions({ tabBarVisible: true });
+    navigation.setOptions({tabBarVisible: true});
   }
   return (
     <Stack.Navigator
       initialRouteName="Profile"
-      screenOptions={{ headerShown: false }}
+      screenOptions={{headerShown: false}}
       mode="card">
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="Host" component={HostScreen} />
@@ -37,7 +37,6 @@ const ProfileNavigator = ({ navigation, route }) => {
       <Stack.Screen name="About" component={About} />
       <Stack.Screen name="Terms" component={Terms} />
       <Stack.Screen name="Privacy" component={Privacy} />
-
     </Stack.Navigator>
   );
 };

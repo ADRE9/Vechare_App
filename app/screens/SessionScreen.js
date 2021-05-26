@@ -23,37 +23,26 @@ import CustomBack from '../components/CustomBack';
 function SessionScreen(props) {
   const [loading, setLoading] = useState(true);
   const [value, setdata] = useState([]);
-  const [offset, setOffset] = useState(5);
+  const [offset, setOffset] = useState(1);
   const [isListEnd, setIsListEnd] = useState(false);
 
   async function dtl() {
-    // if (!loading && !isListEnd) {
     setLoading(true);
     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
-    fetch(`https://vecharge.app/api/v1/payment/?page=1&limit=${offset}`, {
+    const res = await fetch(`https://vecharge.app/api/v1/payment/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: token,
       },
     })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if (responseJson.data.payments.length > 0) {
-          //Successful response from the API Call
-          setOffset(offset + 1);
-          //After the response increasing the offset for the next API call.
-          setdata([...value, ...responseJson.data.payments]);
-          setLoading(false);
-        } else {
-          setIsListEnd(true);
-          setLoading(false);
-        }
-      })
       .catch((error) => {
         console.error(error);
-      });
-    // }
+      })
+      .finally(() => setLoading(false));
+
+    const resData = await res.json();
+    setdata(resData.data.payments);
   }
   useEffect(() => {
     dtl();
@@ -92,7 +81,9 @@ function SessionScreen(props) {
           <Text style={styles.btnText}>Load More</Text>
           {loading ? <ActivityIndicator color="#2D9CDB" size="large" /> : null}
         </TouchableOpacity> */}
-        {loading ? <ActivityIndicator color="#2D9CDB" size="large" /> : null}
+        {loading === true ? (
+          <ActivityIndicator color="#2D9CDB" size="large" />
+        ) : null}
       </View>
     );
   };
@@ -101,7 +92,7 @@ function SessionScreen(props) {
     <SafeAreaView style={styles.container}>
       <View>
         <FlatList
-          keyExtractor={(item) => item._id.toString()}
+          keyExtractor={(item, index) => index.toString()}
           data={value}
           ListHeaderComponent={header}
           stickyHeaderIndices={[0]}

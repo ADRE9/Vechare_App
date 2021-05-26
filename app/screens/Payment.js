@@ -58,6 +58,10 @@ export default function Payment({navigation}) {
     'charge hour + charge minutes',
     chargeHours + ' ' + chargeMinutes,
   );
+
+  function DateCh({tm}) {
+    return moment(tm).startOf('minutes').fromNow();
+  }
   // useEffect(() => {
   //   async function value() {
   //     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
@@ -228,7 +232,7 @@ export default function Payment({navigation}) {
     <SafeAreaView style={styles.cont}>
       <ScrollView style={styles.cont}>
         <ChargeHeader width={wp('100%')} height={hp('16%')} />
-        <TouchableOpacity
+        {/* <TouchableOpacity
           activeOpacity={0.5}
           style={{
             position: 'absolute',
@@ -237,7 +241,7 @@ export default function Payment({navigation}) {
           }}
           onPress={() => navigation.goBack()}>
           <CustomBack />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View
           flexDirection="column"
           style={{alignItems: 'center', justifyContent: 'center'}}>
@@ -279,14 +283,14 @@ export default function Payment({navigation}) {
               <View style={{marginRight: wp('2%')}}>
                 <Text
                   style={{
-                    fontSize: wp('5.6%'),
+                    fontSize: wp('5%'),
                     color: 'white',
                     fontFamily: 'SF-Pro-Display-Semibold',
                     padding: wp('1%'),
                     marginTop: wp('6%'),
                     marginLeft: wp('6%'),
                   }}>
-                  {currentHour - chargeHours}h {currentMin - chargeMinutes}min
+                  <DateCh tm={time}></DateCh>
                 </Text>
               </View>
             </View>

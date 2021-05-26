@@ -1,4 +1,4 @@
-import React, { useCallback, memo, useRef, useState, useEffect } from 'react';
+import React, {useCallback, memo, useRef, useState, useEffect} from 'react';
 import {
   FlatList,
   View,
@@ -19,7 +19,9 @@ import {
 import RNLocation from 'react-native-location';
 import LottieView from 'lottie-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
+
+import {Navigate, ChargeNow, ChargeBox, Tick} from 'svg';
+const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
 export default function Carousel() {
   const [index, setIndex] = useState(0);
@@ -29,7 +31,7 @@ export default function Carousel() {
   const [viewLocation, isViewLocation] = useState([]);
   indexRef.current = index;
 
-  function Pagination({ index }) {
+  function Pagination({index}) {
     return (
       <View style={styles.pagination} pointerEvents="none">
         {value.map((_, i) => {
@@ -92,11 +94,11 @@ export default function Carousel() {
           },
         });
         console.log(permission);
-        location = await RNLocation.getLatestLocation({ timeout: 2000 });
+        location = await RNLocation.getLatestLocation({timeout: 2000});
         console.log(location);
         isViewLocation(location);
       } else {
-        location = await RNLocation.getLatestLocation({ timeout: 2000 });
+        location = await RNLocation.getLatestLocation({timeout: 2000});
         console.log(location);
         isViewLocation(location);
       }
@@ -147,7 +149,7 @@ export default function Carousel() {
     ),
   };
 
-  function OpenGps({ latitude, longitude }) {
+  function OpenGps({latitude, longitude}) {
     const openGps = () => {
       var scheme =
         Platform.OS === 'ios' ? 'maps://app?daddr=' : 'google.navigation:q=';
@@ -157,15 +159,11 @@ export default function Carousel() {
 
     return (
       <TouchableOpacity activeOpacity={0.4} onPress={openGps}>
-        <Image
-          source={require('../assets/navigate.png')}
-          style={{
-            height: hp('8%'),
-            width: wp('20%'),
-            borderRadius: hp('4%') / 4,
-            marginTop: -wp('2%'),
-          }}
-          resizeMode="contain"
+        <Navigate
+          height={hp('8%')}
+          width={wp('20%')}
+          borderRadius={hp('4%') / 4}
+          marginTop={-wp('2%')}
         />
       </TouchableOpacity>
     );
@@ -194,16 +192,12 @@ export default function Carousel() {
           bounces={false}
           onScroll={onScroll}
           {...flatListOptimizationProps}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <SafeAreaView style={styles.cardContainer}>
               <View style={styles.container}>
-                <View style={{ flexDirection: 'row' }}>
-                  <Image
-                    source={require('../assets/card-charge.png')}
-                    style={{ height: hp('8%'), width: wp('14%') }}
-                    resizeMode="contain"
-                  />
-                  <View style={{ flexDirection: 'column', marginLeft: 30 }}>
+                <View style={{flexDirection: 'row'}}>
+                  <ChargeBox height={hp('8%')} width={wp('14%')} />
+                  <View style={{flexDirection: 'column', marginLeft: 30}}>
                     <Text
                       style={{
                         fontSize: wp('6%'),
@@ -213,15 +207,12 @@ export default function Carousel() {
                       }}>
                       {item._id}
                     </Text>
-                    <View style={{ flexDirection: 'row' }}>
-                      <Image
-                        source={require('../assets/tick.png')}
-                        style={{
-                          right: wp('6%'),
-                          top: hp('0.2%'),
-                          width: wp('5%'),
-                          height: hp('3%'),
-                        }}
+                    <View style={{flexDirection: 'row'}}>
+                      <Tick
+                        height={hp('3%')}
+                        width={wp('5%')}
+                        top={hp('0.2%')}
+                        right={wp('6%')}
                       />
                       <Text
                         style={{
@@ -239,8 +230,10 @@ export default function Carousel() {
                           borderRadius: wp('10%') / 4,
                           marginLeft: wp('20%'),
                           marginTop: -wp('1%'),
+                          alignItems: 'center',
+                          justifyContent: 'center',
                         }}>
-                        <Text style={{ fontSize: wp('3%'), fontWeight: 'bold' }}>
+                        <Text style={{fontSize: wp('3%'), fontWeight: 'bold'}}>
                           {(item.distance / 1000).toFixed(2)} km
                         </Text>
                       </TouchableOpacity>
@@ -271,17 +264,12 @@ export default function Carousel() {
                     longitude={item.location.coordinates[0]}></OpenGps>
                   <TouchableOpacity
                     activeOpacity={0.4}
-                    style={{ left: wp('3%') }}>
-                    <Image
-                      source={require('../assets/charge_now.png')}
-                      style={{
-                        height: hp('8%'),
-                        width: wp('20%'),
-                        borderRadius: hp('4%') / 4,
-
-                        marginTop: -wp('2%'),
-                      }}
-                      resizeMode="contain"
+                    style={{left: wp('3%')}}>
+                    <ChargeNow
+                      height={hp('8%')}
+                      width={wp('20%')}
+                      borderRadius={hp('4%') / 4}
+                      marginTop={-wp('2%')}
                     />
                   </TouchableOpacity>
                 </View>
@@ -308,8 +296,8 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginHorizontal: 6,
   },
-  paginationDotActive: { backgroundColor: '#069DFF' },
-  paginationDotInactive: { backgroundColor: '#DBDBDB' },
+  paginationDotActive: {backgroundColor: '#069DFF'},
+  paginationDotInactive: {backgroundColor: '#DBDBDB'},
 
   carousel: {
     // backgroundColor: 'yellow',

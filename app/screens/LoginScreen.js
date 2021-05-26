@@ -55,6 +55,7 @@ function LoginScreen(props) {
       // setName(currentUser);
       await AsyncStorage.setItem('name', currentUser.user.name);
       await AsyncStorage.setItem('mail', currentUser.user.email);
+      await AsyncStorage.setItem('pic', currentUser.user.photo);
 
       const credential = auth.GoogleAuthProvider.credential(
         idToken,

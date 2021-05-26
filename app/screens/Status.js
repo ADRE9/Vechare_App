@@ -18,10 +18,16 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import LottieView from 'lottie-react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import {Cost, EnergyConsumed, Time, ChargeHeader, PayBtn} from 'svg';
 
 import loader from '../components/loader';
-
+import moment from 'moment';
 import '../Constants/Useragent';
+
+function Date({tm}) {
+  return moment(tm).startOf('m').fromNow();
+}
 
 export default class Status extends Component {
   constructor(props) {
@@ -252,40 +258,189 @@ export default class Status extends Component {
       <View style={styles.container}>
         {this.state.loaded ? (
           <View>
-            <View style={styles.icontainer}>
+            <View style={styles.container}>
               <Image
                 source={require('../assets/status.png')}
                 style={styles.image}
               />
             </View>
 
-            <View style={styles.status}>
-              <TouchableOpacity style={styles.details}>
-                <Text style={styles.text}>Energy</Text>
-                <Text style={styles.value}>{this.state.energy} kWh</Text>
-              </TouchableOpacity>
+            <View
+              flexDirection="column"
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: hp('13%'),
+              }}>
+              <LinearGradient
+                colors={['#4B5358', '#545B60']}
+                style={styles.box3}>
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                  }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      position: 'absolute',
+                      left: -wp('17%'),
+                    }}>
+                    <Time
+                      height={hp('6%')}
+                      width={wp('15%')}
+                      borderRadius={wp('10%') / 8}
+                    />
+                    <View>
+                      <Text
+                        style={{
+                          fontFamily: 'SF-Pro-Display-Medium',
+                          color: 'white',
+                          fontSize: wp('5%'),
+                        }}>
+                        Time
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: wp('3.4%'),
+                          fontFamily: 'SF-Pro-Display-Regular',
+                          color: 'white',
+                        }}>
+                        Charged
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={{marginRight: wp('2%')}}>
+                    <Text
+                      style={{
+                        fontSize: wp('5%'),
+                        color: 'white',
+                        fontFamily: 'SF-Pro-Display-Semibold',
+                        padding: wp('1%'),
+                        marginTop: wp('6%'),
+                        left: wp('18%'),
+                      }}>
+                      <Date tm={this.state.time}></Date>
+                    </Text>
+                  </View>
+                </View>
+              </LinearGradient>
 
-              <TouchableOpacity style={styles.details}>
-                <Text style={styles.text}>Price</Text>
-                <Text style={styles.value}>
-                  ₹{' '}
-                  {(
-                    this.state.energy * this.state.price +
-                    this.state.energy * this.state.price * 0.15
-                  ).toFixed(2)}
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.status}>
-              <TouchableOpacity style={styles.details}>
-                <Text style={styles.text}>Voltage </Text>
-                <Text style={styles.value}>{this.state.voltage} V</Text>
-              </TouchableOpacity>
+              <LinearGradient
+                colors={['#03AD70', '#059863']}
+                style={styles.box1}>
+                <View style={{flexDirection: 'column'}}>
+                  <View
+                    flexDirection="row"
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <View
+                      style={{
+                        position: 'absolute',
+                        flexDirection: 'row',
+                        right: 45,
+                      }}>
+                      <EnergyConsumed
+                        height={hp('6%')}
+                        width={wp('15%')}
+                        borderRadius={wp('10%') / 8}
+                      />
+                      <View style={{marginRight: wp('4%')}}>
+                        <Text
+                          style={{
+                            fontFamily: 'SF-Pro-Display-Medium',
+                            color: 'white',
+                            fontSize: wp('5%'),
+                          }}>
+                          Energy
+                        </Text>
+                        <Text
+                          style={{
+                            fontFamily: 'SF-Pro-Display-Regular',
+                            fontSize: wp('3.4%'),
+                            color: 'white',
+                          }}>
+                          Consumed
+                        </Text>
+                      </View>
+                    </View>
 
-              <TouchableOpacity style={styles.details}>
-                <Text style={styles.text}>Current</Text>
-                <Text style={styles.value}>{this.state.current} A</Text>
-              </TouchableOpacity>
+                    <View style={{marginRight: wp('2%')}}>
+                      <Text
+                        style={{
+                          fontSize: wp('5.6%'),
+                          color: 'white',
+                          fontFamily: 'SF-Pro-Display-Semibold',
+                          padding: wp('1%'),
+                          marginTop: wp('6%'),
+                          left: wp('22%'),
+                        }}>
+                        {this.state.energy} kWh
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </LinearGradient>
+
+              <LinearGradient
+                colors={['#2D9CDB', '#2C93CE']}
+                style={styles.box2}>
+                <View flexDirection="row">
+                  <View
+                    style={{
+                      position: 'absolute',
+                      flexDirection: 'row',
+                      left: -wp('3%'),
+                    }}>
+                    <Cost
+                      height={hp('6%')}
+                      width={wp('15%')}
+                      // margin={wp('1%')}
+                      right={wp('8%')}
+                      borderRadius={wp('10%') / 8}
+                      position={'absolute'}
+                    />
+                    <View style={{position: 'absolute', left: wp('-6%')}}>
+                      <Text
+                        style={{
+                          fontFamily: 'SF-Pro-Display-Medium',
+                          color: 'white',
+                          fontSize: wp('5%'),
+                        }}>
+                        Amount
+                      </Text>
+                      <Text
+                        style={{
+                          fontFamily: 'SF-Pro-Display-Regular',
+                          fontSize: wp('3.4%'),
+                          color: 'white',
+                        }}>
+                        Payable
+                      </Text>
+                    </View>
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: wp('6%'),
+                        color: 'white',
+                        fontFamily: 'SF-Pro-Display-Semibold',
+                        padding: wp('1%'),
+                        marginTop: wp('3%'),
+                        left: wp('20%'),
+                      }}>
+                      {'\u20B9'}
+                      {(
+                        this.state.energy * this.state.price +
+                        this.state.energy * this.state.price * 0.15
+                      ).toFixed(2)}
+                    </Text>
+                  </View>
+                </View>
+              </LinearGradient>
             </View>
             <View style={styles.switch}>
               <Switch
@@ -299,10 +454,6 @@ export default class Status extends Component {
                 {this.state.toggle ? 'ON' : 'OFF'}
               </Text>
               {/* <Text style={styles.textStyle}>{this.state.error}</Text> */}
-              {/* <Button
-                title="next"
-                onPress={() => this.props.navigation.replace('Pay')}
-              /> */}
             </View>
           </View>
         ) : (
@@ -341,13 +492,7 @@ const styles = StyleSheet.create({
     width: wp('20%'),
     fontSize: hp('2.5%'),
   },
-  value: {
-    color: 'black',
-    height: hp('6%'),
-    width: wp('33%'),
-    fontSize: hp('3.5%'),
-    backgroundColor: '#F4F4F4',
-  },
+
   switch: {
     height: hp('20%'),
     width: wp('80%'),
@@ -367,5 +512,35 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#344953',
+  },
+  box1: {
+    // backgroundColor: "#03AD70",
+    height: hp('13%'),
+    width: wp('74%'),
+    borderRadius: hp('20%') / 16,
+    padding: 5,
+    marginTop: hp('5%'),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  box2: {
+    // backgroundColor: "#2D9CDB",
+    height: hp('13%'),
+    width: wp('74%'),
+    borderRadius: hp('20%') / 16,
+    padding: 5,
+    marginTop: hp('5%'),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  box3: {
+    // backgroundColor: "#4B5358",
+    height: hp('13%'),
+    width: wp('74%'),
+    borderRadius: hp('20%') / 16,
+    padding: 5,
+    marginTop: hp('5%'),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

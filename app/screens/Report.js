@@ -17,6 +17,7 @@ import axios from 'axios';
 import {nameValidator} from '../helpers/nameValidator';
 import {numberValidator} from '../helpers/numberValidator';
 import {emailValidator} from '../helpers/emailValidator';
+import {msgValidator} from '../helpers/msgValidator';
 
 import CustomBackLight from '../components/CustomBackLight';
 import {Submit} from 'svg';
@@ -35,7 +36,7 @@ export default function FeedBack({navigation}) {
     const nameError = nameValidator(name.value);
     const numberError = numberValidator(number.value);
     const mailError = emailValidator(mail.value);
-    const msgError = nameValidator(msg.value);
+    const msgError = msgValidator(msg.value);
     if (nameError || numberError || mailError || msgError) {
       setName({...name, error: nameError});
       setNumber({...number, error: numberError});
