@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Image, Alert, BackHandler, Text} from 'react-native';
 import {
@@ -202,6 +201,7 @@ const styles = StyleSheet.create({
     paddingTop: 50,
 
     backgroundColor: 'white',
+    paddingTop: 50,
   },
 });
 

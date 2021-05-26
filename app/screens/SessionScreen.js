@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   FlatList,
   ActivityIndicator,
+  ImageBackground,
 } from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -50,18 +51,21 @@ function SessionScreen(props) {
   const header = () => {
     return (
       <View>
-        <Image style={styles.img} source={require('../assets/session.png')} />
+        <ImageBackground style={styles.img}
+          source={require('../assets/session.png')} >
 
-        <TouchableOpacity
-          activeOpacity={0.5}
-          style={{
-            position: 'absolute',
-            left: 12,
-            top: 20,
-          }}
-          onPress={() => props.navigation.goBack()}>
-          <CustomBack />
-        </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={{
+              marginTop: 30,
+              marginLeft: 8
+
+            }}
+            onPress={() => props.navigation.goBack()}>
+            <CustomBack />
+
+          </TouchableOpacity>
+        </ImageBackground>
       </View>
     );
   };
@@ -93,7 +97,7 @@ function SessionScreen(props) {
           ListHeaderComponent={header}
           stickyHeaderIndices={[0]}
           ListFooterComponent={renderFooter}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <SessionCard
               device={item.chargerId._id}
               loc={item.chargerId.address}
@@ -118,8 +122,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   img: {
-    height: hp('22%'),
-    width: wp('100%'),
+    height: 180,
+    width: "100%",
   },
   footer: {
     // padding: 10,
