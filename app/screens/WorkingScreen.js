@@ -19,7 +19,7 @@ function WorkingScreen({ navigation }) {
         <Image
           source={require("../assets/Back4.png")}
           style={{
-            height: 25, width: 25
+            height: 25.2, width: 25
           }}
         />
       </TouchableOpacity>

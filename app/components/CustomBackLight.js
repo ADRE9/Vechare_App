@@ -11,8 +11,8 @@ const CustomBackLight = () => (
 
 const styles = StyleSheet.create({
     image: {
-        width: 26,
-        height: 26,
+        width: 25,
+        height: 25.2,
     },
 });
 
