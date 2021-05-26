@@ -19,7 +19,7 @@ function WorkingScreen({ navigation }) {
         <Image
           source={require("../assets/Back4.png")}
           style={{
-            height: hp("4 % "), width: wp("7.5 % ")
+            height: 25, width: 25
           }}
         />
       </TouchableOpacity>
@@ -145,7 +145,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-
   },
   header: {
     fontFamily: "SF-Pro-Text-Semibold",
@@ -207,7 +206,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     marginRight: wp("16%"),
   },
-
 });
 
 export default WorkingScreen;

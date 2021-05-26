@@ -67,9 +67,8 @@ export default function Home({ navigation }) {
               style={{
                 fontSize: 28,
                 color: 'white',
-                position: 'absolute',
-                top: 30,
-                left: 40,
+                marginTop: 10,
+                marginRight: 158,
                 marginBottom: wp('15%'),
                 fontFamily: 'SF-Pro-Text-Bold',
               }}>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -8,6 +8,7 @@ import {
   ScrollView,
   SafeAreaView,
   FlatList,
+  ImageBackground,
 } from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -49,11 +50,11 @@ function StationScreen(props) {
           },
         });
         console.log(permission);
-        location = await RNLocation.getLatestLocation({timeout: 2000});
+        location = await RNLocation.getLatestLocation({ timeout: 2000 });
         console.log(location);
         isViewLocation(location);
       } else {
-        location = await RNLocation.getLatestLocation({timeout: 2000});
+        location = await RNLocation.getLatestLocation({ timeout: 2000 });
         console.log(location);
         isViewLocation(location);
       }
@@ -80,21 +81,25 @@ function StationScreen(props) {
 
     getLocation();
   }, []);
+
   const header = () => {
     return (
       <View>
-        <Image style={styles.img} source={require('../assets/stations.png')} />
+        <ImageBackground style={styles.img}
+          source={require('../assets/stations.png')} >
 
-        <TouchableOpacity
-          activeOpacity={0.5}
-          style={{
-            position: 'absolute',
-            left: 15,
-            top: 30,
-          }}
-          onPress={() => props.navigation.goBack()}>
-          <CustomBack />
-        </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={{
+              marginTop: 30,
+              marginLeft: 8
+
+            }}
+            onPress={() => props.navigation.goBack()}>
+            <CustomBack />
+
+          </TouchableOpacity>
+        </ImageBackground>
       </View>
     );
   };
@@ -107,7 +112,7 @@ function StationScreen(props) {
           data={value}
           ListHeaderComponent={header}
           stickyHeaderIndices={[0]}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <StationCard
               dis={(item.distance / 1000).toFixed(2)}
               loc={item.address}
@@ -128,8 +133,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   img: {
-    height: hp('16%'),
-    width: wp('100%'),
+    height: 120,
+    width: "100%",
   },
 });
 

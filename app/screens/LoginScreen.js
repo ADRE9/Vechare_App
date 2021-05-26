@@ -1,13 +1,12 @@
-/* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Image, Alert, BackHandler, Text} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Image, Alert, BackHandler, Text } from 'react-native';
 import {
   GoogleSignin,
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
-import {useFocusEffect} from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   heightPercentageToDP as hp,
@@ -15,7 +14,7 @@ import {
 } from 'react-native-responsive-screen';
 import axios from 'axios';
 import RNLocation from 'react-native-location';
-import {Login, Google} from 'svg';
+import { Login, Google } from 'svg';
 
 function LoginScreen(props) {
   useFocusEffect(
@@ -27,7 +26,7 @@ function LoginScreen(props) {
             onPress: () => null,
             style: 'cancel',
           },
-          {text: 'YES', onPress: () => BackHandler.exitApp()},
+          { text: 'YES', onPress: () => BackHandler.exitApp() },
         ]);
         return true;
       };
@@ -49,7 +48,7 @@ function LoginScreen(props) {
   const _signIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
-      const {accessToken, idToken} = await GoogleSignin.signIn();
+      const { accessToken, idToken } = await GoogleSignin.signIn();
       setloggedIn(true);
 
       const currentUser = await GoogleSignin.getCurrentUser();
@@ -103,7 +102,7 @@ function LoginScreen(props) {
       await AsyncStorage.setItem('googletoken', idToken);
       return props.navigation.reset({
         index: 0,
-        routes: [{name: 'RegisterPage'}],
+        routes: [{ name: 'RegisterPage' }],
       });
     } else {
       const tokendata = res.data.data.token;
@@ -114,7 +113,7 @@ function LoginScreen(props) {
       }
       return props.navigation.reset({
         index: 0,
-        routes: [{name: 'AppBottom'}],
+        routes: [{ name: 'AppBottom' }],
       });
     }
   };
@@ -157,11 +156,11 @@ function LoginScreen(props) {
           },
         });
         console.log(permission);
-        location = await RNLocation.getLatestLocation({timeout: 2000});
+        location = await RNLocation.getLatestLocation({ timeout: 2000 });
         // console.log(location);
         isViewLocation(location);
       } else {
-        location = await RNLocation.getLatestLocation({timeout: 2000});
+        location = await RNLocation.getLatestLocation({ timeout: 2000 });
         // console.log(location);
         isViewLocation(location);
       }
@@ -170,25 +169,26 @@ function LoginScreen(props) {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <View style={{marginBottom: hp('33%')}}>
-        <Login width={wp('70%')} height={hp('36%')} />
-        <Text
-          style={{
-            fontSize: 22,
-            fontFamily: 'SF-Pro-Display-Semibold',
-            fontWeight: 'bold',
-            color: 'black',
-            marginTop: hp('3%'),
-            marginLeft: wp('5%'),
-          }}>
-          Charge your vehicle {'\n'}with veCharge
-        </Text>
-      </View>
 
-      <View style={{position: 'absolute', top: 420, left: wp('19%')}}>
-        <Google width={wp('52%')} height={hp('10')} onPress={() => _signIn()} />
-      </View>
+    <View style={styles.container}>
+      <Login width={280} height={280} />
+      <Text
+        style={{
+          fontSize: 22,
+          fontFamily: 'SF-Pro-Display-Semibold',
+          color: '#030303',
+          marginRight: 20,
+          paddingVertical: 13,
+        }}>
+        Charge your vehicle {'\n'}with veCharge
+    </Text>
+
+      <Google
+        width={200}
+        height={100}
+        onPress={() => _signIn()}
+        marginRight={20}
+      />
     </View>
   );
 }
@@ -196,11 +196,9 @@ function LoginScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: hp('100%'),
-    width: wp('100%'),
+    alignItems: "center",
     backgroundColor: 'white',
+    paddingTop: 50,
   },
 });
 
