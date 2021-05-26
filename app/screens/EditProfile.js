@@ -17,7 +17,6 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   GoogleSignin,
-  GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 
@@ -43,9 +42,9 @@ function EditProfile({navigation}) {
     const _getCurrentUserInfo = async () => {
       try {
         let info = await GoogleSignin.signInSilently();
-        console.log('User Info --> ', info);
+        // console.log('User Info --> ', info);
         setUserInfo(info.user.photo);
-        console.log(info.user.photo);
+        // console.log(info.user.photo);
       } catch (error) {
         if (error.code === statusCodes.SIGN_IN_REQUIRED) {
           alert('User has not signed in yet');

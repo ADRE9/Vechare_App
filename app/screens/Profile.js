@@ -276,7 +276,7 @@ export default function Profile({navigation}) {
     const shareOptions = {
       message:
         'Are you the proud owner of an electric vehicle? \nOr are you thinking to buy one? \n \nCheck out veCharge - a mobile app to take care of all your EV needs! Locate charging points pre-book slots, monitor charging remotely & pay digitally for a seamless charging experience.\n \nPower up with veCharge ⚡\nDownload the app now ',
-      url: files.image1,
+      url: files.image,
     };
     try {
       await Share.open(shareOptions);
@@ -293,13 +293,7 @@ export default function Profile({navigation}) {
           <Text style={styles.textCont}>{name}</Text>
           <View flexDirection="column">
             <View flexDirection="row">
-              <Loc
-                height={hp('5%')}
-                width={wp('4%')}
-                position={'absolute'}
-                top={-hp('18.5%')}
-                left={wp('15%')}
-              />
+              <Loc height={15} width={14} top={-hp('18.5%')} left={wp('15%')} />
               <Text style={styles.textCont2}>Rohini/City , Delhi/State</Text>
             </View>
             <View

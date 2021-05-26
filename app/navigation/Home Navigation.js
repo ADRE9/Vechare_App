@@ -6,6 +6,7 @@ import SessionScreen from '../screens/SessionScreen';
 import HostScreen from '../screens/HostScreen';
 import RegisterHost from '../screens/RegisterHost';
 import BecomeHost from '../screens/BecomeHost';
+import QRScreen from '../screens/QRScreen';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ const HomeNavigation = ({navigation, route}) => {
       <Stack.Screen name="Host" component={HostScreen} />
       <Stack.Screen name="RegisterHost" component={RegisterHost} />
       <Stack.Screen name="BecomeHost" component={BecomeHost} />
+      <Stack.Screen name="QrScreen" component={QRScreen} />
     </Stack.Navigator>
   );
 };

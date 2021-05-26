@@ -56,7 +56,6 @@ function LoginScreen(props) {
       // setName(currentUser);
       await AsyncStorage.setItem('name', currentUser.user.name);
       await AsyncStorage.setItem('mail', currentUser.user.email);
-      await AsyncStorage.setItem('pic', currentUser.user.photo);
 
       const credential = auth.GoogleAuthProvider.credential(
         idToken,
@@ -172,24 +171,25 @@ function LoginScreen(props) {
 
   return (
     <View style={styles.container}>
-      <View style={{marginBottom: hp('33%')}}>
-        <Login width={wp('70%')} height={hp('36%')} />
-        <Text
-          style={{
-            fontSize: 22,
-            fontFamily: 'SF-Pro-Display-Semibold',
-            fontWeight: 'bold',
-            color: 'black',
-            marginTop: hp('3%'),
-            marginLeft: wp('5%'),
-          }}>
-          Charge your vehicle {'\n'}with veCharge
-        </Text>
-      </View>
+      {/* <Login width={wp('70%')} height={hp('36%')} /> */}
+      <Login width={280} height={280} />
+      <Text
+        style={{
+          fontSize: 22,
+          fontFamily: 'SF-Pro-Display-Semibold',
+          color: '#030303',
+          marginRight: 20,
+          paddingVertical: 13,
+        }}>
+        Charge your vehicle {'\n'}with veCharge
+      </Text>
 
-      <View style={{position: 'absolute', top: 420, left: wp('19%')}}>
-        <Google width={wp('52%')} height={hp('10')} onPress={() => _signIn()} />
-      </View>
+      <Google
+        width={200}
+        height={100}
+        onPress={() => _signIn()}
+        marginRight={20}
+      />
     </View>
   );
 }
@@ -197,10 +197,10 @@ function LoginScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
-    height: hp('100%'),
-    width: wp('100%'),
+    paddingTop: 50,
+
     backgroundColor: 'white',
   },
 });

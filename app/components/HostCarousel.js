@@ -1,4 +1,4 @@
-import React, { useCallback, memo, useRef, useState } from 'react';
+import React, {useCallback, memo, useRef, useState} from 'react';
 import {
   FlatList,
   View,
@@ -7,14 +7,14 @@ import {
   StyleSheet,
   Image,
   SafeAreaView,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
-const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
+const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
 // const slideList = Array.from({length: 3}).map((_, i) => {
 //   return {
@@ -49,22 +49,21 @@ const slideList = [
   },
 ];
 
-const Slide = memo(function Slide({ data }) {
+const Slide = memo(function Slide({data}) {
   return (
     <SafeAreaView style={styles.slide}>
       <View style={styles.container}>
         <Image source={data.image} style={styles.slideImage} />
       </View>
-      <View style={{ padding: 15, paddingHorizontal: 25 }}>
+      <View style={{padding: 15, paddingHorizontal: 25}}>
         <Text style={styles.slideTitle}>{data.title}</Text>
         <Text style={styles.slideSubtitle}>{data.subtitle}</Text>
       </View>
-
     </SafeAreaView>
   );
 });
 
-function Pagination({ index }) {
+function Pagination({index}) {
   return (
     <View style={styles.pagination} pointerEvents="none">
       {slideList.map((_, i) => {
@@ -122,21 +121,21 @@ export default function HostCarousel() {
     ),
   };
 
-  const renderItem = useCallback(function renderItem({ item }) {
+  const renderItem = useCallback(function renderItem({item}) {
     return <Slide data={item} />;
   }, []);
 
   return (
     <View
       style={{
-        height: 450,
-        justifyContent: 'center',
+        height: 430,
+        paddingTop: 15,
         alignItems: 'center',
-        // backgroundColor: 'yellow',
+        backgroundColor: 'white',
       }}>
       <FlatList
         data={slideList}
-        style={styles.carousel}
+        // style={styles.carousel}
         renderItem={renderItem}
         pagingEnabled
         horizontal
@@ -147,7 +146,6 @@ export default function HostCarousel() {
       />
 
       <Pagination index={index}></Pagination>
-
     </View>
   );
 }
@@ -176,22 +174,23 @@ const styles = StyleSheet.create({
     shadowRadius: 2.62,
     elevation: 4,
   },
-  slideImage: { width: windowWidth * 0.5, height: windowHeight * 0.23 },
+  slideImage: {width: 190, height: 158},
   slideTitle: {
-    fontSize: windowWidth > 350 ? 18 : 14,
-    marginTop: hp("6%"),
-    fontFamily: "SF-Pro-Text-Semibold",
-    color: "#0D0D0D"
+    fontSize: windowWidth > 350 ? 16 : 12,
+    marginTop: hp('6%'),
+    fontFamily: 'SF-Pro-Text-Semibold',
+    color: '#0D0D0D',
   },
   slideSubtitle: {
     fontSize: windowWidth > 350 ? 13 : 10,
-    marginTop: hp("0.5%"),
-    fontFamily: "SF-Pro-Text-Regular",
-    color: "#373737"
+    marginTop: hp('0.5%'),
+    fontFamily: 'SF-Pro-Text-Regular',
+    color: '#373737',
   },
 
   pagination: {
     position: 'absolute',
+    marginTop: 220,
     width: '100%',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -203,12 +202,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     marginTop: 15,
   },
-  paginationDotActive: { backgroundColor: '#069DFF' },
-  paginationDotInactive: { backgroundColor: '#DBDBDB' },
-
-  carousel: {
-    flex: 1,
-    // backgroundColor: 'yellow',
-    paddingTop: 15,
-  },
+  paginationDotActive: {backgroundColor: '#069DFF'},
+  paginationDotInactive: {backgroundColor: '#DBDBDB'},
 });

@@ -26,7 +26,7 @@ import moment from 'moment';
 import '../Constants/Useragent';
 
 function Date({tm}) {
-  return moment(tm).startOf('m').fromNow();
+  return moment(tm).startOf('minutes').fromNow();
 }
 
 export default class Status extends Component {
