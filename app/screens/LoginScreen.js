@@ -201,7 +201,6 @@ const styles = StyleSheet.create({
     paddingTop: 50,
 
     backgroundColor: 'white',
-    paddingTop: 50,
   },
 });
 

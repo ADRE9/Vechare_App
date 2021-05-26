@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -50,11 +50,11 @@ function StationScreen(props) {
           },
         });
         console.log(permission);
-        location = await RNLocation.getLatestLocation({ timeout: 2000 });
+        location = await RNLocation.getLatestLocation({timeout: 2000});
         console.log(location);
         isViewLocation(location);
       } else {
-        location = await RNLocation.getLatestLocation({ timeout: 2000 });
+        location = await RNLocation.getLatestLocation({timeout: 2000});
         console.log(location);
         isViewLocation(location);
       }
@@ -85,19 +85,17 @@ function StationScreen(props) {
   const header = () => {
     return (
       <View>
-        <ImageBackground style={styles.img}
-          source={require('../assets/stations.png')} >
-
+        <ImageBackground
+          style={styles.img}
+          source={require('../assets/stations.png')}>
           <TouchableOpacity
             activeOpacity={0.5}
             style={{
               marginTop: 30,
-              marginLeft: 8
-
+              marginLeft: 8,
             }}
             onPress={() => props.navigation.goBack()}>
             <CustomBack />
-
           </TouchableOpacity>
         </ImageBackground>
       </View>
@@ -112,7 +110,7 @@ function StationScreen(props) {
           data={value}
           ListHeaderComponent={header}
           stickyHeaderIndices={[0]}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <StationCard
               dis={(item.distance / 1000).toFixed(2)}
               loc={item.address}
@@ -134,7 +132,7 @@ const styles = StyleSheet.create({
   },
   img: {
     height: 120,
-    width: "100%",
+    width: '100%',
   },
 });
 
