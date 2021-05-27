@@ -54,7 +54,7 @@ import {
 } from 'svg';
 import {BoxShadow} from 'react-native-shadow';
 
-export default function Profile({navigation}) {
+function Profile({navigation}) {
   const [loggedIn, setloggedIn] = useState(false);
   const [user, setUser] = useState([]);
   const [paid, setPaid] = useState([]);
@@ -293,7 +293,7 @@ export default function Profile({navigation}) {
           <Text style={styles.textCont}>{name}</Text>
           <View flexDirection="column">
             <View flexDirection="row">
-              <Loc height={15} width={14} top={-hp('18.5%')} left={wp('15%')} />
+              <Loc height={15} width={14} top={-hp('17%')} left={wp('15%')} />
               <Text style={styles.textCont2}>Rohini/City , Delhi/State</Text>
             </View>
             <View
@@ -323,7 +323,7 @@ export default function Profile({navigation}) {
             }}
             onPress={() => navigation.navigate('Host')}>
             <BoxShadow setting={shadowOpt}>
-              <Host height={hp('8%')} width={wp('80%')} />
+              <Host height={hp('9%')} width={wp('86%')} />
             </BoxShadow>
           </TouchableOpacity>
         </View>
@@ -432,62 +432,61 @@ export default function Profile({navigation}) {
           <Text
             style={{
               color: '#292929',
-              fontSize: wp('3.6%'),
-              marginLeft: wp('0.3%'),
-              marginTop: wp('2%'),
+              fontSize: 16,
+              marginLeft: 8,
+              marginTop: 10,
             }}>
             Connect with us
           </Text>
           <View
             flexDirection="row"
             style={{
-              marginLeft: -wp('4%'),
-              marginTop: hp('1%'),
+              marginTop: 8,
             }}>
             <TouchableOpacity
               onPress={twitter}
               style={{
-                marginLeft: wp('4%'),
-                marginTop: wp('2%'),
+                marginLeft: 10,
+                marginTop: 8,
               }}
               activeOpacity={0.5}>
-              <Twitter height={hp('4.2%')} width={wp('7.8%')} />
+              <Twitter height={31.2} width={31} />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={fb}
               style={{
-                marginLeft: wp('4%'),
-                marginTop: wp('2%'),
+                marginLeft: 20,
+                marginTop: 8,
               }}
               activeOpacity={0.5}>
-              <Facebook height={hp('3.6%')} width={wp('7%')} />
+              <Facebook height={27.2} width={27} />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={intsa}
               style={{
-                marginLeft: wp('4%'),
-                marginTop: wp('2%'),
+                marginLeft: 20,
+                marginTop: 8,
               }}
               activeOpacity={0.5}>
-              <Instagram height={hp('3.6%')} width={wp('7%')} />
+              <Instagram height={26.2} width={27} />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={linkedIn}
               style={{
-                marginLeft: wp('4%'),
-                marginTop: wp('2%'),
+                marginLeft: 20,
+                marginTop: 8,
               }}
               activeOpacity={0.5}>
-              <LinkedIn height={hp('3.6%')} width={wp('7%')} />
+              <LinkedIn height={27.2} width={27} />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={website}
               style={{
-                marginLeft: wp('4%'),
-                marginTop: wp('2%'),
+                marginLeft: 20,
+                marginTop: 8,
               }}
               activeOpacity={0.5}>
-              <Web height={hp('3.6%')} width={wp('7%')} />
+              <Web height={27.2} width={27} />
             </TouchableOpacity>
           </View>
         </View>
@@ -700,11 +699,11 @@ const styles = StyleSheet.create({
     fontFamily: 'SF-Pro-Text-Semibold',
   },
   imgCont2: {
-    fontSize: wp('4%'),
+    fontSize: wp('3.3%'),
     color: '#292929',
     position: 'absolute',
     top: -hp('5%'),
-    left: wp('8%'),
+    marginLeft: wp('8%'),
     fontFamily: 'SF-Pro-Text-Medium',
   },
   imgCont3: {
@@ -742,3 +741,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
 });
+
+export default Profile;

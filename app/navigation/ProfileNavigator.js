@@ -1,4 +1,5 @@
 import React from 'react';
+import {View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import FeedBack from '../screens/FeedBack';
 import Profile from '../screens/Profile';
@@ -15,12 +16,15 @@ import Privacy from '../screens/Privacy';
 
 const Stack = createStackNavigator();
 
+import {ProfileHeader} from 'svg';
+
 const ProfileNavigator = ({navigation, route}) => {
   if (route.state && route.state.index > 0) {
     navigation.setOptions({tabBarVisible: false});
   } else {
     navigation.setOptions({tabBarVisible: true});
   }
+
   return (
     <Stack.Navigator
       initialRouteName="Profile"

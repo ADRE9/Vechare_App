@@ -1,14 +1,14 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Image, Text } from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Image, Text} from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
-import { Button } from 'react-native-elements';
+import {Button} from 'react-native-elements';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import { Screen1, NextBtn, Screen2, Screen3, Screen4 } from 'svg';
+import {Screen1, NextBtn, Screen2, Screen3, Screen4} from 'svg';
 
-const dots = ({ selected }) => {
+const dots = ({selected}) => {
   let backgroundColor;
   backgroundColor = selected ? '#069DFF' : '#DBDBDB';
 
@@ -27,28 +27,21 @@ const dots = ({ selected }) => {
   );
 };
 
-const Next = ({ ...props }) => (
-  // <Button
-  //   title="NEXT"
-  //   {...props}
-  //   containerStyle={{
-  //     marginLeft: wp('10%'),
-  //     marginBottom: hp('10%'),
-  //     marginRight: wp('10%'),
-  //   }}
-  //   buttonStyle={{ height: hp('7%'), width: wp('80%') }}
-  //   titleStyle={{ fontFamily: 'SF-Pro-Text-Bold' }}
-  // />
-  <TouchableOpacity style={styles.next} {...props}>
-    <Image
-      source={require("../assets/next.png")}
-      style={styles.nextImage}
-
-    />
-  </TouchableOpacity>
+const Next = ({...props}) => (
+  <View
+    style={{
+      alignItems: 'center',
+      width: '245%',
+      height: 200,
+      justifyContent: 'center',
+    }}>
+    <TouchableOpacity style={styles.next} {...props}>
+      <Image source={require('../assets/next.png')} style={styles.nextImage} />
+    </TouchableOpacity>
+  </View>
 );
 
-function OnBoardingScreen({ navigation }) {
+function OnBoardingScreen({navigation}) {
   return (
     <View style={styles.container}>
       <Onboarding
@@ -56,12 +49,12 @@ function OnBoardingScreen({ navigation }) {
         showSkip={false}
         bottomBarHighlight={false}
         NextButtonComponent={Next}
-        titleStyles={{ fontSize: 30, fontWeight: 'bold', bottom: 200 }} // set default color for the title
-        subTitleStyles={{ color: 'white' }}
+        titleStyles={{fontSize: 30, fontWeight: 'bold', bottom: 200}} // set default color for the title
+        subTitleStyles={{color: 'white'}}
         onDone={() =>
           navigation.reset({
             index: 0,
-            routes: [{ name: 'LoginPage' }],
+            routes: [{name: 'LoginPage'}],
           })
         }
         pages={[
@@ -76,7 +69,7 @@ function OnBoardingScreen({ navigation }) {
             ),
             title: 'CHECK PRICES',
             subtitle: '1',
-            containerStyles: { paddingBottom: 30 },
+            containerStyles: {paddingBottom: 30},
           },
           {
             backgroundColor: '#fff',
@@ -125,10 +118,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   next: {
-    marginBottom: 30,
-    marginRight: 40,
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    marginBottom: 50,
   },
   nextImage: {
     width: 300,
