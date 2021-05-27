@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -15,7 +15,7 @@ import {
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-import { ReceiptBtn, ReportBtn, Continue } from 'svg';
+import {ReceiptBtn, ReportBtn, Continue} from 'svg';
 import CustomBack from '../components/CustomBack';
 
 function FinalChargeDetails(props) {
@@ -70,9 +70,8 @@ function FinalChargeDetails(props) {
         <View>
           <ImageBackground
             source={require('../assets/chargeDetails.png')}
-            style={{ width: wp('100%'), height: hp('16%') }}
+            style={{width: wp('100%'), height: hp('16%')}}
             resizeMode="cover">
-
             {/* <TouchableOpacity
               activeOpacity={0.5}
               style={{
@@ -86,7 +85,7 @@ function FinalChargeDetails(props) {
           </ImageBackground>
         </View>
 
-        <View style={{ justifyContent: 'space-evenly', flexDirection: "row" }}>
+        <View style={{justifyContent: 'space-evenly', flexDirection: 'row'}}>
           <View style={styles.box1}>
             <View flexDirection="row">
               <Image
@@ -140,7 +139,6 @@ function FinalChargeDetails(props) {
               <Image
                 source={require('../assets/cost.png')}
                 style={{
-
                   height: 40,
                   width: 40,
                   marginLeft: 8,
@@ -229,11 +227,10 @@ function FinalChargeDetails(props) {
         </View>
         <View
           style={{
-            alignItems: "center",
+            alignItems: 'center',
             marginTop: 40,
           }}>
           <TouchableOpacity
-
             activeOpacity={0.5}
             onPress={() =>
               disconnect()
@@ -241,13 +238,11 @@ function FinalChargeDetails(props) {
                 .finally(() =>
                   props.navigation.reset({
                     index: 0,
-                    routes: [{ name: 'AppBottom' }],
+                    routes: [{name: 'AppBottom'}],
                   }),
                 )
             }>
-            <Continue
-              width={250}
-            />
+            <Continue width={250} />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -261,8 +256,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   header: {
-    color: "white",
-    fontFamily: "SF-Pro-Text-Bold",
+    color: 'white',
+    fontFamily: 'SF-Pro-Text-Bold',
     fontSize: 28,
     marginLeft: 40,
     marginTop: 30,
