@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  ImageBackground,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -51,32 +52,32 @@ export default function Home({navigation}) {
   return (
     <SafeAreaView style={styles.cont}>
       <ScrollView style={styles.cont}>
-        <View>
-          <HomeScreen width={wp('100%')} height={hp('22%')} />
-          <View
+        <ImageBackground
+          source={require('../assets/homeHeader.png')}
+          style={{
+            width: wp('100%'),
+            height: 150,
+          }}>
+          <Text
             style={{
-              position: 'absolute',
-              top: 0,
-              left: wp('-4%'),
-              right: 0,
-              bottom: 0,
-              justifyContent: 'center',
-              alignItems: 'center',
+              fontSize: 28,
+              color: 'white',
+              marginTop: 20,
+              marginLeft: 30,
+              fontFamily: 'SF-Pro-Text-Bold',
             }}>
-            <Text
-              style={{
-                fontSize: 28,
-                color: 'white',
-                marginTop: 10,
-                marginRight: 158,
-                marginBottom: wp('15%'),
-                fontFamily: 'SF-Pro-Text-Bold',
-              }}>
-              Hello {name},
-            </Text>
-          </View>
-        </View>
-
+            Hello {name},
+          </Text>
+          <Text
+            style={{
+              fontSize: 14,
+              color: 'white',
+              fontFamily: 'SF-Pro-Text-Regular',
+              marginLeft: 30,
+            }}>
+            Let's Charge your Vehicle
+          </Text>
+        </ImageBackground>
         <View>
           <TouchableOpacity
             onPress={() => navigation.navigate('Host')}
