@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -289,11 +288,11 @@ export default function Profile({ navigation }) {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <View>
-          <ProfileHeader width={wp('100%')} height={hp('28%')} />
+          <ProfileHeader width={'100%'} height={200} />
           <Text style={styles.textCont}>{name}</Text>
           <View flexDirection="column">
             <View flexDirection="row">
-              <Loc height={15} width={14} top={-hp('18.5%')} left={wp('15%')} />
+              <Loc height={15} width={14} marginTop={-hp('17%')} marginLeft={50} />
               <Text style={styles.textCont2}>Rohini/City , Delhi/State</Text>
             </View>
             <View
@@ -317,21 +316,31 @@ export default function Profile({ navigation }) {
           </Text>
           <TouchableOpacity
             style={{
-              position: 'absolute',
-              top: -hp('1%'),
-              left: -wp('5%'),
+              marginLeft: 30,
+              marginTop: 10,
             }}
             onPress={() => navigation.navigate('Host')}>
-            <BoxShadow setting={shadowOpt}>
-              <Host height={hp('8%')} width={wp('80%')} />
-            </BoxShadow>
+            {/* <BoxShadow setting={shadowOpt}> */}
+            {/* <Host
+              height={hp('8%')}
+              width={wp('80%')}
+
+            /> */}
+            <Image
+              source={require("../assets/hostProfile.png")}
+              style={{
+                height: 70,
+                width: 250,
+              }}
+            />
+            {/* </BoxShadow> */}
           </TouchableOpacity>
         </View>
 
         <View
           style={{
-            marginLeft: wp('8%'),
-            marginTop: wp('12%'),
+            marginLeft: 30,
+            marginTop: 10,
           }}>
           <TouchableOpacity
             onPress={() => navigation.navigate('Work')}
@@ -425,29 +434,25 @@ export default function Profile({ navigation }) {
             width: wp('30%'),
           }}>
           <TouchableOpacity onPress={() => sign()} activeOpacity={0.5}>
-            <Logout height={hp('10%')} width={wp('30%')} />
+            <Logout height={70} width={120} />
           </TouchableOpacity>
         </View>
-        <View style={{ marginLeft: wp('8%') }}>
+        <View style={{ marginLeft: 30 }}>
           <Text
             style={{
               color: '#292929',
               fontSize: 16,
-              marginLeft: 8,
               marginTop: 10,
             }}>
             Connect with us
           </Text>
           <View
-            flexDirection="row"
-            style={{
-              marginTop: 8,
-            }}
-          >
+            flexDirection="row">
+
             <TouchableOpacity
               onPress={twitter}
               style={{
-                marginLeft: 10,
+
                 marginTop: 8,
               }}
               activeOpacity={0.5}>
@@ -497,18 +502,20 @@ export default function Profile({ navigation }) {
           overlayStyle={{
             top: hp('25%'),
             flex: 0.5,
-            borderTopLeftRadius: 75,
-            borderTopRightRadius: 75,
+            // borderRadius: 80,
+            borderTopLeftRadius: 95,
+            borderTopRightRadius: 95,
             backgroundColor: '#F6F6F6',
+
           }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={{ width: wp('100%'), flex: 1, marginBottom: 50 }}>
+            style={{ width: wp('100%'), flex: 1, marginBottom: 20 }}>
             <Text
               style={{
                 fontSize: 30,
                 marginLeft: 20,
-                top: 5,
+                marginTop: 10,
                 padding: 10,
                 fontFamily: 'SF-Pro-Display-Medium',
                 color: 'black',
@@ -524,7 +531,7 @@ export default function Profile({ navigation }) {
                 style={{
                   paddingLeft: 15,
                   textAlignVertical: 'top',
-                  marginTop: 10,
+                  marginTop: 20,
                   width: '90%',
                   borderWidth: 1,
                   borderColor: '#525252',
@@ -536,19 +543,21 @@ export default function Profile({ navigation }) {
               />
             </KeyboardAvoidingView>
 
-            <View style={{ flexDirection: 'row' }}>
+            <View>
               <TouchableOpacity
                 onPress={toggleplay}
                 style={{
                   marginLeft: wp('70%'),
                   marginTop: hp('2%'),
+                  alignItems: "center",
+                  // justifyContent: "center",
                   backgroundColor: '#069DFF',
                   padding: 10,
-
-                  height: hp('6%'),
+                  height: 40,
+                  width: 80,
                   borderRadius: 10,
                 }}>
-                <Text style={{ fontSize: 15, color: 'white' }}>Submit</Text>
+                <Text style={{ fontSize: 14, color: 'white' }}>Submit</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -561,18 +570,18 @@ export default function Profile({ navigation }) {
             overlayStyle={{
               top: hp('25%'),
               flex: 0.5,
-              borderTopLeftRadius: 45,
-              borderTopRightRadius: 45,
+              borderTopLeftRadius: 95,
+              borderTopRightRadius: 95,
               backgroundColor: '#F6F6F6',
             }}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              style={{ width: wp('100%'), flex: 1, marginBottom: 50 }}>
+              style={{ width: wp('100%'), flex: 1, marginBottom: 20 }}>
               <Text
                 style={{
                   fontSize: 30,
                   marginLeft: 20,
-                  top: 5,
+                  marginTop: 10,
                   padding: 10,
                   fontFamily: 'SF-Pro-Display-Medium',
                   color: 'black',
@@ -584,9 +593,9 @@ export default function Profile({ navigation }) {
                 style={{
                   fontFamily: 'SF-Pro-Display-Regular',
                   color: '#252525',
-                  marginLeft: wp('8%'),
+                  marginLeft: 30,
                   fontSize: 20,
-                  marginTop: hp('2%'),
+                  marginTop: 8,
                 }}>
                 Please rate us on the Playstore too :)
               </Text>
@@ -660,13 +669,15 @@ export default function Profile({ navigation }) {
           </Overlay>
         )}
       </ScrollView>
-      {paid === false ? (
-        <UnpaidNotify
-          amount={amount}
-          onPress={() => onPay().finally(() => navigation.replace('PayDetail'))}
-        />
-      ) : null}
-    </SafeAreaView>
+      {
+        paid === false ? (
+          <UnpaidNotify
+            amount={amount}
+            onPress={() => onPay().finally(() => navigation.replace('PayDetail'))}
+          />
+        ) : null
+      }
+    </SafeAreaView >
   );
 }
 
@@ -677,7 +688,7 @@ const styles = StyleSheet.create({
   },
 
   textCont: {
-    fontSize: wp('8%'),
+    fontSize: 28,
     color: 'white',
     position: 'absolute',
     top: hp('4%'),
@@ -690,7 +701,7 @@ const styles = StyleSheet.create({
     fontSize: wp('3%'),
     position: 'absolute',
     top: -hp('17%'),
-    left: wp('20%'),
+    left: wp('17%'),
     fontFamily: 'SF-Pro-Text-Semibold',
   },
   textCont3: {
@@ -702,9 +713,8 @@ const styles = StyleSheet.create({
   imgCont2: {
     fontSize: wp('4%'),
     color: '#292929',
-    position: 'absolute',
-    top: -hp('5%'),
-    left: wp('8%'),
+    marginLeft: 30,
+    marginTop: -40,
     fontFamily: 'SF-Pro-Text-Medium',
   },
   imgCont3: {
