@@ -247,145 +247,124 @@ export default function Payment({navigation}) {
         <LinearGradient colors={['#4B5358', '#545B60']} style={styles.box3}>
           <View
             style={{
-              justifyContent: 'center',
-              alignItems: 'center',
               flexDirection: 'row',
             }}>
-            <View
-              style={{
-                flexDirection: 'row',
-              }}>
-              <Time
-                height={hp('6%')}
-                width={wp('15%')}
-                borderRadius={wp('10%') / 8}
-              />
-              <View>
-                <Text
-                  style={{
-                    fontFamily: 'SF-Pro-Display-Medium',
-                    color: 'white',
-                    fontSize: wp('5%'),
-                  }}>
-                  Time
-                </Text>
-                <Text
-                  style={{
-                    fontSize: wp('3.4%'),
-                    fontFamily: 'SF-Pro-Display-Regular',
-                    color: 'white',
-                  }}>
-                  Charged
-                </Text>
-              </View>
-            </View>
-            <View style={{marginRight: wp('2%')}}>
+            <Time
+              height={hp('6%')}
+              width={wp('15%')}
+              borderRadius={wp('10%') / 8}
+            />
+            <View>
               <Text
                 style={{
-                  fontSize: wp('5%'),
+                  fontFamily: 'SF-Pro-Display-Medium',
                   color: 'white',
-                  fontFamily: 'SF-Pro-Display-Semibold',
-                  padding: wp('1%'),
-                  marginTop: wp('6%'),
-                  marginLeft: wp('6%'),
+                  fontSize: wp('5%'),
                 }}>
-                <DateCh tm={time}></DateCh>
+                Time
+              </Text>
+              <Text
+                style={{
+                  fontSize: wp('3.4%'),
+                  fontFamily: 'SF-Pro-Display-Regular',
+                  color: 'white',
+                }}>
+                Charged
               </Text>
             </View>
+          </View>
+          <View style={{marginRight: wp('2%')}}>
+            <Text
+              style={{
+                fontSize: wp('5%'),
+                color: 'white',
+                fontFamily: 'SF-Pro-Display-Semibold',
+                padding: wp('1%'),
+              }}>
+              <DateCh tm={time}></DateCh>
+            </Text>
           </View>
         </LinearGradient>
 
         <LinearGradient colors={['#03AD70', '#059863']} style={styles.box1}>
-          <View style={{flexDirection: 'column'}}>
-            <View
-              flexDirection="row"
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <EnergyConsumed
-                height={hp('6%')}
-                width={wp('15%')}
-                borderRadius={wp('10%') / 8}
-              />
-              <View style={{marginRight: wp('4%')}}>
-                <Text
-                  style={{
-                    fontFamily: 'SF-Pro-Display-Medium',
-                    color: 'white',
-                    fontSize: wp('5%'),
-                  }}>
-                  Energy
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: 'SF-Pro-Display-Regular',
-                    fontSize: wp('3.4%'),
-                    color: 'white',
-                  }}>
-                  Consumed
-                </Text>
-              </View>
-              <View style={{marginRight: wp('2%')}}>
-                <Text
-                  style={{
-                    fontSize: wp('5.6%'),
-                    color: 'white',
-                    fontFamily: 'SF-Pro-Display-Semibold',
-                    padding: wp('1%'),
-                    marginTop: wp('6%'),
-                    marginLeft: wp('2%'),
-                  }}>
-                  {energy} kWh
-                </Text>
-              </View>
+          <View
+            style={{
+              flexDirection: 'row',
+            }}>
+            <EnergyConsumed
+              height={hp('6%')}
+              width={wp('15%')}
+              borderRadius={wp('10%') / 8}
+            />
+            <View style={{marginRight: wp('4%')}}>
+              <Text
+                style={{
+                  fontFamily: 'SF-Pro-Display-Medium',
+                  color: 'white',
+                  fontSize: wp('5%'),
+                }}>
+                Energy
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'SF-Pro-Display-Regular',
+                  fontSize: wp('3.4%'),
+                  color: 'white',
+                }}>
+                Consumed
+              </Text>
             </View>
           </View>
+
+          <Text
+            style={{
+              fontSize: wp('5.6%'),
+              color: 'white',
+              fontFamily: 'SF-Pro-Display-Semibold',
+              padding: wp('1%'),
+            }}>
+            {energy} kWh
+          </Text>
         </LinearGradient>
 
         <LinearGradient colors={['#2D9CDB', '#2C93CE']} style={styles.box2}>
           <View flexDirection="row">
-            <View flexDirection="row">
-              <Cost
-                height={hp('6%')}
-                width={wp('15%')}
-                // margin={wp('1%')}
-                right={wp('8%')}
-                borderRadius={wp('10%') / 8}
-                position={'absolute'}
-              />
-              <View style={{position: 'absolute', left: wp('-6%')}}>
-                <Text
-                  style={{
-                    fontFamily: 'SF-Pro-Display-Medium',
-                    color: 'white',
-                    fontSize: wp('5%'),
-                  }}>
-                  Amount
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: 'SF-Pro-Display-Regular',
-                    fontSize: wp('3.4%'),
-                    color: 'white',
-                  }}>
-                  Payable
-                </Text>
-              </View>
-            </View>
-            <View>
+            <Cost
+              height={hp('6%')}
+              width={wp('15%')}
+              // margin={wp('1%')}
+
+              borderRadius={wp('10%') / 8}
+            />
+            <View style={{marginLeft: wp('4%')}}>
               <Text
                 style={{
-                  fontSize: wp('6%'),
+                  fontFamily: 'SF-Pro-Display-Medium',
                   color: 'white',
-                  fontFamily: 'SF-Pro-Display-Semibold',
-                  padding: wp('1%'),
-                  marginTop: wp('3%'),
-                  left: wp('20%'),
+                  fontSize: wp('5%'),
                 }}>
-                {'\u20B9'} {amount}
+                Amount
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'SF-Pro-Display-Regular',
+                  fontSize: wp('3.4%'),
+                  color: 'white',
+                }}>
+                Payable
               </Text>
             </View>
+          </View>
+          <View>
+            <Text
+              style={{
+                fontSize: wp('6%'),
+                color: 'white',
+                fontFamily: 'SF-Pro-Display-Semibold',
+                padding: wp('1%'),
+              }}>
+              {'\u20B9'} {amount}
+            </Text>
           </View>
         </LinearGradient>
       </View>
@@ -449,8 +428,9 @@ const styles = StyleSheet.create({
     borderRadius: hp('20%') / 16,
     padding: 5,
     marginTop: hp('5%'),
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    flexDirection: 'row',
   },
   box2: {
     // backgroundColor: "#2D9CDB",
@@ -459,8 +439,9 @@ const styles = StyleSheet.create({
     borderRadius: hp('20%') / 16,
     padding: 5,
     marginTop: hp('5%'),
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    flexDirection: 'row',
   },
   box3: {
     // backgroundColor: "#4B5358",
@@ -469,7 +450,8 @@ const styles = StyleSheet.create({
     borderRadius: hp('20%') / 16,
     padding: 5,
     marginTop: hp('5%'),
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    flexDirection: 'row',
   },
 });
