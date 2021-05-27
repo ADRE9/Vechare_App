@@ -24,8 +24,8 @@ function HostScreen({ navigation }) {
       <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={{
-          marginTop: hp('2%'),
-          marginLeft: wp('8%'),
+          marginTop: 10,
+          marginLeft: 32,
         }}>
         <Image
           source={require('../assets/Back4.png')}
@@ -39,17 +39,15 @@ function HostScreen({ navigation }) {
         Power up {'\n'}your Parking with {'\n'}
         <Text style={{ color: '#2279B9' }}>veCharge Point</Text>
       </Text>
-      <HostCarousel />
-      <TouchableOpacity
-        activeOpacity={0.6}
-        style={{
-          position: 'absolute',
-          top: hp('85%'),
-          left: wp('14%'),
-        }}
-        onPress={() => navigation.navigate('RegisterHost')}>
-        <BecomeHostBtn width={wp('65%')} />
-      </TouchableOpacity>
+      <View>
+        <HostCarousel />
+        <TouchableOpacity
+          activeOpacity={0.6}
+          style={{ alignItems: 'center' }}
+          onPress={() => navigation.navigate('RegisterHost')}>
+          <BecomeHostBtn width={270} />
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -63,8 +61,8 @@ const styles = StyleSheet.create({
     fontFamily: 'SF-Pro-Display-Semibold',
     fontSize: 36,
     color: '#181725',
-    marginLeft: wp('10%'),
-    marginTop: hp('3%'),
+    marginLeft: 35,
+    marginTop: 10,
     letterSpacing: 1,
   },
 });

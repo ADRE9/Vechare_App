@@ -230,9 +230,8 @@ export default function Payment({navigation}) {
 
   return (
     <SafeAreaView style={styles.cont}>
-      <ScrollView style={styles.cont}>
-        <ChargeHeader width={wp('100%')} height={hp('16%')} />
-        {/* <TouchableOpacity
+      <ChargeHeader width={wp('100%')} height={hp('16%')} />
+      {/* <TouchableOpacity
           activeOpacity={0.5}
           style={{
             position: 'absolute',
@@ -242,187 +241,186 @@ export default function Payment({navigation}) {
           onPress={() => navigation.goBack()}>
           <CustomBack />
         </TouchableOpacity> */}
-        <View
-          flexDirection="column"
-          style={{alignItems: 'center', justifyContent: 'center'}}>
-          <LinearGradient colors={['#4B5358', '#545B60']} style={styles.box3}>
+      <View
+        flexDirection="column"
+        style={{alignItems: 'center', justifyContent: 'center'}}>
+        <LinearGradient colors={['#4B5358', '#545B60']} style={styles.box3}>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'row',
+            }}>
             <View
+              style={{
+                flexDirection: 'row',
+              }}>
+              <Time
+                height={hp('6%')}
+                width={wp('15%')}
+                borderRadius={wp('10%') / 8}
+              />
+              <View>
+                <Text
+                  style={{
+                    fontFamily: 'SF-Pro-Display-Medium',
+                    color: 'white',
+                    fontSize: wp('5%'),
+                  }}>
+                  Time
+                </Text>
+                <Text
+                  style={{
+                    fontSize: wp('3.4%'),
+                    fontFamily: 'SF-Pro-Display-Regular',
+                    color: 'white',
+                  }}>
+                  Charged
+                </Text>
+              </View>
+            </View>
+            <View style={{marginRight: wp('2%')}}>
+              <Text
+                style={{
+                  fontSize: wp('5%'),
+                  color: 'white',
+                  fontFamily: 'SF-Pro-Display-Semibold',
+                  padding: wp('1%'),
+                  marginTop: wp('6%'),
+                  marginLeft: wp('6%'),
+                }}>
+                <DateCh tm={time}></DateCh>
+              </Text>
+            </View>
+          </View>
+        </LinearGradient>
+
+        <LinearGradient colors={['#03AD70', '#059863']} style={styles.box1}>
+          <View style={{flexDirection: 'column'}}>
+            <View
+              flexDirection="row"
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
-                flexDirection: 'row',
               }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                }}>
-                <Time
-                  height={hp('6%')}
-                  width={wp('15%')}
-                  borderRadius={wp('10%') / 8}
-                />
-                <View>
-                  <Text
-                    style={{
-                      fontFamily: 'SF-Pro-Display-Medium',
-                      color: 'white',
-                      fontSize: wp('5%'),
-                    }}>
-                    Time
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: wp('3.4%'),
-                      fontFamily: 'SF-Pro-Display-Regular',
-                      color: 'white',
-                    }}>
-                    Charged
-                  </Text>
-                </View>
+              <EnergyConsumed
+                height={hp('6%')}
+                width={wp('15%')}
+                borderRadius={wp('10%') / 8}
+              />
+              <View style={{marginRight: wp('4%')}}>
+                <Text
+                  style={{
+                    fontFamily: 'SF-Pro-Display-Medium',
+                    color: 'white',
+                    fontSize: wp('5%'),
+                  }}>
+                  Energy
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'SF-Pro-Display-Regular',
+                    fontSize: wp('3.4%'),
+                    color: 'white',
+                  }}>
+                  Consumed
+                </Text>
               </View>
               <View style={{marginRight: wp('2%')}}>
                 <Text
                   style={{
-                    fontSize: wp('5%'),
+                    fontSize: wp('5.6%'),
                     color: 'white',
                     fontFamily: 'SF-Pro-Display-Semibold',
                     padding: wp('1%'),
                     marginTop: wp('6%'),
-                    marginLeft: wp('6%'),
+                    marginLeft: wp('2%'),
                   }}>
-                  <DateCh tm={time}></DateCh>
+                  {energy} kWh
                 </Text>
               </View>
             </View>
-          </LinearGradient>
+          </View>
+        </LinearGradient>
 
-          <LinearGradient colors={['#03AD70', '#059863']} style={styles.box1}>
-            <View style={{flexDirection: 'column'}}>
-              <View
-                flexDirection="row"
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <EnergyConsumed
-                  height={hp('6%')}
-                  width={wp('15%')}
-                  borderRadius={wp('10%') / 8}
-                />
-                <View style={{marginRight: wp('4%')}}>
-                  <Text
-                    style={{
-                      fontFamily: 'SF-Pro-Display-Medium',
-                      color: 'white',
-                      fontSize: wp('5%'),
-                    }}>
-                    Energy
-                  </Text>
-                  <Text
-                    style={{
-                      fontFamily: 'SF-Pro-Display-Regular',
-                      fontSize: wp('3.4%'),
-                      color: 'white',
-                    }}>
-                    Consumed
-                  </Text>
-                </View>
-                <View style={{marginRight: wp('2%')}}>
-                  <Text
-                    style={{
-                      fontSize: wp('5.6%'),
-                      color: 'white',
-                      fontFamily: 'SF-Pro-Display-Semibold',
-                      padding: wp('1%'),
-                      marginTop: wp('6%'),
-                      marginLeft: wp('2%'),
-                    }}>
-                    {energy} kWh
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </LinearGradient>
-
-          <LinearGradient colors={['#2D9CDB', '#2C93CE']} style={styles.box2}>
+        <LinearGradient colors={['#2D9CDB', '#2C93CE']} style={styles.box2}>
+          <View flexDirection="row">
             <View flexDirection="row">
-              <View flexDirection="row">
-                <Cost
-                  height={hp('6%')}
-                  width={wp('15%')}
-                  // margin={wp('1%')}
-                  right={wp('8%')}
-                  borderRadius={wp('10%') / 8}
-                  position={'absolute'}
-                />
-                <View style={{position: 'absolute', left: wp('-6%')}}>
-                  <Text
-                    style={{
-                      fontFamily: 'SF-Pro-Display-Medium',
-                      color: 'white',
-                      fontSize: wp('5%'),
-                    }}>
-                    Amount
-                  </Text>
-                  <Text
-                    style={{
-                      fontFamily: 'SF-Pro-Display-Regular',
-                      fontSize: wp('3.4%'),
-                      color: 'white',
-                    }}>
-                    Payable
-                  </Text>
-                </View>
-              </View>
-              <View>
+              <Cost
+                height={hp('6%')}
+                width={wp('15%')}
+                // margin={wp('1%')}
+                right={wp('8%')}
+                borderRadius={wp('10%') / 8}
+                position={'absolute'}
+              />
+              <View style={{position: 'absolute', left: wp('-6%')}}>
                 <Text
                   style={{
-                    fontSize: wp('6%'),
+                    fontFamily: 'SF-Pro-Display-Medium',
                     color: 'white',
-                    fontFamily: 'SF-Pro-Display-Semibold',
-                    padding: wp('1%'),
-                    marginTop: wp('3%'),
-                    left: wp('20%'),
+                    fontSize: wp('5%'),
                   }}>
-                  {'\u20B9'} {amount}
+                  Amount
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'SF-Pro-Display-Regular',
+                    fontSize: wp('3.4%'),
+                    color: 'white',
+                  }}>
+                  Payable
                 </Text>
               </View>
             </View>
-          </LinearGradient>
-        </View>
-        <BoxShadow setting={shadowOpt}>
-          <View
-            flexDirection="row"
-            style={{
-              alignItems: 'center',
-              height: hp('11%'),
-              marginTop: wp('35%'),
-              backgroundColor: 'white',
-            }}>
-            <Text
-              style={{
-                fontFamily: 'SF-Pro-Display-Semibold',
-                marginLeft: wp('5%'),
-                fontSize: wp('5.6%'),
-                marginTop: wp('1%'),
-                color: 'black',
-              }}>
-              {'\u20B9'} {amount}
-            </Text>
-
-            <TouchableOpacity
-              style={{
-                left: wp('45%'),
-                borderRadius: wp('8%') / 4,
-                position: 'absolute',
-                marginBottom: wp('3%'),
-              }}
-              onPress={() => onPay()}>
-              <PayBtn height={hp('5%')} width={wp('50%')} />
-            </TouchableOpacity>
+            <View>
+              <Text
+                style={{
+                  fontSize: wp('6%'),
+                  color: 'white',
+                  fontFamily: 'SF-Pro-Display-Semibold',
+                  padding: wp('1%'),
+                  marginTop: wp('3%'),
+                  left: wp('20%'),
+                }}>
+                {'\u20B9'} {amount}
+              </Text>
+            </View>
           </View>
-        </BoxShadow>
-      </ScrollView>
+        </LinearGradient>
+      </View>
+      <BoxShadow setting={shadowOpt}>
+        <View
+          flexDirection="row"
+          style={{
+            alignItems: 'center',
+            height: hp('11%'),
+            marginTop: wp('35%'),
+            backgroundColor: 'white',
+          }}>
+          <Text
+            style={{
+              fontFamily: 'SF-Pro-Display-Semibold',
+              marginLeft: wp('5%'),
+              fontSize: wp('5.6%'),
+              marginTop: wp('1%'),
+              color: 'black',
+            }}>
+            {'\u20B9'} {amount}
+          </Text>
+
+          <TouchableOpacity
+            style={{
+              left: wp('45%'),
+              borderRadius: wp('8%') / 4,
+              position: 'absolute',
+              marginBottom: wp('3%'),
+            }}
+            onPress={() => onPay()}>
+            <PayBtn height={hp('5%')} width={wp('50%')} />
+          </TouchableOpacity>
+        </View>
+      </BoxShadow>
     </SafeAreaView>
   );
 }

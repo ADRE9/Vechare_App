@@ -14,6 +14,11 @@ import {
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
+
 import { nameValidator } from '../helpers/nameValidator';
 import { numberValidator } from '../helpers/numberValidator';
 import { emailValidator } from '../helpers/emailValidator';
@@ -29,6 +34,30 @@ export default function FeedBack({ navigation }) {
   const [mail, setMail] = useState({ value: '', error: '' });
   const [msg, setMsg] = useState({ value: '', error: '' });
   const [loading, setLoading] = useState();
+  const [userInfo, setUserInfo] = useState(null);
+  const [usermail, setUsermail] = useState(null);
+
+  // useEffect(() => {
+  //   const _getCurrentUserInfo = async () => {
+  //     try {
+  //       let info = await GoogleSignin.signInSilently();
+  //       // console.log('User Info --> ', info);
+  //       setUserInfo(info.user.name);
+  //       setUsermail(info.user.email);
+  //       // console.log(info.user.photo);
+  //     } catch (error) {
+  //       if (error.code === statusCodes.SIGN_IN_REQUIRED) {
+  //         alert('User has not signed in yet');
+  //         console.log('User has not signed in yet');
+  //       } else {
+  //         alert("Unable to get user's info");
+  //         console.log("Unable to get user's info");
+  //       }
+  //     }
+  //   };
+  //   _getCurrentUserInfo();
+  //   console.log('Report  SCreen');
+  // }, []);
 
   const onSignUpPressed = async () => {
     const nameError = nameValidator(name.value);
