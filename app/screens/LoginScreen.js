@@ -139,7 +139,7 @@ function LoginScreen(props) {
         },
       });
 
-      console.log(permission);
+      // console.log(permission);
 
       let location;
       if (!permission) {

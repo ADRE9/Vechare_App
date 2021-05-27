@@ -24,31 +24,29 @@ function UnpaidNotify({onPress, amount}) {
       <ImageBackground
         source={require('../assets/fail.png')}
         style={{width: wp('100%'), height: hp('35%')}}
-        resizeMode="cover"
-      />
-      <Text style={styles.heading}>Confirm Payment</Text>
-      <Text style={styles.sub}>
-        Please pay your dues from last charging session.
-      </Text>
-      <View flexDirection="row">
-        <View>
+        resizeMode="cover">
+        <Text style={styles.heading}>Confirm Payment</Text>
+        <Text style={styles.sub}>
+          Please pay your dues from last charging session.
+        </Text>
+        <View flexDirection="row">
           <Text style={styles.subtxt}>
             To continue using the veCharge, please pay
           </Text>
-        </View>
-        <View>
+
           <Text style={styles.txt}>₹ {amount}</Text>
         </View>
-      </View>
-      <TouchableOpacity onPress={onPress} style={styles.btn}>
-        <Image
-          source={require('../assets/unpayment.png')}
-          style={{
-            height: hp('5%'),
-            width: wp('30%'),
-          }}
-        />
-      </TouchableOpacity>
+
+        <TouchableOpacity onPress={onPress} style={styles.btn}>
+          <Image
+            source={require('../assets/unpayment.png')}
+            style={{
+              height: 40,
+              width: 130,
+            }}
+          />
+        </TouchableOpacity>
+      </ImageBackground>
     </View>
   );
 }
@@ -62,20 +60,16 @@ const styles = StyleSheet.create({
     top: 440,
   },
   btn: {
-    position: 'absolute',
-    marginTop: windowWidth > 350 ? 180 : 140,
     marginLeft: 30,
+    marginTop: 15,
   },
   txt: {
-    position: 'absolute',
-    marginTop: -120,
     marginLeft: 270,
     fontSize: windowWidth > 350 ? 24 : 20,
     color: 'white',
     fontFamily: 'SF-Pro-Display-Semibold',
   },
   heading: {
-    position: 'absolute',
     marginTop: 60,
     marginLeft: 30,
     fontSize: windowWidth > 350 ? 24 : 20,
@@ -83,16 +77,13 @@ const styles = StyleSheet.create({
     fontFamily: 'SF-Pro-Display-Semibold',
   },
   sub: {
-    position: 'absolute',
-    marginTop: 92,
     marginLeft: 30,
     fontSize: windowWidth > 350 ? 16 : 13,
     color: 'white',
     fontFamily: 'SF-Pro-Display-Medium',
   },
   subtxt: {
-    position: 'absolute',
-    marginTop: -110,
+    marginTop: 25,
     marginLeft: 32,
     fontSize: windowWidth > 350 ? 12 : 9,
     color: 'white',

@@ -18,6 +18,8 @@ import {
 } from 'react-native-responsive-screen';
 import RNLocation from 'react-native-location';
 import LottieView from 'lottie-react-native';
+import axios from 'axios';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {Navigate, ChargeNow, ChargeBox, Tick} from 'svg';
@@ -29,6 +31,8 @@ export default function Carousel() {
   const [value, setdata] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [viewLocation, isViewLocation] = useState([]);
+  const [latitude, setLatitude] = useState([]);
+  const [longitude, setLongitude] = useState([]);
   indexRef.current = index;
 
   function Pagination({index}) {
@@ -102,8 +106,16 @@ export default function Carousel() {
         console.log(location);
         isViewLocation(location);
       }
-      const lat = location.latitude;
-      const long = location.longitude;
+
+      setLatitude(location.latitude);
+      setLongitude(location.longitude);
+    };
+
+    getLocation();
+  }, []);
+
+  useEffect(() => {
+    async function location() {
       const token = `Bearer ${await AsyncStorage.getItem('token')}`;
       const res = await fetch(
         `https://vecharge.app/api/v1/charger/nearestChargers/?page=1&limit=3`,
@@ -115,7 +127,7 @@ export default function Carousel() {
           },
           body: JSON.stringify({
             isActive: true,
-            coordinates: [long, lat],
+            coordinates: [longitude, latitude],
           }),
         },
       )
@@ -123,14 +135,9 @@ export default function Carousel() {
         .finally(() => setLoading(false));
       const resData = await res.json();
       setdata(resData.data.nearestChargers);
-      console.log(
-        'Location of device',
-        resData.data.nearestChargers[0].location.coordinates[1],
-      );
-    };
-
-    getLocation();
-  }, []);
+    }
+    location();
+  });
 
   const flatListOptimizationProps = {
     initialNumToRender: 0,
@@ -161,7 +168,7 @@ export default function Carousel() {
       <TouchableOpacity activeOpacity={0.4} onPress={openGps}>
         <Navigate
           height={hp('8%')}
-          width={wp('20%')}
+          width={wp('26%')}
           borderRadius={hp('4%') / 4}
           marginTop={-wp('2%')}
         />
@@ -226,9 +233,23 @@ export default function Carousel() {
                       <TouchableOpacity
                         style={{
                           backgroundColor: '#CAEAFF',
-                          padding: wp('1.5%'),
-                          borderRadius: wp('10%') / 4,
-                          marginLeft: wp('20%'),
+                          padding: wp('2%'),
+                          borderRadius: wp('10%') / 2,
+                          marginLeft: wp('4%'),
+                          marginTop: -wp('1%'),
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <Text style={{fontSize: wp('3%'), fontWeight: 'bold'}}>
+                          {'\u20B9'} {item.price}/KwH
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          backgroundColor: '#CAEAFF',
+                          padding: wp('2%'),
+                          borderRadius: wp('10%') / 2,
+                          marginLeft: wp('4%'),
                           marginTop: -wp('1%'),
                           alignItems: 'center',
                           justifyContent: 'center',
@@ -267,7 +288,7 @@ export default function Carousel() {
                     style={{left: wp('3%')}}>
                     <ChargeNow
                       height={hp('8%')}
-                      width={wp('20%')}
+                      width={wp('26%')}
                       borderRadius={hp('4%') / 4}
                       marginTop={-wp('2%')}
                     />

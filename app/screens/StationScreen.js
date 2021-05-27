@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   FlatList,
   ImageBackground,
+  ActivityIndicator,
 } from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -22,6 +23,7 @@ import CustomBack from '../components/CustomBack';
 function StationScreen(props) {
   const [value, setdata] = useState([]);
   const [viewLocation, isViewLocation] = useState([]);
+  const [loading, setloading] = useState(null);
 
   useEffect(() => {
     const getLocation = async () => {
@@ -60,9 +62,10 @@ function StationScreen(props) {
       }
       const lat = location.latitude;
       const long = location.longitude;
+      setloading(true);
       const token = `Bearer ${await AsyncStorage.getItem('token')}`;
       const res = await fetch(
-        `https://vecharge.app/api/v1/charger/nearestChargers/?page=1&limit=3`,
+        `https://vecharge.app/api/v1/charger/nearestChargers`,
         {
           method: 'POST',
           headers: {
@@ -77,6 +80,7 @@ function StationScreen(props) {
       );
       const resData = await res.json();
       setdata(resData.data.nearestChargers);
+      setloading(false);
     };
 
     getLocation();
@@ -104,23 +108,27 @@ function StationScreen(props) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
-        <FlatList
-          keyExtractor={(item) => item._id}
-          data={value}
-          ListHeaderComponent={header}
-          stickyHeaderIndices={[0]}
-          renderItem={({item}) => (
-            <StationCard
-              dis={(item.distance / 1000).toFixed(2)}
-              loc={item.address}
-              device={item._id}
-              lat={item.location.coordinates[1]}
-              long={item.location.coordinates[0]}
-            />
-          )}
-        />
-      </View>
+      {loading === true ? (
+        <ActivityIndicator size="large" color="#069DFF" />
+      ) : (
+        <View>
+          <FlatList
+            keyExtractor={(item) => item._id}
+            data={value}
+            ListHeaderComponent={header}
+            stickyHeaderIndices={[0]}
+            renderItem={({item}) => (
+              <StationCard
+                dis={(item.distance / 1000).toFixed(2)}
+                loc={item.address}
+                device={item._id}
+                lat={item.location.coordinates[1]}
+                long={item.location.coordinates[0]}
+              />
+            )}
+          />
+        </View>
+      )}
     </SafeAreaView>
   );
 }

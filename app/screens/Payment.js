@@ -60,7 +60,13 @@ export default function Payment({navigation}) {
   );
 
   function DateCh({tm}) {
-    return moment(tm).startOf('minutes').fromNow();
+    let th1 = moment(tm).utcOffset('+05:30').format('h');
+    let tm1 = moment(tm).utcOffset('+05:30').format('mm');
+    let th2 = moment().utcOffset('+05:30').format('h');
+    let tm2 = moment().utcOffset('+05:30').format('mm');
+    let hr = th2 - th1 + ' ' + 'hr' + ' ' + (tm2 - tm1) + 'min';
+
+    return hr;
   }
   // useEffect(() => {
   //   async function value() {
@@ -366,8 +372,13 @@ export default function Payment({navigation}) {
           shadowColor: 'black',
           elevation: 20,
           borderWidth: 0.18,
-          marginTop: 120,
+          marginTop: 678,
           backgroundColor: 'white',
+          position: 'absolute',
+          width: '100%',
+          bottom: 0,
+          left: 0,
+          right: 0,
         }}>
         <Text
           style={{

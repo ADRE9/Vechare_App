@@ -12,13 +12,6 @@ import LoginScreen from './app/screens/LoginScreen';
 import RegisterScreen from './app/screens/RegisterScreen';
 import PaymentNavigation from './app/navigation/PaymentNavigation';
 import DetailNavigation from './app/navigation/DetailNavigation';
-import FinalChargeDetails from './app/screens/FinalChargeDetails';
-
-import OnBoardingScreen from './app/screens/onBoardingScreen';
-import HostScreen from './app/screens/HostScreen';
-import Status from './app/screens/Status';
-import BillingScreen from './app/screens/BillingScreen';
-import Home from './app/screens/home';
 
 const Stack = createStackNavigator();
 function App() {
