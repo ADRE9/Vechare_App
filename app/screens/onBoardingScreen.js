@@ -116,6 +116,7 @@ function OnBoardingScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   },
   next: {
     marginBottom: 50,
@@ -124,6 +125,7 @@ const styles = StyleSheet.create({
     width: 300,
     height: 50,
     borderRadius: 4,
+    alignSelf: 'center',
   },
 });
 

@@ -11,9 +11,9 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import {Work1, Img1, Img2, Img3, BecomeHostBtn} from 'svg';
+import { Work1, Img1, Img2, Img3, BecomeHostBtn } from 'svg';
 
-function WorkingScreen({navigation}) {
+function WorkingScreen({ navigation }) {
   return (
     <ScrollView style={styles.container}>
       <TouchableOpacity
@@ -25,8 +25,7 @@ function WorkingScreen({navigation}) {
         <Image
           source={require('../assets/Back4.png')}
           style={{
-            height: 25.2,
-            width: 25,
+            height: 25.2, width: 25
           }}
         />
       </TouchableOpacity>
