@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
   StyleSheet,
@@ -17,17 +17,17 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RazorpayCheckout from 'react-native-razorpay';
 import LinearGradient from 'react-native-linear-gradient';
-import {Cost, EnergyConsumed, Time, ChargeHeader, PayBtn} from 'svg';
-import {BoxShadow} from 'react-native-shadow';
+import { Cost, EnergyConsumed, Time, ChargeHeader, PayBtn } from 'svg';
+import { BoxShadow } from 'react-native-shadow';
 
 import moment from 'moment';
 
-import {RazorpayApiKey} from '../Constants/config';
+import { RazorpayApiKey } from '../Constants/config';
 
 import '../Constants/Useragent';
 import CustomBack from '../components/CustomBack';
 
-export default function Payment({navigation}) {
+export default function Payment({ navigation }) {
   // const [isLoading, setLoading] = useState(true);
   const [amount, setAmount] = useState([]);
   const [energy, setEnergy] = useState([]);
@@ -59,7 +59,7 @@ export default function Payment({navigation}) {
     chargeHours + ' ' + chargeMinutes,
   );
 
-  function DateCh({tm}) {
+  function DateCh({ tm }) {
     return moment(tm).startOf('minutes').fromNow();
   }
   // useEffect(() => {
@@ -200,13 +200,13 @@ export default function Payment({navigation}) {
         contact: 'Add Contact here',
         name: name,
       },
-      theme: {color: '#a29bfe'},
+      theme: { color: '#a29bfe' },
     };
 
     RazorpayCheckout.open(options)
       .then(async function (response) {
         const config = {
-          headers: {Authorization: token},
+          headers: { Authorization: token },
         };
         const data = {
           orderCreationId: pytId,
@@ -224,13 +224,13 @@ export default function Payment({navigation}) {
       })
       .finally(() => navigation.replace('PayDetail'))
       .catch((err) => {
-        navigation.replace('AppBottom', {err});
+        navigation.replace('AppBottom', { err });
       });
   };
 
   return (
     <SafeAreaView style={styles.cont}>
-      <ChargeHeader width={wp('100%')} height={hp('16%')} />
+      <ChargeHeader width={wp('100%')} height={120} />
       {/* <TouchableOpacity
           activeOpacity={0.5}
           style={{
@@ -242,8 +242,8 @@ export default function Payment({navigation}) {
           <CustomBack />
         </TouchableOpacity> */}
       <View
-        flexDirection="column"
-        style={{alignItems: 'center', justifyContent: 'center'}}>
+
+        style={{ alignItems: 'center', justifyContent: 'center' }}>
         <LinearGradient colors={['#4B5358', '#545B60']} style={styles.box3}>
           <View
             style={{
@@ -259,13 +259,13 @@ export default function Payment({navigation}) {
                 style={{
                   fontFamily: 'SF-Pro-Display-Medium',
                   color: 'white',
-                  fontSize: wp('5%'),
+                  fontSize: 20,
                 }}>
                 Time
               </Text>
               <Text
                 style={{
-                  fontSize: wp('3.4%'),
+                  fontSize: 14,
                   fontFamily: 'SF-Pro-Display-Regular',
                   color: 'white',
                 }}>
@@ -273,13 +273,13 @@ export default function Payment({navigation}) {
               </Text>
             </View>
           </View>
-          <View style={{marginRight: wp('2%')}}>
+          <View style={{ marginRight: 10 }}>
             <Text
               style={{
-                fontSize: wp('5%'),
+                fontSize: 22,
                 color: 'white',
                 fontFamily: 'SF-Pro-Display-Semibold',
-                padding: wp('1%'),
+                padding: 3,
               }}>
               <DateCh tm={time}></DateCh>
             </Text>
@@ -294,21 +294,21 @@ export default function Payment({navigation}) {
             <EnergyConsumed
               height={hp('6%')}
               width={wp('15%')}
-              borderRadius={wp('10%') / 8}
+
             />
-            <View style={{marginRight: wp('4%')}}>
+            <View style={{ marginRight: wp('4%') }}>
               <Text
                 style={{
                   fontFamily: 'SF-Pro-Display-Medium',
                   color: 'white',
-                  fontSize: wp('5%'),
+                  fontSize: 20,
                 }}>
                 Energy
               </Text>
               <Text
                 style={{
                   fontFamily: 'SF-Pro-Display-Regular',
-                  fontSize: wp('3.4%'),
+                  fontSize: 14,
                   color: 'white',
                 }}>
                 Consumed
@@ -318,10 +318,10 @@ export default function Payment({navigation}) {
 
           <Text
             style={{
-              fontSize: wp('5.6%'),
+              fontSize: 22,
               color: 'white',
               fontFamily: 'SF-Pro-Display-Semibold',
-              padding: wp('1%'),
+              padding: 3,
             }}>
             {energy} kWh
           </Text>
@@ -332,23 +332,21 @@ export default function Payment({navigation}) {
             <Cost
               height={hp('6%')}
               width={wp('15%')}
-              // margin={wp('1%')}
 
-              borderRadius={wp('10%') / 8}
             />
-            <View style={{marginLeft: wp('4%')}}>
+            <View >
               <Text
                 style={{
                   fontFamily: 'SF-Pro-Display-Medium',
                   color: 'white',
-                  fontSize: wp('5%'),
+                  fontSize: 20,
                 }}>
                 Amount
               </Text>
               <Text
                 style={{
                   fontFamily: 'SF-Pro-Display-Regular',
-                  fontSize: wp('3.4%'),
+                  fontSize: 14,
                   color: 'white',
                 }}>
                 Payable
@@ -358,49 +356,52 @@ export default function Payment({navigation}) {
           <View>
             <Text
               style={{
-                fontSize: wp('6%'),
+                fontSize: 22,
                 color: 'white',
                 fontFamily: 'SF-Pro-Display-Semibold',
-                padding: wp('1%'),
+                padding: 3,
               }}>
               {'\u20B9'} {amount}
             </Text>
           </View>
         </LinearGradient>
       </View>
-      <BoxShadow setting={shadowOpt}>
-        <View
-          flexDirection="row"
-          style={{
-            alignItems: 'center',
-            height: hp('11%'),
-            marginTop: wp('35%'),
-            backgroundColor: 'white',
-          }}>
-          <Text
-            style={{
-              fontFamily: 'SF-Pro-Display-Semibold',
-              marginLeft: wp('5%'),
-              fontSize: wp('5.6%'),
-              marginTop: wp('1%'),
-              color: 'black',
-            }}>
-            {'\u20B9'} {amount}
-          </Text>
+      {/* <BoxShadow setting={shadowOpt}> */}
+      <View
+        style={{
+          alignItems: 'center',
+          flexDirection: "row",
+          height: 80,
+          shadowColor: "black",
+          elevation: 20,
+          borderWidth: 0.18,
+          marginTop: 120,
+          backgroundColor: 'white',
 
-          <TouchableOpacity
-            style={{
-              left: wp('45%'),
-              borderRadius: wp('8%') / 4,
-              position: 'absolute',
-              marginBottom: wp('3%'),
-            }}
-            onPress={() => onPay()}>
-            <PayBtn height={hp('5%')} width={wp('50%')} />
-          </TouchableOpacity>
-        </View>
-      </BoxShadow>
-    </SafeAreaView>
+        }}>
+        <Text
+          style={{
+            fontFamily: 'SF-Pro-Display-Semibold',
+            marginLeft: wp('5%'),
+            fontSize: wp('5.6%'),
+            marginTop: wp('1%'),
+            color: 'black',
+          }}>
+          {'\u20B9'} {amount}
+        </Text>
+
+        <TouchableOpacity
+          style={{
+            marginRight: 30,
+            marginLeft: "40%",
+
+          }}
+          onPress={() => onPay()}>
+          <PayBtn width={180} />
+        </TouchableOpacity>
+      </View>
+      {/* </BoxShadow> */}
+    </SafeAreaView >
   );
 }
 
@@ -409,11 +410,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  // back: {
-  //   position: 'absolute',
-  //   top: 35,
-  //   left: 15,
-  // },
   txt: {
     color: 'white',
     fontSize: wp('8%'),
