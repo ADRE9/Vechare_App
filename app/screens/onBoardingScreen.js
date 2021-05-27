@@ -39,13 +39,14 @@ const Next = ({ ...props }) => (
   //   buttonStyle={{ height: hp('7%'), width: wp('80%') }}
   //   titleStyle={{ fontFamily: 'SF-Pro-Text-Bold' }}
   // />
-  <TouchableOpacity style={styles.next} {...props}>
-    <Image
-      source={require("../assets/next.png")}
-      style={styles.nextImage}
-
-    />
-  </TouchableOpacity>
+  <View style={styles.next}>
+    <TouchableOpacity  {...props}>
+      <Image
+        source={require("../assets/next.png")}
+        style={styles.nextImage}
+      />
+    </TouchableOpacity>
+  </View >
 );
 
 function OnBoardingScreen({ navigation }) {
@@ -123,17 +124,19 @@ function OnBoardingScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white"
   },
   next: {
-    marginBottom: 30,
-    marginRight: 40,
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    // marginBottom: 30,
+    // marginRight: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   nextImage: {
     width: 300,
     height: 50,
     borderRadius: 4,
+    alignSelf: "center",
   },
 });
 
