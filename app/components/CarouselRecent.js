@@ -133,7 +133,7 @@ export default function CarouselRecent({props}) {
       <TouchableOpacity activeOpacity={0.4} onPress={openGps}>
         <Navigate
           height={hp('8%')}
-          width={wp('22%')}
+          width={wp('26%')}
           borderRadius={hp('4%') / 4}
           marginTop={-wp('2%')}
         />
@@ -142,7 +142,12 @@ export default function CarouselRecent({props}) {
   }
 
   return (
-    <View>
+    <View
+      style={{
+        height: 210,
+        paddingTop: 15,
+        alignItems: 'center',
+      }}>
       {isLoading === true ? (
         <LottieView
           autoPlay
@@ -209,7 +214,7 @@ export default function CarouselRecent({props}) {
                     style={{left: wp('3%')}}>
                     <ChargeNow
                       height={hp('8%')}
-                      width={wp('23%')}
+                      width={wp('26%')}
                       borderRadius={hp('4%') / 4}
                       marginTop={-wp('2%')}
                     />
@@ -229,7 +234,7 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     flexDirection: 'row',
-    // marginBottom: 20,
+    height: 20,
   },
   paginationDot: {
     width: 8,
@@ -239,10 +244,7 @@ const styles = StyleSheet.create({
   },
   paginationDotActive: {backgroundColor: '#069DFF'},
   paginationDotInactive: {backgroundColor: '#DBDBDB'},
-  carousel: {
-    // backgroundColor: 'yellow',
-    height: 190,
-  },
+
   cardContainer: {
     height: windowHeight,
     width: windowWidth,
@@ -302,6 +304,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: wp('6%'),
     marginRight: wp('10%'),
+    alignItems: 'center',
   },
   subtitle2: {
     backgroundColor: '#05C07D',

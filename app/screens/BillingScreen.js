@@ -43,27 +43,31 @@ function BillingScreen(props) {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <View flexDirection="column">
-          <Receipt width={wp('100%')} height={hp('16%')} />
+          <Receipt width={wp('101%')} height={hp('16%')} />
 
           <TouchableOpacity
             activeOpacity={0.5}
             style={{
               position: 'absolute',
-              left: 15,
-              top: 30,
+              marginLeft: 15,
+              marginTop: 30,
             }}
             onPress={() => props.navigation.goBack()}>
             <CustomBack />
           </TouchableOpacity>
-          <View style={{position: 'absolute', top: 94}}>
-            <ReceiptBg width={wp('100%')} height={hp('30%')} />
+          <View
+            style={{
+              position: 'absolute',
+              marginTop: 96,
+            }}>
+            <ReceiptBg width={wp('102%')} height={hp('30%')} />
 
             <Text style={styles.content1}>{currentDate} </Text>
             <Text style={styles.content2}>
               Rohini Community Charging Station, B-5/30, New Delhi - 110034
             </Text>
           </View>
-          <Car1 width={wp('50%')} height={hp('30%')} left={180} top={4} />
+          <Car1 width={wp('50%')} height={hp('30%')} left={180} marginTop={5} />
           <Text style={styles.txt}>Receipt for{'\n'}Charging Session</Text>
 
           <View flexDirection="row">

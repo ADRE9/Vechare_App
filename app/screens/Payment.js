@@ -361,6 +361,7 @@ export default function Payment({navigation}) {
         style={{
           alignItems: 'center',
           flexDirection: 'row',
+          justifyContent: 'space-around',
           height: 80,
           shadowColor: 'black',
           elevation: 20,
@@ -371,21 +372,16 @@ export default function Payment({navigation}) {
         <Text
           style={{
             fontFamily: 'SF-Pro-Display-Semibold',
-            marginLeft: wp('5%'),
             fontSize: wp('5.6%'),
             marginTop: wp('1%'),
             color: 'black',
+            marginRight: 80,
           }}>
           {'\u20B9'} {amount}
         </Text>
 
-        <TouchableOpacity
-          style={{
-            marginRight: 30,
-            marginLeft: '40%',
-          }}
-          onPress={() => onPay()}>
-          <PayBtn width={180} />
+        <TouchableOpacity onPress={() => onPay()}>
+          <PayBtn width={185} />
         </TouchableOpacity>
       </View>
       {/* </BoxShadow> */}
