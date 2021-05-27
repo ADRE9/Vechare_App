@@ -174,7 +174,7 @@ function LoginScreen(props) {
       <Login width={280} height={280} />
       <Text
         style={{
-          fontSize: 22,
+          fontSize: 23,
           fontFamily: 'SF-Pro-Display-Semibold',
           color: '#030303',
           marginRight: 20,
@@ -183,12 +183,7 @@ function LoginScreen(props) {
         Charge your vehicle {'\n'}with veCharge
       </Text>
 
-      <Google
-        width={200}
-        height={100}
-        onPress={() => _signIn()}
-        marginRight={20}
-      />
+      <Google width={210} onPress={() => _signIn()} marginRight={20} />
     </View>
   );
 }

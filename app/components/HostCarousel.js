@@ -49,20 +49,6 @@ const slideList = [
   },
 ];
 
-const Slide = memo(function Slide({data}) {
-  return (
-    <SafeAreaView style={styles.slide}>
-      <View style={styles.container}>
-        <Image source={data.image} style={styles.slideImage} />
-      </View>
-      <View style={{padding: 15, paddingHorizontal: 25}}>
-        <Text style={styles.slideTitle}>{data.title}</Text>
-        <Text style={styles.slideSubtitle}>{data.subtitle}</Text>
-      </View>
-    </SafeAreaView>
-  );
-});
-
 function Pagination({index}) {
   return (
     <View style={styles.pagination} pointerEvents="none">
@@ -87,6 +73,22 @@ export default function HostCarousel() {
   const [index, setIndex] = useState(0);
   const indexRef = useRef(index);
   indexRef.current = index;
+
+  const Slide = memo(function Slide({data}) {
+    return (
+      <SafeAreaView style={styles.slide}>
+        <View style={styles.container}>
+          <Image source={data.image} style={styles.slideImage} />
+        </View>
+
+        <View style={{padding: 15, paddingHorizontal: 25}}>
+          <Text style={styles.slideTitle}>{data.title}</Text>
+          <Text style={styles.slideSubtitle}>{data.subtitle}</Text>
+        </View>
+      </SafeAreaView>
+    );
+  });
+
   const onScroll = useCallback((event) => {
     const slideSize = event.nativeEvent.layoutMeasurement.width;
     const index = event.nativeEvent.contentOffset.x / slideSize;
@@ -131,7 +133,6 @@ export default function HostCarousel() {
         height: 430,
         paddingTop: 15,
         alignItems: 'center',
-        backgroundColor: 'white',
       }}>
       <FlatList
         data={slideList}
@@ -144,8 +145,9 @@ export default function HostCarousel() {
         onScroll={onScroll}
         {...flatListOptimizationProps}
       />
-
-      <Pagination index={index}></Pagination>
+      <View style={{bottom: 180, paddingTop: 20}}>
+        <Pagination index={index}></Pagination>
+      </View>
     </View>
   );
 }
@@ -189,10 +191,6 @@ const styles = StyleSheet.create({
   },
 
   pagination: {
-    position: 'absolute',
-    marginTop: 220,
-    width: '100%',
-    justifyContent: 'center',
     flexDirection: 'row',
   },
   paginationDot: {
@@ -200,7 +198,6 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: 4,
     marginHorizontal: 5,
-    marginTop: 15,
   },
   paginationDotActive: {backgroundColor: '#069DFF'},
   paginationDotInactive: {backgroundColor: '#DBDBDB'},

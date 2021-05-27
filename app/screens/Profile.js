@@ -53,7 +53,7 @@ import {
 } from 'svg';
 import { BoxShadow } from 'react-native-shadow';
 
-export default function Profile({ navigation }) {
+function Profile({ navigation }) {
   const [loggedIn, setloggedIn] = useState(false);
   const [user, setUser] = useState([]);
   const [paid, setPaid] = useState([]);
@@ -711,7 +711,7 @@ const styles = StyleSheet.create({
     fontFamily: 'SF-Pro-Text-Semibold',
   },
   imgCont2: {
-    fontSize: wp('4%'),
+    fontSize: wp('3.3%'),
     color: '#292929',
     marginLeft: 30,
     marginTop: -40,
@@ -752,3 +752,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
 });
+
+export default Profile;
