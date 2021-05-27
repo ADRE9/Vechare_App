@@ -23,7 +23,7 @@ function UnpaidNotify({onPress, amount}) {
     <View style={styles.container}>
       <ImageBackground
         source={require('../assets/fail.png')}
-        style={{width: wp('100%'), height: hp('35%')}}
+        style={{width: wp('100%'), height:hp("35%")}}
         resizeMode="cover"
       />
       <Text style={styles.heading}>Confirm Payment</Text>
@@ -44,8 +44,9 @@ function UnpaidNotify({onPress, amount}) {
         <Image
           source={require('../assets/unpayment.png')}
           style={{
-            height: hp('5%'),
-            width: wp('30%'),
+            height: 30,
+            width: 80,
+            borderRadius:18,
           }}
         />
       </TouchableOpacity>

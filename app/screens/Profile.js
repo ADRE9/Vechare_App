@@ -288,7 +288,7 @@ function Profile({navigation}) {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <View>
-          <ProfileHeader width={'100%'} height={200} />
+          <ProfileHeader width={wp('100%')} height={200} />
           <Text style={styles.textCont}>{name}</Text>
           <View flexDirection="column">
             <View flexDirection="row">

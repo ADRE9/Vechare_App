@@ -20,18 +20,17 @@ import { Book } from 'svg';
 function RegisterHost(props) {
   return (
     <SafeAreaView style={styles.cont}>
-      <ScrollView>
+      <ScrollView style={styles.cont}>
         <ImageBackground
-          source={require('../assets/register.png')}
+          source={require('../assets/registerHeader.png')}
           resizeMode="cover"
           style={styles.register}
-        />
+        >
         <TouchableOpacity
           activeOpacity={0.5}
           style={{
-            position: 'absolute',
-            left: 15,
-            top: 30,
+          marginLeft:20,
+          marginTop:30,
           }}
           onPress={() => props.navigation.goBack()}>
           <CustomBack
@@ -39,6 +38,8 @@ function RegisterHost(props) {
           />
 
         </TouchableOpacity>
+        <Text style={styles.header}>Register</Text>
+        </ImageBackground>
         <View>
           <Text style={styles.heading}>Name</Text>
           <TextInput style={styles.input} placeholder="Enter Name" />
@@ -103,8 +104,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+  header:{
+color:"white",
+fontFamily:"SF-Pro-Text-Bold",
+fontSize:28,
+marginLeft:60,
+marginTop:-30,
+  },
   register: {
-    height: hp('15%'),
+    height: 120,
     width: wp('100%'),
   },
   heading: {
