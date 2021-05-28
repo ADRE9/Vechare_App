@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   StyleSheet,
@@ -17,17 +17,17 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RazorpayCheckout from 'react-native-razorpay';
 import LinearGradient from 'react-native-linear-gradient';
-import { Cost, EnergyConsumed, Time, ChargeHeader, PayBtn } from 'svg';
-import { BoxShadow } from 'react-native-shadow';
+import {Cost, EnergyConsumed, Time, ChargeHeader, PayBtn} from 'svg';
+import {BoxShadow} from 'react-native-shadow';
 
 import moment from 'moment';
 
-import { RazorpayApiKey } from '../Constants/config';
+import {RazorpayApiKey} from '../Constants/config';
 
 import '../Constants/Useragent';
 import CustomBack from '../components/CustomBack';
 
-export default function Payment({ navigation }) {
+export default function Payment({navigation}) {
   // const [isLoading, setLoading] = useState(true);
   const [amount, setAmount] = useState([]);
   const [energy, setEnergy] = useState([]);
@@ -59,7 +59,7 @@ export default function Payment({ navigation }) {
     chargeHours + ' ' + chargeMinutes,
   );
 
-  function DateCh({ tm }) {
+  function DateCh({tm}) {
     return moment(tm).startOf('minutes').fromNow();
   }
   // useEffect(() => {
@@ -200,13 +200,13 @@ export default function Payment({ navigation }) {
         contact: 'Add Contact here',
         name: name,
       },
-      theme: { color: '#a29bfe' },
+      theme: {color: '#a29bfe'},
     };
 
     RazorpayCheckout.open(options)
       .then(async function (response) {
         const config = {
-          headers: { Authorization: token },
+          headers: {Authorization: token},
         };
         const data = {
           orderCreationId: pytId,
@@ -224,7 +224,7 @@ export default function Payment({ navigation }) {
       })
       .finally(() => navigation.replace('PayDetail'))
       .catch((err) => {
-        navigation.replace('AppBottom', { err });
+        navigation.replace('AppBottom', {err});
       });
   };
 
@@ -241,7 +241,7 @@ export default function Payment({ navigation }) {
           onPress={() => navigation.goBack()}>
           <CustomBack />
         </TouchableOpacity> */}
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{alignItems: 'center', justifyContent: 'center'}}>
         <LinearGradient colors={['#4B5358', '#545B60']} style={styles.box3}>
           <View
             style={{
@@ -271,7 +271,7 @@ export default function Payment({ navigation }) {
               </Text>
             </View>
           </View>
-          <View style={{ marginRight: 10 }}>
+          <View style={{marginRight: 10}}>
             <Text
               style={{
                 fontSize: 22,
@@ -290,7 +290,7 @@ export default function Payment({ navigation }) {
               flexDirection: 'row',
             }}>
             <EnergyConsumed height={hp('6%')} width={wp('15%')} />
-            <View style={{ marginRight: wp('4%') }}>
+            <View style={{marginRight: wp('4%')}}>
               <Text
                 style={{
                   fontFamily: 'SF-Pro-Display-Medium',
