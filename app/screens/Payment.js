@@ -60,7 +60,13 @@ export default function Payment({navigation}) {
   );
 
   function DateCh({tm}) {
-    return moment(tm).startOf('minutes').fromNow();
+    let th1 = moment(tm).utcOffset('+05:30').format('h');
+    let tm1 = moment(tm).utcOffset('+05:30').format('mm');
+    let th2 = moment().utcOffset('+05:30').format('h');
+    let tm2 = moment().utcOffset('+05:30').format('mm');
+    let hr = th2 - th1 + ' ' + 'hr' + ' ' + (tm2 - tm1) + 'min';
+
+    return hr;
   }
   // useEffect(() => {
   //   async function value() {

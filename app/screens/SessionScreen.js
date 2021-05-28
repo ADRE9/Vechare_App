@@ -89,7 +89,7 @@ function SessionScreen(props) {
     <SafeAreaView style={styles.container}>
       <View>
         <FlatList
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item) => item._id.toString()}
           data={value}
           ListHeaderComponent={header}
           stickyHeaderIndices={[0]}
@@ -105,8 +105,6 @@ function SessionScreen(props) {
               long={item.chargerId.location.coordinates[0]}
             />
           )}
-          onEndReached={dtl}
-          onEndReachedThreshold={0.5}
         />
       </View>
     </SafeAreaView>
