@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -14,10 +14,10 @@ import {
   ImageBackground,
   Platform,
 } from 'react-native';
-import { Button, Overlay, Rating, AirbnbRating } from 'react-native-elements';
+import {Button, Overlay, Rating, AirbnbRating} from 'react-native-elements';
 
 import auth from '@react-native-firebase/auth';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   heightPercentageToDP as hp,
@@ -27,7 +27,7 @@ import Share from 'react-native-share';
 import axios from 'axios';
 import RazorpayCheckout from 'react-native-razorpay';
 
-import { RazorpayApiKey } from '../Constants/config';
+import {RazorpayApiKey} from '../Constants/config';
 import files from '../../assets/filesBase64';
 import UnpaidNotify from '../components/UnpaidNotify';
 
@@ -52,9 +52,9 @@ import {
   Visit,
   Visit1,
 } from 'svg';
-import { BoxShadow } from 'react-native-shadow';
+import {BoxShadow} from 'react-native-shadow';
 
-function Profile({ navigation }) {
+function Profile({navigation}) {
   const [loggedIn, setloggedIn] = useState(false);
   const [user, setUser] = useState([]);
   const [paid, setPaid] = useState([]);
@@ -81,7 +81,7 @@ function Profile({ navigation }) {
               <Image
                 style={styles.starImgStyle}
                 source={item <= defaultRating ? starfill : star}
-              // source={star}
+                // source={star}
               />
             </TouchableOpacity>
           );
@@ -122,7 +122,7 @@ function Profile({ navigation }) {
     opacity: 0.2,
     x: 52,
     y: 10,
-    style: { marginBottom: hp('3%') },
+    style: {marginBottom: hp('3%')},
   };
   const signOut = async () => {
     try {
@@ -168,7 +168,7 @@ function Profile({ navigation }) {
           signOut().then(() =>
             navigation.reset({
               index: 0,
-              routes: [{ name: 'LoginPage' }],
+              routes: [{name: 'LoginPage'}],
             }),
           ),
       },
@@ -206,11 +206,11 @@ function Profile({ navigation }) {
         contact: '9191919191',
         name: 'John Doe',
       },
-      theme: { color: '#a29bfe' },
+      theme: {color: '#a29bfe'},
     };
     RazorpayCheckout.open(options).then(async function (response) {
       const config = {
-        headers: { Authorization: token },
+        headers: {Authorization: token},
       };
       const data = {
         orderCreationId: orderData.id,
@@ -290,20 +290,14 @@ function Profile({ navigation }) {
       <ScrollView style={styles.container}>
         <View>
           <ImageBackground
-            source={require("../assets/profileHeader.png")}
+            source={require('../assets/profileHeader.png')}
             style={{
-              width: wp("100%"),
+              width: wp('100%'),
               height: 180,
-            }}
-          >
+            }}>
             <Text style={styles.textCont}>{name}</Text>
             <View flexDirection="row">
-              <Loc
-                height={16}
-                width={14}
-                marginTop={70}
-                marginLeft={54}
-              />
+              <Loc height={16} width={14} marginTop={70} marginLeft={54} />
               <Text style={styles.textCont2}>Rohini/City , Delhi/State</Text>
             </View>
             <TouchableOpacity
@@ -467,7 +461,7 @@ function Profile({ navigation }) {
             <Logout height={70} width={120} />
           </TouchableOpacity>
         </View>
-        <View style={{ marginLeft: 30 }}>
+        <View style={{marginLeft: 30}}>
           <Text
             style={{
               color: '#292929',
@@ -536,7 +530,7 @@ function Profile({ navigation }) {
           }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={{ width: wp('100%'), flex: 1, marginBottom: 20 }}>
+            style={{width: wp('100%'), flex: 1, marginBottom: 20}}>
             <Text
               style={{
                 fontSize: 30,
@@ -552,7 +546,7 @@ function Profile({ navigation }) {
             <Bar />
 
             <KeyboardAvoidingView
-              style={{ justifyContent: 'center', alignItems: 'center' }}>
+              style={{justifyContent: 'center', alignItems: 'center'}}>
               <TextInput
                 style={{
                   paddingLeft: 15,
@@ -569,7 +563,7 @@ function Profile({ navigation }) {
               />
             </KeyboardAvoidingView>
 
-            <View style={{ alignItems: 'center' }}>
+            <View style={{alignItems: 'center'}}>
               <TouchableOpacity
                 onPress={toggleplay}
                 style={{
@@ -582,7 +576,7 @@ function Profile({ navigation }) {
                   width: 80,
                   borderRadius: 10,
                 }}>
-                <Text style={{ fontSize: 14, color: 'white' }}>Submit</Text>
+                <Text style={{fontSize: 14, color: 'white'}}>Submit</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -601,7 +595,7 @@ function Profile({ navigation }) {
             }}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              style={{ width: wp('100%'), flex: 1, marginBottom: 20 }}>
+              style={{width: wp('100%'), flex: 1, marginBottom: 20}}>
               <Text
                 style={{
                   fontSize: 30,
@@ -654,7 +648,7 @@ function Profile({ navigation }) {
             }}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              style={{ width: wp('100%'), flex: 1, marginBottom: 50 }}>
+              style={{width: wp('100%'), flex: 1, marginBottom: 50}}>
               <Text
                 style={{
                   fontSize: 30,
