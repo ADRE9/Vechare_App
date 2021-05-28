@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  ScrollView,
+  KeyboardAvoidingView,
+} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -52,67 +59,77 @@ function RegisterScreen({navigation}) {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require('../assets/valerio-logo.png')}
-        resizeMode="contain"
-        style={{
-          width: wp('30%'),
-          height: hp('30%'),
-          marginLeft: wp('32%'),
-        }}
-      />
-      <Image
-        source={require('../assets/signup-text.png')}
-        resizeMode="contain"
-        style={{width: wp('60%'), height: hp('10%'), marginLeft: wp('10%')}}
-      />
-      <View style={{marginTop: wp('4%'), marginLeft: wp('10%')}}>
-        <Text style={{fontSize: wp('4%'), color: '#7C7C7C'}}>Username</Text>
-        <TextInput
-          label="Name"
-          returnKeyType="next"
-          value={name.value}
-          onChangeText={(text) => setName({value: text, error: ''})}
-          error={!!name.error}
-          errorText={name.error}
-          placeholder={'Enter Name'}
-        />
-      </View>
+      <ScrollView>
+        <KeyboardAvoidingView>
+          <Image
+            source={require('../assets/valerio-logo.png')}
+            resizeMode="contain"
+            style={{
+              width: wp('30%'),
+              height: hp('30%'),
+              marginLeft: wp('32%'),
+            }}
+          />
+          <Image
+            source={require('../assets/signup-text.png')}
+            resizeMode="contain"
+            style={{width: wp('60%'), height: hp('10%'), marginLeft: wp('10%')}}
+          />
+          <View style={{marginTop: wp('4%'), marginLeft: wp('10%')}}>
+            <Text style={{fontSize: wp('4%'), color: '#7C7C7C'}}>Username</Text>
+            <TextInput
+              label="Name"
+              returnKeyType="next"
+              value={name.value}
+              onChangeText={(text) => setName({value: text, error: ''})}
+              error={!!name.error}
+              errorText={name.error}
+              placeholder={'Enter Name'}
+              style={styles.input}
+              mode="flat"
+            />
+          </View>
 
-      <View style={{marginTop: wp('4%'), marginLeft: wp('10%')}}>
-        <Text style={{fontSize: wp('4%'), color: '#7C7C7C'}}>Phone Number</Text>
-        <TextInput
-          label="Number"
-          returnKeyType="next"
-          value={number.value}
-          onChangeText={(text) => setNumber({value: text, error: ''})}
-          error={!!number.error}
-          errorText={number.error}
-          placeholder={'Phone Number'}
-          maxLength={10}
-          keyboardType="phone-pad"
-        />
-      </View>
-      <Text style={styles.condition}>
-        By continuing you agree to our{' '}
-        <Text style={{color: '#069DFF'}}>Terms of Service </Text>
-        and <Text style={{color: '#069DFF'}}>Privacy Policy.</Text>
-      </Text>
-      {/* <TouchableOpacity activeOpacity={0.6} onPress={onSignUpPressed}>
+          <View style={{marginTop: wp('4%'), marginLeft: wp('10%')}}>
+            <Text style={{fontSize: wp('4%'), color: '#7C7C7C'}}>
+              Phone Number
+            </Text>
+            <TextInput
+              label="Number"
+              returnKeyType="next"
+              value={number.value}
+              onChangeText={(text) => setNumber({value: text, error: ''})}
+              error={!!number.error}
+              errorText={number.error}
+              placeholder={'Phone Number'}
+              maxLength={10}
+              keyboardType="phone-pad"
+              mode="flat"
+              style={styles.input}
+            />
+          </View>
+          <Text style={styles.condition}>
+            By continuing you agree to our{' '}
+            <Text style={{color: '#069DFF'}}>Terms of Service </Text>
+            and <Text style={{color: '#069DFF'}}>Privacy Policy.</Text>
+          </Text>
+          {/* <TouchableOpacity activeOpacity={0.6} onPress={onSignUpPressed}>
         <Image
           source={require('../assets/signupBtn.png')}
           resizeMode="contain"
           style={{width: wp('60%'), height: hp('18%'), marginLeft: wp('20%')}}
         />
       </TouchableOpacity> */}
-      <Button
-        loading={loading}
-        mode="contained"
-        onPress={onSignUpPressed}
-        uppercase={false}
-        style={{marginTop: 24, backgroundColor: '#069DFF'}}>
-        Sign Up
-      </Button>
+          <Button
+            loading={loading}
+            mode="contained"
+            onPress={onSignUpPressed}
+            uppercase={false}
+            style={{marginTop: 24, backgroundColor: '#069DFF'}}>
+            Sign Up
+          </Button>
+        </KeyboardAvoidingView>
+      </ScrollView>
     </View>
   );
 }
@@ -140,6 +157,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#E2E2E2',
     marginRight: wp('10%'),
+  },
+  input: {
+    color: '#7B7B7B',
+    backgroundColor: '#EFEFEF',
+    width: '100%',
   },
 });
 

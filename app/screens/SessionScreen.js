@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -21,7 +21,7 @@ import SessionCard from '../components/SessionCard';
 import CustomBack from '../components/CustomBack';
 
 function SessionScreen(props) {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(null);
   const [value, setdata] = useState([]);
   const [offset, setOffset] = useState(1);
   const [isListEnd, setIsListEnd] = useState(false);
@@ -35,14 +35,13 @@ function SessionScreen(props) {
         'Content-Type': 'application/json',
         Authorization: token,
       },
-    })
-      .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => setLoading(false));
+    }).catch((error) => {
+      console.error(error);
+    });
 
     const resData = await res.json();
     setdata(resData.data.payments);
+    setLoading(false);
   }
   useEffect(() => {
     dtl();
@@ -51,19 +50,17 @@ function SessionScreen(props) {
   const header = () => {
     return (
       <View>
-        <ImageBackground style={styles.img}
-          source={require('../assets/session.png')} >
-
+        <ImageBackground
+          style={styles.img}
+          source={require('../assets/session.png')}>
           <TouchableOpacity
             activeOpacity={0.5}
             style={{
               marginTop: 30,
-              marginLeft: 8
-
+              marginLeft: 8,
             }}
             onPress={() => props.navigation.goBack()}>
             <CustomBack />
-
           </TouchableOpacity>
         </ImageBackground>
       </View>
@@ -97,7 +94,7 @@ function SessionScreen(props) {
           ListHeaderComponent={header}
           stickyHeaderIndices={[0]}
           ListFooterComponent={renderFooter}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <SessionCard
               device={item.chargerId._id}
               loc={item.chargerId.address}
@@ -123,7 +120,7 @@ const styles = StyleSheet.create({
   },
   img: {
     height: 180,
-    width: "100%",
+    width: '100%',
   },
   footer: {
     // padding: 10,

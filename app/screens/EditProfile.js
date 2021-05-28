@@ -19,25 +19,43 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-
+import axios from 'axios';
 import CustomBack from '../components/CustomBack';
 import {EditHeader, Pencil, SaveBtn, Loc} from 'svg';
 
 function EditProfile({navigation}) {
   const [name, setName] = useState([]);
   const [mail, setMail] = useState([]);
-  // const [picture, setPicture] = useState('');
+  const [userName, setuserName] = useState([]);
+  const [userPhone, setuserPhone] = useState([]);
+  const [newName, setnewName] = useState([]);
+  const [newPhone, setnewPhone] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
+
+  const details = async () => {
+    const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+    let config = {
+      headers: {
+        Authorization: token,
+      },
+    };
+
+    const data = {
+      number: userPhone,
+      username: userName,
+    };
+    await axios
+      .patch('https://vecharge.app/api/v1/users/me', data, config)
+      .catch((error) => alert(error))
+      .then(() => alert('Details submitted Successfully'))
+      .finally(() => navigation.goBack());
+  };
   useEffect(() => {
     async function value() {
       const user = await AsyncStorage.getItem('name');
       const mailid = await AsyncStorage.getItem('mail');
-
       setName(user);
       setMail(mailid);
-      // setPicture(profile);
-      // console.log(picture);
-      // console.log(profile);
     }
     const _getCurrentUserInfo = async () => {
       try {
@@ -60,9 +78,30 @@ function EditProfile({navigation}) {
     console.log('edit profile SCreen');
   }, []);
 
-  // let pic = {
-  //   uri: picture,
-  // };
+  // useEffect(() => {
+  //   async function value() {
+  //     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+  //     let config = {
+  //       headers: {
+  //         Authorization: token,
+  //       },
+  //     };
+  //     await axios
+  //       .patch('https://vecharge.app/api/v1/users/me', config)
+  //       .catch((error) => alert(error))
+  //       .then((response) => {
+  //         setnewName(response.data.data.username),
+  //           setnewPhone(response.data.data.number);
+  //         console.log(
+  //           'the user details were updated',
+  //           response.data.data.username + ' ' + response.data.data.number,
+  //         );
+  //       })
+  //       .then(() => alert('Details submitted Successfully'))
+  //       .finally(() => navigation.goBack());
+  //   }
+  //   value();
+  // });
   return (
     <ScrollView style={styles.cont}>
       <SafeAreaView style={styles.cont}>
@@ -110,10 +149,13 @@ function EditProfile({navigation}) {
             <TextInput
               style={styles.input}
               keyboardType="numeric"
-              maxLength={10}>
-              9711898182
-            </TextInput>
-            <Text style={styles.change}>CHANGE</Text>
+              maxLength={10}
+              placeholder="Enter Phone"
+              onChangeText={(text) => setuserPhone(text)}
+              defaultValue={newPhone}
+            />
+
+            {/* <Text style={styles.change}>CHANGE</Text> */}
           </View>
         </View>
         <View style={styles.cont2}>
@@ -123,18 +165,22 @@ function EditProfile({navigation}) {
               style={styles.input}
               textContentType="emailAddress"
               keyboardType="email-address"
-              autoCapitalize="none">
-              {mail}
-            </TextInput>
+              autoCapitalize="none"
+              defaultValue={mail}
+            />
           </View>
         </View>
         <View style={styles.cont2}>
           <Text style={styles.txt}>Full Name</Text>
           <View style={styles.inputCont}>
-            <TextInput style={styles.input}>{name}</TextInput>
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => setuserName(text)}
+              defaultValue={newName}
+            />
           </View>
         </View>
-        <View style={styles.cont2}>
+        {/* <View style={styles.cont2}>
           <Text style={styles.txt}>Location</Text>
           <View style={styles.inputCont}>
             <TextInput
@@ -142,9 +188,10 @@ function EditProfile({navigation}) {
               placeholder="Add Address"
               placeholderTextColor="#7B7B7B"
               multiline={true}
+              defaultValue={userName}
             />
           </View>
-        </View>
+        </View> */}
         <TouchableOpacity
           style={{
             marginLeft: wp('10%'),
@@ -152,7 +199,7 @@ function EditProfile({navigation}) {
             height: hp('5%'),
             width: wp('30%'),
           }}
-          onPress={() => console.log('save')}
+          onPress={details}
           activeOpacity={0.5}>
           <SaveBtn height={hp('5%')} width={wp('30%')} />
         </TouchableOpacity>

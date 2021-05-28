@@ -179,8 +179,8 @@ export default function Carousel() {
   return (
     <View
       style={{
-        height: 195,
-        justifyContent: 'center',
+        height: 210,
+        paddingTop: 15,
         alignItems: 'center',
       }}>
       {isLoading === true ? (
@@ -266,7 +266,7 @@ export default function Carousel() {
                   style={{
                     fontSize: wp('2.6%'),
                     color: '#484848',
-                    marginLeft: wp('2%'),
+                    marginLeft: wp('3%'),
                     marginTop: hp('1.2%'),
                     fontFamily: 'SF-Pro-Display-Regular',
                   }}>
@@ -320,10 +320,6 @@ const styles = StyleSheet.create({
   paginationDotActive: {backgroundColor: '#069DFF'},
   paginationDotInactive: {backgroundColor: '#DBDBDB'},
 
-  carousel: {
-    // backgroundColor: 'yellow',
-    height: 180,
-  },
   cardContainer: {
     height: windowHeight,
     width: windowWidth,

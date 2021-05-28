@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -19,45 +19,45 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 
-import { nameValidator } from '../helpers/nameValidator';
-import { numberValidator } from '../helpers/numberValidator';
-import { emailValidator } from '../helpers/emailValidator';
-import { msgValidator } from '../helpers/msgValidator';
+import {nameValidator} from '../helpers/nameValidator';
+import {numberValidator} from '../helpers/numberValidator';
+import {emailValidator} from '../helpers/emailValidator';
+import {msgValidator} from '../helpers/msgValidator';
 import CustomBackLight from '../components/CustomBackLight';
-import { Submit } from 'svg';
+import {Submit} from 'svg';
 import TextInput from '../components/TextInput';
 import Button from '../components/Button';
 
-export default function FeedBack({ navigation }) {
-  const [name, setName] = useState({ value: '', error: '' });
-  const [number, setNumber] = useState({ value: '', error: '' });
-  const [mail, setMail] = useState({ value: '', error: '' });
-  const [msg, setMsg] = useState({ value: '', error: '' });
+export default function FeedBack({navigation}) {
+  const [name, setName] = useState({value: '', error: ''});
+  const [number, setNumber] = useState({value: '', error: ''});
+  const [mail, setMail] = useState({value: '', error: ''});
+  const [msg, setMsg] = useState({value: '', error: ''});
   const [loading, setLoading] = useState();
   const [userInfo, setUserInfo] = useState(null);
   const [usermail, setUsermail] = useState(null);
 
-  // useEffect(() => {
-  //   const _getCurrentUserInfo = async () => {
-  //     try {
-  //       let info = await GoogleSignin.signInSilently();
-  //       // console.log('User Info --> ', info);
-  //       setUserInfo(info.user.name);
-  //       setUsermail(info.user.email);
-  //       // console.log(info.user.photo);
-  //     } catch (error) {
-  //       if (error.code === statusCodes.SIGN_IN_REQUIRED) {
-  //         alert('User has not signed in yet');
-  //         console.log('User has not signed in yet');
-  //       } else {
-  //         alert("Unable to get user's info");
-  //         console.log("Unable to get user's info");
-  //       }
-  //     }
-  //   };
-  //   _getCurrentUserInfo();
-  //   console.log('Report  SCreen');
-  // }, []);
+  useEffect(() => {
+    const _getCurrentUserInfo = async () => {
+      try {
+        let info = await GoogleSignin.signInSilently();
+        // console.log('User Info --> ', info);
+        setUserInfo(info.user.name);
+        setUsermail(info.user.email);
+        // console.log(info.user.photo);
+      } catch (error) {
+        if (error.code === statusCodes.SIGN_IN_REQUIRED) {
+          alert('User has not signed in yet');
+          console.log('User has not signed in yet');
+        } else {
+          alert("Unable to get user's info");
+          console.log("Unable to get user's info");
+        }
+      }
+    };
+    _getCurrentUserInfo();
+    console.log('Report  SCreen');
+  }, []);
 
   const onSignUpPressed = async () => {
     const nameError = nameValidator(name.value);
@@ -65,10 +65,10 @@ export default function FeedBack({ navigation }) {
     const mailError = emailValidator(mail.value);
     const msgError = msgValidator(msg.value);
     if (nameError || numberError || mailError || msgError) {
-      setName({ ...name, error: nameError });
-      setNumber({ ...number, error: numberError });
-      setMail({ ...mail, error: mailError });
-      setMsg({ ...msg, error: msgError });
+      setName({...name, error: nameError});
+      setNumber({...number, error: numberError});
+      setMail({...mail, error: mailError});
+      setMsg({...msg, error: msgError});
       return;
     }
     setLoading(true);
@@ -123,19 +123,20 @@ export default function FeedBack({ navigation }) {
             label="Name"
             returnKeyType="next"
             value={name.value}
-            onChangeText={(text) => setName({ value: text, error: '' })}
+            onChangeText={(text) => setName({value: text, error: ''})}
             error={!!name.error}
             errorText={name.error}
             placeholder={'Name of user'}
             style={styles.input}
             mode="flat"
           />
+
           {/* <Text style={styles.name}>Contact</Text> */}
           <TextInput
             label="Contact"
             returnKeyType="next"
             value={number.value}
-            onChangeText={(text) => setNumber({ value: text, error: '' })}
+            onChangeText={(text) => setNumber({value: text, error: ''})}
             error={!!number.error}
             errorText={number.error}
             placeholder={'Enter Phone Number'}
@@ -150,7 +151,7 @@ export default function FeedBack({ navigation }) {
             label="Email Address"
             returnKeyType="next"
             value={mail.value}
-            onChangeText={(text) => setMail({ value: text, error: '' })}
+            onChangeText={(text) => setMail({value: text, error: ''})}
             error={!!mail.error}
             errorText={mail.error}
             placeholder={'Enter Email Address'}
@@ -164,7 +165,7 @@ export default function FeedBack({ navigation }) {
             label="Enter Message"
             returnKeyType="next"
             value={msg.value}
-            onChangeText={(text) => setMsg({ value: text, error: '' })}
+            onChangeText={(text) => setMsg({value: text, error: ''})}
             error={!!msg.error}
             errorText={msg.error}
             style={styles.input2}
