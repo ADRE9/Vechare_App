@@ -234,7 +234,7 @@ export default function Carousel() {
                           backgroundColor: '#CAEAFF',
                           paddingHorizontal: 10,
                           borderRadius: wp('10%') / 4,
-                          marginLeft: wp('4%'),
+                          marginLeft: wp('3%'),
                           justifyContent: 'center',
                         }}>
                         <Text style={{fontSize: wp('3%'), fontWeight: 'bold'}}>

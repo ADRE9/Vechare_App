@@ -19,6 +19,7 @@ import {
 } from 'react-native-responsive-screen';
 import LottieView from 'lottie-react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import Toggle from 'react-native-toggle-element';
 import {Cost, EnergyConsumed, Time, ChargeHeader, PayBtn} from 'svg';
 
 import loader from '../components/loader';
@@ -176,16 +177,6 @@ export default class Status extends Component {
     }
   };
 
-  // message = () => {
-  //   return ToastAndroid.showWithGravityAndOffset(
-  //     'Device Connected',
-  //     ToastAndroid.LONG,
-  //     ToastAndroid.CENTER,
-  //     25,
-  //     50,
-  //   );
-  // };
-
   async componentDidMount() {
     console.log('Status screen');
     loader.load((v) => this.setState({loaded: true}));
@@ -309,17 +300,16 @@ export default class Status extends Component {
                     </Text>
                   </View>
                 </View>
-                <View style={{marginRight: wp('2%')}}>
-                  <Text
-                    style={{
-                      fontSize: wp('5%'),
-                      color: 'white',
-                      fontFamily: 'SF-Pro-Display-Semibold',
-                      padding: wp('1%'),
-                    }}>
-                    <Date tm={this.state.time}></Date>
-                  </Text>
-                </View>
+
+                <Text
+                  style={{
+                    fontSize: wp('5%'),
+                    color: 'white',
+                    fontFamily: 'SF-Pro-Display-Semibold',
+                    padding: wp('1%'),
+                  }}>
+                  <Date tm={this.state.time}></Date>
+                </Text>
               </LinearGradient>
 
               <LinearGradient
@@ -359,7 +349,7 @@ export default class Status extends Component {
                     fontSize: wp('5.6%'),
                     color: 'white',
                     fontFamily: 'SF-Pro-Display-Semibold',
-                    padding: wp('1%'),
+                    paddingHorizontal: 10,
                   }}>
                   {this.state.energy} kWh
                 </Text>
@@ -402,7 +392,7 @@ export default class Status extends Component {
                     fontSize: wp('6%'),
                     color: 'white',
                     fontFamily: 'SF-Pro-Display-Semibold',
-                    padding: wp('1%'),
+                    paddingHorizontal: 10,
                   }}>
                   {'\u20B9'}
                   {(
@@ -413,7 +403,7 @@ export default class Status extends Component {
               </LinearGradient>
             </View>
             <View style={styles.switch}>
-              <Switch
+              {/* <Switch
                 trackColor={{false: '#767577', true: '#81b0ff'}}
                 onValueChange={this.toggleSwitch}
                 value={this.state.toggle}
@@ -422,8 +412,45 @@ export default class Status extends Component {
 
               <Text style={styles.textStyle}>
                 {this.state.toggle ? 'ON' : 'OFF'}
-              </Text>
+              </Text> */}
               {/* <Text style={styles.textStyle}>{this.state.error}</Text> */}
+              <Toggle
+                value={this.state.toggle}
+                onPress={this.toggleSwitch}
+                thumbActiveComponent={
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      height: 90,
+                      justifyContent: 'center',
+                    }}>
+                    <Text style={{fontSize: 22, color: 'white'}}>ON</Text>
+                  </View>
+                }
+                thumbInActiveComponent={
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      height: 90,
+                    }}>
+                    <Text style={{fontSize: 22, color: 'white'}}>OFF</Text>
+                  </View>
+                }
+                thumbButton={{
+                  width: 90,
+                  height: 90,
+                  radius: 45,
+                  activeBackgroundColor: '#069DFF',
+                  inActiveBackgroundColor: '#2C2C2C',
+                }}
+                trackBar={{
+                  activeBackgroundColor: '#069DFF',
+                  inActiveBackgroundColor: '#2C2C2C',
+                  width: 185,
+                  height: 15,
+                }}
+              />
             </View>
           </View>
         ) : (
@@ -488,7 +515,7 @@ const styles = StyleSheet.create({
     height: hp('13%'),
     width: wp('74%'),
     borderRadius: hp('20%') / 16,
-    padding: 5,
+    padding: 3,
     marginTop: hp('5%'),
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -499,7 +526,7 @@ const styles = StyleSheet.create({
     height: hp('13%'),
     width: wp('74%'),
     borderRadius: hp('20%') / 16,
-    padding: 5,
+    padding: 3,
     marginTop: hp('5%'),
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -510,7 +537,7 @@ const styles = StyleSheet.create({
     height: hp('13%'),
     width: wp('74%'),
     borderRadius: hp('20%') / 16,
-    padding: 5,
+    padding: 3,
     marginTop: hp('5%'),
     justifyContent: 'space-between',
     alignItems: 'center',

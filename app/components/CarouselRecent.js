@@ -25,7 +25,7 @@ const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
 console.log('CarouselRecent');
 
-export default function CarouselRecent({props}) {
+export default function CarouselRecent({onPress}) {
   const [index, setIndex] = useState(0);
   const [value, setdata] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -210,7 +210,7 @@ export default function CarouselRecent({props}) {
                     }></OpenGps>
                   <TouchableOpacity
                     activeOpacity={0.4}
-                    onPress={() => props.navigation.jumpTo('QrScreen')}
+                    onPress={onPress}
                     style={{left: wp('3%')}}>
                     <ChargeNow
                       height={hp('8%')}
