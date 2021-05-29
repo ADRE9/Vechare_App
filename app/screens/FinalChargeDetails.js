@@ -15,7 +15,7 @@ import {
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-import { ReceiptBtn, ReportBtn, Continue } from 'svg';
+import { ReceiptBtn, ReportBtn, Continue, Report } from 'svg';
 import CustomBack from '../components/CustomBack';
 
 function FinalChargeDetails(props) {
@@ -190,7 +190,7 @@ function FinalChargeDetails(props) {
             color: '#484848',
             marginTop: 5,
             marginRight: 36,
-            marginLeft: 36,
+            marginLeft: 40,
             fontFamily: 'SF-Pro-Display-Regular',
           }}>
           Rohini Community Charging Station, B-5/30, New Delhi - 110034
@@ -198,19 +198,19 @@ function FinalChargeDetails(props) {
         <View flexDirection="row">
           <TouchableOpacity
             style={{
-              marginLeft: 36,
+              marginLeft: 40,
 
               marginTop: 20,
             }}
             activeOpacity={0.6}
             onPress={() => props.navigation.navigate('Receipt')}>
-            <ReceiptBtn width={140} />
+            <Report width={140} />
           </TouchableOpacity>
           <TouchableOpacity
             style={{
-              marginLeft: 36,
-
+              marginLeft: 20,
               marginTop: 20,
+
             }}
             activeOpacity={0.6}
             onPress={() => props.navigation.navigate('Report')}>

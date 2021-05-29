@@ -11,7 +11,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import { Work1, Img1, Img2, Img3, BecomeHostBtn } from 'svg';
+import { Work1, Img1, Img2, Img3, BecomeHostBtn, Host2 } from 'svg';
 
 function WorkingScreen({ navigation }) {
   return (
@@ -33,7 +33,9 @@ function WorkingScreen({ navigation }) {
         <Text style={styles.sub}>veCharge</Text> Mobile App {'\n'}for the users{' '}
       </Text>
       <Text style={styles.subtxt}>Charge your vehicle with simple steps</Text>
-      <Work1 height={hp('30%')} width={wp('90%')} />
+      <Host2 height={hp('30%')} width={wp('90%')}
+        marginLeft={20}
+      />
       <View style={styles.box}>
         <Text style={styles.line1}>1. Locate</Text>
         <Text style={styles.subline1}>
