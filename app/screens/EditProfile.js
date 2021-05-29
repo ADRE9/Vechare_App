@@ -50,6 +50,9 @@ function EditProfile({navigation}) {
     await axios
       .patch('https://vecharge.app/api/v1/users/me', data, config)
       .catch((error) => alert(error))
+      .then((response) =>
+        AsyncStorage.setItem('name', response.data.data.username),
+      )
       .then(() => alert('Details submitted Successfully'))
       .finally(() => navigation.goBack());
   };
@@ -172,6 +175,7 @@ function EditProfile({navigation}) {
               style={styles.input}
               onChangeText={(text) => setuserName(text)}
               defaultValue={newName}
+              placeholder="Enter your name"
             />
           </View>
         </View>

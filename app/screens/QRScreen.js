@@ -224,6 +224,7 @@ export default function QRScreen({navigation, route}) {
         reactivate={true}
         permissionDialogMessage="Need Permission to access Camera"
         reactivateTimeout={1500}
+        cameraTimeout={20000}
         showMarker={true}
         bottomContent={
           <ScrollView>
@@ -257,11 +258,12 @@ const styles = StyleSheet.create({
   containerStyle: {
     backgroundColor: 'white',
     flex: 1,
+    alignItems: 'center',
   },
   cameraStyle: {
-    height: 350,
-    width: 400,
-    marginTop: -95,
+    height: 300,
+    width: '100%',
+    bottom: 50,
   },
   input: {
     marginTop: 15,

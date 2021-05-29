@@ -141,7 +141,7 @@ export default function Home({navigation}) {
             </TouchableOpacity>
           </View>
         </View>
-        <CarouselRecent />
+        <CarouselRecent onPress={() => navigation.navigate('QrScreen')} />
       </ScrollView>
     </SafeAreaView>
   );
