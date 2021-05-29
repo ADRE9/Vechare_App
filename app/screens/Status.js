@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
@@ -19,13 +19,13 @@ import {
 } from 'react-native-responsive-screen';
 import LottieView from 'lottie-react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {Cost, EnergyConsumed, Time, ChargeHeader, PayBtn} from 'svg';
+import { Cost, EnergyConsumed, Time, ChargeHeader, PayBtn } from 'svg';
 
 import loader from '../components/loader';
 import moment from 'moment';
 import '../Constants/Useragent';
 
-function Date({tm}) {
+function Date({ tm }) {
   let th1 = moment(tm).utcOffset('+05:30').format('h');
   let tm1 = moment(tm).utcOffset('+05:30').format('mm');
   let th2 = moment().utcOffset('+05:30').format('h');
@@ -65,7 +65,7 @@ export default class Status extends Component {
     );
     const resData = await res.json();
     if (resData.status === 'success') {
-      this.setState({toggle: false});
+      this.setState({ toggle: false });
     }
     const order = await fetch(
       'https://vecharge.app/api/v1/payment/instantiatePayment',
@@ -170,7 +170,7 @@ export default class Status extends Component {
             style: 'cancel',
           },
         ],
-        {cancelable: false},
+        { cancelable: false },
         //clicking out side of alert will not cancel
       );
     }
@@ -188,7 +188,7 @@ export default class Status extends Component {
 
   async componentDidMount() {
     console.log('Status screen');
-    loader.load((v) => this.setState({loaded: true}));
+    loader.load((v) => this.setState({ loaded: true }));
 
     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
     const id = await AsyncStorage.getItem('id');
@@ -205,34 +205,34 @@ export default class Status extends Component {
       data = JSON.parse(data);
       console.log(data);
       if (data.status === 'OFF') {
-        this.setState({toggle: false});
+        this.setState({ toggle: false });
       } else {
-        this.setState({toggle: true});
+        this.setState({ toggle: true });
       }
-      this.setState({energy: data.energy});
-      this.setState({voltage: data.voltage});
-      this.setState({power: data.power});
-      this.setState({current: data.current});
-      this.setState({price: data.price});
-      this.setState({time: data.connectedTimestamp});
+      this.setState({ energy: data.energy });
+      this.setState({ voltage: data.voltage });
+      this.setState({ power: data.power });
+      this.setState({ current: data.current });
+      this.setState({ price: data.price });
+      this.setState({ time: data.connectedTimestamp });
       console.log('Value of current', this.state.current);
     });
 
     socket.on('statusChanged', (data) => {
       data = JSON.parse(data);
       if (data.status === 'OFF') {
-        this.setState({toggle: false});
+        this.setState({ toggle: false });
       } else {
-        this.setState({toggle: true});
+        this.setState({ toggle: true });
       }
     });
 
     socket.on('newLog', (log) => {
       log = JSON.parse(log);
-      this.setState({energy: log.energy});
-      this.setState({voltage: log.voltage});
-      this.setState({power: log.power});
-      this.setState({current: log.current});
+      this.setState({ energy: log.energy });
+      this.setState({ voltage: log.voltage });
+      this.setState({ power: log.power });
+      this.setState({ current: log.current });
     });
     socket.on('error', (data) => {
       console.log('error about device', data);
@@ -309,7 +309,7 @@ export default class Status extends Component {
                     </Text>
                   </View>
                 </View>
-                <View style={{marginRight: wp('2%')}}>
+                <View style={{ marginRight: wp('2%') }}>
                   <Text
                     style={{
                       fontSize: wp('5%'),
@@ -334,7 +334,7 @@ export default class Status extends Component {
                     width={wp('15%')}
                     borderRadius={wp('10%') / 8}
                   />
-                  <View style={{marginRight: wp('4%')}}>
+                  <View style={{ marginRight: wp('4%') }}>
                     <Text
                       style={{
                         fontFamily: 'SF-Pro-Display-Medium',
@@ -377,7 +377,7 @@ export default class Status extends Component {
                     width={wp('15%')}
                     borderRadius={wp('10%') / 8}
                   />
-                  <View style={{marginRight: wp('4%')}}>
+                  <View style={{ marginRight: wp('4%') }}>
                     <Text
                       style={{
                         fontFamily: 'SF-Pro-Display-Medium',
@@ -414,10 +414,10 @@ export default class Status extends Component {
             </View>
             <View style={styles.switch}>
               <Switch
-                trackColor={{false: '#767577', true: '#81b0ff'}}
+                trackColor={{ false: '#767577', true: '#81b0ff' }}
                 onValueChange={this.toggleSwitch}
                 value={this.state.toggle}
-                style={{transform: [{scaleX: 2.5}, {scaleY: 2.5}]}}
+                style={{ transform: [{ scaleX: 2.5 }, { scaleY: 2.5 }] }}
               />
 
               <Text style={styles.textStyle}>
@@ -428,7 +428,7 @@ export default class Status extends Component {
           </View>
         ) : (
           <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <LottieView
               autoPlay
               loop

@@ -15,6 +15,7 @@ import RegisterScreen from './app/screens/RegisterScreen';
 import BillingScreen from './app/screens/BillingScreen';
 import FinalChargeDetails from './app/screens/FinalChargeDetails';
 import Unpaid from './app/components/Unpaid';
+import Status from './app/screens/Status';
 
 import PaymentNavigation from './app/navigation/PaymentNavigation';
 import DetailNavigation from './app/navigation/DetailNavigation';
@@ -26,20 +27,20 @@ function App() {
     RNBootSplash.hide({ duration: 250 });
   }, []);
   return (
-
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{ headerShown: false }}
-        initialRouteName="Auth">
-        <Stack.Screen name="Auth" component={AuthNavigation} />
-        <Stack.Screen name="AppBottom" component={AppBottomNavigation} />
-        <Stack.Screen name="Pay" component={PaymentNavigation} />
-        <Stack.Screen name="PayDetail" component={DetailNavigation} />
-        <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="LoginPage" component={LoginScreen} />
-        <Stack.Screen name="RegisterPage" component={RegisterScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Status />
+    // <NavigationContainer>
+    //   <Stack.Navigator
+    //     screenOptions={{ headerShown: false }}
+    //     initialRouteName="Auth">
+    //     <Stack.Screen name="Auth" component={AuthNavigation} />
+    //     <Stack.Screen name="AppBottom" component={AppBottomNavigation} />
+    //     <Stack.Screen name="Pay" component={PaymentNavigation} />
+    //     <Stack.Screen name="PayDetail" component={DetailNavigation} />
+    //     <Stack.Screen name="Profile" component={Profile} />
+    //     <Stack.Screen name="LoginPage" component={LoginScreen} />
+    //     <Stack.Screen name="RegisterPage" component={RegisterScreen} />
+    //   </Stack.Navigator>
+    // </NavigationContainer>
   );
 }
 
