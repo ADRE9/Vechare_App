@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -15,14 +15,14 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import LottieView from 'lottie-react-native';
-import {BoxShadow} from 'react-native-shadow';
+import { BoxShadow } from 'react-native-shadow';
 
 import loader from '../components/loader';
 import Carousel from '../components/Carousel';
 import CarouselRecent from '../components/CarouselRecent';
-import {HomeScreen, Host, More} from 'svg';
+import { HomeScreen, Host, More } from 'svg';
 
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
   const [name, setName] = useState([]);
   const [load, setLoad] = useState(false);
 
@@ -35,7 +35,7 @@ export default function Home({navigation}) {
     opacity: 0.2,
     x: 14,
     y: 23,
-    style: {marginBottom: hp('8%')},
+    style: { marginBottom: hp('8%') },
   };
 
   useEffect(() => {
@@ -90,7 +90,7 @@ export default function Home({navigation}) {
             source={require('../assets/hostProfile.png')}
             style={{
               height: 70,
-              width: 250,
+              width: 270,
             }}
           />
         </TouchableOpacity>
@@ -136,7 +136,7 @@ export default function Home({navigation}) {
             <TouchableOpacity
               onPress={() => navigation.navigate('Session')}
               activeOpacity={0.5}
-              style={{marginLeft: wp('10%'), marginTop: wp('3%')}}>
+              style={{ marginLeft: wp('10%'), marginTop: wp('3%') }}>
               <More width={wp('20%')} height={hp('3.8%')} />
             </TouchableOpacity>
           </View>

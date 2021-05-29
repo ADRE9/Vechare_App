@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
   Text,
   Image,
   ScrollView,
+  ImageBackground,
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
@@ -15,7 +16,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 
-import {Receipt, ReceiptBg, Car1} from 'svg';
+import { Receipt, ReceiptBg, Car1 } from 'svg';
 import CustomBack from '../components/CustomBack';
 
 function BillingScreen(props) {
@@ -43,18 +44,26 @@ function BillingScreen(props) {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <View flexDirection="column">
-          <Receipt width={wp('101%')} height={hp('16%')} />
-
-          <TouchableOpacity
-            activeOpacity={0.5}
+          {/* <Receipt width={wp('101%')} height={hp('16%')} /> */}
+          <ImageBackground
+            source={require("../assets/receiptHeader.png")}
             style={{
-              position: 'absolute',
-              marginLeft: 15,
-              marginTop: 30,
+              height: 120,
+              width: wp("100%")
             }}
-            onPress={() => props.navigation.goBack()}>
-            <CustomBack />
-          </TouchableOpacity>
+          >
+            <TouchableOpacity
+              activeOpacity={0.5}
+              style={{
+                marginLeft: 20,
+                marginTop: 32,
+              }}
+              onPress={() => props.navigation.goBack()}>
+              <CustomBack />
+            </TouchableOpacity>
+            <Text style={styles.header}>Receipt</Text>
+          </ImageBackground>
+
           <View
             style={{
               position: 'absolute',
@@ -116,10 +125,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
-  back: {
-    position: 'absolute',
-    top: 35,
-    left: 15,
+  header: {
+    color: "white",
+    fontFamily: "SF-Pro-Text-Bold",
+    marginLeft: 80,
+    fontSize: 28,
+    marginTop: -32,
+
   },
   content1: {
     fontSize: wp('5%'),

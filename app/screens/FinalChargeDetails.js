@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -15,7 +15,7 @@ import {
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-import {ReceiptBtn, ReportBtn, Continue} from 'svg';
+import { ReceiptBtn, ReportBtn, Continue, Report } from 'svg';
 import CustomBack from '../components/CustomBack';
 
 function FinalChargeDetails(props) {
@@ -70,22 +70,14 @@ function FinalChargeDetails(props) {
         <View>
           <ImageBackground
             source={require('../assets/chargeDetails.png')}
-            style={{width: wp('100%'), height: hp('16%')}}
+            style={{ width: wp('100%'), height: hp('16%') }}
             resizeMode="cover">
-            {/* <TouchableOpacity
-              activeOpacity={0.5}
-              style={{
-                marginLeft: 20,
-                marginTop: 30,
-              }}
-              onPress={() => props.navigation.goBack()}>
-              <CustomBack />
-            </TouchableOpacity> */}
+
             <Text style={styles.header}>Charging Details</Text>
           </ImageBackground>
         </View>
 
-        <View style={{justifyContent: 'space-evenly', flexDirection: 'row'}}>
+        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row' }}>
           <View style={styles.box1}>
             <View flexDirection="row">
               <Image
@@ -198,7 +190,7 @@ function FinalChargeDetails(props) {
             color: '#484848',
             marginTop: 5,
             marginRight: 36,
-            marginLeft: 36,
+            marginLeft: 40,
             fontFamily: 'SF-Pro-Display-Regular',
           }}>
           Rohini Community Charging Station, B-5/30, New Delhi - 110034
@@ -206,19 +198,19 @@ function FinalChargeDetails(props) {
         <View flexDirection="row">
           <TouchableOpacity
             style={{
-              marginLeft: 36,
+              marginLeft: 40,
 
               marginTop: 20,
             }}
             activeOpacity={0.6}
             onPress={() => props.navigation.navigate('Receipt')}>
-            <ReceiptBtn width={140} />
+            <Report width={140} />
           </TouchableOpacity>
           <TouchableOpacity
             style={{
-              marginLeft: 36,
-
+              marginLeft: 20,
               marginTop: 20,
+
             }}
             activeOpacity={0.6}
             onPress={() => props.navigation.navigate('Report')}>
@@ -238,7 +230,7 @@ function FinalChargeDetails(props) {
                 .finally(() =>
                   props.navigation.reset({
                     index: 0,
-                    routes: [{name: 'AppBottom'}],
+                    routes: [{ name: 'AppBottom' }],
                   }),
                 )
             }>
@@ -259,7 +251,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'SF-Pro-Text-Bold',
     fontSize: 28,
-    marginLeft: 40,
+    marginLeft: 60,
     marginTop: 30,
   },
   box1: {

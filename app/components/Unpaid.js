@@ -27,8 +27,8 @@ const Unpaid = ({ amount, onPress }) => {
       <View style={{ flexDirection: 'row' }}>
         <Text style={styles.heading}>Confirm Payment</Text>
         <Error
-          marginTop={windowWidth > 350 ? hp('6%') : hp('3%')}
-          marginLeft={hp('8%')}
+          marginTop={windowWidth > 350 ? 50 : 20}
+          marginLeft={20}
           width={windowWidth > 350 ? wp('18%') : wp("15%")}
         />
       </View>
@@ -62,27 +62,27 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 24,
     marginTop: hp('20%'),
-    marginLeft: wp('8%'),
+    marginLeft: 20,
   },
   subtext: {
     fontSize: windowWidth > 350 ? 16 : 15,
     fontFamily: 'SF-Pro-Display-Medium',
     color: 'white',
-    marginLeft: wp('8%'),
-    marginTop: hp('3%'),
+    marginLeft: 20,
+    marginTop: 20,
   },
   subtext2: {
     fontSize: windowWidth > 350 ? 14 : 12,
     fontFamily: 'SF-Pro-Display-Medium',
     color: 'white',
-    marginLeft: wp('8%'),
+    marginLeft: 20,
     marginTop: hp('4%'),
   },
   txt: {
     color: 'white',
     fontFamily: 'SF-Pro-Display-Semibold',
-    marginLeft: wp('8%'),
-    marginTop: hp('2%'),
+    marginLeft: 20,
+    marginTop: 10,
     fontSize: windowWidth > 350 ? 24 : 22,
   },
 });
