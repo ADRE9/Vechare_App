@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ImageBackground,
   SafeAreaView,
@@ -9,6 +9,7 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  Dimensions
 } from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -21,9 +22,11 @@ import {
 } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
 import CustomBack from '../components/CustomBack';
-import {EditHeader, Pencil, SaveBtn, Loc} from 'svg';
+import { EditHeader, Pencil, SaveBtn, Loc } from 'svg';
 
-function EditProfile({navigation}) {
+const Width = Dimensions.get('window').width;
+
+function EditProfile({ navigation }) {
   const [name, setName] = useState([]);
   const [mail, setMail] = useState([]);
   const [userName, setuserName] = useState([]);
@@ -105,43 +108,37 @@ function EditProfile({navigation}) {
   return (
     <ScrollView style={styles.cont}>
       <SafeAreaView style={styles.cont}>
-        <EditHeader height={hp('40%')} width={wp('100%')} />
+        {/* <EditHeader height={hp('40%')} width={wp('100%')} /> */}
+        <ImageBackground source={require("../assets/edit.png")}
+          style={{
+            height: 250,
+            width: wp("100%")
+          }}>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => navigation.goBack()}
+            style={styles.backBtn}>
+            <CustomBack />
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => navigation.goBack()}
-          style={styles.backBtn}>
-          <CustomBack />
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => console.log('pressed avatar')}
-          style={styles.avatar}>
           <Image
-            source={{uri: userInfo}}
+            source={{ uri: userInfo }}
             style={{
-              height: hp('10%'),
-              width: wp('18%'),
+              height: 70,
+              width: 70,
+              borderRadius: 35,
+              marginLeft: 160,
+              marginTop: -20,
+
             }}
           />
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => console.log('pressed edit')}
-          style={styles.pencil}>
-          <Pencil height={hp('4%')} width={wp('8%')} />
-        </TouchableOpacity>
-        <Text style={styles.name}>{name}</Text>
-        <View flexDirection="row" style={styles.cont4}>
-          <Loc
-            position={'absolute'}
-            height={hp('4%')}
-            width={wp('4%')}
-            top={4}
-            left={-5}
-          />
-          <Text style={styles.textCont2}>Rohini/City , Delhi/State</Text>
-        </View>
+
+          <View style={{ alignItems: "center" }}>
+            <Text style={styles.name}>{name}</Text>
+          </View>
+
+
+        </ImageBackground>
 
         <View style={styles.cont1}>
           <Text style={styles.txt}>Mobile Number</Text>
@@ -194,17 +191,16 @@ function EditProfile({navigation}) {
         </View> */}
         <TouchableOpacity
           style={{
-            marginLeft: wp('10%'),
-            marginTop: wp('7%'),
-            height: hp('5%'),
-            width: wp('30%'),
+            marginLeft: 40,
+            marginTop: 50,
+
           }}
           onPress={details}
           activeOpacity={0.5}>
-          <SaveBtn height={hp('5%')} width={wp('30%')} />
+          <SaveBtn width={110} />
         </TouchableOpacity>
       </SafeAreaView>
-    </ScrollView>
+    </ScrollView >
   );
 }
 
@@ -214,27 +210,24 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   name: {
-    fontSize: wp('6%'),
+    fontSize: 26,
     color: 'white',
     fontFamily: 'SF-Pro-Text-Bold',
-    position: 'absolute',
-    top: 100,
-    left: 120,
+    marginTop: 10,
   },
   cont1: {
-    marginLeft: wp('10%'),
-    marginRight: wp('10%'),
-    marginTop: -wp('10%'),
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: -8,
   },
   cont2: {
-    marginLeft: wp('10%'),
-    marginRight: wp('10%'),
-    marginTop: wp('4%'),
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: 25,
   },
   backBtn: {
-    position: 'absolute',
-    top: 30,
-    left: 15,
+    marginLeft: 20,
+    marginTop: 32,
   },
   textCont2: {
     color: 'white',
@@ -253,16 +246,10 @@ const styles = StyleSheet.create({
     top: 135,
     left: 120,
   },
-  avatar: {
-    position: 'absolute',
-    top: 30,
-    left: 150,
-  },
-  pencil: {
-    position: 'absolute',
-    top: 30,
-    left: 320,
-  },
+  // avatar: {
+  //   marginLeft: Width / 3,
+  // },
+
   txt: {
     fontSize: 13,
     color: '#626262',

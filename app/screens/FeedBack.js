@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -14,22 +14,22 @@ import {
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {nameValidator} from '../helpers/nameValidator';
-import {numberValidator} from '../helpers/numberValidator';
-import {emailValidator} from '../helpers/emailValidator';
-import {msgValidator} from '../helpers/msgValidator';
+import { nameValidator } from '../helpers/nameValidator';
+import { numberValidator } from '../helpers/numberValidator';
+import { emailValidator } from '../helpers/emailValidator';
+import { msgValidator } from '../helpers/msgValidator';
 
 import CustomBackLight from '../components/CustomBackLight';
-import {Submit} from 'svg';
+import { Submit } from 'svg';
 
 import TextInput from '../components/TextInput';
 import Button from '../components/Button';
 
-export default function FeedBack({navigation}) {
-  const [name, setName] = useState({value: '', error: ''});
-  const [number, setNumber] = useState({value: '', error: ''});
-  const [mail, setMail] = useState({value: '', error: ''});
-  const [msg, setMsg] = useState({value: '', error: ''});
+export default function FeedBack({ navigation }) {
+  const [name, setName] = useState({ value: '', error: '' });
+  const [number, setNumber] = useState({ value: '', error: '' });
+  const [mail, setMail] = useState({ value: '', error: '' });
+  const [msg, setMsg] = useState({ value: '', error: '' });
   const [loading, setLoading] = useState();
 
   const onSignUpPressed = async () => {
@@ -38,10 +38,10 @@ export default function FeedBack({navigation}) {
     const mailError = emailValidator(mail.value);
     const msgError = msgValidator(msg.value);
     if (nameError || numberError || mailError || msgError) {
-      setName({...name, error: nameError});
-      setNumber({...number, error: numberError});
-      setMail({...mail, error: mailError});
-      setMsg({...msg, error: msgError});
+      setName({ ...name, error: nameError });
+      setNumber({ ...number, error: numberError });
+      setMail({ ...mail, error: mailError });
+      setMsg({ ...msg, error: msgError });
       return;
     }
     setLoading(true);
@@ -74,7 +74,7 @@ export default function FeedBack({navigation}) {
               activeOpacity={0.5}
               style={{
                 marginLeft: 20,
-                marginTop: 18,
+                marginTop: 32,
               }}
               onPress={() => navigation.goBack()}>
               <CustomBackLight />
@@ -98,7 +98,7 @@ export default function FeedBack({navigation}) {
             label="Name"
             returnKeyType="next"
             value={name.value}
-            onChangeText={(text) => setName({value: text, error: ''})}
+            onChangeText={(text) => setName({ value: text, error: '' })}
             error={!!name.error}
             errorText={name.error}
             placeholder={'Name of user'}
@@ -110,7 +110,7 @@ export default function FeedBack({navigation}) {
             label="Contact"
             returnKeyType="next"
             value={number.value}
-            onChangeText={(text) => setNumber({value: text, error: ''})}
+            onChangeText={(text) => setNumber({ value: text, error: '' })}
             error={!!number.error}
             errorText={number.error}
             placeholder={'Enter Phone Number'}
@@ -125,7 +125,7 @@ export default function FeedBack({navigation}) {
             label="Email Address"
             returnKeyType="next"
             value={mail.value}
-            onChangeText={(text) => setMail({value: text, error: ''})}
+            onChangeText={(text) => setMail({ value: text, error: '' })}
             error={!!mail.error}
             errorText={mail.error}
             placeholder={'Enter Email Address'}
@@ -139,7 +139,7 @@ export default function FeedBack({navigation}) {
             label="Enter Message"
             returnKeyType="next"
             value={msg.value}
-            onChangeText={(text) => setMsg({value: text, error: ''})}
+            onChangeText={(text) => setMsg({ value: text, error: '' })}
             error={!!msg.error}
             errorText={msg.error}
             style={styles.input2}
@@ -186,10 +186,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   header: {
-    fontSize: wp('7%'),
+    fontSize: 28,
     color: '#000000',
-    marginTop: 12,
-    marginLeft: 30,
+    marginTop: 24,
+    marginLeft: 32,
     fontFamily: 'SF-Pro-Display-Bold',
   },
   subtitle: {

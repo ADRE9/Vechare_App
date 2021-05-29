@@ -18,8 +18,8 @@ function WorkingScreen({ navigation }) {
     <ScrollView style={styles.container}>
       <TouchableOpacity
         style={{
-          marginTop: hp('4%'),
-          marginLeft: wp('6%'),
+          marginTop: 32,
+          marginLeft: 20,
         }}
         onPress={() => navigation.goBack()}>
         <Image
@@ -78,14 +78,13 @@ function WorkingScreen({ navigation }) {
       <View
         style={{
           flexDirection: 'row',
-          marginTop: hp('5%'),
-          marginLeft: wp('8%'),
+          marginLeft: 20
         }}>
-        <Img1 height={hp('10%')} width={wp('16%')} />
+        <Img1 width={wp('16%')} />
         <View
           style={{
             justifyContent: 'center',
-            marginLeft: wp('4%'),
+            marginLeft: 15,
             marginRight: wp('3%'),
           }}>
           <Text style={styles.img1}>Easy Installation of veCharge Points</Text>
@@ -100,14 +99,14 @@ function WorkingScreen({ navigation }) {
       <View
         style={{
           flexDirection: 'row',
-          marginTop: hp('5%'),
-          marginLeft: wp('8%'),
+          marginTop: -40,
+          marginLeft: 20,
         }}>
-        <Img2 height={hp('10%')} width={wp('16%')} />
+        <Img2 width={wp('16%')} />
         <View
           style={{
             justifyContent: 'center',
-            marginLeft: wp('4%'),
+            marginLeft: 15,
             marginRight: wp('3%'),
           }}>
           <Text style={styles.img1}>Host and earn income</Text>
@@ -120,14 +119,14 @@ function WorkingScreen({ navigation }) {
       <View
         style={{
           flexDirection: 'row',
-          marginTop: hp('5%'),
-          marginLeft: wp('8%'),
+          marginTop: -40,
+          marginLeft: 20,
         }}>
-        <Img3 height={hp('10%')} width={wp('16%')} />
+        <Img3 width={wp('16%')} />
         <View
           style={{
             justifyContent: 'center',
-            marginLeft: wp('4%'),
+            marginLeft: 15,
             marginRight: wp('3%'),
           }}>
           <Text style={styles.img1}>Complete automated solution</Text>
@@ -145,10 +144,9 @@ function WorkingScreen({ navigation }) {
           marginTop: hp('5%'),
           marginLeft: wp('20%'),
           marginBottom: hp('10%'),
-          height: hp('7%'),
-          width: wp('50%'),
+          width: 220,
         }}>
-        <BecomeHostBtn height={hp('7%')} width={wp('60%')} />
+        <BecomeHostBtn width={220} />
       </TouchableOpacity>
     </ScrollView>
   );
@@ -162,8 +160,8 @@ const styles = StyleSheet.create({
   header: {
     fontFamily: 'SF-Pro-Text-Semibold',
     fontSize: 26,
-    marginLeft: wp('8%'),
-    marginTop: hp('2%'),
+    marginLeft: 20,
+    marginTop: 15,
     color: '#292929',
   },
   sub: {
@@ -172,14 +170,14 @@ const styles = StyleSheet.create({
   subtxt: {
     fontFamily: 'SF-Pro-Text-Medium',
     fontSize: 16,
-    marginLeft: wp('8%'),
-    marginTop: hp('1%'),
+    marginLeft: 20,
+    marginTop: 5,
     color: '#0D0D0D',
   },
   subtxt2: {
     fontFamily: 'SF-Pro-Text-Regular',
     fontSize: 16,
-    marginLeft: wp('8%'),
+    marginLeft: 20,
     marginTop: hp('1%'),
     color: '#0D0D0D',
   },
@@ -189,14 +187,14 @@ const styles = StyleSheet.create({
   line1: {
     fontFamily: 'SF-Pro-Text-Semibold',
     fontSize: 17,
-    marginLeft: wp('8%'),
+    marginLeft: 20,
     color: '#0D0D0D',
   },
   subline1: {
     fontFamily: 'SF-Pro-Text-Regular',
     fontSize: 12,
-    marginLeft: wp('8%'),
-    marginRight: wp('6%'),
+    marginLeft: 20,
+    marginRight: 28,
   },
   break: {
     borderBottomColor: '#626262',
@@ -204,7 +202,7 @@ const styles = StyleSheet.create({
     width: wp('70%'),
     marginTop: 10,
     height: 10,
-    marginLeft: wp('14%'),
+    marginLeft: 40,
     marginBottom: 20,
   },
   img1: {

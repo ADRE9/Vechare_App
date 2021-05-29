@@ -24,7 +24,7 @@ function HostScreen({ navigation }) {
       <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={{
-          marginTop: 10,
+          marginTop: 20,
           marginLeft: 32,
         }}>
         <Image
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     marginLeft: 35,
     marginTop: 10,
     letterSpacing: 1,
+    lineHeight: 40,
   },
 });
 

@@ -26,19 +26,18 @@ function RegisterHost(props) {
           resizeMode="cover"
           style={styles.register}
         >
-        <TouchableOpacity
-          activeOpacity={0.5}
-          style={{
-          marginLeft:20,
-          marginTop:30,
-          }}
-          onPress={() => props.navigation.goBack()}>
-          <CustomBack
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={{
+              marginLeft: 20,
+              marginTop: 32,
+            }}
+            onPress={() => props.navigation.goBack()}>
+            <CustomBack
+            />
 
-          />
-
-        </TouchableOpacity>
-        <Text style={styles.header}>Register</Text>
+          </TouchableOpacity>
+          <Text style={styles.header}>Register</Text>
         </ImageBackground>
         <View>
           <Text style={styles.heading}>Name</Text>
@@ -104,12 +103,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  header:{
-color:"white",
-fontFamily:"SF-Pro-Text-Bold",
-fontSize:28,
-marginLeft:60,
-marginTop:-30,
+  header: {
+    color: "white",
+    fontFamily: "SF-Pro-Text-Bold",
+    fontSize: 28,
+    marginLeft: 70,
+    marginTop: -32,
   },
   register: {
     height: 120,

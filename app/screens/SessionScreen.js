@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -52,16 +52,17 @@ function SessionScreen(props) {
       <View>
         <ImageBackground
           style={styles.img}
-          source={require('../assets/session.png')}>
+          source={require('../assets/recent1.png')}>
           <TouchableOpacity
             activeOpacity={0.5}
             style={{
-              marginTop: 30,
-              marginLeft: 8,
+              marginLeft: 20,
+              marginTop: 32,
             }}
             onPress={() => props.navigation.goBack()}>
             <CustomBack />
           </TouchableOpacity>
+          <Text style={styles.header}>Recent Sessions</Text>
         </ImageBackground>
       </View>
     );
@@ -94,7 +95,7 @@ function SessionScreen(props) {
           ListHeaderComponent={header}
           stickyHeaderIndices={[0]}
           ListFooterComponent={renderFooter}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <SessionCard
               device={item.chargerId._id}
               loc={item.chargerId.address}
@@ -118,11 +119,18 @@ const styles = StyleSheet.create({
   },
   img: {
     height: 180,
-    width: '100%',
+    width: wp('100%'),
+  },
+  header: {
+    color: "white",
+    fontFamily: "SF-Pro-Text-Bold",
+    marginLeft: 80,
+    fontSize: 28,
+    marginTop: -32,
+
   },
   footer: {
     // padding: 10,
-
     justifyContent: 'center',
     alignItems: 'center',
     // flexDirection: 'row',
