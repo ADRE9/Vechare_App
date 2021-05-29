@@ -9,6 +9,7 @@ import {
   Image,
   Switch,
   Button,
+  ImageBackground,
   ToastAndroid,
 } from 'react-native';
 import io from 'socket.io-client';
@@ -256,10 +257,14 @@ export default class Status extends Component {
         {this.state.loaded ? (
           <View>
             <View style={styles.container}>
-              <Image
-                source={require('../assets/status.png')}
-                style={styles.image}
-              />
+              <ImageBackground
+                source={require('../assets/status1.png')}
+                style={{
+                  height: 120,
+                  width: wp('100%'),
+                }}>
+                <Text style={styles.header}>Charging Status</Text>
+              </ImageBackground>
             </View>
 
             <View
@@ -497,6 +502,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
+  },
+  header: {
+    color: 'white',
+    fontFamily: 'SF-Pro-Text-Bold',
+    fontSize: 28,
+    marginLeft: 60,
+    marginTop: 25,
   },
   image: {
     height: hp('15%'),
