@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ImageBackground,
   SafeAreaView,
@@ -9,7 +9,7 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -22,11 +22,11 @@ import {
 } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
 import CustomBack from '../components/CustomBack';
-import { EditHeader, Pencil, SaveBtn, Loc } from 'svg';
+import {EditHeader, Pencil, SaveBtn, Loc} from 'svg';
 
 const Width = Dimensions.get('window').width;
 
-function EditProfile({ navigation }) {
+function EditProfile({navigation}) {
   const [name, setName] = useState([]);
   const [mail, setMail] = useState([]);
   const [userName, setuserName] = useState([]);
@@ -109,10 +109,11 @@ function EditProfile({ navigation }) {
     <ScrollView style={styles.cont}>
       <SafeAreaView style={styles.cont}>
         {/* <EditHeader height={hp('40%')} width={wp('100%')} /> */}
-        <ImageBackground source={require("../assets/edit.png")}
+        <ImageBackground
+          source={require('../assets/edit.png')}
           style={{
             height: 250,
-            width: wp("100%")
+            width: wp('100%'),
           }}>
           <TouchableOpacity
             activeOpacity={0.5}
@@ -122,22 +123,19 @@ function EditProfile({ navigation }) {
           </TouchableOpacity>
 
           <Image
-            source={{ uri: userInfo }}
+            source={{uri: userInfo}}
             style={{
               height: 70,
               width: 70,
               borderRadius: 35,
               marginLeft: 160,
               marginTop: -20,
-
             }}
           />
 
-          <View style={{ alignItems: "center" }}>
+          <View style={{alignItems: 'center'}}>
             <Text style={styles.name}>{name}</Text>
           </View>
-
-
         </ImageBackground>
 
         <View style={styles.cont1}>
@@ -193,14 +191,13 @@ function EditProfile({ navigation }) {
           style={{
             marginLeft: 40,
             marginTop: 50,
-
           }}
           onPress={details}
           activeOpacity={0.5}>
           <SaveBtn width={110} />
         </TouchableOpacity>
       </SafeAreaView>
-    </ScrollView >
+    </ScrollView>
   );
 }
 

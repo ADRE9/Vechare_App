@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -14,10 +14,10 @@ import {
   ImageBackground,
   Platform,
 } from 'react-native';
-import { Button, Overlay, Rating, AirbnbRating } from 'react-native-elements';
+import {Button, Overlay, Rating, AirbnbRating} from 'react-native-elements';
 
 import auth from '@react-native-firebase/auth';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   heightPercentageToDP as hp,
@@ -27,7 +27,7 @@ import Share from 'react-native-share';
 import axios from 'axios';
 import RazorpayCheckout from 'react-native-razorpay';
 
-import { RazorpayApiKey } from '../Constants/config';
+import {RazorpayApiKey} from '../Constants/config';
 import files from '../../assets/filesBase64';
 import UnpaidNotify from '../components/UnpaidNotify';
 
@@ -52,9 +52,9 @@ import {
   Visit,
   Visit1,
 } from 'svg';
-import { BoxShadow } from 'react-native-shadow';
+import {BoxShadow} from 'react-native-shadow';
 
-function Profile({ navigation }) {
+function Profile({navigation}) {
   const [loggedIn, setloggedIn] = useState(false);
   const [user, setUser] = useState([]);
   const [paid, setPaid] = useState([]);
@@ -81,7 +81,7 @@ function Profile({ navigation }) {
               <Image
                 style={styles.starImgStyle}
                 source={item <= defaultRating ? starfill : star}
-              // source={star}
+                // source={star}
               />
             </TouchableOpacity>
           );
@@ -122,7 +122,7 @@ function Profile({ navigation }) {
     opacity: 0.2,
     x: 52,
     y: 10,
-    style: { marginBottom: hp('3%') },
+    style: {marginBottom: hp('3%')},
   };
   const signOut = async () => {
     try {
@@ -168,7 +168,7 @@ function Profile({ navigation }) {
           signOut().then(() =>
             navigation.reset({
               index: 0,
-              routes: [{ name: 'LoginPage' }],
+              routes: [{name: 'LoginPage'}],
             }),
           ),
       },
@@ -206,11 +206,11 @@ function Profile({ navigation }) {
         contact: '9191919191',
         name: 'John Doe',
       },
-      theme: { color: '#a29bfe' },
+      theme: {color: '#a29bfe'},
     };
     RazorpayCheckout.open(options).then(async function (response) {
       const config = {
-        headers: { Authorization: token },
+        headers: {Authorization: token},
       };
       const data = {
         orderCreationId: orderData.id,
@@ -288,19 +288,14 @@ function Profile({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
-
         <ImageBackground
           source={require('../assets/profileHeader.png')}
           style={{
             width: wp('100%'),
             height: 180,
-
-
           }}>
-          <View style={{ alignItems: "center", }}>
-
+          <View style={{alignItems: 'center'}}>
             <Text style={styles.textCont}>{name}</Text>
-
           </View>
 
           <TouchableOpacity
@@ -345,26 +340,17 @@ function Profile({ navigation }) {
           <TouchableOpacity
             onPress={() => navigation.navigate('Work')}
             activeOpacity={0.5}>
-            <View flexDirection="row" style={{ alignItems: "center" }}>
+            <View flexDirection="row" style={{alignItems: 'center'}}>
               <Text style={styles.item1}>How veCharge works</Text>
-              <Icon1
-
-                width={wp('5%')}
-                marginLeft={wp('34%')}
-              />
+              <Icon1 width={wp('5%')} marginLeft={wp('34%')} />
             </View>
             <View style={styles.line}></View>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={share} activeOpacity={0.5}>
-            <View flexDirection="row" style={{ alignItems: "center" }}>
+            <View flexDirection="row" style={{alignItems: 'center'}}>
               <Text style={styles.item1}>Refer a friend</Text>
-              <Icon2
-
-                width={wp('5%')}
-                marginTop={10}
-                marginLeft={wp('46%')}
-              />
+              <Icon2 width={wp('5%')} marginTop={10} marginLeft={wp('46%')} />
             </View>
             <View style={styles.line}></View>
           </TouchableOpacity>
@@ -372,12 +358,9 @@ function Profile({ navigation }) {
           <TouchableOpacity
             onPress={() => navigation.navigate('Report')}
             activeOpacity={0.5}>
-            <View flexDirection="row" style={{ alignItems: "center" }}>
+            <View flexDirection="row" style={{alignItems: 'center'}}>
               <Text style={styles.item1}>Report an issue</Text>
-              <Icon3
-                width={wp('5%')}
-                marginLeft={wp('42')}
-              />
+              <Icon3 width={wp('5%')} marginLeft={wp('42')} />
             </View>
             <View style={styles.line}></View>
           </TouchableOpacity>
@@ -385,26 +368,16 @@ function Profile({ navigation }) {
           <TouchableOpacity
             onPress={() => navigation.navigate('Feed')}
             activeOpacity={0.5}>
-            <View flexDirection="row" style={{ alignItems: "center" }}>
+            <View flexDirection="row" style={{alignItems: 'center'}}>
               <Text style={styles.item1}>Give us feedback</Text>
-              <Icon4
-
-                width={wp('5%')}
-
-                marginLeft={wp('40%')}
-              />
+              <Icon4 width={wp('5%')} marginLeft={wp('40%')} />
             </View>
             <View style={styles.line}></View>
           </TouchableOpacity>
           <TouchableOpacity onPress={toggleOverlay} activeOpacity={0.5}>
-            <View flexDirection="row" style={{ alignItems: "center" }}>
+            <View flexDirection="row" style={{alignItems: 'center'}}>
               <Text style={styles.item1}>Rate us</Text>
-              <Icon5
-
-                width={wp('5%')}
-
-                marginLeft={wp('56%')}
-              />
+              <Icon5 width={wp('5%')} marginLeft={wp('56%')} />
             </View>
             <View style={styles.line}></View>
           </TouchableOpacity>
@@ -412,14 +385,9 @@ function Profile({ navigation }) {
           <TouchableOpacity
             onPress={() => navigation.navigate('About')}
             activeOpacity={0.5}>
-            <View flexDirection="row" style={{ alignItems: "center" }}>
+            <View flexDirection="row" style={{alignItems: 'center'}}>
               <Text style={styles.item1}>About</Text>
-              <Icon6
-
-                width={wp('5%')}
-                marginTop={10}
-                marginLeft={wp('58%')}
-              />
+              <Icon6 width={wp('5%')} marginTop={10} marginLeft={wp('58%')} />
             </View>
             <View style={styles.line}></View>
           </TouchableOpacity>
@@ -434,7 +402,7 @@ function Profile({ navigation }) {
             <Logout height={70} width={120} />
           </TouchableOpacity>
         </View>
-        <View style={{ marginLeft: 30 }}>
+        <View style={{marginLeft: 30}}>
           <Text
             style={{
               color: '#292929',
@@ -503,7 +471,7 @@ function Profile({ navigation }) {
           }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={{ width: wp('100%'), flex: 1, marginBottom: 20 }}>
+            style={{width: wp('100%'), flex: 1, marginBottom: 20}}>
             <Text
               style={{
                 fontSize: 30,
@@ -519,7 +487,7 @@ function Profile({ navigation }) {
             <Bar />
 
             <KeyboardAvoidingView
-              style={{ justifyContent: 'center', alignItems: 'center' }}>
+              style={{justifyContent: 'center', alignItems: 'center'}}>
               <TextInput
                 style={{
                   paddingLeft: 15,
@@ -536,7 +504,7 @@ function Profile({ navigation }) {
               />
             </KeyboardAvoidingView>
 
-            <View style={{ alignItems: 'center' }}>
+            <View style={{alignItems: 'center'}}>
               <TouchableOpacity
                 onPress={toggleplay}
                 style={{
@@ -549,7 +517,7 @@ function Profile({ navigation }) {
                   width: 80,
                   borderRadius: 10,
                 }}>
-                <Text style={{ fontSize: 14, color: 'white' }}>Submit</Text>
+                <Text style={{fontSize: 14, color: 'white'}}>Submit</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -568,7 +536,7 @@ function Profile({ navigation }) {
             }}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              style={{ width: wp('100%'), flex: 1, marginBottom: 20 }}>
+              style={{width: wp('100%'), flex: 1, marginBottom: 20}}>
               <Text
                 style={{
                   fontSize: 30,
@@ -621,7 +589,7 @@ function Profile({ navigation }) {
             }}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              style={{ width: wp('100%'), flex: 1, marginBottom: 50 }}>
+              style={{width: wp('100%'), flex: 1, marginBottom: 50}}>
               <Text
                 style={{
                   fontSize: 30,
@@ -718,7 +686,7 @@ const styles = StyleSheet.create({
     fontFamily: 'SF-Pro-Text-Regular',
     color: '#292929',
     // marginTop: 10,
-    alignItems: "center",
+    alignItems: 'center',
     fontSize: wp('3.4%'),
   },
   line: {
