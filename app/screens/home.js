@@ -101,9 +101,9 @@ export default function Home({navigation}) {
               style={{
                 fontFamily: 'SF-Pro-Display-Semibold',
                 color: '#181725',
-                fontSize: wp('5.7%'),
-                marginLeft: wp('5%'),
-                marginTop: hp('0.1%'),
+                fontSize: 22,
+                marginLeft: 20,
+                marginTop: 10,
               }}>
               Charging Points Near Me
             </Text>
@@ -113,7 +113,7 @@ export default function Home({navigation}) {
               activeOpacity={0.5}
               style={{
                 marginLeft: wp('6%'),
-                marginTop: hp('0.5%'),
+                marginTop: 10,
               }}>
               <More width={wp('20%')} height={hp('3.8%')} />
             </TouchableOpacity>
@@ -125,7 +125,7 @@ export default function Home({navigation}) {
             <Text
               style={{
                 fontSize: 22,
-                marginLeft: 30,
+                marginLeft: 20,
                 marginTop: 10,
                 fontFamily: 'SF-Pro-Display-Semibold',
                 color: '#181725',

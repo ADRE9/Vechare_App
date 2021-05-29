@@ -179,8 +179,7 @@ export default function Carousel() {
   return (
     <View
       style={{
-        height: 210,
-        paddingTop: 15,
+        height: 180,
         alignItems: 'center',
       }}>
       {isLoading === true ? (
@@ -233,11 +232,9 @@ export default function Carousel() {
                       <TouchableOpacity
                         style={{
                           backgroundColor: '#CAEAFF',
-                          padding: wp('2%'),
-                          borderRadius: wp('10%') / 2,
+                          paddingHorizontal: 10,
+                          borderRadius: wp('10%') / 4,
                           marginLeft: wp('4%'),
-                          marginTop: -wp('1%'),
-                          alignItems: 'center',
                           justifyContent: 'center',
                         }}>
                         <Text style={{fontSize: wp('3%'), fontWeight: 'bold'}}>
@@ -247,11 +244,9 @@ export default function Carousel() {
                       <TouchableOpacity
                         style={{
                           backgroundColor: '#CAEAFF',
-                          padding: wp('2%'),
-                          borderRadius: wp('10%') / 2,
+                          paddingHorizontal: 10,
+                          borderRadius: wp('10%') / 4,
                           marginLeft: wp('4%'),
-                          marginTop: -wp('1%'),
-                          alignItems: 'center',
                           justifyContent: 'center',
                         }}>
                         <Text style={{fontSize: wp('3%'), fontWeight: 'bold'}}>
@@ -266,7 +261,7 @@ export default function Carousel() {
                   style={{
                     fontSize: wp('2.6%'),
                     color: '#484848',
-                    marginLeft: wp('3%'),
+                    marginLeft: wp('5%'),
                     marginTop: hp('1.2%'),
                     fontFamily: 'SF-Pro-Display-Regular',
                   }}>

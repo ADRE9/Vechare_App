@@ -54,17 +54,17 @@ function UnpaidNotify({onPress, amount}) {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 50,
     left: 0,
     right: 0,
-    top: 440,
   },
   btn: {
     marginLeft: 30,
     marginTop: 15,
   },
   txt: {
-    marginLeft: 270,
+    marginLeft: 10,
+    marginTop: 15,
     fontSize: windowWidth > 350 ? 24 : 20,
     color: 'white',
     fontFamily: 'SF-Pro-Display-Semibold',

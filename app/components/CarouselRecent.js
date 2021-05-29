@@ -144,8 +144,8 @@ export default function CarouselRecent({props}) {
   return (
     <View
       style={{
-        height: 210,
-        paddingTop: 15,
+        height: 200,
+        paddingTop: 5,
         alignItems: 'center',
       }}>
       {isLoading === true ? (
@@ -234,7 +234,6 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     flexDirection: 'row',
-    height: 20,
   },
   paginationDot: {
     width: 8,
@@ -305,6 +304,7 @@ const styles = StyleSheet.create({
     marginTop: wp('6%'),
     marginRight: wp('10%'),
     alignItems: 'center',
+    justifyContent: 'center',
   },
   subtitle2: {
     backgroundColor: '#05C07D',
@@ -317,6 +317,7 @@ const styles = StyleSheet.create({
     fontSize: wp('3%'),
     textAlign: 'center',
     marginTop: wp('6%'),
+    justifyContent: 'center',
   },
   txt: {
     marginTop: wp('3%'),
