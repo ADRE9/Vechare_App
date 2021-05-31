@@ -99,7 +99,7 @@ export default function QRScreen({navigation, route}) {
       async function value() {
         try {
           await AsyncStorage.setItem('id', id);
-          await AsyncStorage.setItem('idValue', id);
+          // await AsyncStorage.setItem('idValue', id);
         } catch (e) {
           console.log('error in token storing', e);
         }
@@ -130,6 +130,9 @@ export default function QRScreen({navigation, route}) {
     );
 
     const orderData = await order.json();
+    const mail = await AsyncStorage.getItem('mail');
+    const name = await AsyncStorage.getItem('name');
+    const number = await AsyncStorage.getItem('number');
 
     console.log('order data value', orderData);
 
@@ -140,9 +143,9 @@ export default function QRScreen({navigation, route}) {
       order_id: orderData.id,
       key: RazorpayApiKey,
       prefill: {
-        email: 'useremail@example.com',
-        contact: '9191919191',
-        name: 'John Doe',
+        email: mail,
+        contact: number,
+        name: name,
       },
       theme: {color: '#a29bfe'},
     };
@@ -239,14 +242,13 @@ export default function QRScreen({navigation, route}) {
             </Text>
             <TextInput
               value={id}
-              onChangeText={(id) => setId(id)}
-              onChange={Idtext}
+              onChangeText={(text) => setId(text)}
               placeholder="   Enter station"
               style={styles.input}
             />
-            {/* <TouchableOpacity style={styles.buttonTouchable}>
+            <TouchableOpacity style={styles.buttonTouchable} onPress={Idtext}>
               <Text style={styles.buttonText}>Next ➡ </Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </ScrollView>
         }
       />

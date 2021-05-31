@@ -192,6 +192,9 @@ function Profile({navigation}) {
     );
 
     const orderData = await order.json();
+    const mail = await AsyncStorage.getItem('mail');
+    const name = await AsyncStorage.getItem('name');
+    const number = await AsyncStorage.getItem('number');
 
     console.log('order data value', orderData);
 
@@ -202,9 +205,9 @@ function Profile({navigation}) {
       order_id: orderData.id,
       key: RazorpayApiKey,
       prefill: {
-        email: 'useremail@example.com',
-        contact: '9191919191',
-        name: 'John Doe',
+        email: mail,
+        contact: number,
+        name: name,
       },
       theme: {color: '#a29bfe'},
     };

@@ -84,6 +84,7 @@ export default class Status extends Component {
     const jV = JSON.stringify(orderData.amount);
     await AsyncStorage.setItem('pyt', jV);
     await AsyncStorage.setItem('pytId', orderData.id);
+    await AsyncStorage.setItem('number', JSON.stringify(orderData.number));
   };
 
   // switchoff = async () => {
@@ -168,7 +169,7 @@ export default class Status extends Component {
           // },
           {
             text: 'No',
-            onPress: () => console.log('No'),
+            onPress: () => this.setState({toggle: true}),
             style: 'cancel',
           },
         ],
@@ -184,8 +185,8 @@ export default class Status extends Component {
 
     const token = `Bearer ${await AsyncStorage.getItem('token')}`;
     const id = await AsyncStorage.getItem('id');
-    console.log(id);
-    console.log(token);
+    // console.log(id);
+    // console.log(token);
     const socket = io.connect('https://vecharge.app', {
       query: {
         chargerId: id,
@@ -242,7 +243,7 @@ export default class Status extends Component {
       //     50,
       //   )
       // );
-      // return this.setState({error: data});
+      return this.setState({error: data});
     });
     // socket.on('chargerDisconnected', (data) => {
     //   console.log('charger disconnected from device', data);
@@ -408,18 +409,18 @@ export default class Status extends Component {
               </LinearGradient>
             </View>
             <View style={styles.switch}>
-              {/* <Switch
+              <Switch
                 trackColor={{false: '#767577', true: '#81b0ff'}}
                 onValueChange={this.toggleSwitch}
                 value={this.state.toggle}
-                style={{ transform: [{ scaleX: 2.5 }, { scaleY: 2.5 }] }}
+                style={{transform: [{scaleX: 2.5}, {scaleY: 2.5}]}}
               />
 
               <Text style={styles.textStyle}>
                 {this.state.toggle ? 'ON' : 'OFF'}
-              </Text> */}
-              {/* <Text style={styles.textStyle}>{this.state.error}</Text> */}
-              <Toggle
+              </Text>
+
+              {/* <Toggle
                 value={this.state.toggle}
                 onPress={this.toggleSwitch}
                 thumbActiveComponent={
@@ -455,8 +456,9 @@ export default class Status extends Component {
                   width: 185,
                   height: 15,
                 }}
-              />
+              /> */}
             </View>
+            <Text style={styles.textStyle}>{this.state.error}</Text>
           </View>
         ) : (
           <View

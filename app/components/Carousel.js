@@ -25,7 +25,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Navigate, ChargeNow, ChargeBox, Tick} from 'svg';
 const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
-export default function Carousel() {
+export default function Carousel({onPress}) {
   const [index, setIndex] = useState(0);
   const indexRef = useRef(index);
   const [value, setdata] = useState([]);
@@ -179,7 +179,7 @@ export default function Carousel() {
   return (
     <View
       style={{
-        height: 180,
+        height: 185,
         alignItems: 'center',
       }}>
       {isLoading === true ? (
@@ -280,6 +280,7 @@ export default function Carousel() {
                     longitude={item.location.coordinates[0]}></OpenGps>
                   <TouchableOpacity
                     activeOpacity={0.4}
+                    onPress={onPress}
                     style={{left: wp('3%')}}>
                     <ChargeNow
                       height={hp('8%')}

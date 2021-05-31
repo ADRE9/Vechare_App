@@ -16,7 +16,7 @@ import {
 
 import {Navigate, ChargeNow, Tick} from 'svg';
 
-function StationCard({dis, loc, device, lat, long}) {
+function StationCard({dis, loc, device, lat, long, onPress}) {
   function OpenGps({latitude, longitude}) {
     const openGps = () => {
       var scheme =
@@ -28,11 +28,11 @@ function StationCard({dis, loc, device, lat, long}) {
     return (
       <TouchableOpacity
         activeOpacity={0.4}
-        style={{marginLeft: wp('14%')}}
+        style={{marginLeft: wp('10%')}}
         onPress={openGps}>
         <Navigate
           height={hp('7%')}
-          width={wp('18%')}
+          width={wp('21%')}
           borderRadius={hp('4%') / 4}
         />
       </TouchableOpacity>
@@ -64,10 +64,11 @@ function StationCard({dis, loc, device, lat, long}) {
             <OpenGps latitude={lat} longitude={long}></OpenGps>
             <TouchableOpacity
               activeOpacity={0.4}
+              onPress={onPress}
               style={{marginLeft: wp('6%')}}>
               <ChargeNow
                 height={hp('7%')}
-                width={wp('18%')}
+                width={wp('21%')}
                 borderRadius={hp('4%') / 4}
               />
             </TouchableOpacity>

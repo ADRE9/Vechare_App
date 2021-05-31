@@ -194,6 +194,7 @@ export default function Payment({navigation}) {
     const pytId = await AsyncStorage.getItem('pytId');
     const mail = await AsyncStorage.getItem('mail');
     const name = await AsyncStorage.getItem('name');
+    const number = await AsyncStorage.getItem('number');
 
     var options = {
       description: 'Electricity bill payment',
@@ -203,7 +204,7 @@ export default function Payment({navigation}) {
       key: RazorpayApiKey,
       prefill: {
         email: mail,
-        contact: 'Add Contact here',
+        contact: number,
         name: name,
       },
       theme: {color: '#a29bfe'},

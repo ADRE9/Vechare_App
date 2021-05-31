@@ -54,7 +54,7 @@ function UnpaidNotify({onPress, amount}) {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    bottom: 50,
+    bottom: 10,
     left: 0,
     right: 0,
   },
