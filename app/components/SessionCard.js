@@ -17,7 +17,7 @@ import moment from 'moment';
 
 import {Navigate, ChargeNow, Tick} from 'svg';
 
-function SessionCard({amount, days, loc, energy, device, lat, long}) {
+function SessionCard({amount, days, loc, energy, device, lat, long, onPress}) {
   // function DateCh({tm}) {
   //   return moment(tm, 'YYYYMMDD').fromNow();
   // }
@@ -76,6 +76,7 @@ function SessionCard({amount, days, loc, energy, device, lat, long}) {
             <OpenGps latitude={lat} longitude={long}></OpenGps>
             <TouchableOpacity
               activeOpacity={0.4}
+              onPress={onPress}
               style={{marginLeft: wp('4%')}}>
               <ChargeNow
                 height={hp('8%')}

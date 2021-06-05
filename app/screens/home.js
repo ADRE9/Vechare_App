@@ -119,7 +119,7 @@ export default function Home({navigation}) {
             </TouchableOpacity>
           </View>
         </View>
-        <Carousel />
+        <Carousel onPress={() => navigation.navigate('SCAN')} />
         <View>
           <View flexDirection="row">
             <Text
@@ -141,7 +141,7 @@ export default function Home({navigation}) {
             </TouchableOpacity>
           </View>
         </View>
-        <CarouselRecent onPress={() => navigation.navigate('QrScreen')} />
+        <CarouselRecent onPress={() => navigation.navigate('SCAN')} />
       </ScrollView>
     </SafeAreaView>
   );

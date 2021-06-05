@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -15,7 +15,7 @@ import {
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
-import { ReceiptBtn, ReportBtn, Continue, Report } from 'svg';
+import {ReceiptBtn, ReportBtn, Continue, Report} from 'svg';
 import CustomBack from '../components/CustomBack';
 
 function FinalChargeDetails(props) {
@@ -48,21 +48,21 @@ function FinalChargeDetails(props) {
       console.log(e);
     }
   };
-  const disconnect = async () => {
-    const token = `Bearer ${await AsyncStorage.getItem('token')}`;
-    const id = await AsyncStorage.getItem('idValue');
-    // const idValue = await AsyncStorage.getItem('id');
-    // console.log('Value of id', idValue);
-    await fetch(
-      `https://vecharge.app/api/v1/charger/removeChargerFromUser/${id}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token,
-        },
-      },
-    );
-  };
+  // const disconnect = async () => {
+  //   const token = `Bearer ${await AsyncStorage.getItem('token')}`;
+  //   const id = await AsyncStorage.getItem('idValue');
+  //   // const idValue = await AsyncStorage.getItem('id');
+  //   // console.log('Value of id', idValue);
+  //   await fetch(
+  //     `https://vecharge.app/api/v1/charger/removeChargerFromUser/${id}`,
+  //     {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: token,
+  //       },
+  //     },
+  //   );
+  // };
 
   return (
     <ScrollView style={styles.cont}>
@@ -70,14 +70,13 @@ function FinalChargeDetails(props) {
         <View>
           <ImageBackground
             source={require('../assets/chargeDetails.png')}
-            style={{ width: wp('100%'), height: hp('16%') }}
+            style={{width: wp('100%'), height: hp('16%')}}
             resizeMode="cover">
-
             <Text style={styles.header}>Charging Details</Text>
           </ImageBackground>
         </View>
 
-        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row' }}>
+        <View style={{justifyContent: 'space-evenly', flexDirection: 'row'}}>
           <View style={styles.box1}>
             <View flexDirection="row">
               <Image
@@ -210,7 +209,6 @@ function FinalChargeDetails(props) {
             style={{
               marginLeft: 20,
               marginTop: 20,
-
             }}
             activeOpacity={0.6}
             onPress={() => props.navigation.navigate('Report')}>
@@ -225,14 +223,12 @@ function FinalChargeDetails(props) {
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={() =>
-              disconnect()
-                .then(() => clearStorage())
-                .finally(() =>
-                  props.navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'AppBottom' }],
-                  }),
-                )
+              clearStorage().finally(() =>
+                props.navigation.reset({
+                  index: 0,
+                  routes: [{name: 'AppBottom'}],
+                }),
+              )
             }>
             <Continue width={250} />
           </TouchableOpacity>

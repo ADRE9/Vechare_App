@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import RNBootSplash from 'react-native-bootsplash';
 
 import AuthNavigation from './app/navigation/AuthNavigation';
@@ -23,12 +23,16 @@ import DetailNavigation from './app/navigation/DetailNavigation';
 const Stack = createStackNavigator();
 function App() {
   useEffect(() => {
-    RNBootSplash.hide({ duration: 250 });
+    RNBootSplash.hide({duration: 250});
   }, []);
   return (
     <NavigationContainer>
       <Stack.Navigator
+<<<<<<< HEAD
         screenOptions={{ headerShown: false }}
+=======
+        screenOptions={{headerShown: false}}
+>>>>>>> db78ce3119603f04f63341a939edae934f5c6ace
         initialRouteName="Auth">
         <Stack.Screen name="Auth" component={AuthNavigation} />
         <Stack.Screen name="AppBottom" component={AppBottomNavigation} />

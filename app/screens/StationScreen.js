@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -20,7 +20,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import StationCard from '../components/StationCard';
 import CustomBack from '../components/CustomBack';
 
-function StationScreen(props) {
+function StationScreen({navigation}) {
   const [value, setdata] = useState([]);
   const [viewLocation, isViewLocation] = useState([]);
   const [loading, setloading] = useState(null);
@@ -52,11 +52,11 @@ function StationScreen(props) {
           },
         });
         console.log(permission);
-        location = await RNLocation.getLatestLocation({ timeout: 2000 });
+        location = await RNLocation.getLatestLocation({timeout: 2000});
         console.log(location);
         isViewLocation(location);
       } else {
-        location = await RNLocation.getLatestLocation({ timeout: 2000 });
+        location = await RNLocation.getLatestLocation({timeout: 2000});
         console.log(location);
         isViewLocation(location);
       }
@@ -98,7 +98,7 @@ function StationScreen(props) {
               marginLeft: 20,
               marginTop: 32,
             }}
-            onPress={() => props.navigation.goBack()}>
+            onPress={() => navigation.goBack()}>
             <CustomBack />
           </TouchableOpacity>
           <Text style={styles.header}>Stations Nearby</Text>
@@ -118,13 +118,14 @@ function StationScreen(props) {
             data={value}
             ListHeaderComponent={header}
             stickyHeaderIndices={[0]}
-            renderItem={({ item }) => (
+            renderItem={({item}) => (
               <StationCard
                 dis={(item.distance / 1000).toFixed(2)}
                 loc={item.address}
                 device={item._id}
                 lat={item.location.coordinates[1]}
                 long={item.location.coordinates[0]}
+                onPress={() => navigation.navigate('SCAN')}
               />
             )}
           />
@@ -144,12 +145,11 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   header: {
-    color: "white",
-    fontFamily: "SF-Pro-Text-Bold",
+    color: 'white',
+    fontFamily: 'SF-Pro-Text-Bold',
     marginLeft: 80,
     fontSize: 28,
     marginTop: -32,
-
   },
 });
 

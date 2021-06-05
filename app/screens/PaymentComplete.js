@@ -10,7 +10,7 @@ function PaymentComplete({navigation}) {
   setTimeout(() => {
     navigation.navigate('Details'); // Stack Name
     console.log('payment complete');
-  }, 2000);
+  }, 1500);
 
   return (
     <View style={styles.container}>

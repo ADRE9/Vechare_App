@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -20,7 +20,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import SessionCard from '../components/SessionCard';
 import CustomBack from '../components/CustomBack';
 
-function SessionScreen(props) {
+function SessionScreen({navigation}) {
   const [loading, setLoading] = useState(null);
   const [value, setdata] = useState([]);
   const [offset, setOffset] = useState(1);
@@ -59,7 +59,7 @@ function SessionScreen(props) {
               marginLeft: 20,
               marginTop: 32,
             }}
-            onPress={() => props.navigation.goBack()}>
+            onPress={() => navigation.goBack()}>
             <CustomBack />
           </TouchableOpacity>
           <Text style={styles.header}>Recent Sessions</Text>
@@ -95,7 +95,7 @@ function SessionScreen(props) {
           ListHeaderComponent={header}
           stickyHeaderIndices={[0]}
           ListFooterComponent={renderFooter}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <SessionCard
               device={item.chargerId._id}
               loc={item.chargerId.address}
@@ -104,6 +104,7 @@ function SessionScreen(props) {
               days={item.createdAt}
               lat={item.chargerId.location.coordinates[1]}
               long={item.chargerId.location.coordinates[0]}
+              onPress={() => navigation.navigate('SCAN')}
             />
           )}
         />
@@ -122,12 +123,11 @@ const styles = StyleSheet.create({
     width: wp('100%'),
   },
   header: {
-    color: "white",
-    fontFamily: "SF-Pro-Text-Bold",
+    color: 'white',
+    fontFamily: 'SF-Pro-Text-Bold',
     marginLeft: 80,
     fontSize: 28,
     marginTop: -32,
-
   },
   footer: {
     // padding: 10,
