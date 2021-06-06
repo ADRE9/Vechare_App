@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import RNBootSplash from 'react-native-bootsplash';
@@ -7,16 +6,9 @@ import RNBootSplash from 'react-native-bootsplash';
 import AuthNavigation from './app/navigation/AuthNavigation';
 import AppBottomNavigation from './app/navigation/AppBottomNavigation';
 
-import Payment from './app/screens/Payment';
-
 import Profile from './app/screens/Profile';
 import LoginScreen from './app/screens/LoginScreen';
 import RegisterScreen from './app/screens/RegisterScreen';
-import BillingScreen from './app/screens/BillingScreen';
-import FinalChargeDetails from './app/screens/FinalChargeDetails';
-import Unpaid from './app/components/Unpaid';
-import Status from './app/screens/Status';
-
 import PaymentNavigation from './app/navigation/PaymentNavigation';
 import DetailNavigation from './app/navigation/DetailNavigation';
 
@@ -28,11 +20,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-<<<<<<< HEAD
-        screenOptions={{ headerShown: false }}
-=======
         screenOptions={{headerShown: false}}
->>>>>>> db78ce3119603f04f63341a939edae934f5c6ace
         initialRouteName="Auth">
         <Stack.Screen name="Auth" component={AuthNavigation} />
         <Stack.Screen name="AppBottom" component={AppBottomNavigation} />
