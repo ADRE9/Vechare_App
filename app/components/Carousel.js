@@ -232,7 +232,7 @@ export default function Carousel({onPress}) {
                       <TouchableOpacity
                         style={{
                           backgroundColor: '#CAEAFF',
-                          paddingHorizontal: 10,
+                          paddingHorizontal: 5,
                           borderRadius: wp('10%') / 4,
                           marginLeft: wp('3%'),
                           justifyContent: 'center',
@@ -244,7 +244,7 @@ export default function Carousel({onPress}) {
                       <TouchableOpacity
                         style={{
                           backgroundColor: '#CAEAFF',
-                          paddingHorizontal: 10,
+                          paddingHorizontal: 5,
                           borderRadius: wp('10%') / 4,
                           marginLeft: wp('4%'),
                           justifyContent: 'center',

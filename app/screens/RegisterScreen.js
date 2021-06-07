@@ -6,6 +6,8 @@ import {
   Image,
   ScrollView,
   KeyboardAvoidingView,
+  Alert,
+  BackHandler,
 } from 'react-native';
 import {
   heightPercentageToDP as hp,
@@ -13,6 +15,7 @@ import {
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import {useFocusEffect} from '@react-navigation/native';
 import {nameValidator} from '../helpers/nameValidator';
 import {numberValidator} from '../helpers/numberValidator';
 
@@ -23,6 +26,30 @@ function RegisterScreen({navigation}) {
   const [name, setName] = useState({value: '', error: ''});
   const [number, setNumber] = useState({value: '', error: ''});
   const [loading, setLoading] = useState();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        Alert.alert('Hold on!', 'Are you sure you want to exit app?', [
+          {
+            text: 'Cancel',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {text: 'YES', onPress: () => BackHandler.exitApp()},
+        ]);
+        return true;
+      };
+
+      // Add Event Listener for hardwareBackPress
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress,
+      );
+
+      return () => backHandler.remove();
+    }, []),
+  );
 
   const onSignUpPressed = async () => {
     const nameError = nameValidator(name.value);

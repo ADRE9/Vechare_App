@@ -8,6 +8,7 @@ import {
   Image,
   ScrollView,
   ImageBackground,
+  Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -16,6 +17,7 @@ import {
 } from 'react-native-responsive-screen';
 import LottieView from 'lottie-react-native';
 import {BoxShadow} from 'react-native-shadow';
+import axios from 'axios';
 
 import loader from '../components/loader';
 import Carousel from '../components/Carousel';
@@ -25,6 +27,8 @@ import {HomeScreen, Host, More} from 'svg';
 export default function Home({navigation}) {
   const [name, setName] = useState([]);
   const [load, setLoad] = useState(false);
+  const [mail, setMail] = useState('');
+  const [id, setId] = useState('');
 
   const shadowOpt = {
     width: wp('62%'),
@@ -38,16 +42,55 @@ export default function Home({navigation}) {
     style: {marginBottom: hp('8%')},
   };
 
+  // function signDetails() {
+  //   if (mail === id) {
+  //     Alert.alert(
+  //       'Sign Up',
+
+  //       'Please complete the sign up to access app',
+  //       [
+  //         {
+  //           text: 'Sign Up',
+  //           onPress: () =>
+  //             navigation.reset({
+  //               index: 0,
+  //               routes: [{name: 'RegisterPage'}],
+  //             }),
+  //         },
+  //       ],
+  //       {cancelable: false},
+  //       //clicking out side of alert will not cancel
+  //     );
+  //   }
+  // }
+
   useEffect(() => {
     loader.loading((v) => setLoad(true));
     async function value() {
       const user = await AsyncStorage.getItem('name');
       setName(user.split(' ')[0]);
     }
+    async function get() {
+      const idToken = await AsyncStorage.getItem('googletoken');
+      const res = await axios.post(
+        'https://vecharge.app/api/v1/users/loginWithGoogle',
+        {
+          token: idToken,
+        },
+      );
+      const tokenmail = res.data.data.email;
+
+      const mailId = await AsyncStorage.getItem('mail');
+      if (tokenmail === mailId) {
+        await AsyncStorage.setItem('googletoken', idToken);
+        navigation.navigate('RegisterPage');
+      }
+    }
 
     value();
+    get();
     console.log('home SCreen');
-  }, []);
+  });
 
   return (
     <SafeAreaView style={styles.cont}>

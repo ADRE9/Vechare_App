@@ -145,8 +145,13 @@ export default function HostCarousel() {
         onScroll={onScroll}
         {...flatListOptimizationProps}
       />
-
-      <Pagination index={index}></Pagination>
+      <View
+        style={{
+          position: 'absolute',
+          top: 250,
+        }}>
+        <Pagination index={index}></Pagination>
+      </View>
     </View>
   );
 }
@@ -197,7 +202,6 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: 4,
     marginHorizontal: 5,
-    bottom: hp('23%'),
   },
   paginationDotActive: {backgroundColor: '#069DFF'},
   paginationDotInactive: {backgroundColor: '#DBDBDB'},

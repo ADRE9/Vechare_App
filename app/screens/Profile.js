@@ -128,6 +128,7 @@ function Profile({navigation}) {
     try {
       await GoogleSignin.revokeAccess();
       await GoogleSignin.signOut();
+
       // await AsyncStorage.removeItem('ervl');
       auth()
         .signOut()
@@ -297,7 +298,7 @@ function Profile({navigation}) {
             width: wp('100%'),
             height: 180,
           }}>
-          <View style={{alignItems: 'center'}}>
+          <View style={{marginLeft: 35}}>
             <Text style={styles.textCont}>{name}</Text>
           </View>
 
@@ -668,7 +669,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: 'white',
     textDecorationLine: 'underline',
-    marginLeft: 120,
+    marginLeft: 35,
     marginTop: 20,
     fontFamily: 'SF-Pro-Text-Semibold',
     // backgroundColor: "red"
